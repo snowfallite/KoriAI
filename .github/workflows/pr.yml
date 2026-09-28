@@ -24,8 +24,11 @@ jobs:
       - name: Zone labels and core version
         env:
           BASE: origin/${{ github.base_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
-        run: python3 scripts/check_contract_bump.py --base="$BASE" --labels="$LABELS"
+        run: >-
+          python3 scripts/check_contract_bump.py
+          --base="$BASE" --head="$HEAD_SHA" --labels="$LABELS"
       - name: Forbidden APIs
         run: python3 scripts/check_forbidden_apis.py
 

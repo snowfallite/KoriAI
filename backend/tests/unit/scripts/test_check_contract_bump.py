@@ -172,8 +172,9 @@ def test_core_version_below_main_asks_for_rebase() -> None:
 
 
 def git(repo: Path, *args: str) -> None:
+    identity = ["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"]
     subprocess.run(  # noqa: S603
-        ["git", "-c", "user.name=t", "-c", "user.email=t@t", *args],  # noqa: S607
+        ["git", *identity, *args],  # noqa: S607
         cwd=repo,
         check=True,
         capture_output=True,
@@ -183,7 +184,7 @@ def git(repo: Path, *args: str) -> None:
 @pytest.fixture
 def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     git(tmp_path, "init", "-b", "main")
-    (tmp_path / "tech.md").write_text(BASE, encoding="utf-8")
+    (tmp_path / "tech.md").write_text(BASE, encoding="utf-8", newline="\n")
     git(tmp_path, "add", ".")
     git(tmp_path, "commit", "-m", "core")
     git(tmp_path, "switch", "-c", "feature")
@@ -194,7 +195,7 @@ def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 def commit_file(repo: Path, path: str, text: str) -> None:
     target = repo / path
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(text, encoding="utf-8")
+    target.write_text(text, encoding="utf-8", newline="\n")
     git(repo, "add", ".")
     git(repo, "commit", "-m", path)
 
@@ -213,3 +214,13 @@ def test_cli_reads_bump_from_base_and_head(repo: Path) -> None:
     commit_file(repo, "tech.md", BUMPED)
     assert main(["--base", "main", "--labels", "contract-change"]) == 0
     assert main(["--base", "main", "--labels", "core-impl"]) == 1
+
+
+def test_cli_checks_the_branch_head_not_the_merge_commit(repo: Path) -> None:
+    # CI checks out a merge commit that already carries the newer core of main.
+    commit_file(repo, "README.md", "# kori\n")
+    git(repo, "switch", "main")
+    commit_file(repo, "tech.md", BUMPED)
+    git(repo, "switch", "--detach", "feature")
+    git(repo, "merge", "--no-edit", "main")
+    assert main(["--base", "main", "--head", "feature", "--labels", ""]) == 1

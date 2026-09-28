@@ -56,7 +56,7 @@ def zone_of(path: str) -> Zone:
 
 
 def core_version(core: str) -> int:
-    match = re.search(r"^> CORE_VERSION: (\d+)$", core, re.MULTILINE)
+    match = re.search(r"^> CORE_VERSION: (\d+)\s*$", core, re.MULTILINE)
     if match is None:
         raise ValueError("tech.md has no '> CORE_VERSION: N' line")
     return int(match.group(1))
@@ -115,14 +115,16 @@ def git(*args: str) -> str:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", default="origin/main", help="git ref the PR merges into")
+    # CI checks out a merge commit that already has the core of main; check the branch instead.
+    parser.add_argument("--head", default="HEAD", help="git ref of the PR branch head")
     parser.add_argument("--labels", default="", help="comma-separated PR labels")
     args = parser.parse_args(argv)
 
     labels = {label.strip() for label in args.labels.split(",") if label.strip()}
-    diff = git("diff", "--name-only", "--no-renames", "-z", f"{args.base}...HEAD")
+    diff = git("diff", "--name-only", "--no-renames", "-z", f"{args.base}...{args.head}")
     changed = [path for path in diff.split("\0") if path]
     errors = evaluate(
-        changed, labels, git("show", f"{args.base}:tech.md"), git("show", "HEAD:tech.md")
+        changed, labels, git("show", f"{args.base}:tech.md"), git("show", f"{args.head}:tech.md")
     )
 
     for error in errors:
