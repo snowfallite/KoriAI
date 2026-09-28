@@ -150,7 +150,6 @@ class Settings(BaseSettings):
     # Disclosures
     DISCLOSURE_MODE: Mode = "fake"
     EDISCLOSURE_BASE_URL: str = "https://www.e-disclosure.ru"
-    EDISCLOSURE_USER_AGENT: str = "KoriBot/1.0 (+mailto:<контакт>)"
     EDISCLOSURE_RPS: float = 0.5
     DISCLOSURE_YEARS_BACK: int = 5
 
