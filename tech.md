@@ -1,12 +1,13 @@
-# tech.md: ядро проекта «Invest Analyst»
+# tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 1
+> CORE_VERSION: 2
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v2 (2026-09-28): продукт переименован в «氷 Kōri»: образ `kori-api`, `TINVEST_APP_NAME=kori`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0`.
 - v1 (2026-09-26): первичное ядро. Стек, архитектура, схема БД, контракты HTTP/SSE/портов/агента/очереди, UI-компоненты, тесты, CI/CD, long-lead, стадии S1 (каркас) и S2 (слайсы F-01..F-16).
 
 ---
@@ -1628,7 +1629,7 @@ class SourceRef(BaseModel):
 
 ### 15.1 Compose
 
-- `docker-compose.yml` (тестовый VPS): `caddy` (80/443, тома `caddy_data`, `caddy_config`), `api` (образ `ghcr.io/<owner>/invest-analyst-api:<sha>`, `env_file: .env`, том `data:/data`), `postgres` (`postgres:18`, том `pg_data`, healthcheck), `qdrant` (пин версии, том `qdrant_data`). Реплика `api` одна, `uvicorn --workers 1`.
+- `docker-compose.yml` (тестовый VPS): `caddy` (80/443, тома `caddy_data`, `caddy_config`), `api` (образ `ghcr.io/<owner>/kori-api:<sha>`, `env_file: .env`, том `data:/data`), `postgres` (`postgres:18`, том `pg_data`, healthcheck), `qdrant` (пин версии, том `qdrant_data`). Реплика `api` одна, `uvicorn --workers 1`.
 - `docker-compose.dev.yml`: порты 5432 и 6333 наружу, `api` с `--reload` и смонтированным кодом, все `*_MODE=fake`. Фронт запускается на хосте `pnpm dev`, Vite проксирует `/api` на `localhost:8000`.
 - `docker-compose.ci.yml`: фейки, эфемерные тома, Caddy отдаёт собранную SPA. На нём идут e2e.
 
@@ -1665,12 +1666,12 @@ class SourceRef(BaseModel):
 | DB | `DATABASE_URL=postgresql+psycopg://app:app@localhost:5432/app`, `DB_POOL_SIZE=10` |
 | Qdrant | `QDRANT_URL=http://localhost:6333`, `QDRANT_API_KEY=`, `QDRANT_COLLECTION=doc_chunks` |
 | Auth | `SESSION_TTL_DAYS=30`, `COOKIE_SECURE=false`, `REGISTRATION_MODE=invite`, `SEED_OWNER_EMAIL=owner@example.test`, `SEED_OWNER_PASSWORD=` |
-| T-Invest | `TINVEST_MODE=fake`, `TINVEST_APP_NAME=invest-analyst`, `TINVEST_SYSTEM_TOKEN=`, `TINVEST_TOKEN_KEYS=k1:<base64 32 байта>`, `TINVEST_TOKEN_ACTIVE_KEY=k1`, `TINVEST_TIMEOUT_S=20` |
+| T-Invest | `TINVEST_MODE=fake`, `TINVEST_APP_NAME=kori`, `TINVEST_SYSTEM_TOKEN=`, `TINVEST_TOKEN_KEYS=k1:<base64 32 байта>`, `TINVEST_TOKEN_ACTIVE_KEY=k1`, `TINVEST_TIMEOUT_S=20` |
 | LLM | `LLM_MODE=fake`, `GIGACHAT_CREDENTIALS=`, `GIGACHAT_SCOPE=GIGACHAT_API_PERS`, `GIGACHAT_BASE_URL=https://api.giga.chat/v1`, `GIGACHAT_CA_BUNDLE=/app/certs/russian_trusted_root_ca.pem`, `GIGACHAT_TIMEOUT_S=120`, `LLM_MAX_CONCURRENCY=1`, `LLM_QUEUE_TIMEOUT_S=90`, `LLM_MODELS=lite:GigaChat-2,pro:GigaChat-2-Pro,max:GigaChat-2-Max,ultra:GigaChat-3-Ultra`, `LLM_TOOLS_UNSUPPORTED=`, `LLM_CONTEXT_TOKENS=lite:32000,pro:32000,max:32000,ultra:32000` (реальные окна фиксирует S1-09) |
 | Квоты | `LLM_QUOTAS=lite:250000000,pro:40000000,max:25000000,ultra:50000000`, `LLM_QUOTA_PERIOD_START=2026-09-26`, `LLM_QUOTA_PERIOD_DAYS=365`, `LLM_PACE_MAX=1.15`, `LLM_PACE_GRACE_DAYS=7`, `LLM_RESERVE_PCT=1`, `USER_DAILY_BUDGET_LITE_EQ=600000`, `BACKGROUND_DAILY_BUDGET_LITE_EQ=1500000` |
 | Агент | `AGENT_HISTORY_MESSAGES=8`, `AGENT_RUN_TIMEOUT_S=240`, `AGENT_RUN_BUDGET_LITE_EQ=400000`, `TOOL_TIMEOUT_S=60`, `RUN_EVENTS_TTL_S=600` |
 | Web | `WEB_MODE=fake`, `TAVILY_API_KEY=`, `TAVILY_MONTHLY_CREDITS=1000`, `TAVILY_USER_DAILY_CREDITS=40`, `WEB_CACHE_TTL_SEARCH_S=21600`, `WEB_CACHE_TTL_EXTRACT_S=604800` |
-| Раскрытие | `DISCLOSURE_MODE=fake`, `EDISCLOSURE_BASE_URL=https://www.e-disclosure.ru`, `EDISCLOSURE_USER_AGENT=InvestAnalystBot/1.0 (+mailto:<контакт>)`, `EDISCLOSURE_RPS=0.5`, `DISCLOSURE_YEARS_BACK=5` |
+| Раскрытие | `DISCLOSURE_MODE=fake`, `EDISCLOSURE_BASE_URL=https://www.e-disclosure.ru`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0 (+mailto:<контакт>)`, `EDISCLOSURE_RPS=0.5`, `DISCLOSURE_YEARS_BACK=5` |
 | Векторы | `EMBEDDINGS_MODE=fake`, `EMBEDDINGS_DENSE_MODEL=intfloat/multilingual-e5-small`, `EMBEDDINGS_SPARSE_MODEL=Qdrant/bm25`, `FASTEMBED_CACHE_DIR=/data/fastembed`, `VECTORS_MODE=memory` (`qdrant` на VPS) |
 | Медиа | `FETCH_MODE=fake`, `MEDIA_MAX_BYTES=5242880` |
 | Фейки | `FAKE_FAULTS=`, `FAKE_STRICT=false` (в тестах `true`) |
