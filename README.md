@@ -31,6 +31,7 @@ just --list           # остальные команды, полный спис
 Нужен [GitHub CLI](https://cli.github.com/). Защита веток в приватном репозитории требует GitHub Pro или публичного репозитория.
 
 ```sh
+gh repo create <owner>/<name> --public --source . --remote origin --push
 gh label create contract-change --color D93F0B --description "Контрактная зона и бамп CORE_VERSION"
 gh label create core-impl --color 0E8A16 --description "Реализация текущего ядра без правки tech.md"
 gh label create owner --color 5319E7 --description "Общая зона, режим владельца"
