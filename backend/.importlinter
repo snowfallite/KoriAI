@@ -1,0 +1,157 @@
+# Import boundaries from tech.md §4.4.
+[importlinter]
+root_package = app
+include_external_packages = True
+
+[importlinter:contract:contracts-pure]
+name = app.contracts imports only app.contracts, stdlib and pydantic
+type = forbidden
+source_modules =
+    app.contracts
+forbidden_modules =
+    app.core
+    app.db
+    app.http
+    app.gateways
+    app.domains
+    app.jobs
+    app.main
+    app.config
+    app.cli
+    # Every third-party package of the tech.md §2 stack except pydantic.
+    alembic
+    argon2
+    cryptography
+    fastapi
+    fastembed
+    gigachat
+    httpx
+    langchain_core
+    langchain_gigachat
+    langgraph
+    numpy
+    openpyxl
+    pandas
+    pdfplumber
+    procrastinate
+    psycopg
+    pydantic_settings
+    pypdf
+    pypdfium2
+    qdrant_client
+    scipy
+    selectolax
+    sqlalchemy
+    sse_starlette
+    starlette
+    structlog
+    t_tech
+    tavily
+    uvicorn
+    xlrd
+
+[importlinter:contract:gateways-no-domains]
+name = app.gateways does not import app.domains
+type = forbidden
+source_modules =
+    app.gateways
+forbidden_modules =
+    app.domains
+
+[importlinter:contract:domains-no-sdk]
+name = app.domains does not import external service SDKs
+type = forbidden
+source_modules =
+    app.domains
+forbidden_modules =
+    t_tech
+    gigachat
+    langchain_gigachat
+    tavily
+    qdrant_client
+    fastembed
+    httpx
+    selectolax
+allow_indirect_imports = True
+
+[importlinter:contract:domains-no-pdf]
+name = Only disclosures and media domains import pdfplumber and pypdf
+type = forbidden
+source_modules =
+    app.domains
+forbidden_modules =
+    pdfplumber
+    pypdf
+allow_indirect_imports = True
+ignore_imports =
+    app.domains.disclosures.** -> pdfplumber
+    app.domains.disclosures.** -> pypdf
+    app.domains.media.** -> pdfplumber
+    app.domains.media.** -> pypdf
+unmatched_ignore_imports_alerting = none
+
+[importlinter:contract:langchain-scope]
+name = Only app.domains.agent and app.gateways.llm import langchain_core and langgraph
+type = forbidden
+source_modules =
+    app
+forbidden_modules =
+    langchain_core
+    langgraph
+ignore_imports =
+    app.domains.agent -> langchain_core
+    app.domains.agent -> langgraph
+    app.domains.agent.** -> langchain_core
+    app.domains.agent.** -> langgraph
+    app.gateways.llm -> langchain_core
+    app.gateways.llm -> langgraph
+    app.gateways.llm.** -> langchain_core
+    app.gateways.llm.** -> langgraph
+unmatched_ignore_imports_alerting = none
+
+[importlinter:contract:analytics-pure]
+name = app.domains.analytics imports nothing from app except app.contracts
+type = forbidden
+source_modules =
+    app.domains.analytics
+forbidden_modules =
+    app.core
+    app.db
+    app.http
+    app.gateways
+    app.jobs
+    app.main
+    app.config
+    app.cli
+    app.domains.*
+
+[importlinter:contract:domains-via-service]
+name = A domain imports another domain only through its service.py
+type = independence
+# analytics is a pure function library (§4.4, §11), open to every domain.
+modules =
+    app.domains.auth
+    app.domains.broker
+    app.domains.settings
+    app.domains.portfolio
+    app.domains.instruments
+    app.domains.chat
+    app.domains.agent
+    app.domains.disclosures
+    app.domains.rag
+    app.domains.usage
+    app.domains.media
+ignore_imports =
+    app.domains.** -> app.domains.*.service
+unmatched_ignore_imports_alerting = none
+
+[importlinter:contract:routers-via-service]
+name = Routers reach the database only through service.py
+type = forbidden
+source_modules =
+    app.domains.*.router
+forbidden_modules =
+    app.domains.*.repo
+    app.db
+    sqlalchemy
+allow_indirect_imports = True
