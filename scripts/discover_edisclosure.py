@@ -175,7 +175,9 @@ def say(line: str) -> None:
 
 def dump(path: Path, data: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
 
 
 def parse_robots(text: str) -> tuple[Rules, float]:
@@ -276,7 +278,7 @@ class Crawler:
         file = None if "files.aspx" in url and "files.aspx" not in final_url else name
         if file:
             (OUT / file).parent.mkdir(parents=True, exist_ok=True)
-            (OUT / file).write_text(html, encoding="utf-8")
+            (OUT / file).write_text(html, encoding="utf-8", newline="\n")
         self.pages[url] = {"final_url": final_url, "file": file}
         dump(OUT / "pages.json", self.pages)
         return final_url, html
@@ -288,7 +290,7 @@ class Crawler:
         self.pace(url, "asset")
         response = self.page.context.request.get(url)
         (OUT / name).parent.mkdir(parents=True, exist_ok=True)
-        (OUT / name).write_text(response.text(), encoding="utf-8")
+        (OUT / name).write_text(response.text(), encoding="utf-8", newline="\n")
 
 
 def load_robots(crawler: Crawler) -> str:
@@ -309,7 +311,7 @@ def load_robots(crawler: Crawler) -> str:
     crawler.pace(url, "robots")
     response = crawler.page.context.request.get(url)
     text = response.text()
-    (OUT / "robots.txt").write_text(text, encoding="utf-8")
+    (OUT / "robots.txt").write_text(text, encoding="utf-8", newline="\n")
     if response.status == 200 and "user-agent" in text.lower():
         rules, delay = parse_robots(text)
     elif 400 <= response.status < 500:
@@ -537,7 +539,7 @@ def write_issuers(crawler: Crawler) -> None:
         check = "" if inn in {None, info.get("inn")} else " MISMATCH"
         say(f"{ticker:<6} id={company_id} inn={info.get('inn')}{check} {info.get('short_name')}")
     ISSUERS_CSV.parent.mkdir(parents=True, exist_ok=True)
-    ISSUERS_CSV.write_text(out.getvalue(), encoding="utf-8")
+    ISSUERS_CSV.write_text(out.getvalue(), encoding="utf-8", newline="\n")
     say(f"wrote {ISSUERS_CSV.relative_to(ROOT)}")
 
 
