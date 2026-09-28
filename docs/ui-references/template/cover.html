@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/kioku-tokens.css">
+<link rel="stylesheet" href="css/kioku.css">
+<script>(function(){var h=document.documentElement;function s(){h.setAttribute("data-theme",location.hash.slice(1)||"night")}s();addEventListener("hashchange",s)})();</script>
+<meta charset="utf-8">
+<title>Kïoku</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--ground); color:var(--ink); font-family:var(--font-mono); overflow:hidden; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { position:absolute; top:0; left:-480px; display:block; width:960px; height:288px; }
+  .s-pink { stop-color:var(--pink); }
+  .s-red { stop-color:var(--red); }
+  .s-clear { stop-color:var(--ground); stop-opacity:0; }
+  .s-ground { stop-color:var(--ground); stop-opacity:1; }
+  .slab { fill:url(#cv-hero); }
+  .veil { fill:url(#cv-veil); }
+  .blk { fill:var(--red); }
+  .ray { stroke:var(--red); stroke-width:var(--stroke-hair); }
+  .deep { fill:var(--red-deep); }
+  .inkb { fill:var(--ink); }
+  .words { position:absolute; left:var(--space-12); bottom:var(--space-8); max-width:420px; }
+  .name { margin:0; font-size:120px; line-height:.92; font-weight:400; letter-spacing:-.01em; color:var(--ink); }
+  .tag { margin:var(--space-3) 0 0 6px; font-size:13px; line-height:17px; letter-spacing:.02em; text-transform:uppercase; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 960 288" width="960" height="288">
+<!--
+  blocks      hero slab 336×264 in pink → red (the brand's own two hues, bled off the top) · red-deep 48×120 satellite bled off the top · ink 48×24 on the slab's base line — ≈ 38% of 960×288, three hues plus ink
+  arrangement one tall slab with two satellites, as the landing's hero sits over the black page: the slab dissolves into ground at its foot (grad-hero's last stop)
+  pattern     pixel arches — "nested arches of stepped blocks" from the README's graphic language: three arches of red blocks 16×24 (space-4 × space-6) around the slab's centre, plus five stroke-hair rays converging low, as in the hero
+  scales      sides in space-6 (24px) multiples; blocks space-4 × space-6; gaps space-4; corners radius-none (Kïoku is square)
+-->
+<defs>
+  <linearGradient id="cv-hero" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s-pink"/><stop offset=".3" class="s-pink"/><stop offset=".8" class="s-red"/><stop offset="1" class="s-red"/></linearGradient>
+  <linearGradient id="cv-veil" x1="0" y1="0" x2="0" y2="1"><stop offset=".5" class="s-clear"/><stop offset="1" class="s-ground"/></linearGradient>
+  <clipPath id="cv-clip"><rect x="528" y="-24" width="336" height="264"/></clipPath>
+</defs>
+<rect class="deep" x="880" y="-24" width="48" height="144"/>
+<rect class="slab" x="528" y="-24" width="336" height="264"/>
+<g clip-path="url(#cv-clip)">
+<line class="ray" x1="696" y1="232" x2="552" y2="-24"/>
+<line class="ray" x1="696" y1="232" x2="624" y2="-24"/>
+<line class="ray" x1="696" y1="232" x2="696" y2="-24"/>
+<line class="ray" x1="696" y1="232" x2="768" y2="-24"/>
+<line class="ray" x1="696" y1="232" x2="840" y2="-24"/>
+<rect class="blk" x="536" y="72" width="16" height="24"/>
+<rect class="blk" x="536" y="96" width="16" height="24"/>
+<rect class="blk" x="536" y="120" width="16" height="24"/>
+<rect class="blk" x="536" y="144" width="16" height="24"/>
+<rect class="blk" x="536" y="168" width="16" height="24"/>
+<rect class="blk" x="536" y="192" width="16" height="24"/>
+<rect class="blk" x="536" y="216" width="16" height="24"/>
+<rect class="blk" x="544" y="48" width="16" height="24"/>
+<rect class="blk" x="552" y="24" width="16" height="24"/>
+<rect class="blk" x="568" y="0" width="16" height="24"/>
+<rect class="blk" x="584" y="72" width="16" height="24"/>
+<rect class="blk" x="584" y="96" width="16" height="24"/>
+<rect class="blk" x="584" y="120" width="16" height="24"/>
+<rect class="blk" x="584" y="144" width="16" height="24"/>
+<rect class="blk" x="584" y="168" width="16" height="24"/>
+<rect class="blk" x="584" y="192" width="16" height="24"/>
+<rect class="blk" x="584" y="216" width="16" height="24"/>
+<rect class="blk" x="592" y="-24" width="16" height="24"/>
+<rect class="blk" x="592" y="48" width="16" height="24"/>
+<rect class="blk" x="616" y="24" width="16" height="24"/>
+<rect class="blk" x="632" y="96" width="16" height="24"/>
+<rect class="blk" x="632" y="120" width="16" height="24"/>
+<rect class="blk" x="632" y="144" width="16" height="24"/>
+<rect class="blk" x="632" y="168" width="16" height="24"/>
+<rect class="blk" x="632" y="192" width="16" height="24"/>
+<rect class="blk" x="632" y="216" width="16" height="24"/>
+<rect class="blk" x="640" y="72" width="16" height="24"/>
+<rect class="blk" x="648" y="0" width="16" height="24"/>
+<rect class="blk" x="656" y="48" width="16" height="24"/>
+<rect class="blk" x="720" y="48" width="16" height="24"/>
+<rect class="blk" x="728" y="0" width="16" height="24"/>
+<rect class="blk" x="736" y="72" width="16" height="24"/>
+<rect class="blk" x="744" y="96" width="16" height="24"/>
+<rect class="blk" x="744" y="120" width="16" height="24"/>
+<rect class="blk" x="744" y="144" width="16" height="24"/>
+<rect class="blk" x="744" y="168" width="16" height="24"/>
+<rect class="blk" x="744" y="192" width="16" height="24"/>
+<rect class="blk" x="744" y="216" width="16" height="24"/>
+<rect class="blk" x="760" y="24" width="16" height="24"/>
+<rect class="blk" x="784" y="-24" width="16" height="24"/>
+<rect class="blk" x="784" y="48" width="16" height="24"/>
+<rect class="blk" x="792" y="72" width="16" height="24"/>
+<rect class="blk" x="792" y="96" width="16" height="24"/>
+<rect class="blk" x="792" y="120" width="16" height="24"/>
+<rect class="blk" x="792" y="144" width="16" height="24"/>
+<rect class="blk" x="792" y="168" width="16" height="24"/>
+<rect class="blk" x="792" y="192" width="16" height="24"/>
+<rect class="blk" x="792" y="216" width="16" height="24"/>
+<rect class="blk" x="808" y="0" width="16" height="24"/>
+<rect class="blk" x="824" y="24" width="16" height="24"/>
+<rect class="blk" x="832" y="48" width="16" height="24"/>
+<rect class="blk" x="840" y="72" width="16" height="24"/>
+<rect class="blk" x="840" y="96" width="16" height="24"/>
+<rect class="blk" x="840" y="120" width="16" height="24"/>
+<rect class="blk" x="840" y="144" width="16" height="24"/>
+<rect class="blk" x="840" y="168" width="16" height="24"/>
+<rect class="blk" x="840" y="192" width="16" height="24"/>
+<rect class="blk" x="840" y="216" width="16" height="24"/>
+<rect class="veil" x="528" y="-24" width="336" height="264"/>
+</g>
+<rect class="inkb" x="880" y="216" width="48" height="24"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Kïoku</h1>
+<p class="tag">AI-powered browser extension for contextual language learning</p>
+</div>
+</div>
+</body>
+</html>

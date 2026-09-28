@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "ask": [
+      "Edit(/tech.md)", "Edit(/CLAUDE.md)", "Edit(/.claude/**)",
+      "Edit(/backend/app/contracts/**)", "Edit(/backend/app/db/schema/**)", "Edit(/backend/migrations/**)",
+      "Edit(/backend/app/config.py)", "Edit(/.env.example)", "Edit(/backend/app/gateways/**)",
+      "Edit(/backend/fixtures/**)", "Edit(/backend/app/domains/agent/routing.py)",
+      "Edit(/backend/app/core/**)", "Edit(/backend/app/http/**)", "Edit(/backend/app/main.py)",
+      "Edit(/backend/app/jobs/**)", "Edit(/backend/app/cli.py)", "Edit(/backend/tests/support/**)",
+      "Edit(/frontend/src/lib/api/**)", "Edit(/frontend/src/lib/types/**)", "Edit(/frontend/src/lib/nav.ts)",
+      "Edit(/frontend/src/lib/ui/**)", "Edit(/frontend/src/lib/components/**)", "Edit(/frontend/src/lib/utils/**)",
+      "Edit(/frontend/src/lib/state/**)", "Edit(/frontend/src/app.css)", "Edit(/frontend/src/app.html)",
+      "Edit(/frontend/src/routes/+layout.*)", "Edit(/frontend/src/routes/(app)/+layout.*)",
+      "Edit(/infra/**)", "Edit(/.github/**)", "Edit(/docker-compose*.yml)", "Edit(/justfile)", "Edit(/scripts/**)",
+      "Bash(alembic revision:*)", "Bash(just migration:*)", "Bash(git push:*)"
+    ],
+    "deny": ["Read(/.env)", "Read(/.env.local)", "Read(/.env.prod)", "Bash(git push --force:*)"]
+  }
+}

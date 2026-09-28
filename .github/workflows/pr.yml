@@ -1,0 +1,113 @@
+name: pr
+
+on:
+  pull_request:
+    branches: [main]
+    # core-guard reads PR labels, so label changes re-run the gate.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  core-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Zone labels and core version
+        env:
+          BASE: origin/${{ github.base_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: >-
+          python3 scripts/check_contract_bump.py
+          --base="$BASE" --head="$HEAD_SHA" --labels="$LABELS"
+      - name: Forbidden APIs
+        run: python3 scripts/check_forbidden_apis.py
+
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: app
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U app"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      # The T-Bank index sends no intermediate certificate (L-04).
+      - name: Trust the Russian CA
+        run: |
+          cat /etc/ssl/certs/ca-certificates.crt ../infra/certs/russian_trusted_root_ca.pem > "$RUNNER_TEMP/ca.pem"
+          echo "SSL_CERT_FILE=$RUNNER_TEMP/ca.pem" >> "$GITHUB_ENV"
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --frozen
+      - run: uv run ruff check . ../scripts
+      - run: uv run ruff format --check . ../scripts
+      - run: uv run mypy
+      - run: uv run lint-imports
+      - run: uv run deptry .
+      - run: uv run pytest -m "not integration"
+
+  migrations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - run: echo "No migrations yet, S1-03 adds them"
+
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - run: echo "No integration tests yet, S1-03 adds them"
+
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec prettier --check .
+      - run: pnpm exec eslint .
+      - run: pnpm check
+      - run: pnpm exec knip
+      - run: pnpm test
+      - run: pnpm build
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - run: echo "No e2e suite yet, S1-05 adds the first spec"

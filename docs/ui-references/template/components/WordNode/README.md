@@ -1,0 +1,45 @@
+# WordNode
+
+Узел mind-map: лесенка ячеек → слово ♪ +, а в раскрытом виде ↓ слово ♪ перевод ✓.
+
+- Высота 36px (в карте — 28px), ячейки глифов квадратные, слово — `font-serif text-word` на `grey-300`.
+- Раскрытый узел: ячейка `bg-red` со стрелкой ↓, перевод на `white`, галочка — слово уже в словаре.
+- Центр кластера — красный квадрат со стрелкой.
+- Потребитель задаёт слово (`lang`), перевод и состояние (свёрнут / раскрыт / в словаре).
+
+## Разметка (HTML + Tailwind)
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500&display=swap">
+
+<div class="flex flex-col items-start gap-5 bg-grey-100 p-8 text-black">
+
+  <!-- default: → word ♪ + -->
+  <div class="inline-flex h-9 items-stretch text-ui" role="group" aria-label="頓悟">
+    <button type="button" aria-label="Open" class="ki-focus grid w-9 place-items-center bg-grey-400 text-lead hover:bg-red">→</button>
+    <span lang="zh-Hant" class="flex items-center bg-grey-300 px-2.5 text-word font-medium">頓悟</span>
+    <button type="button" aria-label="Listen" class="ki-focus grid w-9 place-items-center bg-grey-200 hover:bg-grey-300">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square" aria-hidden="true"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 6a2.5 2.5 0 0 1 0 4"/><path d="M12 4a5 5 0 0 1 0 8"/></svg>
+    </button>
+    <button type="button" aria-label="Add to dictionary" class="ki-focus grid w-9 place-items-center bg-white text-lead hover:bg-grey-200">+</button>
+  </div>
+
+  <!-- open: ↓ word ♪ translation ✓ -->
+  <div class="inline-flex h-9 items-stretch text-ui" role="group" aria-label="壓倒性 — overwhelming">
+    <button type="button" aria-label="Collapse" class="ki-focus grid w-9 place-items-center bg-red text-lead">↓</button>
+    <span lang="zh-Hant" class="flex items-center bg-grey-300 px-2.5 text-word font-medium">壓倒性</span>
+    <button type="button" aria-label="Listen" class="ki-focus grid w-9 place-items-center bg-grey-200 hover:bg-grey-300">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square" aria-hidden="true"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><path d="M10.5 6a2.5 2.5 0 0 1 0 4"/><path d="M12 4a5 5 0 0 1 0 8"/></svg>
+    </button>
+    <span class="flex items-center bg-white px-3">overwhelming</span>
+    <span class="grid w-9 place-items-center bg-grey-100 outline outline-1 -outline-offset-1 outline-grey-200" aria-label="In dictionary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>
+    </span>
+  </div>
+
+  <!-- hub: the red square every branch starts from -->
+  <div class="flex items-center gap-3 text-caption text-black">
+    <span class="grid size-6 place-items-center bg-red text-ui text-black">→</span> hub · centre of a cluster
+  </div>
+</div>
+```
