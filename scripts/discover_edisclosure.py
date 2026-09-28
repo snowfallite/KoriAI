@@ -1,22 +1,24 @@
 """e-disclosure discovery for S1-12 (tech.md §8.5, §22.1).
 
-The site answers plain HTTP clients with 403 and puts the ServicePipe JavaScript check in front
-of its pages, so the crawl drives a visible Chromium through Playwright with the browser's own
-User-Agent. A captcha, if one shows up, is passed by hand in that window.
+The site answers plain HTTP clients with a 403 bot page (open-source crawlers also report a
+ServicePipe JavaScript check), so the crawl drives a visible Chromium through Playwright with
+the browser's own User-Agent. A captcha, if one shows up, is passed by hand in that window.
 
 robots.txt disallows /api/*, and the company search of the site runs through it, so the crawl
 never searches: company ids come from ISSUERS and the INN on each card confirms them.
 
 Polite: robots.txt first (RFC 9309 wildcards), one request at a time, 1 / EDISCLOSURE_RPS
 seconds between requests, pages and archives cached across runs. Output: snapshots and JSON
-summaries in backend/tests/fixtures/edisclosure/ (golden fixtures for F-10), archives in
-.discovery/edisclosure/ (gitignored). Hits the real site: run by hand with
-`just discover-edisclosure [--headless]`.
+summaries in backend/tests/fixtures/edisclosure/ (golden fixtures for F-10), archives and parsed
+rows in .discovery/edisclosure/ (gitignored). Hits the real site: run by hand with
+`just discover-edisclosure [--issuers] [--headless]`; --issuers only opens the cards of IMOEX
+and writes backend/fixtures/reference/issuers.csv.
 """
 
 # ruff: noqa: RUF001  (Russian names and units are data here)
 
 import contextlib
+import csv
 import io
 import json
 import os
@@ -64,9 +66,67 @@ ISSUERS = (
     ("rzd", 4543, "7708503727", "bonds only"),
     ("gmkn", 564, "8401005730", "metals and mining"),
     ("mtss", 236, "7740000076", "telecom"),
-    ("rual", 38288, "3906394938", "МКПАО: IFRS without RAS candidate"),
-    ("ydex", 37211, None, "МКПАО, IT: check the name on the card"),
+    ("rual", 38288, "3906394938", "МКПАО after redomiciliation"),
+    ("ydex", 39059, None, "МКПАО, IT"),
+    ("enplc", 37211, None, "foreign issuer (Jersey): IFRS without RAS"),
 )
+# IMOEX and popular issuers for backend/fixtures/reference/issuers.csv (`--issuers`):
+# ticker, company id (web search on e-disclosure.ru pages), INN the card must show if known.
+IMOEX = (
+    ("SBER", 3043, "7707083893"),
+    ("GAZP", 934, "7736050003"),
+    ("LKOH", 17, "7708004767"),
+    ("ROSN", 6505, "7706107510"),
+    ("NVTK", 225, "6316031581"),
+    ("GMKN", 564, "8401005730"),
+    ("PLZL", 7832, "7703389295"),
+    ("SNGS", 312, "8602060555"),
+    ("TATN", 118, "1644003838"),
+    ("CHMF", 30, "3528000597"),
+    ("NLMK", 2509, "4823006703"),
+    ("MAGN", 9, "7414003633"),
+    ("MTSS", 236, "7740000076"),
+    ("MGNT", 7671, "2309085638"),
+    ("IRAO", 12213, "2320109650"),
+    ("VTBR", 1210, "7702070139"),
+    ("ALRS", 199, "1433000147"),
+    ("MOEX", 43, "7702077840"),
+    ("PHOR", 573, "7736216869"),
+    ("AFLT", 1480, "7712040126"),
+    ("PIKK", 44, "7713011336"),
+    ("CBOM", 202, "7734202860"),
+    ("RTKM", 141, "7707049388"),
+    ("AFKS", 4772, "7703104630"),
+    ("BSPB", 3935, "7831000027"),
+    ("FEES", 379, "4716016979"),
+    ("HYDR", 8580, "2460066195"),
+    ("TRNFP", 636, "7706061801"),
+    ("UPRO", 7878, "8602067092"),
+    ("SMLT", 36419, "9731004688"),
+    ("SVCB", 30052, "4401116480"),
+    ("RUAL", 38288, "3906394938"),
+    ("YDEX", 39059, None),
+    ("T", 39055, None),
+    ("OZON", 39583, None),
+    ("X5", 39008, None),
+    ("VKCO", 38965, None),
+    ("HEAD", 39017, None),
+    ("POSI", 38538, None),
+    ("ENPG", 37955, None),
+    ("ASTR", 38906, None),
+    ("MDMG", 39129, None),
+    ("FLOT", 11967, None),
+    ("SELG", 12557, None),
+    ("SGZH", 38038, None),
+    ("LENT", 38380, None),
+    ("CNRU", 39286, None),
+    ("MTLR", 1942, "7703370008"),
+    ("VSMO", 1641, "6607000556"),
+    ("MSNG", 936, "7705035012"),
+    ("LSRG", 4834, "7838360491"),
+    ("ETLN", 39517, None),
+)
+ISSUERS_CSV = ROOT / "backend/fixtures/reference/issuers.csv"
 # Pages for the discovery notes: the search form, its script, the terms of use, the paid API.
 PAGES = {
     "search/page.html": "/poisk-po-kompaniyam",
@@ -267,20 +327,24 @@ def card(crawler: Crawler, company_id: int) -> dict[str, Any]:
     if opened is None:
         return {"status": "stub"}
     tree = HTMLParser(opened[1])
-    text = tree.body.text(separator=" ") if tree.body else ""
-    inn = re.search(r"ИНН\D{0,20}?(\d{10,12})", text)
-    ogrn = re.search(r"ОГРН\D{0,20}?(\d{13,15})", text)
+    # "Общие сведения": label cells td.field-name, values in the next cell.
+    fields = {
+        cell.text(strip=True): cells[1].text(strip=True)
+        for cell in tree.css("td.field-name")
+        if cell.parent is not None and len(cells := cell.parent.css("td")) > 1
+    }
     sections: dict[str, str] = {}
     for link in tree.css('a[href*="files.aspx"]'):
         match = re.search(r"type=(\d+)", link.attributes.get("href") or "")
         if match:
             sections.setdefault(match.group(1), link.text(strip=True))
-    title = tree.css_first("title")
     return {
         "status": "ok",
-        "title": title.text(strip=True) if title else None,
-        "inn": inn.group(1) if inn else None,
-        "ogrn": ogrn.group(1) if ogrn else None,
+        "inn": fields.get("ИНН"),
+        "ogrn": fields.get("Номер Государственной регистрации (ОГРН)"),
+        "name": fields.get("Полное наименование компании"),
+        "short_name": fields.get("Сокращенное наименование компании"),
+        "fields": fields,
         "sections": sections,
     }
 
@@ -296,12 +360,18 @@ def rows(html: str, base: str) -> tuple[list[str], list[dict[str, Any]]]:
     tree = HTMLParser(html)
     links = [a for a in tree.css("a[href]") if "fileload" in (a.attributes["href"] or "").lower()]
     table = ancestor(links[0], "table") if links else None
-    header = [th.text(strip=True) for th in table.css("th")] if table else []
+    # Headers carry soft hyphens for line breaks.
+    header = [th.text(strip=True).replace("\xad", "") for th in table.css("th")] if table else []
     found = []
     for link in links:
         href = urljoin(base + "/portal/", link.attributes.get("href") or "")
         row = ancestor(link, "tr")
         cells = [c.text(separator=" ", strip=True) for c in row.iter()] if row else []
+        # A free-text description ("Презентация ...") sits in the next row.
+        after = row.next if row else None
+        while after is not None and after.tag != "tr":
+            after = after.next
+        described = after is not None and "description-row" in (after.attributes.get("class") or "")
         file_id = re.search(r"Fileid=(\d+)", href, re.IGNORECASE)
         found.append(
             {
@@ -309,6 +379,7 @@ def rows(html: str, base: str) -> tuple[list[str], list[dict[str, Any]]]:
                 "href": href,
                 "link_text": link.text(separator=" ", strip=True),
                 "cells": cells,
+                "description": after.text(strip=True) if described and after else None,
             }
         )
     return header, found
@@ -407,7 +478,7 @@ def discover(crawler: Crawler, company_id: int) -> dict[str, Any]:
         header, found = rows(html, crawler.base)
         by_type[file_type] = found
         files[str(file_type)] = {"status": "ok", "header": header, "rows": len(found)}
-        dump(OUT / "rows" / f"{company_id}_{file_type}.json", found)
+        dump(ARCHIVES / "rows" / f"{company_id}_{file_type}.json", found)
     result["files"] = files
 
     picked: list[dict[str, Any]] = []
@@ -424,6 +495,50 @@ def discover(crawler: Crawler, company_id: int) -> dict[str, Any]:
             downloads.append({"file_id": row["file_id"], "error": str(error)})
     result["downloads"] = downloads
     return result
+
+
+def discover_all(crawler: Crawler, summary: dict[str, Any]) -> None:
+    for name, path in PAGES.items():
+        summary.setdefault("pages", {})[name] = crawler.open(crawler.base + path, name) is not None
+    for name, path in ASSETS.items():
+        crawler.save(crawler.base + path, name)
+    for key, company_id, inn, note in ISSUERS:
+        crawler.tag = key
+        try:
+            result = discover(crawler, company_id)
+        except (Disallowed, PlaywrightError) as error:
+            result = {"company_id": company_id, "error": str(error)}
+        result |= {"key": key, "inn_expected": inn, "note": note}
+        summary["issuers"].append(result)
+        files = result.get("files", {})
+        inn_on_card = result.get("card", {}).get("inn")
+        say(
+            f"{key:<5} id={company_id} inn={inn_on_card}"
+            f"{'' if inn in {None, inn_on_card} else ' MISMATCH'}"
+            f" sections={sum(f['status'] == 'ok' for f in files.values())}/{len(files)}"
+            f" downloads={len(result.get('downloads', []))} {result.get('error', '')}"
+        )
+
+
+def write_issuers(crawler: Crawler) -> None:
+    """Draft of the issuer mapping (§8.5): only cards are opened, INN and OGRN come from them."""
+    out = io.StringIO()
+    writer = csv.writer(out, lineterminator="\n")
+    writer.writerow(["ticker", "edisclosure_id", "inn", "ogrn", "name", "short_name"])
+    for ticker, company_id, inn in IMOEX:
+        crawler.tag = ticker
+        try:
+            info = card(crawler, company_id)
+        except (Disallowed, PlaywrightError) as error:
+            info = {"error": str(error)}
+        writer.writerow(
+            [ticker, company_id] + [info.get(key) for key in ("inn", "ogrn", "name", "short_name")]
+        )
+        check = "" if inn in {None, info.get("inn")} else " MISMATCH"
+        say(f"{ticker:<6} id={company_id} inn={info.get('inn')}{check} {info.get('short_name')}")
+    ISSUERS_CSV.parent.mkdir(parents=True, exist_ok=True)
+    ISSUERS_CSV.write_text(out.getvalue(), encoding="utf-8")
+    say(f"wrote {ISSUERS_CSV.relative_to(ROOT)}")
 
 
 def main() -> int:
@@ -443,31 +558,16 @@ def main() -> int:
             summary["user_agent"] = agent
             summary["robots"] = load_robots(crawler)
             say(f"robots.txt: {summary['robots']}")
-            for name, path in PAGES.items():
-                summary.setdefault("pages", {})[name] = crawler.open(base + path, name) is not None
-            for name, path in ASSETS.items():
-                crawler.save(base + path, name)
-            for key, company_id, inn, note in ISSUERS:
-                crawler.tag = key
-                try:
-                    result = discover(crawler, company_id)
-                except (Disallowed, PlaywrightError) as error:
-                    result = {"company_id": company_id, "error": str(error)}
-                result |= {"key": key, "inn_expected": inn, "note": note}
-                summary["issuers"].append(result)
-                files = result.get("files", {})
-                inn_on_card = result.get("card", {}).get("inn")
-                say(
-                    f"{key:<5} id={company_id} inn={inn_on_card}"
-                    f"{'' if inn in {None, inn_on_card} else ' MISMATCH'}"
-                    f" sections={sum(f['status'] == 'ok' for f in files.values())}/{len(files)}"
-                    f" downloads={len(result.get('downloads', []))} {result.get('error', '')}"
-                )
+            if "--issuers" in sys.argv:
+                write_issuers(crawler)
+            else:
+                discover_all(crawler, summary)
         finally:
             summary["requests"] = crawler.requests
-            dump(OUT / "summary.json", summary)
+            if "--issuers" not in sys.argv:
+                dump(OUT / "summary.json", summary)
             browser.close()
-    say(f"{len(crawler.requests)} requests, summary in {OUT.relative_to(ROOT)}/summary.json")
+    say(f"{len(crawler.requests)} requests")
     return 0
 
 
