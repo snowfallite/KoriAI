@@ -62,6 +62,10 @@ e2e:
 build:
     {{ fe }} build
 
+# e-disclosure discovery for S1-12: hits the real site, run by hand
+discover-edisclosure:
+    {{ py }} scripts/discover_edisclosure.py
+
 # Zone labels and CORE_VERSION bump against the PR base: just core-guard core-impl
 core-guard labels="" base="origin/main":
     {{ py }} scripts/check_contract_bump.py --base={{ base }} --labels={{ labels }}
