@@ -1,0 +1,106 @@
+/* Kïoku × Tailwind CSS v4 — theme layer.
+   Values come from the Kïoku tokens (tokens.css defines --red, --ink, --grad-* …);
+   colours are mapped with `@theme inline`, so utilities read the live token and follow [data-theme]. */
+@import "tailwindcss";
+@import "./kioku-tokens.css";
+
+@theme {
+  --color-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-*: initial;
+
+  --spacing: 4px;
+
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-serif: "Noto Serif", "Noto Serif TC", "Noto Serif JP", Georgia, serif;
+  --font-kana: "Noto Sans JP", sans-serif;
+  --default-font-family: var(--font-mono);
+  --default-mono-font-family: var(--font-mono);
+
+  --text-micro: 10px;
+  --text-micro--line-height: 12px;
+  --text-caption: 11px;
+  --text-caption--line-height: 14px;
+  --text-caps-sm: 12px;
+  --text-caps-sm--line-height: 15px;
+  --text-caps-sm--letter-spacing: 0.04em;
+  --text-ui: 13px;
+  --text-ui--line-height: 16px;
+  --text-caps: 14px;
+  --text-caps--line-height: 17px;
+  --text-caps--letter-spacing: 0.02em;
+  --text-lead: 18px;
+  --text-lead--line-height: 24px;
+  --text-word: 20px;
+  --text-word--line-height: 24px;
+  --text-title: 24px;
+  --text-title--line-height: 28px;
+  --text-quote: 40px;
+  --text-quote--line-height: 52px;
+  --text-display: 64px;
+  --text-display--line-height: 64px;
+  --text-display--letter-spacing: -0.01em;
+  --text-wordmark: 128px;
+  --text-wordmark--line-height: 1;
+
+  --tracking-wordmark: 1em;
+  --tracking-kana: 1em;
+}
+
+@theme inline {
+  --color-red: var(--red);
+  --color-red-deep: var(--red-deep);
+  --color-pink: var(--pink);
+  --color-red-300: var(--red-300);
+  --color-red-100: var(--red-100);
+  --color-black: var(--black);
+  --color-grey-900: var(--grey-900);
+  --color-grey-600: var(--grey-600);
+  --color-grey-400: var(--grey-400);
+  --color-grey-300: var(--grey-300);
+  --color-grey-200: var(--grey-200);
+  --color-grey-100: var(--grey-100);
+  --color-white: var(--white);
+
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-on-accent-deep: var(--on-accent-deep);
+  --color-highlight: var(--highlight);
+}
+
+/* Brand gradients and textures */
+@utility ki-fade { background-image: var(--grad-fade); }
+@utility ki-ignite { background-image: var(--grad-ignite); }
+@utility ki-hero { background-image: var(--grad-hero); }
+@utility ki-tile { background-image: var(--grad-tile); }
+@utility ki-ember { background-image: var(--grad-ember); }
+@utility ki-highlight {
+  background-image: var(--grad-highlight), linear-gradient(90deg, #FFFFFF00 45%, #FFFFFF 100%), radial-gradient(circle, #FD4B61 0.9px, #FD4B6100 1.3px);
+  background-size: 100% 100%, 100% 100%, 3px 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@utility ki-halftone {
+  background-image: radial-gradient(circle, var(--red) 1.2px, #FE262700 1.7px);
+  background-size: 4px 4px;
+}
+@utility ki-focus {
+  &:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+}
+@utility caps { text-transform: uppercase; }
+
+@layer base {
+  body { background: var(--ground); color: var(--ink); font-family: var(--font-mono); -webkit-font-smoothing: antialiased; }
+  :lang(zh-Hant), :lang(ja), :lang(zh) { font-family: var(--font-serif); }
+}

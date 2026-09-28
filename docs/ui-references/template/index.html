@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ru" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kïoku — бренд-бук</title>
+<link rel="stylesheet" href="css/kioku-tokens.css">
+<link rel="stylesheet" href="css/kioku.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap">
+<style>
+  .kb-frame { position: relative; overflow: hidden; }
+  .kb-frame iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: transparent; }
+</style>
+</head>
+<body class="bg-ground text-ink">
+<header class="grid grid-cols-12 items-baseline gap-x-6 px-12 py-8 text-caps-sm caps">
+  <p class="col-span-3">Kïoku — бренд-бук</p>
+  <nav aria-label="Разделы" class="col-span-6 flex flex-wrap gap-x-6 gap-y-1 text-ink-muted"><a href="#g-0" class="ki-focus hover:text-accent">Бренд</a> <a href="#g-1" class="ki-focus hover:text-accent">Сайт</a> <a href="#g-2" class="ki-focus hover:text-accent">Действия</a> <a href="#g-3" class="ki-focus hover:text-accent">Содержимое</a> <a href="#g-4" class="ki-focus hover:text-accent">Расширение</a> <a href="#g-5" class="ki-focus hover:text-accent">Графика</a></nav>
+  <div class="col-span-3 flex justify-end" role="group" aria-label="Тема">
+    <button type="button" data-theme-set="night" aria-pressed="true" class="ki-focus border border-line px-3 py-1 aria-pressed:bg-ink aria-pressed:text-ground">Ночь</button>
+    <button type="button" data-theme-set="day" aria-pressed="false" class="ki-focus -ml-px border border-line px-3 py-1 aria-pressed:bg-ink aria-pressed:text-ground">День</button>
+  </div>
+</header>
+
+<div class="px-12">
+  <div class="kb-frame" data-w="960" data-h="288"><iframe title="Обложка" src="cover.html#night" data-src="cover.html"></iframe></div>
+</div>
+
+<section class="grid grid-cols-12 gap-x-6 px-12 pt-16 text-caps caps">
+  <p class="col-span-8">AI-powered browser extension for contextual language learning. Токены, шрифты, градиенты и блоки сайта на HTML + Tailwind. Правила — в README.md, подключение Tailwind — в TAILWIND.md.</p>
+  <p class="col-span-4 text-right text-ink-muted">Concept &amp; design<br>By TC Bureau</p>
+</section>
+
+  <section id="g-0" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Бренд</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Wordmark</h3>
+        <p class="text-caps-sm caps text-ink-muted">Разреженный, компактный, знак Kï</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Wordmark/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Wordmark/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="1100" data-h="420"><iframe title="Wordmark" src="components/Wordmark/index.html#night" data-src="components/Wordmark/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">LogoTile</h3>
+        <p class="text-caps-sm caps text-ink-muted">Плитка для обложек, соцсетей, стора</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/LogoTile/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/LogoTile/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="260"><iframe title="LogoTile" src="components/LogoTile/index.html#night" data-src="components/LogoTile/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+  <section id="g-1" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Сайт</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">SiteHeader</h3>
+        <p class="text-caps-sm caps text-ink-muted">Мета-строка и навигация</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/SiteHeader/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/SiteHeader/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="1280" data-h="260"><iframe title="SiteHeader" src="components/SiteHeader/index.html#night" data-src="components/SiteHeader/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Hero</h3>
+        <p class="text-caps-sm caps text-ink-muted">Арки-лесенки, лучи, логотип на срезе</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Hero/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Hero/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="1280" data-h="820"><iframe title="Hero" src="components/Hero/index.html#night" data-src="components/Hero/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">InfoSection</h3>
+        <p class="text-caps-sm caps text-ink-muted">Манифест, «как это работает», ключевые функции</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/InfoSection/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/InfoSection/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="1280" data-h="640"><iframe title="InfoSection" src="components/InfoSection/index.html#night" data-src="components/InfoSection/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">SiteFooter</h3>
+        <p class="text-caps-sm caps text-ink-muted">Подвал: знак, кредиты, наверх</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/SiteFooter/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/SiteFooter/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="1280" data-h="300"><iframe title="SiteFooter" src="components/SiteFooter/index.html#night" data-src="components/SiteFooter/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+  <section id="g-2" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Действия</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Button</h3>
+        <p class="text-caps-sm caps text-ink-muted">Сегментные: ячейка-глиф + подпись</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Button/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Button/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="960" data-h="330"><iframe title="Button" src="components/Button/index.html#night" data-src="components/Button/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Tabs</h3>
+        <p class="text-caps-sm caps text-ink-muted">Сортировка словаря: Sort by → Topic</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Tabs/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Tabs/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="220"><iframe title="Tabs" src="components/Tabs/index.html#night" data-src="components/Tabs/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+  <section id="g-3" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Содержимое</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Tag</h3>
+        <p class="text-caps-sm caps text-ink-muted">Темы, счётчик, пара языков</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Tag/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Tag/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="190"><iframe title="Tag" src="components/Tag/index.html#night" data-src="components/Tag/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Highlight</h3>
+        <p class="text-caps-sm caps text-ink-muted">Выделенное слово, вставленный перевод, подпись</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Highlight/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Highlight/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="960" data-h="360"><iframe title="Highlight" src="components/Highlight/index.html#night" data-src="components/Highlight/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">CategoryList</h3>
+        <p class="text-caps-sm caps text-ink-muted">Лесенка тем словаря со счётчиками</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/CategoryList/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/CategoryList/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="440"><iframe title="CategoryList" src="components/CategoryList/index.html#night" data-src="components/CategoryList/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+  <section id="g-4" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Расширение</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">TranslationCard</h3>
+        <p class="text-caps-sm caps text-ink-muted">Всплывающая карточка перевода</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/TranslationCard/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/TranslationCard/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="520"><iframe title="TranslationCard" src="components/TranslationCard/index.html#night" data-src="components/TranslationCard/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Toolbar</h3>
+        <p class="text-caps-sm caps text-ink-muted">Верхняя строка боковой панели</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Toolbar/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Toolbar/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="960" data-h="170"><iframe title="Toolbar" src="components/Toolbar/index.html#night" data-src="components/Toolbar/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">WordNode</h3>
+        <p class="text-caps-sm caps text-ink-muted">Узел mind-map: лесенка серых ячеек</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/WordNode/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/WordNode/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="720" data-h="240"><iframe title="WordNode" src="components/WordNode/index.html#night" data-src="components/WordNode/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">MindMap</h3>
+        <p class="text-caps-sm caps text-ink-muted">Кластер слов вокруг выделенного</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/MindMap/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/MindMap/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="760" data-h="470"><iframe title="MindMap" src="components/MindMap/index.html#night" data-src="components/MindMap/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+  <section id="g-5" class="px-12 pt-24">
+    <h2 class="text-caps caps text-ink-muted">Графика</h2>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">Gradients</h3>
+        <p class="text-caps-sm caps text-ink-muted">Шесть градиентов бренда и полутон</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/Gradients/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/Gradients/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="960" data-h="300"><iframe title="Gradients" src="components/Gradients/index.html#night" data-src="components/Gradients/index.html" loading="lazy"></iframe></div>
+    </article>
+    <article class="mt-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 border-t border-line-soft pt-4">
+        <h3 class="text-title font-normal">LetterBurst</h3>
+        <p class="text-caps-sm caps text-ink-muted">Буквы Kïoku, связанные лучами; полутон</p>
+        <p class="flex gap-6 text-caps-sm caps"><a class="ki-focus hover:text-accent" href="components/LetterBurst/index.html">→ Открыть</a><a class="ki-focus hover:text-accent" href="components/LetterBurst/README.md">→ Разметка и правила</a></p>
+      </div>
+      <div class="kb-frame mt-6" data-w="960" data-h="520"><iframe title="LetterBurst" src="components/LetterBurst/index.html#night" data-src="components/LetterBurst/index.html" loading="lazy"></iframe></div>
+    </article>
+  </section>
+
+<footer class="px-12 pt-24 pb-12">
+  <div class="ki-fade h-2" aria-hidden="true"></div>
+  <p class="mt-6 text-caps-sm caps text-ink-muted">Kïoku · きおく · memory</p>
+</footer>
+
+<script>
+(function () {
+  var frames = [].slice.call(document.querySelectorAll('.kb-frame'));
+  function fit() {
+    frames.forEach(function (f) {
+      var w = +f.dataset.w, h = +f.dataset.h, s = Math.min(1, f.clientWidth / w), ifr = f.querySelector('iframe');
+      ifr.style.width = w + 'px'; ifr.style.height = h + 'px'; ifr.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.ceil(h * s) + 'px';
+    });
+  }
+  fit(); addEventListener('resize', fit);
+  document.querySelectorAll('[data-theme-set]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.themeSet;
+      document.documentElement.setAttribute('data-theme', t);
+      document.querySelectorAll('[data-theme-set]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      document.querySelectorAll('iframe[data-src]').forEach(function (i) { i.src = i.dataset.src + '#' + t; });
+    });
+  });
+})();
+</script>
+</body>
+</html>

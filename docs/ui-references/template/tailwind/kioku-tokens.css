@@ -1,0 +1,67 @@
+:root, [data-theme="night"] {
+  --red: #FE2627;
+  --red-deep: #DF342F;
+  --pink: #FD4B61;
+  --red-300: #FFA5A5;
+  --red-100: #FFDCDC;
+  --black: #000000;
+  --grey-900: #1C1C1C;
+  --grey-600: #757575;
+  --grey-400: #AAAAAA;
+  --grey-300: #CBCBCB;
+  --grey-200: #DBDBDB;
+  --grey-100: #F6F6F6;
+  --white: #FFFFFF;
+  --ground: var(--black);
+  --surface: var(--grey-900);
+  --ink: var(--white);
+  --ink-muted: var(--grey-400);
+  --line: var(--white);
+  --line-soft: var(--grey-600);
+  --accent: var(--red);
+  --on-accent: var(--black);
+  --accent-deep: var(--red-deep);
+  --on-accent-deep: var(--white);
+  --highlight: var(--pink);
+  --focus-ring: 0 0 0 2px #000000, 0 0 0 4px #FE2627;
+}
+[data-theme="day"] {
+  --ground: var(--white);
+  --surface: var(--grey-200);
+  --ink: var(--black);
+  --ink-muted: var(--grey-600);
+  --line: var(--black);
+  --line-soft: var(--grey-400);
+  --accent: var(--red);
+  --on-accent: var(--black);
+  --accent-deep: var(--red-deep);
+  --on-accent-deep: var(--white);
+  --highlight: var(--pink);
+  --focus-ring: 0 0 0 2px #FFFFFF, 0 0 0 4px #000000;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-none: 0px;
+  --grad-fade: linear-gradient(90deg, #FE2627 0%, #FFFFFF 100%);
+  --grad-ignite: linear-gradient(90deg, #000000 0%, #FE2627 100%);
+  --grad-highlight: linear-gradient(90deg, #FD4B61 0%, #FD4B6100 100%);
+  --grad-hero: linear-gradient(180deg, #FD4B61 0%, #FE2627 50%, #000000 100%);
+  --grad-tile: linear-gradient(180deg, #FD4B61 0%, #FE2627 30%, #DBDBDB 100%);
+  --grad-ember: linear-gradient(90deg, #FE2627 0%, #FFA5A5 100%);
+  --stroke-hair: 1px;
+  --stroke-map: 1.5px;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-serif: "Noto Serif", "Noto Serif TC", "Noto Serif JP", Georgia, serif;
+  --font-kana: "Noto Sans JP", sans-serif;
+}
+@font-face { font-family: "JetBrains Mono"; src: url("/fonts/JetBrainsMono-Variable.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Noto Serif"; src: url("/fonts/NotoSerif-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }

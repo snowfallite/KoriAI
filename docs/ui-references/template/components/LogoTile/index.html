@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../css/kioku-tokens.css">
+<link rel="stylesheet" href="../../css/kioku.css">
+<script>(function(){var h=document.documentElement;function s(){h.setAttribute("data-theme",location.hash.slice(1)||"night")}s();addEventListener("hashchange",s)})();</script><meta charset="utf-8"><title>LogoTile — preview</title></head>
+<body class="bg-ground text-ink">
+<div class="flex flex-wrap items-end gap-8 p-8">
+
+  <!-- default: grey frame, gradient field, spaced wordmark -->
+  <figure class="w-[260px] bg-grey-200 p-2">
+    <div class="ki-tile h-20"></div>
+    <figcaption class="grid grid-cols-5 place-items-center pt-4 pb-2 text-[34px] leading-none text-black" aria-label="Kïoku">
+      <span>K</span><span>Ï</span><span>O</span><span>K</span><span>U</span>
+    </figcaption>
+  </figure>
+
+  <!-- square: for avatars and store icons -->
+  <figure class="grid size-[184px] grid-rows-[1fr_auto] bg-grey-200 p-2">
+    <div class="ki-tile"></div>
+    <figcaption class="pt-3 pb-1 text-center text-title text-black">Kï</figcaption>
+  </figure>
+
+  <!-- small: favicon-size, the gradient field shrinks to a strip -->
+  <figure class="w-[88px] bg-grey-200 p-1">
+    <div class="ki-tile h-6"></div>
+    <figcaption class="pt-1.5 text-center text-ui text-black">Kï</figcaption>
+  </figure>
+</div>
+</body>
+</html>
