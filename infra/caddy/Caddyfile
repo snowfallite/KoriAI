@@ -1,0 +1,24 @@
+# One origin: the SPA and /api (tech.md AD-01). APP_BASE_URL picks the site and TLS.
+{$APP_BASE_URL} {
+	# No script-src here: it would block the SPA boot script; kit.csp covers it (§3.5).
+	header {
+		Content-Security-Policy "frame-ancestors 'none'"
+		X-Content-Type-Options nosniff
+		Referrer-Policy same-origin
+		Strict-Transport-Security "max-age=31536000"
+	}
+
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		root * /srv
+		# Hashed assets never change; the shell must, or a deploy leaves stale chunk links.
+		header /_app/immutable/* Cache-Control "public, max-age=31536000, immutable"
+		header ?Cache-Control no-cache
+		encode zstd gzip
+		try_files {path} /200.html
+		file_server
+	}
+}
