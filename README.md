@@ -15,9 +15,14 @@
 
 ```sh
 just setup            # зависимости и браузер Playwright
+just dev              # Postgres, Qdrant и API в Docker на фейках, SPA на хосте: http://localhost:5173
 just gate core-impl   # всё, что проверяет PR-гейт; аргумент: метки PR через запятую
 just --list           # остальные команды, полный список в tech.md §15.4
 ```
+
+- Контрактные тесты (`just test`) ходят в Postgres из dev-стека: держите запущенным `just dev` или `docker compose -f docker-compose.dev.yml up -d postgres`.
+- Остановить dev-стек: `docker compose -f docker-compose.dev.yml down`.
+- Для разработки `.env` не нужен: dev-стек работает на значениях по умолчанию. `.env.example` перечисляет все ключи для VPS; API не стартует, если в `.env` есть неизвестный ключ.
 
 ## Сертификаты НУЦ Минцифры
 
