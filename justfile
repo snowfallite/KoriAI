@@ -2,6 +2,9 @@
 # recipes run under sh on Linux and macOS and under PowerShell on Windows.
 set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
 
+# Windows falls back to the ANSI code page when output is redirected; rich then fails.
+export PYTHONUTF8 := "1"
+
 be := "uv --directory backend run"
 fe := "pnpm --dir frontend"
 py := "uv run --no-project python"
