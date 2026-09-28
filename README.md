@@ -35,18 +35,5 @@ gh label create contract-change --color D93F0B --description "Контрактн
 gh label create core-impl --color 0E8A16 --description "Реализация текущего ядра без правки tech.md"
 gh label create owner --color 5319E7 --description "Общая зона, режим владельца"
 gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge
-gh api -X PUT "repos/{owner}/{repo}/branches/main/protection" --input - <<'EOF'
-{
-  "required_status_checks": {
-    "strict": true,
-    "contexts": ["core-guard", "backend", "migrations", "integration", "frontend", "e2e"]
-  },
-  "enforce_admins": true,
-  "required_pull_request_reviews": {"required_approving_review_count": 0},
-  "restrictions": null,
-  "required_linear_history": true,
-  "allow_force_pushes": false,
-  "allow_deletions": false
-}
-EOF
+gh api -X PUT "repos/{owner}/{repo}/branches/main/protection" --input .github/branch-protection.json
 ```
