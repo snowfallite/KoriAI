@@ -22,6 +22,7 @@ SKIPPED = frozenset(
 RULES = (
     (re.compile(r"CONTRACT-GAP"), "CONTRACT-GAP marker"),
     (re.compile(r"\bINVEST_GRPC_API_SANDBOX\b"), "T-Invest sandbox endpoint"),
+    (re.compile(r"sandbox-invest-public-api"), "T-Invest sandbox endpoint"),
     (re.compile(r"\.(?:orders|stop_orders|sandbox)\b"), "T-Invest trading or sandbox service"),
     (
         re.compile(r"\b(?:OrdersService|StopOrdersService|SandboxService)\b"),
@@ -49,19 +50,27 @@ def scan_text(path: str, text: str) -> list[str]:
     ]
 
 
-def main() -> int:
-    listed = subprocess.run(
-        ["git", "ls-files", "-z"],  # noqa: S607
+def git(*args: str) -> str:
+    result = subprocess.run(  # noqa: S603
+        ["git", *args],  # noqa: S607
         check=True,
         capture_output=True,
         text=True,
         encoding="utf-8",
-    ).stdout
+    )
+    return result.stdout
+
+
+def main() -> int:
+    # Paths stay relative to the repo root wherever the script runs from.
+    root = Path(git("rev-parse", "--show-toplevel").strip())
     violations = [
         violation
-        for path in listed.split("\0")
-        if path and is_scanned(path) and Path(path).is_file()
-        for violation in scan_text(path, Path(path).read_text(encoding="utf-8", errors="replace"))
+        for path in git("-C", str(root), "ls-files", "-z").split("\0")
+        if path and is_scanned(path) and (root / path).is_file()
+        for violation in scan_text(
+            path, (root / path).read_text(encoding="utf-8", errors="replace")
+        )
     ]
 
     for violation in violations:

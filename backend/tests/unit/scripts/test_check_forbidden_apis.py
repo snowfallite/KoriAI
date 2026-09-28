@@ -9,6 +9,7 @@ REAL_PY = "backend/app/gateways/tinvest/real.py"
     "code",
     [
         "from t_tech.invest.constants import INVEST_GRPC_API_SANDBOX\n",
+        'target = "sandbox-invest-public-api.tinkoff.ru:443"\n',
         "# CONTRACT-GAP(F-07): stub until PortfolioOut gets a field\n",
         "await client.orders.get_orders(account_id=account)\n",
         "await client.stop_orders.get_stop_orders(account_id=account)\n",
