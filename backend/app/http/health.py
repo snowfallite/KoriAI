@@ -54,7 +54,8 @@ async def _qdrant_ready(settings: Settings) -> bool:
     try:
         async with httpx.AsyncClient(timeout=PROBE_TIMEOUT_S) as client:
             reply = await client.get(
-                f"{settings.QDRANT_URL}/readyz", headers={"api-key": api_key} if api_key else None
+                f"{settings.QDRANT_URL.rstrip('/')}/readyz",
+                headers={"api-key": api_key} if api_key else None,
             )
     except httpx.HTTPError as exc:
         log.warning("qdrant_not_ready", error=repr(exc))
