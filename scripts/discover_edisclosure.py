@@ -1,11 +1,12 @@
 """e-disclosure discovery for S1-12 (tech.md §8.5, §22.1).
 
-The site answers plain HTTP clients with a 403 bot page (open-source crawlers also report a
-ServicePipe JavaScript check), so the crawl drives a visible Chromium through Playwright with
-the browser's own User-Agent. A captcha, if one shows up, is passed by hand in that window.
+Without a browser the site answers with a 403 bot page or a ServicePipe JavaScript check, and
+headless browsers get a captcha, so the crawl drives a visible Firefox through Playwright with a
+persistent profile in .discovery/edisclosure/profile: the check cookies live 400 days. A captcha,
+if one shows up, is passed by hand in that window.
 
-robots.txt disallows /api/*, and the company search of the site runs through it, so the crawl
-never searches: company ids come from ISSUERS and the INN on each card confirms them.
+robots.txt disallows /api/*, where the company search lives. The adapter may search (§8.5, the
+owner's call); this script does not: company ids come from ISSUERS, the card INN confirms them.
 
 Polite: robots.txt first (RFC 9309 wildcards), one request at a time, 1 / EDISCLOSURE_RPS
 seconds between requests, pages and archives cached across runs. Output: snapshots and JSON
@@ -310,7 +311,7 @@ class Crawler:
 
 def load_robots(crawler: Crawler) -> str:
     url = f"{crawler.base}/robots.txt"
-    say("A Chromium window opens. If it shows a captcha, pass it there.")
+    say("A Firefox window opens. If it shows a captcha, pass it there.")
     crawler.pace(url, "robots")
     crawler.goto(url)
     # robots.txt comes as text/plain once the browser check is passed; without the file
@@ -564,15 +565,13 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     summary: dict[str, Any] = {"issuers": []}
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless="--headless" in sys.argv)
-        # Pin the context to the browser's own User-Agent: API requests then match the page.
-        probe = browser.new_page()
-        agent = probe.evaluate("navigator.userAgent")
-        probe.close()
-        context = browser.new_context(user_agent=agent, locale="ru-RU")
-        crawler = Crawler(context.new_page(), base, delay)
+        # The profile keeps the site-check cookies between runs.
+        context = playwright.firefox.launch_persistent_context(
+            ARCHIVES / "profile", headless="--headless" in sys.argv, locale="ru-RU"
+        )
+        crawler = Crawler(context.pages[0] if context.pages else context.new_page(), base, delay)
         try:
-            summary["user_agent"] = agent
+            summary["user_agent"] = crawler.page.evaluate("navigator.userAgent")
             summary["robots"] = load_robots(crawler)
             say(f"robots.txt: {summary['robots']}")
             if "--issuers" in sys.argv:
@@ -583,7 +582,7 @@ def main() -> int:
             summary["requests"] = crawler.requests
             if "--issuers" not in sys.argv:
                 dump(OUT / "summary.json", summary)
-            browser.close()
+            context.close()
     say(f"{len(crawler.requests)} requests")
     return 0
 
