@@ -1,0 +1,474 @@
+<!DOCTYPE html><html><head>
+	<title>Интерфакс – Сервер раскрытия информации</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width">
+	
+	<meta name="keywords" content="">
+	<meta name="description" content="Шлюз (api)">
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="ver" content="3.56.0.639258897622681947_">
+	
+	
+
+
+<!-- Yandex.Metrika counter -->
+
+<!-- /Yandex.Metrika counter -->
+<!-- Rating@Mail.ru counter -->
+
+<!-- //Rating@Mail.ru counter -->
+	
+        
+	
+
+
+	
+	
+	
+	
+	
+	
+
+		<base href="https://www.e-disclosure.ru/" target="_self">
+</head>
+<body class="site-page">	
+	
+
+
+
+	
+<div class="login-window site-page__login-window" id="enter" style="display: none;">
+    <div class="login-window__title title_basic">
+        Вход
+        <div class="right">
+            <img src="/images/close.png" width="14" height="14" alt="Закрыть окно" style="cursor: pointer" id="closeLoginButton">
+        </div>
+    </div>
+    <div class="login-window__content">
+        <form id="loginForm" class="login-form">
+	        <input type="hidden" name="token" value="rGKPTP2hvKwapEXuiZtfE4W0//+Uo25sSSOoZbtpz8Y=">
+	        <div class="login-form__wrapper">
+                <div class="login-form__input-wrapper">Логин/ИНН: <input type="text" id="login" name="login" maxlength="50" class="login-form__input"></div>
+                <div class="login-form__input-wrapper">Пароль: <input type="password" name="password" id="password" class="login-form__input"></div>
+                <div class="login-form__errors"><span class="login-form__error login-form__error_hiden"></span></div>
+                <div style="text-align: center;">
+	                <button type="button" class="button button_bold login-form__login-button">Войти</button>
+                </div>
+                <div class="login-form__forgot-password">Забыли пароль? <a href="https://www.e-disclosure.ru/password-recovery">Восстановить пароль</a></div>
+            </div>
+        </form>
+    </div>
+</div>
+	<div class="site-page__body-inside">
+		<header class="site-header">
+			<div class="site-header__top">
+				<div class="site-header__site-logo">
+					<a href="/">
+						<img alt="Центр раскрытия " src="/images/logo.gif" width="40" height="40">
+					</a>
+				</div>
+				<div class="site-header__site-title">
+					<h1>
+						<a href="/">
+							ЦЕНТР&nbsp;РАСКРЫТИЯ<br><span>КОРПОРАТИВНОЙ&nbsp;ИНФОРМАЦИИ</span>
+						</a>
+					</h1>
+				</div>
+				<div class="site-header__ifax-logo">
+					<a href="http://www.interfax.ru">
+						<img alt="Интерфакс" src="/images/interfax.png" width="142" height="42">
+					</a>
+				</div>
+				<div class="site-header__contact">
+					Служба раскрытия информации:<br>
+					тел.: <strong>+7 (495) 787-5213, 8-800-200-4818 (в будни, с 08.00 до 20.00 мск)</strong>
+				</div>
+				<div class="site-header__reg">
+					<span style="vertical-align: middle;">Идентификационный код Распространителя информации №0003</span>
+					<button type="button" class="enter">Вход</button>
+					<a class="reg" href="https://emitent.e-disclosure.ru/registration">Регистрация</a>
+				</div>
+			</div>
+			
+<div id="menu_wrap">
+	<div id="menucontainer" style="padding: 0 1% 0 1%; display: flex; flex-direction: row;">
+		<ul id="menulist">
+					<li>
+						<a class="dash" href="/">главная страница</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;сервисы для компаний
+							</a>
+                        <ul>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej">раскрытие в ленте новостей</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/informirovanie-birzhi">информирование биржи</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/prioritetnoe-raskrytie">приоритетное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/vizualizaciya-soobshhenij">визуализация сообщений</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-na-sajte">раскрытие на сайте</a>
+										<ul class="site-menu__item-260">
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/informirovanie-aktsionerov">информирование акционеров</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/domen-tret'ego-urovnya">домен 3 уровня</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/dobrovol'noe-raskrytie">добровольное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/sub'ektam-rynka-ehlektroehnergii">субъектам рынка электроэнергии</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/raskrytie-pod-ehmbargo">раскрытие под эмбарго</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/edinoe-okno-s-nrd">единое окно с нрд</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/sinhronizaciya-i-otslezhivanie-publikacij">синхронизация и отслеживание публикаций</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/elektronnaya-anketa">электронная анкета</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-sostavleniya-otcheta-ehmitenta">программа для составления отчета эмитента</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-podgotovki-nefinansovoj-otchetnosti">программа для подготовки нефинансовой отчетности</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/servis-dlya-agentov-po-razmeshheniyu">сервис для агентов по размещению</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/esg-raskrytie">esg-раскрытие</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/ir-uslugi">ir-услуги</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/ir-uslugi/ir-uslugi">календарь инвестора</a>
+												</li>
+										</ul>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;получение информации
+							</a>
+                        <ul>
+									<li>
+										<a href="/poluchenie-informacii/shlyuz-api">шлюз (api)</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/email-rassylka">email-рассылка</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/vygruzka-na-ftp">выгрузка на ftp</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/otchеt-po-soobshheniyam">отчет по сообщениям</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;все о раскрытии
+							</a>
+                        <ul>
+									<li>
+										<a href="/vse-o-raskrytii/vestnik-centra-raskrytiya-informacii">вестник центра раскрытия информации</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/reglament-raskrytiya">технические условия</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/kontrol-za-insayderskoy-informaciey">контроль за инсайдерской информацией</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/primenenie-elektronnoj-podpisi">применение электронной подписи</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/normativnye-dokumenty">нормативные документы</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/nashi-publikatsii">наши публикации</a>
+									</li>
+									<li>
+											<a class="open" href="/vse-o-raskrytii/premiya-za-otkrytost'">премия за открытость</a>
+										<ul>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/o-premii">о премии</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/kompanuii-pobediteli">компании-победители</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/press-relizy">пресс-релизы</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/faq">вопросы и ответы</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;о проекте
+							</a>
+                        <ul class="site-menu__items_about-project">
+									<li>
+										<a href="/o-proekte/o-proekte">о проекте</a>
+									</li>
+									<li>
+										<a href="/o-proekte/rekvizity">реквизиты</a>
+									</li>
+									<li>
+										<a href="/o-proekte/reklama-na-sajte">реклама на сайте</a>
+									</li>
+						</ul>
+					</li>
+		</ul>
+		<div style="flex: 1;"></div>
+		<div style="padding-top: 5px;">
+			<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+				<img src="/images/telegram_icon.png" width="30" height="30">
+			</a>
+		</div>
+	</div>
+</div>		</header>
+		<div class="site-middle">
+			
+
+
+<div class="site-middle__std-inside">
+	<div class="std-main-content std-inside__std-main-content">
+		
+
+
+
+    <div class="title_basic">Шлюз (api)</div>
+<div id="cont_wrap-managed-pages" class="managed-content ck-content">
+    <p>Шлюз "Раскрытие" представляет собой веб-сервис на базе современного архитектурного решения REST API.</p><p>Шлюз обеспечивает возможность автоматизированного доступа к раскрываемой на сайте <a href="https://www.e-disclosure.ru/">www.e-disclosure.ru</a> информации авторизованным пользователям.</p><p>Взаимодействие со Шлюзом осуществляется по защищенному протоколу <strong>https</strong>. Данные о событиях, связанных с раскрытием информации, предоставляются в формате <strong>json</strong>. Предусмотрена возможность просматривать структуру API и выполнять запросы, используя визуальные инструменты, сгенерированные с помощью <strong>Swagger UI</strong>.</p><p><span style="background-color:hsl(0,0%,90%);font-size:14px;"><strong>Преимущества использования шлюза Интерфакс-ЦРКИ:</strong></span></p><p><strong>• Возможность автоматизации получения сведений о раскрытии.&nbsp;</strong>&nbsp;<br>Обращения к сервису можно органично встроить в любую систему. Формат предоставления данных структурирован, удобен и не зависит от особенностей браузеров и интерфейса общедоступного сайта www.e-disclosure.ru.&nbsp;</p><p><strong>• Высокая скорость получения больших объемов информации.&nbsp;</strong>&nbsp;<br>Шлюз взаимодействует напрямую с базой данных, минуя интерфейс системы, что позволяет отдавать больше информации в сжатые сроки. Доступная частота запросов к Шлюзу превышает ограничения на обращения к общедоступному сайту www.e-disclosure.ru.</p><p><strong>• Информация напрямую из первоисточника.</strong>&nbsp;&nbsp;<br>Через Интерфакс-ЦРКИ раскрывают информацию порядка 90% компаний, имеющих листинг на российских биржах, а сообщения остальных эмитентов нам поступают из других аккредитованных агентств.&nbsp;</p><p><strong>• Получение информации в нужное время.&nbsp;</strong>&nbsp;<br>Периодичность и время получения информации настраиваются клиентом самостоятельно, что позволяет ему быть уверенным в том, что информация поступит именно в тот момент, когда внутренние системы будут готовы ее обработать.</p><p><strong>• Только то, что необходимо.&nbsp;</strong>&nbsp;<br>В Шлюзе реализована возможность фильтрации доступной информации. Получайте только те данные, которые требуются.&nbsp;<br><br><strong>• Легко получить исторические данные.&nbsp;</strong>&nbsp;<br>Если по каким-то причинам ваша система не смогла корректно обработать полученные данные, можно в любой момент повторно запросить информацию, опубликованную <u>в период действия договора</u>.</p><p><strong>• Современный безопасный способ взаимодействия с системой.&nbsp;</strong>&nbsp;<br>Наша компания заботится о безопасности. Взаимодействуя с нашим Шлюзом, который расположен по конкретному адресу, вы можете быть уверенными в источнике поступающей информации.</p><p><strong>• Удобный формат предоставления данных.&nbsp;</strong>&nbsp;<br>Все данные передаются в структурированном формате json, в пользовательской документации всегда присутствует актуальная информация о формате.</p><p><span style="background-color:hsl(0,0%,90%);font-size:14px;"><strong>Скачать спецификации сервиса:</strong></span> <a href="https://www.e-disclosure.ru/PortalContent/InfoMaterial/648"><span style="font-size:14px;"><strong>на русском</strong></span></a><span style="font-size:14px;"><strong> / </strong></span><a href="https://www.e-disclosure.ru/PortalContent/InfoMaterial/647"><span style="font-size:14px;"><strong>English</strong></span></a><br><br><a href="https://www.e-disclosure.ru/PortalContent/InfoMaterial/652"><span style="font-size:14px;"><strong>Скачать заявку на тестовое подключение к сервису</strong></span></a><br><br><span style="background-color:hsl(0,0%,90%);font-size:14px;"><strong>Стоимость услуг:</strong></span><strong>&nbsp;</strong></p><figure class="table" style="float:left;width:77.39%;"><table class="ck-table-resized"><colgroup><col style="width:53.51%;"><col style="width:14.7%;"><col style="width:12.09%;"><col style="width:19.7%;"></colgroup><tbody><tr><td style="background-color:hsl(0, 0%, 90%);"><p style="text-align:center;"><strong>Параметры доступа</strong></p></td><td style="background-color:hsl(0, 0%, 90%);"><p style="text-align:center;"><strong>в месяц без НДС, руб.</strong></p></td><td style="background-color:hsl(0, 0%, 90%);"><p style="text-align:center;"><strong>мин. срок подписки</strong></p></td><td style="background-color:hsl(0, 0%, 90%);"><p style="text-align:center;"><strong>дополнительные условия</strong></p></td></tr><tr><td>Данные о публикации <strong>сообщений </strong>в ленте новостей</td><td style="text-align:center;"><strong>16 180</strong></td><td>3 месяца</td><td rowspan="4">до 2 (двух) ip адресов внутри одной подсети компании (для корпоративных клиентов)</td></tr><tr><td>Данные о публикации <strong>файлов/ отчетов</strong> на странице в сети Интернет</td><td style="text-align:center;"><strong>16 180</strong></td><td>3 месяца</td></tr><tr><td>Полные данные о публикациях (<strong>сообщения + отчеты</strong>)*</td><td style="text-align:center;"><strong>&nbsp; 27 000*</strong></td><td>3 месяца</td></tr><tr><td style="text-align:right;">*при оплате за 12 месяцев единовременно - льготный тариф:</td><td style="text-align:center;"><strong>24 750</strong></td><td>12 месяцев</td></tr><tr><td>Дополнительно:</td><td style="text-align:center;">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp; &nbsp; доплата за каждый последующий ip адрес</td><td style="text-align:center;"><strong>4 500</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp; &nbsp; доступ к архиву глубиной до 01.07.2020</td><td style="text-align:center;"><strong>+ 50% к тарифу</strong></td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table></figure><p><br><br><span style="background-color:hsl(0,0%,90%);font-size:14px;"><strong>По вопросам заключения договора обращайтесь:</strong></span>&nbsp;<br><span style="background-color:rgb(255,255,255);color:rgb(0,0,0);font-family:Arial, Tahoma, Verdana, sans-serif;font-size:12px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"><strong>+7 (495) 787-5213</strong></span></span>&nbsp;<br><span style="background-color:rgb(255,255,255);color:rgb(0,0,0);font-family:Arial, Tahoma, Verdana, sans-serif;font-size:12px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"><strong>+7 (800) 200-4818</strong></span></span>&nbsp;<br><a style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(61, 118, 187);font-family:Arial, Tahoma, Verdana, sans-serif;font-size:12px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:1.5;margin:0px;orphans:2;outline-style:none;padding:0px;text-align:start;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;" href="mailto:dc1@e-disclosure.ru"><strong><u>dc1@e-disclosure.ru</u></strong></a><span style="background-color:rgb(255,255,255);color:rgb(0,0,0);font-family:Arial, Tahoma, Verdana, sans-serif;font-size:12px;"><span style="-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"><strong>&nbsp;</strong></span></span></p>
+</div>
+
+	</div>
+	<div class="anons-news-tech std-inside__anons-news-tech">
+		<div id="adfox_168173373305942583" class="banner"></div>
+		
+
+
+
+
+		<div class="anons-news-tech__block">
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Новости</div>
+        <div class="time">
+			<span class="date">25.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6516">Проблему низкого интереса эмитентов к привлечению средств на рынке акционерного капитала пока решить не удалось - Чистюхин</a>
+        </div>
+        <div class="time">
+			<span class="date">24.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6515">Банк России оштрафовал Юнипро за нераскрытие информации</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6514">ЦБ РФ не планирует серьезных корректировок проекта новых правил листинга после обсуждений с рынком</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6513">Кейс "ЕвроТранса" может повлиять на регулирование аудита - глава департамента ЦБ</a>
+        </div>
+        <div class="time">
+			<span class="date">22.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6512">Аэрофлот и Мосбиржа дискутируют о критериях включения в программу роста акционерной стоимости</a>
+        </div>
+</div>
+			
+            <a class="button button_light anons-news-tech__button" href="/vse-novosti">Все новости</a>
+		</div>
+		<div id="adfox_168173386396589028" class="banner"></div>
+		<div id="adfox_16817338660869469" class="banner"></div>
+		<div id="adfox_168173386897027439" class="banner"></div>
+		<div id="adfox_168173387120063137" class="banner"></div>
+		<div class="anons-news-tech__block">			
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Техническая информация</div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/135">Технические работы 24 сентября 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">24.08.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/134">Технические работы 27 августа 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">29.07.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/133">Технические работы 30 июля 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">26.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/132">Технические работы 29 июня 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">16.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/131">Технические работы 16 июня 2026 года (проверка МЧД с 18:00 до 19:00 мск)</a>
+        </div>
+</div>
+
+            <a class="button button_light anons-news-tech__button" href="/TechInfo">Все сообщения</a>
+		</div>
+	</div>
+</div>
+
+
+		</div>
+		<footer class="site-footer">
+			<div class="site-footer__social" style="top: 3px;">
+				<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+					<img src="/images/telegram_icon.png" width="30" height="30">
+				</a>
+			</div>
+			<div class="site-footer__menu">
+				<ul class="menulist">
+					<li><a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a> </li>
+					<li><a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a> </li>
+					<li><a class="dash" href="/servisy-dlya-kompanij">сервисы для компаний</a> </li>
+					<li><a class="dash" href="/vse-o-raskrytii">всё о раскрытии</a> </li>
+					<li><a href="/o-proekte">о проекте</a> </li>
+				</ul>
+			</div>
+			<div style="display: flex; margin: 5px auto 0; width: 96%; padding-bottom: 10px;">
+				<div style="font-size: 12px; font-weight: bold; line-height: 17px; padding: 0 8% 0 0">
+					<div style="border: 1px solid lightgrey; white-space: nowrap; padding: 6px 10px;">
+						Служба раскрытия информации<br>
+						Интерфакс-ЦРКИ:<br>
+						+7 (495) 787-52-13<br>
+						+7 (800) 200-48-18<br>
+						<a href="mailto:dc1@e-disclosure.ru">dc1@e-disclosure.ru</a><br>
+						Время работы: пн-пт 08:00-20:00 (мск)<br>
+					</div>
+				</div>
+				<div>
+					<div style="font-size: 11px; height: 24px;">
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">© 2026 Интерфакс-ЦРКИ. Все права защищены</span>
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">
+							<a href="/usloviya-ispol'zovaniya-informacii">Условия использования информации</a>
+						</span>
+						<span style="margin-right: 17px; padding-right: 20px;">
+							<a href="/politika-obrabotki-personalnyh-dannyh">Политика обработки персональных данных</a>
+						</span>
+					</div>
+					<div style="font-size: 9px; line-height: 13px;">
+						Сетевое издание «Центр раскрытия корпоративной информации».
+						Свидетельство о регистрации СМИ ЭЛ № ФС77-64320 выдано Федеральной службой по надзору в сфере связи,
+                        информационных технологий и массовых коммуникаций (Роскомнадзор) 25 декабря 2015 года. Учредитель ООО «Инфоком». Главный редактор Горбатова С.В.<br>
+						<span style="font-size: 11px;">12+</span>
+					</div>
+					<div>
+						<br>
+						<!-- Top100 (Kraken) Widget -->
+						<span id="top100_widget" style="padding: 0; margin: 0;"></span>
+						<!-- END Top100 (Kraken) Widget -->
+						<!-- Rating@Mail.ru logo -->
+						<a style="text-decoration: none;" href="http://top.mail.ru/jump?from=650834">
+							
+						</a>
+						<!-- //Rating@Mail.ru logo -->
+						<!-- Yandex.Metrika informer -->
+						<a href="https://metrika.yandex.ru/stat/?id=53780800&amp;from=informer" target="_blank" rel="nofollow" style="text-decoration: none;">
+							
+						</a>
+						<!-- /Yandex.Metrika informer -->
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<input name="__RequestVerificationToken" type="hidden" value="">	
+	<div id="CookieWarningPopup" style="display: block;">
+	На этом сайте используются файлы cookie. Оставаясь на www.e-disclosure.ru, Вы соглашаетесь с <a href="https://e-disclosure.ru/politika-obrabotki-personalnyh-dannyh" target="_blank">Политикой обработки персональных данных</a>.
+	<button type="button" id="AcceptCookieBtn" class="button2" style="margin-left: 5px;">ОК</button>
+</div>
+    <div id="modalLayout"></div>
+	
+			
+			
+			
+			
+			
+	
+
+	<!-- Top100 (Kraken) Counter -->
+	
+    <!-- END Top100 (Kraken) Counter -->
+
+<div class="alert-service alert-service_hidden">
+    <div class="alert-service__wnd">
+        <div class="alert-service__cont-wrap">
+            <div class="alert-service__message"></div>
+        </div>
+        <div class="alert-service__buttons"></div>
+    </div>
+</div></body></html>
