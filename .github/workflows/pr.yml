@@ -110,4 +110,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - run: echo "No e2e suite yet, S1-05 adds the first spec"
+      - uses: actions/checkout@v7
+      - name: Start the CI stack
+        run: docker compose -f docker-compose.ci.yml up -d --build --wait
+      # Playwright joins with the first spec in S1-05.
+      - name: Smoke the stack through Caddy
+        run: |
+          curl --fail --silent --retry 15 --retry-all-errors --retry-delay 2 http://localhost:8080/api/health
+          curl --fail --silent http://localhost:8080/api/health/ready
+          curl --fail --silent http://localhost:8080/portfolio | grep -qi '<!doctype html>'
+      - name: Stack logs
+        if: failure()
+        run: docker compose -f docker-compose.ci.yml logs
