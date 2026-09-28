@@ -62,9 +62,10 @@ e2e:
 build:
     {{ fe }} build
 
-# e-disclosure discovery for S1-12: hits the real site, run by hand
-discover-edisclosure:
-    {{ py }} scripts/discover_edisclosure.py
+# e-disclosure discovery for S1-12: drives a browser on the real site, run by hand.
+# Playwright matches the frontend's version to reuse its Chromium.
+discover-edisclosure *args:
+    uv run --no-project --with playwright==1.63.0 --with selectolax==0.4.12 python scripts/discover_edisclosure.py {{ args }}
 
 # Zone labels and CORE_VERSION bump against the PR base: just core-guard core-impl
 core-guard labels="" base="origin/main":
