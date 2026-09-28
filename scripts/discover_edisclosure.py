@@ -157,6 +157,10 @@ UNITS = {"к": 2**10, "k": 2**10, "м": 2**20, "m": 2**20, "г": 2**30, "g": 2**
 
 Rules = list[tuple[int, bool, re.Pattern[str]]]
 
+# The site and its ads write visitor data into the DOM: userIp in a Metrika script, ad session
+# ids, antiforgery tokens. Snapshots keep only markup.
+NOT_MARKUP = ["script", "style", "iframe", "noscript", "link"]
+
 
 def setting(key: str, default: str) -> str:
     """Read a key the way app/config.py does: the environment first, then the repo .env."""
@@ -178,6 +182,17 @@ def dump(path: Path, data: object) -> None:
     path.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
+
+
+def sanitize(html: str) -> str:
+    tree = HTMLParser(html)
+    tree.strip_tags(NOT_MARKUP)
+    for node in tree.css('input[name="__RequestVerificationToken"]'):
+        node.attrs["value"] = ""
+    for node in tree.css("img[src]"):
+        if urlsplit(node.attributes["src"] or "").netloc not in {"", "www.e-disclosure.ru"}:
+            node.decompose()
+    return tree.html or ""
 
 
 def parse_robots(text: str) -> tuple[Rules, float]:
@@ -273,7 +288,7 @@ class Crawler:
             # A section page may have no rows at all.
             with contextlib.suppress(PlaywrightError):
                 self.page.wait_for_selector(FILE_TABLE, state="attached", timeout=3_000)
-        html = self.page.content()
+        html = sanitize(self.page.content())
         # A section without files redirects to the card: keep only the redirect.
         file = None if "files.aspx" in url and "files.aspx" not in final_url else name
         if file:
