@@ -18,6 +18,11 @@ setup:
     {{ fe }} install
     {{ fe }} exec playwright install chromium
 
+# Dev stack on fakes: Postgres, Qdrant and the reloading API in Docker, the SPA on the host
+dev:
+    docker compose -f docker-compose.dev.yml up -d --build --wait
+    {{ fe }} dev
+
 # Format Python and frontend code
 fmt:
     {{ be }} ruff format . ../scripts
