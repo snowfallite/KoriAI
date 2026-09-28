@@ -1,0 +1,3184 @@
+<!DOCTYPE html><html browser="chrome" browser-version="153"><head>
+	<title>Интерфакс – Сервер раскрытия информации</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width">
+	
+	<meta name="keywords" content="">
+	<meta name="description">
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="ver" content="3.56.0.639258897622681947_">
+	
+	
+
+
+<!-- Yandex.Metrika counter -->
+
+<!-- /Yandex.Metrika counter -->
+<!-- Rating@Mail.ru counter -->
+
+<!-- //Rating@Mail.ru counter -->
+	
+        
+	
+
+
+	
+	
+	
+	
+	
+	
+
+
+
+
+	
+
+		<base href="https://www.e-disclosure.ru/" target="_self">
+</head>
+<body class="site-page">	
+	
+
+
+
+	
+<div class="login-window site-page__login-window" id="enter" style="display: none;">
+    <div class="login-window__title title_basic">
+        Вход
+        <div class="right">
+            <img src="/images/close.png" width="14" height="14" alt="Закрыть окно" style="cursor: pointer" id="closeLoginButton">
+        </div>
+    </div>
+    <div class="login-window__content">
+        <form id="loginForm" class="login-form">
+	        <input type="hidden" name="token" value="rGKPTP2hvKwapEXuiZtfE4W0//+Uo25sSSOoZbtpz8Y=">
+	        <div class="login-form__wrapper">
+                <div class="login-form__input-wrapper">Логин/ИНН: <input type="text" id="login" name="login" maxlength="50" class="login-form__input"></div>
+                <div class="login-form__input-wrapper">Пароль: <input type="password" name="password" id="password" class="login-form__input"></div>
+                <div class="login-form__errors"><span class="login-form__error login-form__error_hiden"></span></div>
+                <div style="text-align: center;">
+	                <button type="button" class="button button_bold login-form__login-button">Войти</button>
+                </div>
+                <div class="login-form__forgot-password">Забыли пароль? <a href="https://www.e-disclosure.ru/password-recovery">Восстановить пароль</a></div>
+            </div>
+        </form>
+    </div>
+</div>
+	<div class="site-page__body-inside">
+		<header class="site-header">
+			<div class="site-header__top">
+				<div class="site-header__site-logo">
+					<a href="/">
+						<img alt="Центр раскрытия " src="/images/logo.gif" width="40" height="40">
+					</a>
+				</div>
+				<div class="site-header__site-title">
+					<h1>
+						<a href="/">
+							ЦЕНТР&nbsp;РАСКРЫТИЯ<br><span>КОРПОРАТИВНОЙ&nbsp;ИНФОРМАЦИИ</span>
+						</a>
+					</h1>
+				</div>
+				<div class="site-header__ifax-logo">
+					<a href="http://www.interfax.ru">
+						<img alt="Интерфакс" src="/images/interfax.png" width="142" height="42">
+					</a>
+				</div>
+				<div class="site-header__contact">
+					Служба раскрытия информации:<br>
+					тел.: <strong>+7 (495) 787-5213, 8-800-200-4818 (в будни, с 08.00 до 20.00 мск)</strong>
+				</div>
+				<div class="site-header__reg">
+					<span style="vertical-align: middle;">Идентификационный код Распространителя информации №0003</span>
+					<button type="button" class="enter">Вход</button>
+					<a class="reg" href="https://emitent.e-disclosure.ru/registration">Регистрация</a>
+				</div>
+			</div>
+			
+<div id="menu_wrap">
+	<div id="menucontainer" style="padding: 0 1% 0 1%; display: flex; flex-direction: row;">
+		<ul id="menulist">
+					<li>
+						<a class="dash" href="/">главная страница</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;сервисы для компаний
+							</a>
+                        <ul>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej">раскрытие в ленте новостей</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/informirovanie-birzhi">информирование биржи</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/prioritetnoe-raskrytie">приоритетное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/vizualizaciya-soobshhenij">визуализация сообщений</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-na-sajte">раскрытие на сайте</a>
+										<ul class="site-menu__item-260">
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/informirovanie-aktsionerov">информирование акционеров</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/domen-tret'ego-urovnya">домен 3 уровня</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/dobrovol'noe-raskrytie">добровольное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/sub'ektam-rynka-ehlektroehnergii">субъектам рынка электроэнергии</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/raskrytie-pod-ehmbargo">раскрытие под эмбарго</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/edinoe-okno-s-nrd">единое окно с нрд</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/sinhronizaciya-i-otslezhivanie-publikacij">синхронизация и отслеживание публикаций</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/elektronnaya-anketa">электронная анкета</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-sostavleniya-otcheta-ehmitenta">программа для составления отчета эмитента</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-podgotovki-nefinansovoj-otchetnosti">программа для подготовки нефинансовой отчетности</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/servis-dlya-agentov-po-razmeshheniyu">сервис для агентов по размещению</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/esg-raskrytie">esg-раскрытие</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/ir-uslugi">ir-услуги</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/ir-uslugi/ir-uslugi">календарь инвестора</a>
+												</li>
+										</ul>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;получение информации
+							</a>
+                        <ul>
+									<li>
+										<a href="/poluchenie-informacii/shlyuz-api">шлюз (api)</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/email-rassylka">email-рассылка</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/vygruzka-na-ftp">выгрузка на ftp</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/otchеt-po-soobshheniyam">отчет по сообщениям</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;все о раскрытии
+							</a>
+                        <ul>
+									<li>
+										<a href="/vse-o-raskrytii/vestnik-centra-raskrytiya-informacii">вестник центра раскрытия информации</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/reglament-raskrytiya">технические условия</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/kontrol-za-insayderskoy-informaciey">контроль за инсайдерской информацией</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/primenenie-elektronnoj-podpisi">применение электронной подписи</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/normativnye-dokumenty">нормативные документы</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/nashi-publikatsii">наши публикации</a>
+									</li>
+									<li>
+											<a class="open" href="/vse-o-raskrytii/premiya-za-otkrytost'">премия за открытость</a>
+										<ul>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/o-premii">о премии</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/kompanuii-pobediteli">компании-победители</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/press-relizy">пресс-релизы</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/faq">вопросы и ответы</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;о проекте
+							</a>
+                        <ul class="site-menu__items_about-project">
+									<li>
+										<a href="/o-proekte/o-proekte">о проекте</a>
+									</li>
+									<li>
+										<a href="/o-proekte/rekvizity">реквизиты</a>
+									</li>
+									<li>
+										<a href="/o-proekte/reklama-na-sajte">реклама на сайте</a>
+									</li>
+						</ul>
+					</li>
+		</ul>
+		<div style="flex: 1;"></div>
+		<div style="padding-top: 5px;">
+			<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+				<img src="/images/telegram_icon.png" width="30" height="30">
+			</a>
+		</div>
+	</div>
+</div>		</header>
+		<div class="site-middle">
+			
+
+
+<div class="site-middle__std-inside">
+	<div class="std-main-content std-inside__std-main-content">
+		
+
+
+
+<div class="title_basic">Карточка компании</div>
+
+
+
+<div class="gray_menu">
+    <div class="menu_wrap" style="position: relative; left: 0;">
+        <div class="table full">
+            <div class="cell">
+                <ul id="cssmenu">
+                    <li>
+                        <a href="/portal/company.aspx?id=6505" class="drop">
+                            <span>Карточка компании</span>
+                        </a>
+                    </li>
+                        <li>
+                            <a href="/portal/company-6505/dokumenty-kompanii" class="drop">
+                                <img src="/images/open.png" alt=""><span>Документация</span>
+                            </a>
+                            <ul>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=1">Устав и внутренние документы</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=7">Эмиссионные документы</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=10">Прочие документы</a>
+                                    </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/portal/company-6505/otchyotnost-kompanii" class="drop">
+                                <img src="/images/open.png" alt=""><span>Отчетность</span>
+                            </a>
+                            <ul>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=2">Годовая</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=3">Бухгалтерская (финансовая)</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=4">Консолидированная</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=5">Отчеты эмитента</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=8">Для инвесторов</a>
+                                    </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/portal/company-6505/informaciya-dlya-akcionerov" class="drop">
+                                <img src="/images/open.png" alt=""><span>Информация для акционеров</span>
+                            </a>
+                            <ul>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=16">Собрания акционеров</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=17">Документы по Главе XI.1 ФЗ об АО</a>
+                                    </li>
+                                    <li>
+                                        <a href="/portal/files.aspx?id=6505&amp;type=18">Документы по ст. 91 ФЗ об АО</a>
+                                    </li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+            <div class="cell menu-search">
+				<button type="button" class="link-button js-show-search" style="vertical-align: middle">
+                    Поиск<img src="/images/vline.png" style="padding: 0 4px;">Печать реестров
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ed-viewport-centering-layout" style="display: none;">
+    <div class="ed-window js-company-window" id="searchWindow">
+        <div class="ed-window__title title_basic">
+            <span>Выбор параметров</span>
+            <div class="right">
+                <img src="/images/close.png" class="close-button js-close-button" alt="Закрыть окно" title="Закрыть окно">
+            </div>
+        </div>
+        <div class="ed-window__content">
+            <form id="searchForm" novalidate="novalidate">
+                <div class="search-type">
+                    <input type="radio" name="sType" id="sEvents" value="0" checked="checked">
+                    <label for="sEvents">события</label>
+                    <input type="radio" name="sType" id="sFiles" value="1">
+                    <label for="sFiles">документы</label>
+                </div>
+                <div style="text-align: center; margin-top: 7px; margin-bottom: 5px;">
+                    <span class="js-period-title">Укажите период публикации событий:</span>
+                </div>
+                <div style="text-align: center; margin: 5px;">
+                    С:
+                    <span class="select-date">
+                        <div class="ed-datepicker">
+    <div class="ed-datepicker__error-message ed-datepicker__error-message_display_none"></div>
+    <div class="ed-datepicker__controls">
+        <div class="ed-datepicker__date-input-wrapper"><input type="text" name="esDateStart" id="esDateStart" value="22.09.2026" data-rule-required="true" data-msg-required="Дата начала должна быть заполнена." data-rule-date="true" data-msg-date="Дата начала должна быть датой в формате дд.мм.гггг." class="ed-datepicker__date-input" tabindex="0" placeholder="ДД.ММ.ГГГГ"></div><button class="button-calendar button-calendar__ed-datepicker js-date-button ed-datepicker__toggle-button" type="button" tabindex="0"></button>
+    </div>
+    <div class="ed-datepicker__fake-picker">
+        <div></div>
+        <div class="ed-datepicker__fake-picker-input-wrapper">
+            <input type="text" class="js-date-text hasDatepicker" readonly="readonly" tabindex="-1" id="dp1790631246058"><button type="button" class="ui-datepicker-trigger">...</button>
+        </div>
+    </div>
+</div>
+                    </span>
+                    По:
+                    <span class="select-date">
+                        <div class="ed-datepicker">
+    <div class="ed-datepicker__error-message ed-datepicker__error-message_display_none"></div>
+    <div class="ed-datepicker__controls">
+        <div class="ed-datepicker__date-input-wrapper"><input type="text" name="esDateFinish" id="esDateFinish" value="29.09.2026" data-rule-required="true" data-msg-required="Дата окончания должна быть заполнена." data-rule-date="true" data-msg-date="Дата окончания должна быть датой в формате дд.мм.гггг." data-rule-dategreater="esDateStart" data-msg-dategreater="Дата начала периода формирования реестра не должна быть больше даты окончания." class="ed-datepicker__date-input" tabindex="0" placeholder="ДД.ММ.ГГГГ"></div><button class="button-calendar button-calendar__ed-datepicker js-date-button ed-datepicker__toggle-button" type="button" tabindex="0"></button>
+    </div>
+    <div class="ed-datepicker__fake-picker">
+        <div></div>
+        <div class="ed-datepicker__fake-picker-input-wrapper">
+            <input type="text" class="js-date-text hasDatepicker" readonly="readonly" tabindex="-1" id="dp1790631246059"><button type="button" class="ui-datepicker-trigger">...</button>
+        </div>
+    </div>
+</div>
+                    </span>
+                </div>
+                <div id="errors" class="error-block"></div>
+            </form>
+        </div>
+        <div class="ed-window__footer hcenter">
+            <button type="button" class="button js-find-button">Подтвердить выбор</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="infoblock">
+    <h2>ПАО «НК «Роснефть»</h2>
+</div>
+<div id="cont_wrap">
+
+
+    <div class="title_middle">Эмиссионные документы</div>
+
+
+    <div class="spaceTbl">
+
+
+<table class="zebra noBorderTbl centerHeader files-table">
+    <tbody><tr>
+        <th class="row-number-header">№</th>
+                <th class="type-header">Тип документа</th>
+                <th class="num-reg-header">Ре­гист­ра­цион­ный номер</th>
+                    <th>Дата ре­гист­ра­ции (дата уве­дом­ле­ния)</th>
+                    <th>Ре­гист­ри­рую­щий орган (ор­га­ни­за­ция)</th>
+                <th>Дата наступления основания<br> для опубликования на сайте</th>
+                    <th>Дата раз­ме­ще­ния</th>
+            <th class="file-header">Файл</th>
+            <th class="cert-header"></th>
+    </tr>
+
+
+        <tr>
+            <td rowspan="" class="row-number-cell">1</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-04-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417589" data-fileid="417589">
+                        zip,&nbsp;592.06&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">2</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4-04-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417727" data-fileid="417727">
+                        zip,&nbsp;7.49&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">3</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-04-00122-A</td>
+                        <td class="date-cell">26.11.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">27.11.2012</td>
+                        <td class="date-cell">27.11.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=517571" data-fileid="517571">
+                        zip,&nbsp;259.08&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">4</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-05-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417630" data-fileid="417630">
+                        zip,&nbsp;592.1&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">5</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-05-00122-A</td>
+                        <td class="date-cell">26.11.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">27.11.2012</td>
+                        <td class="date-cell">27.11.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=517576" data-fileid="517576">
+                        zip,&nbsp;259&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">6</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-06-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417648" data-fileid="417648">
+                        zip,&nbsp;591.62&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">7</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-06-00122-A</td>
+                        <td class="date-cell">10.07.2013</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2013</td>
+                        <td class="date-cell">12.07.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=711694" data-fileid="711694">
+                        zip,&nbsp;438.13&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">8</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-07-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417660" data-fileid="417660">
+                        zip,&nbsp;591.99&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">9</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-07-00122-A</td>
+                        <td class="date-cell">09.04.2013</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">09.04.2013</td>
+                        <td class="date-cell">09.04.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=624592" data-fileid="624592">
+                        zip,&nbsp;271.59&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">10</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-08-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417672" data-fileid="417672">
+                        zip,&nbsp;592.1&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">11</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-08-00122-A</td>
+                        <td class="date-cell">09.04.2013</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">09.04.2013</td>
+                        <td class="date-cell">09.04.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=624594" data-fileid="624594">
+                        zip,&nbsp;271.57&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">12</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-09-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417683" data-fileid="417683">
+                        zip,&nbsp;591.65&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">13</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-09-00122-A</td>
+                        <td class="date-cell">10.07.2013</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2013</td>
+                        <td class="date-cell">12.07.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=711695" data-fileid="711695">
+                        zip,&nbsp;433.87&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">14</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4-10-00122-A</td>
+                        <td class="date-cell">10.07.2012</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2012</td>
+                        <td class="date-cell">03.09.2012</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=417694" data-fileid="417694">
+                        zip,&nbsp;591.65&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">15</td>
+            <td class="type-cell">Уведомление об итогах выпуска ценных бумаг</td>
+                        <td class="num-reg-cell">4-10-00122-A</td>
+                        <td class="date-cell">10.07.2013</td>
+                        <td>ФСФР России</td>
+                        <td class="date-cell">11.07.2013</td>
+                        <td class="date-cell">12.07.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=711696" data-fileid="711696">
+                        zip,&nbsp;433.87&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">16</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753235" data-fileid="753235">
+                        zip,&nbsp;844.52&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">17</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753251" data-fileid="753251">
+                        zip,&nbsp;9.82&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">18</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753255" data-fileid="753255">
+                        zip,&nbsp;2.11&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение 4: Образцы Сертификатов ценных бумаг</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">19</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753254" data-fileid="753254">
+                        zip,&nbsp;16.74&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение 3: Основные положения учетной политики Эмитента на 2010 - 2013 годы</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">20</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753253" data-fileid="753253">
+                        zip,&nbsp;9.49&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение 2: Консолидированная финансовая отчетность</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">21</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-01-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753252" data-fileid="753252">
+                        zip,&nbsp;7.47&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение 1: Годовая бухгалтерская отчетность за 2010 - 2012 годы, а также за 6 мес. 2013 года</td>
+                </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">22</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753236" data-fileid="753236">
+                        zip,&nbsp;844.49&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">23</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973569" data-fileid="973569">
+                        zip,&nbsp;351.36&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">24</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929192" data-fileid="929192">
+                        zip,&nbsp;131.05&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">25</td>
+            <td class="type-cell">Изменения в проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">10.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973556" data-fileid="973556">
+                        zip,&nbsp;989&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">26</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-03-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753237" data-fileid="753237">
+                        zip,&nbsp;844.49&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">27</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-03-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973570" data-fileid="973570">
+                        zip,&nbsp;350.73&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">28</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-03-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929200" data-fileid="929200">
+                        zip,&nbsp;131.01&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">29</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-04-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753238" data-fileid="753238">
+                        zip,&nbsp;844.57&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">30</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-04-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973571" data-fileid="973571">
+                        zip,&nbsp;350.73&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">31</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-04-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929203" data-fileid="929203">
+                        zip,&nbsp;131.01&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">32</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-05-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753239" data-fileid="753239">
+                        zip,&nbsp;844.39&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">33</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-06-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753240" data-fileid="753240">
+                        zip,&nbsp;844.27&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">34</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-07-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753241" data-fileid="753241">
+                        zip,&nbsp;844.33&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">35</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-08-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753242" data-fileid="753242">
+                        zip,&nbsp;844.27&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">36</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-08-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973572" data-fileid="973572">
+                        zip,&nbsp;423.58&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">37</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-08-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929205" data-fileid="929205">
+                        zip,&nbsp;131.15&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">38</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-09-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753243" data-fileid="753243">
+                        zip,&nbsp;844.33&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">39</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-09-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973573" data-fileid="973573">
+                        zip,&nbsp;423.54&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">40</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-09-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929238" data-fileid="929238">
+                        zip,&nbsp;131.15&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">41</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-10-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753244" data-fileid="753244">
+                        zip,&nbsp;844.31&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">42</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-10-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973574" data-fileid="973574">
+                        zip,&nbsp;423.08&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">43</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-10-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929207" data-fileid="929207">
+                        zip,&nbsp;131.16&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">44</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-11-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753245" data-fileid="753245">
+                        zip,&nbsp;843.91&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">45</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-11-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973575" data-fileid="973575">
+                        zip,&nbsp;422.26&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">46</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-11-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929211" data-fileid="929211">
+                        zip,&nbsp;130.78&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">47</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-12-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753246" data-fileid="753246">
+                        zip,&nbsp;844.02&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">48</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-12-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973576" data-fileid="973576">
+                        zip,&nbsp;422.25&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">49</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-12-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929212" data-fileid="929212">
+                        zip,&nbsp;130.78&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">50</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-13-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753247" data-fileid="753247">
+                        zip,&nbsp;844.04&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">51</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-13-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973577" data-fileid="973577">
+                        zip,&nbsp;422.27&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">52</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-13-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929218" data-fileid="929218">
+                        zip,&nbsp;130.79&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">53</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-14-00122-A</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">31.10.2013</td>
+                        <td class="date-cell">01.11.2013</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=753248" data-fileid="753248">
+                        zip,&nbsp;844.07&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">54</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-14-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973578" data-fileid="973578">
+                        zip,&nbsp;422.33&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">55</td>
+            <td class="type-cell">Изменения в решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-14-00122-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929220" data-fileid="929220">
+                        zip,&nbsp;130.78&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">56</td>
+            <td class="type-cell">Изменения в проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00123-A</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td>Закрытое акционерное общество «Фондовая биржа ММВБ»</td>
+                        <td class="date-cell">17.07.2014</td>
+                        <td class="date-cell">18.07.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=929223" data-fileid="929223">
+                        zip,&nbsp;149.2&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">57</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">10.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973557" data-fileid="973557">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">58</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">10.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973555" data-fileid="973555">
+                        zip,&nbsp;2.14&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">59</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973593" data-fileid="973593">
+                        rar,&nbsp;6.41&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 5 из 5, Приложение № 4. Учетные политики ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">60</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973592" data-fileid="973592">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 4 из 5, Приложение № 4. Учетные политики ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">61</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973591" data-fileid="973591">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 3 из 5, Приложение № 4. Учетные политики ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">62</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973590" data-fileid="973590">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 2 из 5, Приложение № 4. Учетные политики ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">63</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973589" data-fileid="973589">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 1 из 5, Приложение № 4. Учетные политики ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">64</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973588" data-fileid="973588">
+                        rar,&nbsp;11.17&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение № 3. Промежуточная КФО МСФО ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">65</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973586" data-fileid="973586">
+                        rar,&nbsp;2.42&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">Приложение № 5. Образцы сертификатов</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">66</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973585" data-fileid="973585">
+                        rar,&nbsp;18.01&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 4 из 4, Приложение № 2. КФО МСФО ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">67</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973584" data-fileid="973584">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 3 из 4, Приложение № 2. КФО МСФО ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">68</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973583" data-fileid="973583">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 2 из 4, Приложение № 2. КФО МСФО ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">69</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973582" data-fileid="973582">
+                        rar,&nbsp;18.31&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 1 из 4, Приложение № 2. КФО МСФО ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">70</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973581" data-fileid="973581">
+                        rar,&nbsp;10.63&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 3 из 3, Приложение № 1. Бухгалтерская отчетность ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">71</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973580" data-fileid="973580">
+                        rar,&nbsp;18.12&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть 2 из 3, Приложение № 1. Бухгалтерская отчетность ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">72</td>
+            <td class="type-cell">Приложение к Проспекту</td>
+                        <td class="num-reg-cell">4B02-15-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973579" data-fileid="973579">
+                        rar,&nbsp;18.12&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+                <tr class="description-row">
+                    <td style="color: rgb(122,134,154);" colspan="6">часть1 из 3, Приложение № 1. Бухгалтерская отчетность ОАО «НК «Роснефть»</td>
+                </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">73</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-16-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">10.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973558" data-fileid="973558">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">74</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-17-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973559" data-fileid="973559">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">75</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-18-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973560" data-fileid="973560">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">76</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-19-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973561" data-fileid="973561">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">77</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-20-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973562" data-fileid="973562">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">78</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-21-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973563" data-fileid="973563">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">79</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-22-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973564" data-fileid="973564">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">80</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-23-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973565" data-fileid="973565">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">81</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-24-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973566" data-fileid="973566">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">82</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-25-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973567" data-fileid="973567">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">83</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-26-00122-A</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">10.12.2014</td>
+                        <td class="date-cell">11.12.2014</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=973568" data-fileid="973568">
+                        zip,&nbsp;1.06&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">84</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4-00122-A-001P-02E</td>
+                        <td class="date-cell">01.12.2016</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">05.12.2016</td>
+                        <td class="date-cell">05.12.2016</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1284686" data-fileid="1284686">
+                        zip,&nbsp;1.62&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">85</td>
+            <td class="type-cell">Программа облигаций (биржевых облигаций)</td>
+                        <td class="num-reg-cell">4-00122-A-001P-02E</td>
+                        <td class="date-cell">01.12.2016</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">05.12.2016</td>
+                        <td class="date-cell">05.12.2016</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1284687" data-fileid="1284687">
+                        zip,&nbsp;752.71&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">86</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-001P</td>
+                        <td class="date-cell">05.12.2016</td>
+                        <td>ЗАО "ФБ ММВБ"</td>
+                        <td class="date-cell">05.12.2016</td>
+                        <td class="date-cell">05.12.2016</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1284688" data-fileid="1284688">
+                        zip,&nbsp;1015.75&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">87</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-001P</td>
+                        <td class="date-cell">21.12.2016</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">21.12.2016</td>
+                        <td class="date-cell">21.12.2016</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1286157" data-fileid="1286157">
+                        zip,&nbsp;483.78&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">88</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-03-00122-A-001P</td>
+                        <td class="date-cell">27.12.2016</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">27.12.2016</td>
+                        <td class="date-cell">27.12.2016</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1286697" data-fileid="1286697">
+                        zip,&nbsp;461.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">89</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-04-00122-A-001P</td>
+                        <td class="date-cell">28.04.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">02.05.2017</td>
+                        <td class="date-cell">02.05.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1334929" data-fileid="1334929">
+                        zip,&nbsp;464.63&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1334929" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">90</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-05-00122-A-001P</td>
+                        <td class="date-cell">15.05.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">16.05.2017</td>
+                        <td class="date-cell">16.05.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1342715" data-fileid="1342715">
+                        zip,&nbsp;465.02&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1342715" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">91</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-06-00122-A-001P</td>
+                        <td class="date-cell">24.07.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">25.07.2017</td>
+                        <td class="date-cell">25.07.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1365195" data-fileid="1365195">
+                        zip,&nbsp;477.27&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1365195" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">92</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-07-00122-A-001P</td>
+                        <td class="date-cell">24.07.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">25.07.2017</td>
+                        <td class="date-cell">25.07.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1365196" data-fileid="1365196">
+                        zip,&nbsp;476.33&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1365196" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">93</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-08-00122-A-001P</td>
+                        <td class="date-cell">09.10.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">10.10.2017</td>
+                        <td class="date-cell">10.10.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1378882" data-fileid="1378882">
+                        zip,&nbsp;437.31&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1378882" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="2" class="row-number-cell">94</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4-00122-A-002P-02E</td>
+                        <td class="date-cell">15.11.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">12.10.2021</td>
+                        <td class="date-cell">14.10.2021</td>
+                <td rowspan="2" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1724399" data-fileid="1724399">
+                        zip,&nbsp;2.24&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="2" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1724399" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+            <tr>
+                <td colspan="6">
+                    Зарегистрирован&nbsp;12.10.2021&nbsp;ПАО Московская Биржа
+                </td>
+            </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">95</td>
+            <td class="type-cell">Проспект ценных бумаг</td>
+                        <td class="num-reg-cell">4-00122-A-002P-02E</td>
+                        <td class="date-cell">15.11.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">17.11.2017</td>
+                        <td class="date-cell">17.11.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1384720" data-fileid="1384720">
+                        zip,&nbsp;1.67&nbsp;МБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1384720" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">96</td>
+            <td class="type-cell">Программа облигаций (биржевых облигаций)</td>
+                        <td class="num-reg-cell">4-00122-A-002P-02E</td>
+                        <td class="date-cell">15.11.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">17.11.2017</td>
+                        <td class="date-cell">17.11.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1384719" data-fileid="1384719">
+                        zip,&nbsp;735.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1384719" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">97</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-002P</td>
+                        <td class="date-cell">04.12.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">04.12.2017</td>
+                        <td class="date-cell">05.12.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1385902" data-fileid="1385902">
+                        zip,&nbsp;438.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1385902" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">98</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-002P</td>
+                        <td class="date-cell">04.12.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">04.12.2017</td>
+                        <td class="date-cell">05.12.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1385903" data-fileid="1385903">
+                        zip,&nbsp;441.22&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1385903" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">99</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-03-00122-A-002P</td>
+                        <td class="date-cell">19.12.2017</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">19.12.2017</td>
+                        <td class="date-cell">20.12.2017</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1386792" data-fileid="1386792">
+                        zip,&nbsp;462.11&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1386792" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">100</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-04-00122-A-002P</td>
+                        <td class="date-cell">12.02.2018</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">12.02.2018</td>
+                        <td class="date-cell">13.02.2018</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1396166" data-fileid="1396166">
+                        zip,&nbsp;555.09&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1396166" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">101</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-05-00122-A-002P</td>
+                        <td class="date-cell">28.02.2018</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">01.03.2018</td>
+                        <td class="date-cell">01.03.2018</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1399388" data-fileid="1399388">
+                        zip,&nbsp;467.62&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1399388" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">102</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-06-00122-A-002P</td>
+                        <td class="date-cell">04.04.2019</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">04.04.2019</td>
+                        <td class="date-cell">04.04.2019</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1507640" data-fileid="1507640">
+                        zip,&nbsp;444.27&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1507640" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">103</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-07-00122-A-002P</td>
+                        <td class="date-cell">04.04.2019</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">04.04.2019</td>
+                        <td class="date-cell">04.04.2019</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1507646" data-fileid="1507646">
+                        zip,&nbsp;442.73&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1507646" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">104</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-08-00122-A-002P</td>
+                        <td class="date-cell">11.07.2019</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">11.07.2019</td>
+                        <td class="date-cell">11.07.2019</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1537610" data-fileid="1537610">
+                        zip,&nbsp;527.43&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1537610" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">105</td>
+            <td class="type-cell">Условия выпуска (дополнительного выпуска) облигаций в рамках программы облигаций</td>
+                        <td class="num-reg-cell">4B02-09-00122-A-002P</td>
+                        <td class="date-cell">22.10.2019</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">22.10.2019</td>
+                        <td class="date-cell">22.10.2019</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1551166" data-fileid="1551166">
+                        zip,&nbsp;528.59&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1551166" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">106</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-10-00122-A-002P</td>
+                        <td class="date-cell">27.05.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">28.05.2020</td>
+                        <td class="date-cell">28.05.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1638767" data-fileid="1638767">
+                        zip,&nbsp;426.82&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1638767" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">107</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-10-00122-A-002P</td>
+                        <td class="date-cell">27.05.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">08.06.2020</td>
+                        <td class="date-cell">08.06.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1640668" data-fileid="1640668">
+                        zip,&nbsp;356.54&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1640668" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">108</td>
+            <td class="type-cell">Программа облигаций (биржевых облигаций)</td>
+                        <td class="num-reg-cell">4-00122-A-003P-02E</td>
+                        <td class="date-cell">17.11.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">18.11.2020</td>
+                        <td class="date-cell">18.11.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1669951" data-fileid="1669951">
+                        zip,&nbsp;824.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1669951" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">109</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-003P</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td class="date-cell">24.11.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1670377" data-fileid="1670377">
+                        zip,&nbsp;604.97&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1670377" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">110</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-003P</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">25.11.2020</td>
+                        <td class="date-cell">25.11.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1670407" data-fileid="1670407">
+                        zip,&nbsp;358.83&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1670407" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">111</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-003P</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td class="date-cell">24.11.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1670378" data-fileid="1670378">
+                        zip,&nbsp;604.92&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1670378" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">112</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-003P</td>
+                        <td class="date-cell">24.11.2020</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">25.11.2020</td>
+                        <td class="date-cell">25.11.2020</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1670408" data-fileid="1670408">
+                        zip,&nbsp;358.83&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1670408" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">113</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-11-00122-A-002P</td>
+                        <td class="date-cell">19.07.2021</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">19.07.2021</td>
+                        <td class="date-cell">19.07.2021</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1715853" data-fileid="1715853">
+                        zip,&nbsp;242.79&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1715853" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">114</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-11-00122-A-002P</td>
+                        <td class="date-cell">21.07.2021</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">21.07.2021</td>
+                        <td class="date-cell">21.07.2021</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1715954" data-fileid="1715954">
+                        zip,&nbsp;253.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1715954" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">115</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-12-00122-A-002P</td>
+                        <td class="date-cell">14.09.2022</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">14.09.2022</td>
+                        <td class="date-cell">15.09.2022</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1767617" data-fileid="1767617">
+                        zip,&nbsp;435.98&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1767617" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">116</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-12-00122-A-002P</td>
+                        <td class="date-cell">14.09.2022</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">15.09.2022</td>
+                        <td class="date-cell">16.09.2022</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1767789" data-fileid="1767789">
+                        zip,&nbsp;387.74&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1767789" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">117</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-13-00122-A-002P</td>
+                        <td class="date-cell">14.03.2023</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">14.03.2023</td>
+                        <td class="date-cell">15.03.2023</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1781409" data-fileid="1781409">
+                        zip,&nbsp;414.86&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1781409" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">118</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-13-00122-A-002P</td>
+                        <td class="date-cell">14.03.2023</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">17.03.2023</td>
+                        <td class="date-cell">17.03.2023</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1782159" data-fileid="1782159">
+                        zip,&nbsp;459.02&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1782159" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">119</td>
+            <td class="type-cell">Программа облигаций (биржевых облигаций)</td>
+                        <td class="num-reg-cell">4-00122-A-004P-02E</td>
+                        <td class="date-cell">04.08.2023</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">04.08.2023</td>
+                        <td class="date-cell">07.08.2023</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1806829" data-fileid="1806829">
+                        zip,&nbsp;636.85&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1806829" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">120</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-004P</td>
+                        <td class="date-cell">21.03.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">21.03.2024</td>
+                        <td class="date-cell">22.03.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1826451" data-fileid="1826451">
+                        zip,&nbsp;447.11&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-cert-for="treat-as-signed">
+							<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">121</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-004P</td>
+                        <td class="date-cell">21.03.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">25.03.2024</td>
+                        <td class="date-cell">25.03.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1826802" data-fileid="1826802">
+                        zip,&nbsp;363.58&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-cert-for="treat-as-signed">
+							<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">122</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-004P</td>
+                        <td class="date-cell">28.08.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">28.08.2024</td>
+                        <td class="date-cell">29.08.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1852282" data-fileid="1852282">
+                        zip,&nbsp;414.03&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-cert-for="treat-as-signed">
+							<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">123</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-004P</td>
+                        <td class="date-cell">28.08.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">30.08.2024</td>
+                        <td class="date-cell">30.08.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1852513" data-fileid="1852513">
+                        zip,&nbsp;357.04&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-cert-for="treat-as-signed">
+							<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">124</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-03-00122-A-004P</td>
+                        <td class="date-cell">05.11.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">05.11.2024</td>
+                        <td class="date-cell">06.11.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1857988" data-fileid="1857988">
+                        zip,&nbsp;407.04&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1857988" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">125</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-03-00122-A-004P</td>
+                        <td class="date-cell">05.11.2024</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">06.11.2024</td>
+                        <td class="date-cell">06.11.2024</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1858027" data-fileid="1858027">
+                        zip,&nbsp;454.14&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+                        <button type="button" class="image-button image-button-cert_small cert-cell_image-button-cert show-cert-info-button" title="Данные о подписи" data-doc-id="1858027" data-cert-for="file">
+								<img src="/images/icon-certificate-64.png" alt="Данные о подписи">
+                        </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">126</td>
+            <td class="type-cell">Программа облигаций (биржевых облигаций)</td>
+                        <td class="num-reg-cell">4-00122-A-005P-02E</td>
+                        <td class="date-cell">19.12.2025</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">19.12.2025</td>
+                        <td class="date-cell">30.12.2025</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1907863" data-fileid="1907863">
+                        zip,&nbsp;696.85&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+	                    <button type="button" class="image-button image-button-info cert-cell_image-button-info show-cert-info-button" title="Информация об источнике" data-cert-for="file-open-source">
+							<img src="/images/icon-info-64.png" alt="Информация об источнике">
+	                    </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">127</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-005P</td>
+                        <td class="date-cell">24.02.2026</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">24.02.2026</td>
+                        <td class="date-cell">12.03.2026</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1914320" data-fileid="1914320">
+                        zip,&nbsp;502.16&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+	                    <button type="button" class="image-button image-button-info cert-cell_image-button-info show-cert-info-button" title="Информация об источнике" data-cert-for="file-open-source">
+							<img src="/images/icon-info-64.png" alt="Информация об источнике">
+	                    </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">128</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-01-00122-A-005P</td>
+                        <td class="date-cell">24.02.2026</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">26.02.2026</td>
+                        <td class="date-cell">12.03.2026</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1914323" data-fileid="1914323">
+                        zip,&nbsp;485.01&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+	                    <button type="button" class="image-button image-button-info cert-cell_image-button-info show-cert-info-button" title="Информация об источнике" data-cert-for="file-open-source">
+							<img src="/images/icon-info-64.png" alt="Информация об источнике">
+	                    </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">129</td>
+            <td class="type-cell">Решение о выпуске (дополнительном выпуске) ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-005P</td>
+                        <td class="date-cell">03.03.2026</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">03.03.2026</td>
+                        <td class="date-cell">12.03.2026</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1914321" data-fileid="1914321">
+                        zip,&nbsp;383.69&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+	                    <button type="button" class="image-button image-button-info cert-cell_image-button-info show-cert-info-button" title="Информация об источнике" data-cert-for="file-open-source">
+							<img src="/images/icon-info-64.png" alt="Информация об источнике">
+	                    </button>
+					</div>
+                </td>
+        </tr>
+        <tr>
+            <td rowspan="" class="row-number-cell">130</td>
+            <td class="type-cell">Условия размещения ценных бумаг</td>
+                        <td class="num-reg-cell">4B02-02-00122-A-005P</td>
+                        <td class="date-cell">03.03.2026</td>
+                        <td>ПАО Московская Биржа</td>
+                        <td class="date-cell">05.03.2026</td>
+                        <td class="date-cell">12.03.2026</td>
+                <td rowspan="" class="file-cell">
+                    <a class="file-link" href="https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1914324" data-fileid="1914324">
+                        zip,&nbsp;456.43&nbsp;КБ
+                    </a>
+                </td>
+                <td rowspan="" class="cert-cell">
+					<div>
+	                    <button type="button" class="image-button image-button-info cert-cell_image-button-info show-cert-info-button" title="Информация об источнике" data-cert-for="file-open-source">
+							<img src="/images/icon-info-64.png" alt="Информация об источнике">
+	                    </button>
+					</div>
+                </td>
+        </tr>
+</tbody></table>
+    </div>
+    <div class="pagingblock"></div>
+</div>
+<div class="ed-viewport-centering-layout ed-viewport-centering-layout__cert-info" style="display: none;"></div>
+<input type="hidden" id="hCompanyId" name="hCompanyId" value="6505">
+	</div>
+	<div class="anons-news-tech std-inside__anons-news-tech">
+		<div id="adfox_168173373305942583" class="banner"></div>
+		
+
+
+
+
+		<div class="anons-news-tech__block">
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Новости</div>
+        <div class="time">
+			<span class="date">25.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6516">Проблему низкого интереса эмитентов к привлечению средств на рынке акционерного капитала пока решить не удалось - Чистюхин</a>
+        </div>
+        <div class="time">
+			<span class="date">24.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6515">Банк России оштрафовал Юнипро за нераскрытие информации</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6514">ЦБ РФ не планирует серьезных корректировок проекта новых правил листинга после обсуждений с рынком</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6513">Кейс "ЕвроТранса" может повлиять на регулирование аудита - глава департамента ЦБ</a>
+        </div>
+        <div class="time">
+			<span class="date">22.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6512">Аэрофлот и Мосбиржа дискутируют о критериях включения в программу роста акционерной стоимости</a>
+        </div>
+</div>
+			
+            <a class="button button_light anons-news-tech__button" href="/vse-novosti">Все новости</a>
+		</div>
+		<div id="adfox_168173386396589028" class="banner"></div>
+		<div id="adfox_16817338660869469" class="banner"></div>
+		<div id="adfox_168173386897027439" class="banner"></div>
+		<div id="adfox_168173387120063137" class="banner"></div>
+		<div class="anons-news-tech__block">			
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Техническая информация</div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/135">Технические работы 24 сентября 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">24.08.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/134">Технические работы 27 августа 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">29.07.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/133">Технические работы 30 июля 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">26.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/132">Технические работы 29 июня 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">16.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/131">Технические работы 16 июня 2026 года (проверка МЧД с 18:00 до 19:00 мск)</a>
+        </div>
+</div>
+
+            <a class="button button_light anons-news-tech__button" href="/TechInfo">Все сообщения</a>
+		</div>
+	</div>
+</div>
+
+
+		</div>
+		<footer class="site-footer">
+			<div class="site-footer__social" style="top: 3px;">
+				<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+					<img src="/images/telegram_icon.png" width="30" height="30">
+				</a>
+			</div>
+			<div class="site-footer__menu">
+				<ul class="menulist">
+					<li><a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a> </li>
+					<li><a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a> </li>
+					<li><a class="dash" href="/servisy-dlya-kompanij">сервисы для компаний</a> </li>
+					<li><a class="dash" href="/vse-o-raskrytii">всё о раскрытии</a> </li>
+					<li><a href="/o-proekte">о проекте</a> </li>
+				</ul>
+			</div>
+			<div style="display: flex; margin: 5px auto 0; width: 96%; padding-bottom: 10px;">
+				<div style="font-size: 12px; font-weight: bold; line-height: 17px; padding: 0 8% 0 0">
+					<div style="border: 1px solid lightgrey; white-space: nowrap; padding: 6px 10px;">
+						Служба раскрытия информации<br>
+						Интерфакс-ЦРКИ:<br>
+						+7 (495) 787-52-13<br>
+						+7 (800) 200-48-18<br>
+						<a href="mailto:dc1@e-disclosure.ru">dc1@e-disclosure.ru</a><br>
+						Время работы: пн-пт 08:00-20:00 (мск)<br>
+					</div>
+				</div>
+				<div>
+					<div style="font-size: 11px; height: 24px;">
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">© 2026 Интерфакс-ЦРКИ. Все права защищены</span>
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">
+							<a href="/usloviya-ispol'zovaniya-informacii">Условия использования информации</a>
+						</span>
+						<span style="margin-right: 17px; padding-right: 20px;">
+							<a href="/politika-obrabotki-personalnyh-dannyh">Политика обработки персональных данных</a>
+						</span>
+					</div>
+					<div style="font-size: 9px; line-height: 13px;">
+						Сетевое издание «Центр раскрытия корпоративной информации».
+						Свидетельство о регистрации СМИ ЭЛ № ФС77-64320 выдано Федеральной службой по надзору в сфере связи,
+                        информационных технологий и массовых коммуникаций (Роскомнадзор) 25 декабря 2015 года. Учредитель ООО «Инфоком». Главный редактор Горбатова С.В.<br>
+						<span style="font-size: 11px;">12+</span>
+					</div>
+					<div>
+						<br>
+						<!-- Top100 (Kraken) Widget -->
+						<span id="top100_widget" style="padding: 0; margin: 0;"><a href="https://top100.rambler.ru/navi?query=2928424" target="_blank"></a></span>
+						<!-- END Top100 (Kraken) Widget -->
+						<!-- Rating@Mail.ru logo -->
+						<a style="text-decoration: none;" href="http://top.mail.ru/jump?from=650834">
+							
+						</a>
+						<!-- //Rating@Mail.ru logo -->
+						<!-- Yandex.Metrika informer -->
+						<a href="https://metrika.yandex.ru/stat/?id=53780800&amp;from=informer" target="_blank" rel="nofollow" style="text-decoration: none;">
+							
+						</a>
+						<!-- /Yandex.Metrika informer -->
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<input name="__RequestVerificationToken" type="hidden" value="">	
+	<div id="CookieWarningPopup" style="display: block;">
+	На этом сайте используются файлы cookie. Оставаясь на www.e-disclosure.ru, Вы соглашаетесь с <a href="https://e-disclosure.ru/politika-obrabotki-personalnyh-dannyh" target="_blank">Политикой обработки персональных данных</a>.
+	<button type="button" id="AcceptCookieBtn" class="button2" style="margin-left: 5px;">ОК</button>
+</div>
+    <div id="modalLayout"></div>
+	
+			
+			
+			
+			
+			
+	
+
+	<!-- Top100 (Kraken) Counter -->
+	
+    <!-- END Top100 (Kraken) Counter -->
+
+<div class="csr-uniq1"><div id="fa3b2372ed" class="csr-uniq2" data-ae948e3e94=""></div></div><div id="div-gpt-ad-3452917686404-0"><div id="div-gpt-ad-3452917686404-0" class="banner" style="height: 0px; min-height: 0px; padding: 0px; margin: 0px; font-size: 0px; border: 0px; overflow: hidden;"><div id="google_ads_iframe_/71589/billboard_ads40-f_0__container__"></div></div></div><div class="alert-service alert-service_hidden">
+    <div class="alert-service__wnd">
+        <div class="alert-service__cont-wrap">
+            <div class="alert-service__message"></div>
+        </div>
+        <div class="alert-service__buttons"></div>
+    </div>
+</div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="<Пред"><span class="ui-icon ui-icon-circle-triangle-w">&lt;Пред</span></a><a class="ui-datepicker-next ui-corner-all ui-state-disabled" title="След>"><span class="ui-icon ui-icon-circle-triangle-e">След&gt;</span></a><div class="ui-datepicker-title"><div class="ed-dropdown ui-datepicker-month">
+    <div class="ed-dropdown__header" style="padding-right: 15px;">
+        <div title="Сентябрь">Сентябрь</div>
+    </div>
+    <div class="ed-dropdown__options ed-dropdown__options_hidden"><div class="ed-dropdown__option" data-name="Январь" data-value="0" data-selected="false" data-index="0">Январь</div><div class="ed-dropdown__option" data-name="Февраль" data-value="1" data-selected="false" data-index="1">Февраль</div><div class="ed-dropdown__option" data-name="Март" data-value="2" data-selected="false" data-index="2">Март</div><div class="ed-dropdown__option" data-name="Апрель" data-value="3" data-selected="false" data-index="3">Апрель</div><div class="ed-dropdown__option" data-name="Май" data-value="4" data-selected="false" data-index="4">Май</div><div class="ed-dropdown__option" data-name="Июнь" data-value="5" data-selected="false" data-index="5">Июнь</div><div class="ed-dropdown__option" data-name="Июль" data-value="6" data-selected="false" data-index="6">Июль</div><div class="ed-dropdown__option" data-name="Август" data-value="7" data-selected="false" data-index="7">Август</div><div class="ed-dropdown__option ed-dropdown__option_selected" data-name="Сентябрь" data-value="8" data-selected="true" data-index="8">Сентябрь</div></div>
+</div><select class="ui-datepicker-month" aria-label="Select month" data-handler="selectMonth" data-event="change" style="display: none;"><option value="0">Январь</option><option value="1">Февраль</option><option value="2">Март</option><option value="3">Апрель</option><option value="4">Май</option><option value="5">Июнь</option><option value="6">Июль</option><option value="7">Август</option><option value="8" selected="selected">Сентябрь</option></select><div class="ed-dropdown ui-datepicker-year">
+    <div class="ed-dropdown__header" style="padding-right: 15px;">
+        <div title="2026">2026</div>
+    </div>
+    <div class="ed-dropdown__options ed-dropdown__options_hidden"><div class="ed-dropdown__option" data-name="1950" data-value="1950" data-selected="false" data-index="0">1950</div><div class="ed-dropdown__option" data-name="1951" data-value="1951" data-selected="false" data-index="1">1951</div><div class="ed-dropdown__option" data-name="1952" data-value="1952" data-selected="false" data-index="2">1952</div><div class="ed-dropdown__option" data-name="1953" data-value="1953" data-selected="false" data-index="3">1953</div><div class="ed-dropdown__option" data-name="1954" data-value="1954" data-selected="false" data-index="4">1954</div><div class="ed-dropdown__option" data-name="1955" data-value="1955" data-selected="false" data-index="5">1955</div><div class="ed-dropdown__option" data-name="1956" data-value="1956" data-selected="false" data-index="6">1956</div><div class="ed-dropdown__option" data-name="1957" data-value="1957" data-selected="false" data-index="7">1957</div><div class="ed-dropdown__option" data-name="1958" data-value="1958" data-selected="false" data-index="8">1958</div><div class="ed-dropdown__option" data-name="1959" data-value="1959" data-selected="false" data-index="9">1959</div><div class="ed-dropdown__option" data-name="1960" data-value="1960" data-selected="false" data-index="10">1960</div><div class="ed-dropdown__option" data-name="1961" data-value="1961" data-selected="false" data-index="11">1961</div><div class="ed-dropdown__option" data-name="1962" data-value="1962" data-selected="false" data-index="12">1962</div><div class="ed-dropdown__option" data-name="1963" data-value="1963" data-selected="false" data-index="13">1963</div><div class="ed-dropdown__option" data-name="1964" data-value="1964" data-selected="false" data-index="14">1964</div><div class="ed-dropdown__option" data-name="1965" data-value="1965" data-selected="false" data-index="15">1965</div><div class="ed-dropdown__option" data-name="1966" data-value="1966" data-selected="false" data-index="16">1966</div><div class="ed-dropdown__option" data-name="1967" data-value="1967" data-selected="false" data-index="17">1967</div><div class="ed-dropdown__option" data-name="1968" data-value="1968" data-selected="false" data-index="18">1968</div><div class="ed-dropdown__option" data-name="1969" data-value="1969" data-selected="false" data-index="19">1969</div><div class="ed-dropdown__option" data-name="1970" data-value="1970" data-selected="false" data-index="20">1970</div><div class="ed-dropdown__option" data-name="1971" data-value="1971" data-selected="false" data-index="21">1971</div><div class="ed-dropdown__option" data-name="1972" data-value="1972" data-selected="false" data-index="22">1972</div><div class="ed-dropdown__option" data-name="1973" data-value="1973" data-selected="false" data-index="23">1973</div><div class="ed-dropdown__option" data-name="1974" data-value="1974" data-selected="false" data-index="24">1974</div><div class="ed-dropdown__option" data-name="1975" data-value="1975" data-selected="false" data-index="25">1975</div><div class="ed-dropdown__option" data-name="1976" data-value="1976" data-selected="false" data-index="26">1976</div><div class="ed-dropdown__option" data-name="1977" data-value="1977" data-selected="false" data-index="27">1977</div><div class="ed-dropdown__option" data-name="1978" data-value="1978" data-selected="false" data-index="28">1978</div><div class="ed-dropdown__option" data-name="1979" data-value="1979" data-selected="false" data-index="29">1979</div><div class="ed-dropdown__option" data-name="1980" data-value="1980" data-selected="false" data-index="30">1980</div><div class="ed-dropdown__option" data-name="1981" data-value="1981" data-selected="false" data-index="31">1981</div><div class="ed-dropdown__option" data-name="1982" data-value="1982" data-selected="false" data-index="32">1982</div><div class="ed-dropdown__option" data-name="1983" data-value="1983" data-selected="false" data-index="33">1983</div><div class="ed-dropdown__option" data-name="1984" data-value="1984" data-selected="false" data-index="34">1984</div><div class="ed-dropdown__option" data-name="1985" data-value="1985" data-selected="false" data-index="35">1985</div><div class="ed-dropdown__option" data-name="1986" data-value="1986" data-selected="false" data-index="36">1986</div><div class="ed-dropdown__option" data-name="1987" data-value="1987" data-selected="false" data-index="37">1987</div><div class="ed-dropdown__option" data-name="1988" data-value="1988" data-selected="false" data-index="38">1988</div><div class="ed-dropdown__option" data-name="1989" data-value="1989" data-selected="false" data-index="39">1989</div><div class="ed-dropdown__option" data-name="1990" data-value="1990" data-selected="false" data-index="40">1990</div><div class="ed-dropdown__option" data-name="1991" data-value="1991" data-selected="false" data-index="41">1991</div><div class="ed-dropdown__option" data-name="1992" data-value="1992" data-selected="false" data-index="42">1992</div><div class="ed-dropdown__option" data-name="1993" data-value="1993" data-selected="false" data-index="43">1993</div><div class="ed-dropdown__option" data-name="1994" data-value="1994" data-selected="false" data-index="44">1994</div><div class="ed-dropdown__option" data-name="1995" data-value="1995" data-selected="false" data-index="45">1995</div><div class="ed-dropdown__option" data-name="1996" data-value="1996" data-selected="false" data-index="46">1996</div><div class="ed-dropdown__option" data-name="1997" data-value="1997" data-selected="false" data-index="47">1997</div><div class="ed-dropdown__option" data-name="1998" data-value="1998" data-selected="false" data-index="48">1998</div><div class="ed-dropdown__option" data-name="1999" data-value="1999" data-selected="false" data-index="49">1999</div><div class="ed-dropdown__option" data-name="2000" data-value="2000" data-selected="false" data-index="50">2000</div><div class="ed-dropdown__option" data-name="2001" data-value="2001" data-selected="false" data-index="51">2001</div><div class="ed-dropdown__option" data-name="2002" data-value="2002" data-selected="false" data-index="52">2002</div><div class="ed-dropdown__option" data-name="2003" data-value="2003" data-selected="false" data-index="53">2003</div><div class="ed-dropdown__option" data-name="2004" data-value="2004" data-selected="false" data-index="54">2004</div><div class="ed-dropdown__option" data-name="2005" data-value="2005" data-selected="false" data-index="55">2005</div><div class="ed-dropdown__option" data-name="2006" data-value="2006" data-selected="false" data-index="56">2006</div><div class="ed-dropdown__option" data-name="2007" data-value="2007" data-selected="false" data-index="57">2007</div><div class="ed-dropdown__option" data-name="2008" data-value="2008" data-selected="false" data-index="58">2008</div><div class="ed-dropdown__option" data-name="2009" data-value="2009" data-selected="false" data-index="59">2009</div><div class="ed-dropdown__option" data-name="2010" data-value="2010" data-selected="false" data-index="60">2010</div><div class="ed-dropdown__option" data-name="2011" data-value="2011" data-selected="false" data-index="61">2011</div><div class="ed-dropdown__option" data-name="2012" data-value="2012" data-selected="false" data-index="62">2012</div><div class="ed-dropdown__option" data-name="2013" data-value="2013" data-selected="false" data-index="63">2013</div><div class="ed-dropdown__option" data-name="2014" data-value="2014" data-selected="false" data-index="64">2014</div><div class="ed-dropdown__option" data-name="2015" data-value="2015" data-selected="false" data-index="65">2015</div><div class="ed-dropdown__option" data-name="2016" data-value="2016" data-selected="false" data-index="66">2016</div><div class="ed-dropdown__option" data-name="2017" data-value="2017" data-selected="false" data-index="67">2017</div><div class="ed-dropdown__option" data-name="2018" data-value="2018" data-selected="false" data-index="68">2018</div><div class="ed-dropdown__option" data-name="2019" data-value="2019" data-selected="false" data-index="69">2019</div><div class="ed-dropdown__option" data-name="2020" data-value="2020" data-selected="false" data-index="70">2020</div><div class="ed-dropdown__option" data-name="2021" data-value="2021" data-selected="false" data-index="71">2021</div><div class="ed-dropdown__option" data-name="2022" data-value="2022" data-selected="false" data-index="72">2022</div><div class="ed-dropdown__option" data-name="2023" data-value="2023" data-selected="false" data-index="73">2023</div><div class="ed-dropdown__option" data-name="2024" data-value="2024" data-selected="false" data-index="74">2024</div><div class="ed-dropdown__option" data-name="2025" data-value="2025" data-selected="false" data-index="75">2025</div><div class="ed-dropdown__option ed-dropdown__option_selected" data-name="2026" data-value="2026" data-selected="true" data-index="76">2026</div></div>
+</div><select class="ui-datepicker-year" aria-label="Select year" data-handler="selectYear" data-event="change" style="display: none;"><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026" selected="selected">2026</option></select></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col"><span title="понедельник">Пн</span></th><th scope="col"><span title="вторник">Вт</span></th><th scope="col"><span title="среда">Ср</span></th><th scope="col"><span title="четверг">Чт</span></th><th scope="col"><span title="пятница">Пт</span></th><th scope="col" class="ui-datepicker-week-end"><span title="суббота">Сб</span></th><th scope="col" class="ui-datepicker-week-end"><span title="воскресенье">Вс</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="7" data-year="2026"><a class="ui-state-default ui-priority-secondary" href="#" aria-current="false" data-date="31">31</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="1">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="2">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="3">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="4">4</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="5">5</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="6">6</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="7">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="8">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="9">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="10">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="11">11</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="12">12</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="13">13</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="14">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="15">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="16">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="17">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="18">18</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="19">19</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="20">20</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="21">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="22">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="23">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="24">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="25">25</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="26">26</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="27">27</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default" href="#" aria-current="false" data-date="28">28</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="8" data-year="2026"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#" aria-current="true" data-date="29">29</a></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">30</span></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">1</span></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">2</span></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">3</span></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">4</span></td></tr></tbody></table></div></body></html>

@@ -1,0 +1,518 @@
+{
+  "https://www.e-disclosure.ru/poisk-po-kompaniyam": {
+    "final_url": "https://www.e-disclosure.ru/poisk-po-kompaniyam",
+    "file": "search/page.html"
+  },
+  "https://www.e-disclosure.ru/usloviya-ispol'zovaniya-informacii": {
+    "final_url": "https://www.e-disclosure.ru/usloviya-ispol'zovaniya-informacii",
+    "file": "terms.html"
+  },
+  "https://www.e-disclosure.ru/poluchenie-informacii/shlyuz-api": {
+    "final_url": "https://www.e-disclosure.ru/poluchenie-informacii/shlyuz-api",
+    "file": "api-gateway.html"
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=3043": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=3043",
+    "file": "company/3043.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=1",
+    "file": "files/3043_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2",
+    "file": "files/3043_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3",
+    "file": "files/3043_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4",
+    "file": "files/3043_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=5",
+    "file": "files/3043_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=3043",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=7",
+    "file": "files/3043_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=8",
+    "file": "files/3043_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10",
+    "file": "files/3043_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=3043",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=934": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=934",
+    "file": "company/934.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=1",
+    "file": "files/934_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2",
+    "file": "files/934_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=3",
+    "file": "files/934_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=4",
+    "file": "files/934_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=5",
+    "file": "files/934_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=6",
+    "file": "files/934_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=7",
+    "file": "files/934_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=8",
+    "file": "files/934_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=10",
+    "file": "files/934_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=934&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=934",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=17": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=17",
+    "file": "company/17.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=1",
+    "file": "files/17_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2",
+    "file": "files/17_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3",
+    "file": "files/17_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4",
+    "file": "files/17_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=5",
+    "file": "files/17_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=6",
+    "file": "files/17_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=7",
+    "file": "files/17_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8",
+    "file": "files/17_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10",
+    "file": "files/17_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=17&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=17",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=6505": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=6505",
+    "file": "company/6505.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=1",
+    "file": "files/6505_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=2",
+    "file": "files/6505_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=3",
+    "file": "files/6505_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=4",
+    "file": "files/6505_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=5",
+    "file": "files/6505_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=6505",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=7",
+    "file": "files/6505_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=8",
+    "file": "files/6505_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=10",
+    "file": "files/6505_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=16",
+    "file": "files/6505_16.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=17": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=17",
+    "file": "files/6505_17.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=18": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=6505&type=18",
+    "file": "files/6505_18.html"
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=7671": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=7671",
+    "file": "company/7671.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=1",
+    "file": "files/7671_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2",
+    "file": "files/7671_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3",
+    "file": "files/7671_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4",
+    "file": "files/7671_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=5",
+    "file": "files/7671_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=6",
+    "file": "files/7671_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=7",
+    "file": "files/7671_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8",
+    "file": "files/7671_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10",
+    "file": "files/7671_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=15": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=15",
+    "file": "files/7671_15.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=7671",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=4543": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=4543",
+    "file": "company/4543.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=1",
+    "file": "files/4543_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=2",
+    "file": "files/4543_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=3",
+    "file": "files/4543_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=4",
+    "file": "files/4543_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=5",
+    "file": "files/4543_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=6",
+    "file": "files/4543_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=7",
+    "file": "files/4543_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=4543",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=10",
+    "file": "files/4543_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=4543&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=4543",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=564": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=564",
+    "file": "company/564.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=1",
+    "file": "files/564_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=2",
+    "file": "files/564_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3",
+    "file": "files/564_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4",
+    "file": "files/564_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=5",
+    "file": "files/564_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=6",
+    "file": "files/564_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=7",
+    "file": "files/564_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=564",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10",
+    "file": "files/564_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=564&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=564",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=236": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=236",
+    "file": "company/236.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=1",
+    "file": "files/236_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=2",
+    "file": "files/236_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=3",
+    "file": "files/236_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=4",
+    "file": "files/236_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=5",
+    "file": "files/236_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=6",
+    "file": "files/236_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=7",
+    "file": "files/236_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=8",
+    "file": "files/236_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=10",
+    "file": "files/236_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=236&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=236",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=38288": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=38288",
+    "file": "company/38288.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=1",
+    "file": "files/38288_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=2",
+    "file": "files/38288_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=3",
+    "file": "files/38288_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=4",
+    "file": "files/38288_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=5",
+    "file": "files/38288_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=6",
+    "file": "files/38288_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=7",
+    "file": "files/38288_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=8",
+    "file": "files/38288_8.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=10",
+    "file": "files/38288_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=15": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=15",
+    "file": "files/38288_15.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=38288&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=38288",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=37211": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": "company/37211.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=2",
+    "file": "files/37211_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=4",
+    "file": "files/37211_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=5",
+    "file": "files/37211_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=14": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=14",
+    "file": "files/37211_14.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=37211",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/company.aspx?id=39059": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=39059",
+    "file": "company/39059.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=1": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=1",
+    "file": "files/39059_1.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=2": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=2",
+    "file": "files/39059_2.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=3": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=3",
+    "file": "files/39059_3.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=4": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=4",
+    "file": "files/39059_4.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=5": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=5",
+    "file": "files/39059_5.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=6": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=6",
+    "file": "files/39059_6.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=7": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=7",
+    "file": "files/39059_7.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=8": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=39059",
+    "file": null
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=10": {
+    "final_url": "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=10",
+    "file": "files/39059_10.html"
+  },
+  "https://www.e-disclosure.ru/portal/files.aspx?id=39059&type=16": {
+    "final_url": "https://www.e-disclosure.ru/portal/company.aspx?id=39059",
+    "file": null
+  }
+}

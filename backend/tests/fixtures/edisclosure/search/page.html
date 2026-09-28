@@ -1,0 +1,1304 @@
+<!DOCTYPE html><html><head>
+	<title>Интерфакс – Сервер раскрытия информации</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width">
+	
+	<meta name="keywords" content="">
+	<meta name="description" content="Поиск компаний-эмитентов по названию, ИНН, ОГРН, региону, отрасли и др.">
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="ver" content="3.56.0.639258897622681947_">
+	
+	
+
+
+<!-- Yandex.Metrika counter -->
+
+<!-- /Yandex.Metrika counter -->
+<!-- Rating@Mail.ru counter -->
+
+<!-- //Rating@Mail.ru counter -->
+	
+        
+	
+
+
+	
+	
+	
+	
+	
+	
+
+		<base href="https://www.e-disclosure.ru/" target="_self">
+		
+</head>
+<body class="site-page">	
+	
+
+
+
+	
+<div class="login-window site-page__login-window" id="enter" style="display: none;">
+    <div class="login-window__title title_basic">
+        Вход
+        <div class="right">
+            <img src="/images/close.png" width="14" height="14" alt="Закрыть окно" style="cursor: pointer" id="closeLoginButton">
+        </div>
+    </div>
+    <div class="login-window__content">
+        <form id="loginForm" class="login-form">
+	        <input type="hidden" name="token" value="rGKPTP2hvKwapEXuiZtfE4W0//+Uo25sSSOoZbtpz8Y=">
+	        <div class="login-form__wrapper">
+                <div class="login-form__input-wrapper">Логин/ИНН: <input type="text" id="login" name="login" maxlength="50" class="login-form__input"></div>
+                <div class="login-form__input-wrapper">Пароль: <input type="password" name="password" id="password" class="login-form__input"></div>
+                <div class="login-form__errors"><span class="login-form__error login-form__error_hiden"></span></div>
+                <div style="text-align: center;">
+	                <button type="button" class="button button_bold login-form__login-button">Войти</button>
+                </div>
+                <div class="login-form__forgot-password">Забыли пароль? <a href="https://www.e-disclosure.ru/password-recovery">Восстановить пароль</a></div>
+            </div>
+        </form>
+    </div>
+</div>
+		<div id="page-loader" class="page-loader">
+			<div class="page-loader__page-loader-inner">
+				<div class="loading-spinner"><div class="loading-spinner__loading-spinner-inner"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div></div>
+			</div>
+		</div>
+	<div class="site-page__body-inside">
+		<header class="site-header">
+			<div class="site-header__top">
+				<div class="site-header__site-logo">
+					<a href="/">
+						<img alt="Центр раскрытия " src="/images/logo.gif" width="40" height="40">
+					</a>
+				</div>
+				<div class="site-header__site-title">
+					<h1>
+						<a href="/">
+							ЦЕНТР&nbsp;РАСКРЫТИЯ<br><span>КОРПОРАТИВНОЙ&nbsp;ИНФОРМАЦИИ</span>
+						</a>
+					</h1>
+				</div>
+				<div class="site-header__ifax-logo">
+					<a href="http://www.interfax.ru">
+						<img alt="Интерфакс" src="/images/interfax.png" width="142" height="42">
+					</a>
+				</div>
+				<div class="site-header__contact">
+					Служба раскрытия информации:<br>
+					тел.: <strong>+7 (495) 787-5213, 8-800-200-4818 (в будни, с 08.00 до 20.00 мск)</strong>
+				</div>
+				<div class="site-header__reg">
+					<span style="vertical-align: middle;">Идентификационный код Распространителя информации №0003</span>
+					<button type="button" class="enter">Вход</button>
+					<a class="reg" href="https://emitent.e-disclosure.ru/registration">Регистрация</a>
+				</div>
+			</div>
+			
+<div id="menu_wrap">
+	<div id="menucontainer" style="padding: 0 1% 0 1%; display: flex; flex-direction: row;">
+		<ul id="menulist">
+					<li>
+						<a class="dash" href="/">главная страница</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a>
+					</li>
+					<li>
+						<a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;сервисы для компаний
+							</a>
+                        <ul>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej">раскрытие в ленте новостей</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/informirovanie-birzhi">информирование биржи</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/prioritetnoe-raskrytie">приоритетное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-v-lente-novostej/vizualizaciya-soobshhenij">визуализация сообщений</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/raskrytie-na-sajte">раскрытие на сайте</a>
+										<ul class="site-menu__item-260">
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/informirovanie-aktsionerov">информирование акционеров</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/domen-tret'ego-urovnya">домен 3 уровня</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/dobrovol'noe-raskrytie">добровольное раскрытие</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/raskrytie-na-sajte/sub'ektam-rynka-ehlektroehnergii">субъектам рынка электроэнергии</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/raskrytie-pod-ehmbargo">раскрытие под эмбарго</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/edinoe-okno-s-nrd">единое окно с нрд</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/sinhronizaciya-i-otslezhivanie-publikacij">синхронизация и отслеживание публикаций</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/elektronnaya-anketa">электронная анкета</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-sostavleniya-otcheta-ehmitenta">программа для составления отчета эмитента</a>
+												</li>
+												<li>
+													<a href="/servisy-dlya-kompanij/elektronnaya-anketa/programma-dlya-podgotovki-nefinansovoj-otchetnosti">программа для подготовки нефинансовой отчетности</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/servis-dlya-agentov-po-razmeshheniyu">сервис для агентов по размещению</a>
+									</li>
+									<li>
+										<a href="/servisy-dlya-kompanij/esg-raskrytie">esg-раскрытие</a>
+									</li>
+									<li>
+											<a class="open" href="/servisy-dlya-kompanij/ir-uslugi">ir-услуги</a>
+										<ul>
+												<li>
+													<a href="/servisy-dlya-kompanij/ir-uslugi/ir-uslugi">календарь инвестора</a>
+												</li>
+										</ul>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;получение информации
+							</a>
+                        <ul>
+									<li>
+										<a href="/poluchenie-informacii/shlyuz-api">шлюз (api)</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/email-rassylka">email-рассылка</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/vygruzka-na-ftp">выгрузка на ftp</a>
+									</li>
+									<li>
+										<a href="/poluchenie-informacii/otchеt-po-soobshheniyam">отчет по сообщениям</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;все о раскрытии
+							</a>
+                        <ul>
+									<li>
+										<a href="/vse-o-raskrytii/vestnik-centra-raskrytiya-informacii">вестник центра раскрытия информации</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/reglament-raskrytiya">технические условия</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/kontrol-za-insayderskoy-informaciey">контроль за инсайдерской информацией</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/primenenie-elektronnoj-podpisi">применение электронной подписи</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/normativnye-dokumenty">нормативные документы</a>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/nashi-publikatsii">наши публикации</a>
+									</li>
+									<li>
+											<a class="open" href="/vse-o-raskrytii/premiya-za-otkrytost'">премия за открытость</a>
+										<ul>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/o-premii">о премии</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/kompanuii-pobediteli">компании-победители</a>
+												</li>
+												<li>
+													<a href="/vse-o-raskrytii/premiya-za-otkrytost'/press-relizy">пресс-релизы</a>
+												</li>
+										</ul>
+									</li>
+									<li>
+										<a href="/vse-o-raskrytii/faq">вопросы и ответы</a>
+									</li>
+						</ul>
+					</li>
+					<li>
+							<a class="dash" href="#" onclick="return false;">
+								<img src="/images/open.png" width="8" height="6" alt="">&nbsp;о проекте
+							</a>
+                        <ul class="site-menu__items_about-project">
+									<li>
+										<a href="/o-proekte/o-proekte">о проекте</a>
+									</li>
+									<li>
+										<a href="/o-proekte/rekvizity">реквизиты</a>
+									</li>
+									<li>
+										<a href="/o-proekte/reklama-na-sajte">реклама на сайте</a>
+									</li>
+						</ul>
+					</li>
+		</ul>
+		<div style="flex: 1;"></div>
+		<div style="padding-top: 5px;">
+			<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+				<img src="/images/telegram_icon.png" width="30" height="30">
+			</a>
+		</div>
+	</div>
+</div>		</header>
+		<div class="site-middle">
+			
+
+
+<div class="site-middle__std-inside">
+	<div class="std-main-content std-inside__std-main-content">
+		
+
+
+
+
+<div class="title_basic">Поиск по компаниям</div>
+<input id="went2Card" name="went2Card" type="hidden" value="">
+<input id="filter" name="filter" type="hidden" value="">
+
+<form id="searchCompanyForm" class="search-form">
+    <div class="search-form__row">
+        <span class="search-form__field-name search-company-form__field-name">Название компании,<br>руководитель или код:</span>
+        <div class="search-form__field-value">
+            <input name="textfield" type="text" id="textfield" class="full" maxlength="300" autocomplete="off">
+        </div>
+        <div class="search-form__comment">
+            возможны коды: ИНН, ОГРН, ОКПО, эмитента
+        </div>
+    </div>
+    <div class="search-form__row search-form__row_relative">
+        <div class="search-form__field-name search-company-form__field-name">
+            <div id="selected_region">
+                <span><img src="/images/open.png" width="8" height="6" alt="Выбрать">&nbsp;&nbsp;Выбрать округ или регион</span>
+            </div>
+        </div>
+        <div class="search-form__field-value">
+            <span class="graytext">Выбрано:&nbsp;&nbsp;</span>
+            <span id="checkedDistrictsOrRegions"></span>
+        </div>
+        <div class="ed-viewport-centering-layout" style="display: none;">
+            <div class="ed-window" id="region">
+                <div class="ed-window__title title_basic">
+                    <span id="regSelectTitle">Выбор округа</span>
+                    <div class="right" id="close_region">
+                        <img src="/images/close.png" width="14" height="14" alt="Закрыть окно" style="cursor: pointer;">
+                    </div>
+                </div>
+                <div class="ed-window__content">
+                    <input type="radio" id="radA" value="FederalDistricts" checked="checked" title="Округа" name="radReg">
+                    <label for="radA">Округа</label>
+                    <input type="radio" id="radR" value="Regions" name="radReg">
+                    <label for="radR">Регионы</label>
+                    <div style="overflow-y: auto; max-height: 150px; margin-top: 10px;">
+                        <div id="divA">
+						    
+
+<div class="table table_full">
+    <div class="table__body">
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district-1" value="-1" data-district-name="Все округа">
+                    <label for="district-1">Все округа</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="districtsCheckboxGroup" value="6" id="district6" data-district-name="Сибирский">
+                        <label for="district6">Сибирский</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district1" value="1" data-district-name="Центральный">
+                    <label for="district1">Центральный</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="districtsCheckboxGroup" value="7" id="district7" data-district-name="Дальневосточный">
+                        <label for="district7">Дальневосточный</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district2" value="2" data-district-name="Северо-Западный">
+                    <label for="district2">Северо-Западный</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="districtsCheckboxGroup" value="8" id="district8" data-district-name="Северо-Кавказский">
+                        <label for="district8">Северо-Кавказский</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district3" value="3" data-district-name="Южный">
+                    <label for="district3">Южный</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="districtsCheckboxGroup" value="9" id="district9" data-district-name="Крымский федеральный округ">
+                        <label for="district9">Крымский федеральный округ</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district4" value="4" data-district-name="Приволжский">
+                    <label for="district4">Приволжский</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="districtsCheckboxGroup" value="10" id="district10" data-district-name="Другое">
+                        <label for="district10">Другое</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 50%;">
+                    <input name="districtsCheckboxGroup" type="checkbox" id="district5" value="5" data-district-name="Уральский">
+                    <label for="district5">Уральский</label>
+                </div>
+                <div class="table__cell">
+                </div>
+            </div>
+    </div>
+</div>
+
+                        </div>
+                        <div id="divR" style="display: none">
+                            
+<div class="table table_full">
+    <div class="table__body">
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region-1" value="-1" data-region-name="Все регионы">
+                    <label for="region-1">Все регионы</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region77" value="77" data-region-name="Москва">
+                    <label for="region77">Москва</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region22" value="22" data-region-name="Алтайский край">
+                    <label for="region22">Алтайский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region28" value="28" data-region-name="Амурская область">
+                    <label for="region28">Амурская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region29" value="29" data-region-name="Архангельская область">
+                    <label for="region29">Архангельская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region30" value="30" data-region-name="Астраханская область">
+                    <label for="region30">Астраханская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region31" value="31" data-region-name="Белгородская область">
+                    <label for="region31">Белгородская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region32" value="32" data-region-name="Брянская область">
+                    <label for="region32">Брянская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region33" value="33" data-region-name="Владимирская область">
+                    <label for="region33">Владимирская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region34" value="34" data-region-name="Волгоградская область">
+                    <label for="region34">Волгоградская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region35" value="35" data-region-name="Вологодская область">
+                    <label for="region35">Вологодская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region36" value="36" data-region-name="Воронежская область">
+                    <label for="region36">Воронежская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region93" value="93" data-region-name="Донецкая Народная Республика">
+                    <label for="region93">Донецкая Народная Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region79" value="79" data-region-name="Еврейская автономная область">
+                    <label for="region79">Еврейская автономная область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region75" value="75" data-region-name="Забайкальский край">
+                    <label for="region75">Забайкальский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region90" value="90" data-region-name="Запорожская область">
+                    <label for="region90">Запорожская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region37" value="37" data-region-name="Ивановская область">
+                    <label for="region37">Ивановская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region99" value="99" data-region-name="Иные территории, включая город и космодром Байконур">
+                    <label for="region99">Иные территории, включая город и космодром Байконур</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region38" value="38" data-region-name="Иркутская область">
+                    <label for="region38">Иркутская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region7" value="7" data-region-name="Кабардино-Балкарская Республика">
+                    <label for="region7">Кабардино-Балкарская Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region39" value="39" data-region-name="Калининградская область">
+                    <label for="region39">Калининградская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region40" value="40" data-region-name="Калужская область">
+                    <label for="region40">Калужская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region41" value="41" data-region-name="Камчатский край">
+                    <label for="region41">Камчатский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region9" value="9" data-region-name="Карачаево-Черкесская Республика">
+                    <label for="region9">Карачаево-Черкесская Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region42" value="42" data-region-name="Кемеровская область">
+                    <label for="region42">Кемеровская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region43" value="43" data-region-name="Кировская область">
+                    <label for="region43">Кировская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region44" value="44" data-region-name="Костромская область">
+                    <label for="region44">Костромская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region23" value="23" data-region-name="Краснодарский край">
+                    <label for="region23">Краснодарский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region24" value="24" data-region-name="Красноярский край">
+                    <label for="region24">Красноярский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region45" value="45" data-region-name="Курганская область">
+                    <label for="region45">Курганская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region46" value="46" data-region-name="Курская область">
+                    <label for="region46">Курская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region47" value="47" data-region-name="Ленинградская область">
+                    <label for="region47">Ленинградская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region48" value="48" data-region-name="Липецкая область">
+                    <label for="region48">Липецкая область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region94" value="94" data-region-name="Луганская Народная Республика">
+                    <label for="region94">Луганская Народная Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region49" value="49" data-region-name="Магаданская область">
+                    <label for="region49">Магаданская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region50" value="50" data-region-name="Московская область">
+                    <label for="region50">Московская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region51" value="51" data-region-name="Мурманская область">
+                    <label for="region51">Мурманская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region83" value="83" data-region-name="Ненецкий автономный округ">
+                    <label for="region83">Ненецкий автономный округ</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region52" value="52" data-region-name="Нижегородская область">
+                    <label for="region52">Нижегородская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region53" value="53" data-region-name="Новгородская область">
+                    <label for="region53">Новгородская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region54" value="54" data-region-name="Новосибирская область">
+                    <label for="region54">Новосибирская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region55" value="55" data-region-name="Омская область">
+                    <label for="region55">Омская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region56" value="56" data-region-name="Оренбургская область">
+                    <label for="region56">Оренбургская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region57" value="57" data-region-name="Орловская область">
+                    <label for="region57">Орловская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region58" value="58" data-region-name="Пензенская область">
+                    <label for="region58">Пензенская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region59" value="59" data-region-name="Пермский край">
+                    <label for="region59">Пермский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region25" value="25" data-region-name="Приморский край">
+                    <label for="region25">Приморский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region60" value="60" data-region-name="Псковская область">
+                    <label for="region60">Псковская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region1" value="1" data-region-name="Республика Адыгея">
+                    <label for="region1">Республика Адыгея</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region4" value="4" data-region-name="Республика Алтай">
+                    <label for="region4">Республика Алтай</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region2" value="2" data-region-name="Республика Башкортостан">
+                    <label for="region2">Республика Башкортостан</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region3" value="3" data-region-name="Республика Бурятия">
+                    <label for="region3">Республика Бурятия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region5" value="5" data-region-name="Республика Дагестан">
+                    <label for="region5">Республика Дагестан</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region6" value="6" data-region-name="Республика Ингушетия">
+                    <label for="region6">Республика Ингушетия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region8" value="8" data-region-name="Республика Калмыкия">
+                    <label for="region8">Республика Калмыкия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region10" value="10" data-region-name="Республика Карелия">
+                    <label for="region10">Республика Карелия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region11" value="11" data-region-name="Республика Коми">
+                    <label for="region11">Республика Коми</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region91" value="91" data-region-name="Республика Крым">
+                    <label for="region91">Республика Крым</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region12" value="12" data-region-name="Республика Марий Эл">
+                    <label for="region12">Республика Марий Эл</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region13" value="13" data-region-name="Республика Мордовия">
+                    <label for="region13">Республика Мордовия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region14" value="14" data-region-name="Республика Саха (Якутия)">
+                    <label for="region14">Республика Саха (Якутия)</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region17" value="17" data-region-name="Республика Тыва">
+                    <label for="region17">Республика Тыва</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region61" value="61" data-region-name="Ростовская область">
+                    <label for="region61">Ростовская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region62" value="62" data-region-name="Рязанская область">
+                    <label for="region62">Рязанская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region63" value="63" data-region-name="Самарская область">
+                    <label for="region63">Самарская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region78" value="78" data-region-name="Санкт-Петербург">
+                    <label for="region78">Санкт-Петербург</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region64" value="64" data-region-name="Саратовская область">
+                    <label for="region64">Саратовская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region65" value="65" data-region-name="Сахалинская область">
+                    <label for="region65">Сахалинская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region66" value="66" data-region-name="Свердловская область">
+                    <label for="region66">Свердловская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region92" value="92" data-region-name="Севастополь">
+                    <label for="region92">Севастополь</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region15" value="15" data-region-name="Северная Осетия">
+                    <label for="region15">Северная Осетия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region67" value="67" data-region-name="Смоленская область">
+                    <label for="region67">Смоленская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region26" value="26" data-region-name="Ставропольский край">
+                    <label for="region26">Ставропольский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region68" value="68" data-region-name="Тамбовская область">
+                    <label for="region68">Тамбовская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region16" value="16" data-region-name="Татарстан">
+                    <label for="region16">Татарстан</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region69" value="69" data-region-name="Тверская область">
+                    <label for="region69">Тверская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region70" value="70" data-region-name="Томская область">
+                    <label for="region70">Томская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region71" value="71" data-region-name="Тульская область">
+                    <label for="region71">Тульская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region72" value="72" data-region-name="Тюменская область">
+                    <label for="region72">Тюменская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region18" value="18" data-region-name="Удмуртская Республика">
+                    <label for="region18">Удмуртская Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region73" value="73" data-region-name="Ульяновская область">
+                    <label for="region73">Ульяновская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region27" value="27" data-region-name="Хабаровский край">
+                    <label for="region27">Хабаровский край</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region19" value="19" data-region-name="Хакасия">
+                    <label for="region19">Хакасия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region86" value="86" data-region-name="Ханты-Мансийский автономный округ">
+                    <label for="region86">Ханты-Мансийский автономный округ</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region95" value="95" data-region-name="Херсонская область">
+                    <label for="region95">Херсонская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region74" value="74" data-region-name="Челябинская область">
+                    <label for="region74">Челябинская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region20" value="20" data-region-name="Чеченская Республика">
+                    <label for="region20">Чеченская Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region21" value="21" data-region-name="Чувашская Республика">
+                    <label for="region21">Чувашская Республика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region87" value="87" data-region-name="Чукотский автономный округ">
+                    <label for="region87">Чукотский автономный округ</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region89" value="89" data-region-name="Ямало-Ненецкий автономный округ">
+                    <label for="region89">Ямало-Ненецкий автономный округ</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region76" value="76" data-region-name="Ярославская область">
+                    <label for="region76">Ярославская область</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell">
+                    <input name="regionsCheckboxGroup" type="checkbox" id="region0" value="0" data-region-name=" - (нерезидент)">
+                    <label for="region0"> - (нерезидент)</label>
+                </div>
+            </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="ed-window__footer hcenter">
+                    <button type="button" class="button button_bold">Подтвердить выбор</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="search-form__row search-form__row_relative">
+        <div class="search-form__field-name search-company-form__field-name">
+            <div id="selected_branch">
+                <span>
+                    <img src="/images/open.png" width="8" height="6" alt="Выбрать">&nbsp;&nbsp;Выбрать отрасль
+                </span>
+            </div>
+        </div>
+        <div class="search-form__field-value">
+            <span class="graytext">Выбрано:&nbsp;&nbsp;</span>
+            <span id="checkedBranches"></span>
+        </div>
+        <div class="ed-viewport-centering-layout" style="display: none;">
+            <div class="ed-window" id="branch">
+                <div class="ed-window__title title_basic">
+                    Выбор отрасли
+                    <div class="right">
+                        <img src="/images/close.png" width="14" height="14" alt="Закрыть окно" style="cursor: pointer;">
+                    </div>
+                </div>
+                <div class="ed-window__content">
+				    
+
+<div class="table table_full">
+    <div class="table__body">
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch-1" value="-1" data-branch-name="Все отрасли">
+                    <label for="branch-1">Все отрасли</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="22" id="branch22" data-branch-name="Страховые компании">
+                        <label for="branch22">Страховые компании</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch1" value="1" data-branch-name="Банки ">
+                    <label for="branch1">Банки </label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="18" id="branch18" data-branch-name="Строительство">
+                        <label for="branch18">Строительство</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch14" value="14" data-branch-name="Деревообрабатывающая и ЦБ промышленность">
+                    <label for="branch14">Деревообрабатывающая и ЦБ промышленность</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="12" id="branch12" data-branch-name="Топливная промышленность">
+                        <label for="branch12">Топливная промышленность</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch21" value="21" data-branch-name="Инвестиционные компании">
+                    <label for="branch21">Инвестиционные компании</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="10" id="branch10" data-branch-name="Торговля">
+                        <label for="branch10">Торговля</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch3" value="3" data-branch-name="Легкая промышленность">
+                    <label for="branch3">Легкая промышленность</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="17" id="branch17" data-branch-name="Транспорт">
+                        <label for="branch17">Транспорт</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch2" value="2" data-branch-name="Машиностроение">
+                    <label for="branch2">Машиностроение</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="20" id="branch20" data-branch-name="Услуги">
+                        <label for="branch20">Услуги</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch19" value="19" data-branch-name="Научно-исследовательские организации">
+                    <label for="branch19">Научно-исследовательские организации</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="13" id="branch13" data-branch-name="Химическая промышленность">
+                        <label for="branch13">Химическая промышленность</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch6" value="6" data-branch-name="Нефтегазодобыча и нефтепереработка">
+                    <label for="branch6">Нефтегазодобыча и нефтепереработка</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="11" id="branch11" data-branch-name="Холдинги и управляющие компании">
+                        <label for="branch11">Холдинги и управляющие компании</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch8" value="8" data-branch-name="Пищевая промышленность">
+                    <label for="branch8">Пищевая промышленность</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="4" id="branch4" data-branch-name="Черная и цветная металлургия">
+                        <label for="branch4">Черная и цветная металлургия</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch15" value="15" data-branch-name="Производство строительных материалов">
+                    <label for="branch15">Производство строительных материалов</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="5" id="branch5" data-branch-name="Электроэнергетика">
+                        <label for="branch5">Электроэнергетика</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch7" value="7" data-branch-name="Связь">
+                    <label for="branch7">Связь</label>
+                </div>
+                <div class="table__cell">
+                        <input type="checkbox" name="branchesCheckboxGroup" value="9" id="branch9" data-branch-name="Иное">
+                        <label for="branch9">Иное</label>
+                </div>
+            </div>
+            <div class="table__row">
+                <div class="table__cell" style="width: 56%;">
+                    <input name="branchesCheckboxGroup" type="checkbox" id="branch16" value="16" data-branch-name="Сельское хозяйство">
+                    <label for="branch16">Сельское хозяйство</label>
+                </div>
+                <div class="table__cell">
+                </div>
+            </div>
+    </div>
+</div>
+
+                </div>
+                <div class="ed-window__footer hcenter">
+                    <button type="button" class="button button_bold">Подтвердить выбор</button>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="search-form__buttons">
+        <button type="button" class="button" id="sendButton">Искать</button>
+    </div>
+    <input id="lastPageSize" name="lastPageSize" type="hidden" value="10">
+    <input id="lastPageNumber" name="lastPageNumber" type="hidden" value="1">
+    <input id="query" name="query" type="hidden" value="">
+</form>
+<div id="searchResults"></div>
+
+	</div>
+	<div class="anons-news-tech std-inside__anons-news-tech">
+		<div id="adfox_168173373305942583" class="banner"></div>
+		
+
+
+
+
+		<div class="anons-news-tech__block">
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Новости</div>
+        <div class="time">
+			<span class="date">25.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6516">Проблему низкого интереса эмитентов к привлечению средств на рынке акционерного капитала пока решить не удалось - Чистюхин</a>
+        </div>
+        <div class="time">
+			<span class="date">24.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6515">Банк России оштрафовал Юнипро за нераскрытие информации</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6514">ЦБ РФ не планирует серьезных корректировок проекта новых правил листинга после обсуждений с рынком</a>
+        </div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6513">Кейс "ЕвроТранса" может повлиять на регулирование аудита - глава департамента ЦБ</a>
+        </div>
+        <div class="time">
+			<span class="date">22.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/vse-novosti/novost/6512">Аэрофлот и Мосбиржа дискутируют о критериях включения в программу роста акционерной стоимости</a>
+        </div>
+</div>
+			
+            <a class="button button_light anons-news-tech__button" href="/vse-novosti">Все новости</a>
+		</div>
+		<div id="adfox_168173386396589028" class="banner"></div>
+		<div id="adfox_16817338660869469" class="banner"></div>
+		<div id="adfox_168173386897027439" class="banner"></div>
+		<div id="adfox_168173387120063137" class="banner"></div>
+		<div class="anons-news-tech__block">			
+			
+
+
+<div class="news">
+	<div class="small-news-list__title">Техническая информация</div>
+        <div class="time">
+			<span class="date">23.09.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/135">Технические работы 24 сентября 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">24.08.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/134">Технические работы 27 августа 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">29.07.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/133">Технические работы 30 июля 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">26.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/132">Технические работы 29 июня 2026 года</a>
+        </div>
+        <div class="time">
+			<span class="date">16.06.2026</span>
+            <span class="graytext"></span>
+        </div>
+        <div class="listitem">
+			<a class="blacklink" href="/TechInfo/Index/131">Технические работы 16 июня 2026 года (проверка МЧД с 18:00 до 19:00 мск)</a>
+        </div>
+</div>
+
+            <a class="button button_light anons-news-tech__button" href="/TechInfo">Все сообщения</a>
+		</div>
+	</div>
+</div>
+
+
+		</div>
+		<footer class="site-footer">
+			<div class="site-footer__social" style="top: 3px;">
+				<a href="https://t.me/edisclosure" target="_blank" title="telegram">
+					<img src="/images/telegram_icon.png" width="30" height="30">
+				</a>
+			</div>
+			<div class="site-footer__menu">
+				<ul class="menulist">
+					<li><a class="dash" href="/poisk-po-kompaniyam">поиск по компаниям</a> </li>
+					<li><a class="dash" href="/poisk-po-soobshheniyam">поиск по сообщениям</a> </li>
+					<li><a class="dash" href="/servisy-dlya-kompanij">сервисы для компаний</a> </li>
+					<li><a class="dash" href="/vse-o-raskrytii">всё о раскрытии</a> </li>
+					<li><a href="/o-proekte">о проекте</a> </li>
+				</ul>
+			</div>
+			<div style="display: flex; margin: 5px auto 0; width: 96%; padding-bottom: 10px;">
+				<div style="font-size: 12px; font-weight: bold; line-height: 17px; padding: 0 8% 0 0">
+					<div style="border: 1px solid lightgrey; white-space: nowrap; padding: 6px 10px;">
+						Служба раскрытия информации<br>
+						Интерфакс-ЦРКИ:<br>
+						+7 (495) 787-52-13<br>
+						+7 (800) 200-48-18<br>
+						<a href="mailto:dc1@e-disclosure.ru">dc1@e-disclosure.ru</a><br>
+						Время работы: пн-пт 08:00-20:00 (мск)<br>
+					</div>
+				</div>
+				<div>
+					<div style="font-size: 11px; height: 24px;">
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">© 2026 Интерфакс-ЦРКИ. Все права защищены</span>
+						<span class="dash" style="margin-right: 17px; padding-right: 20px;">
+							<a href="/usloviya-ispol'zovaniya-informacii">Условия использования информации</a>
+						</span>
+						<span style="margin-right: 17px; padding-right: 20px;">
+							<a href="/politika-obrabotki-personalnyh-dannyh">Политика обработки персональных данных</a>
+						</span>
+					</div>
+					<div style="font-size: 9px; line-height: 13px;">
+						Сетевое издание «Центр раскрытия корпоративной информации».
+						Свидетельство о регистрации СМИ ЭЛ № ФС77-64320 выдано Федеральной службой по надзору в сфере связи,
+                        информационных технологий и массовых коммуникаций (Роскомнадзор) 25 декабря 2015 года. Учредитель ООО «Инфоком». Главный редактор Горбатова С.В.<br>
+						<span style="font-size: 11px;">12+</span>
+					</div>
+					<div>
+						<br>
+						<!-- Top100 (Kraken) Widget -->
+						<span id="top100_widget" style="padding: 0; margin: 0;"><a href="https://top100.rambler.ru/navi?query=2928424" target="_blank"></a></span>
+						<!-- END Top100 (Kraken) Widget -->
+						<!-- Rating@Mail.ru logo -->
+						<a style="text-decoration: none;" href="http://top.mail.ru/jump?from=650834">
+							
+						</a>
+						<!-- //Rating@Mail.ru logo -->
+						<!-- Yandex.Metrika informer -->
+						<a href="https://metrika.yandex.ru/stat/?id=53780800&amp;from=informer" target="_blank" rel="nofollow" style="text-decoration: none;">
+							
+						</a>
+						<!-- /Yandex.Metrika informer -->
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<input name="__RequestVerificationToken" type="hidden" value="">	
+	<div id="CookieWarningPopup">
+	На этом сайте используются файлы cookie. Оставаясь на www.e-disclosure.ru, Вы соглашаетесь с <a href="https://e-disclosure.ru/politika-obrabotki-personalnyh-dannyh" target="_blank">Политикой обработки персональных данных</a>.
+	<button type="button" id="AcceptCookieBtn" class="button2" style="margin-left: 5px;">ОК</button>
+</div>
+    <div id="modalLayout"></div>
+	
+			
+			
+			
+			
+			
+	
+
+	<!-- Top100 (Kraken) Counter -->
+	
+    <!-- END Top100 (Kraken) Counter -->
+
+<div class="csr-uniq1"><div id="fae10172ad" class="csr-uniq2" data-3eda60c7a1=""></div></div></body></html>

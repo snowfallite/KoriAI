@@ -1,0 +1,8 @@
+#
+
+User-Agent: *
+Disallow: /api/*
+Disallow: /Event/Certificate?*
+Disallow: /Company/Certificate/*
+Disallow: /PortalImageHandler.ashx?*
+Disallow: /Company/Search?*

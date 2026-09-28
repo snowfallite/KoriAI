@@ -10,3 +10,6 @@ __pycache__/
 .hypothesis/
 
 node_modules/
+
+# Files downloaded by scripts/discover_edisclosure.py
+/.discovery/
