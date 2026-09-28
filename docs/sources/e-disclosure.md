@@ -42,7 +42,7 @@
 
 1. **HTTP без браузера.** Запросы через urllib с User-Agent `KoriBot/1.0 (+mailto:…)` получили 403 от сервера Angie на robots.txt, поиск, карточку и список файлов. В теле страница «Forbidden» с текстом «If you are not a bot, please copy the report and send it to our support team». Снимок `blocked_403.html`, IP в нём заменён на 203.0.113.10.
 2. **Браузер.** Chromium 153 со своим User-Agent получил все страницы без капчи. Все 54 файла скачаны запросом из контекста браузера (те же cookies и User-Agent) с ответом 200. Открытые проекты за сентябрь 2026 описывают перед сайтом JS-проверку ServicePipe (cookies `spjs`, `spsc`, `spid`); браузер проходит её сам.
-   **Headless не проходит.** С родным User-Agent (`HeadlessChrome`) Chromium получает 403. С User-Agent, где `HeadlessChrome` заменён на `Chrome`, он проходит JS-проверку (cookies `spid`, `spjs`, `spsc`), а затем сайт уводит его на капчу `/xpvnsulc/?back_location=…` с текстом «Разверните картинку горизонтально» (cookie `rndcaptcha`). Проверено на двух карточках 29.09.2026. Поэтому ядро v3 держит браузер в оконном режиме, а на сервере — под Xvfb.
+   **Headless не проходит.** С родным User-Agent (`HeadlessChrome`) Chromium получает 403. С User-Agent, где `HeadlessChrome` заменён на `Chrome`, он проходит JS-проверку (cookies `spid`, `spjs`, `spsc`), а затем сайт уводит его на капчу `/xpvnsulc/?back_location=…` с текстом «Разверните картинку горизонтально» (cookie `rndcaptcha`). Проверено на двух карточках 29.09.2026. Поэтому ядро v3 держит браузер в оконном режиме, на сервере под Xvfb.
 3. **robots.txt** (снимок `robots.txt`):
 
    ```
