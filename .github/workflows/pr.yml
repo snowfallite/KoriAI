@@ -58,7 +58,7 @@ jobs:
         run: |
           cat /etc/ssl/certs/ca-certificates.crt ../infra/certs/russian_trusted_root_ca.pem > "$RUNNER_TEMP/ca.pem"
           echo "SSL_CERT_FILE=$RUNNER_TEMP/ca.pem" >> "$GITHUB_ENV"
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.2.0
         with:
           enable-cache: true
           cache-dependency-glob: backend/uv.lock
