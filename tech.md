@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 2
+> CORE_VERSION: 3
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v3 (2026-09-29): итоги discovery e-disclosure. Адаптер ходит через Chromium в оконном режиме без KoriBot, ключ `EDISCLOSURE_USER_AGENT` удалён; поиска компаний по сайту нет (robots.txt запрещает `/api/*`), эмитенты берутся из `reference/issuers.csv` (строки `IssuerRef`); у строки файла появилось описание, раздел `other` входит в синхронизацию; RAR5 и 7z распаковывает libarchive (S1-12).
 - v2 (2026-09-28): продукт переименован в «氷 Kōri»: образ `kori-api`, `TINVEST_APP_NAME=kori`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0`.
 - v1 (2026-09-26): первичное ядро. Стек, архитектура, схема БД, контракты HTTP/SSE/портов/агента/очереди, UI-компоненты, тесты, CI/CD, long-lead, стадии S1 (каркас) и S2 (слайсы F-01..F-16).
 
@@ -61,7 +62,9 @@
 | | LangChain 1.x (`langchain-core`), LangGraph 1.x, `langchain-gigachat` 0.5.x, `gigachat` | |
 | | `t-tech-investments` | только из индекса T-Bank (§4.3) |
 | | `tavily-python` (`AsyncTavilyClient`) | search, extract, crawl, map |
-| | httpx, selectolax | HTML e-disclosure |
+| | httpx, selectolax | HTTP-клиенты; разбор HTML e-disclosure |
+| | playwright (Python), Chromium | транспорт e-disclosure: клиенту без браузера сайт отдаёт 403, headless упирается в капчу (S1-12) |
+| | libarchive-c | распаковка zip, rar (RAR5) и 7z отчётности |
 | | pdfplumber (рендер страниц через pypdfium2), pypdf, openpyxl, xlrd | PDF и таблицы. PyMuPDF не используем (AGPL) |
 | | qdrant-client, fastembed | эмбеддинги локально на CPU |
 | | NumPy, pandas, SciPy | расчёты |
@@ -95,7 +98,7 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
                              ├─► T-Invest API (gRPC; токен пользователя или системный)
                              ├─► GigaChat API (HTTPS)
                              ├─► Tavily API
-                             └─► e-disclosure.ru (HTTP)
+                             └─► e-disclosure.ru (Chromium через Playwright)
 ```
 
 ### 3.2 Решения
@@ -327,7 +330,7 @@ from t_tech.invest.constants import INVEST_GRPC_API  # боевой контур
 
 - `app.contracts` импортирует только `app.contracts`, stdlib и pydantic.
 - `app.gateways.*` не импортирует `app.domains.*`.
-- `app.domains.*` не импортирует SDK внешних сервисов: `t_tech`, `gigachat`, `langchain_gigachat`, `tavily`, `qdrant_client`, `fastembed`, `httpx`, `selectolax`, `pdfplumber`, `pypdf`. Исключение: `app.domains.disclosures` и `app.domains.media` импортируют `pdfplumber`, `pypdf` (разбор и рендер локальных файлов).
+- `app.domains.*` не импортирует SDK внешних сервисов: `t_tech`, `gigachat`, `langchain_gigachat`, `tavily`, `qdrant_client`, `fastembed`, `httpx`, `selectolax`, `playwright`, `pdfplumber`, `pypdf`, `libarchive`. Исключение: `app.domains.disclosures` и `app.domains.media` импортируют `pdfplumber`, `pypdf` (разбор и рендер локальных файлов), `app.domains.disclosures` ещё и `libarchive` (распаковка архивов).
 - `langchain_core` и `langgraph` разрешены только в `app.domains.agent` и `app.gateways.llm`.
 - `app.domains.analytics` не импортирует ничего из `app`, кроме `app.contracts`.
 - Домен импортирует чужой домен только через его `service.py`. Чужой `repo.py` не импортируется.
@@ -560,12 +563,13 @@ create table disclosure_documents (
                       'affiliates','emission','investors','other','meetings')),
   source_page_url   text not null,                   -- files.aspx?id=..&type=..
   doc_type_raw      text not null,
+  description       text,                            -- строка описания под записью на сайте
   kind              text not null check (kind in ('ifrs_annual','ifrs_interim','ras_annual','ras_interim',
                       'annual_report','issuer_report','presentation','press_release','other')),
   standard          text not null check (standard in ('ifrs','ras','none')),
   period_year       integer,
   period_months     integer check (period_months in (3,6,9,12)),
-  period_label      text not null,                   -- как на сайте: '2026, 6 месяцев'
+  period_label      text not null,                   -- как на сайте: '2026, 6 месяцев'; '' без колонки периода
   basis_date        date,
   published_date    date not null,
   file_ext          text not null,                   -- 'zip','pdf','xlsx',...
@@ -1066,22 +1070,21 @@ class WebSearchPort(Protocol):
 
 ```python
 class DisclosurePort(Protocol):
-    async def search_companies(self, query: str) -> list[DisclosureCompanyHit]: ...   # название, ИНН, ОГРН
     async def get_company(self, company_id: int) -> DisclosureCompany: ...
     async def list_files(self, company_id: int, section: FileSection) -> list[DisclosureFileRow]: ...
     async def download(self, file_id: int) -> DownloadedFile: ...
 ```
 
 - `FileSection` → параметр `type` страницы `files.aspx`: `charter=1, annual=2, ras=3, ifrs=4, issuer_reports=5, affiliates=6, emission=7, investors=8, other=10, meetings=16`.
-- `DisclosureCompanyHit {company_id, name, inn: str | None, ogrn: str | None}`; `DisclosureCompany {company_id, full_name, short_name, inn, ogrn, address: str | None, page_url}`.
-- `DisclosureFileRow {file_id: int, section, doc_type_raw, period_raw, basis_date: date | None, published_date: date, file_ext, size_raw, page_url, download_url}`. Строка таблицы сайта: «Тип документа», «Отчетный период» (`2025` или `2026, 6 месяцев`), «Дата наступления основания», «Дата размещения», ссылка `FileLoad.ashx?Fileid=<id>` с подписью `zip, 2.09 МБ`.
+- `DisclosureCompany {company_id, full_name, short_name, inn: str | None, ogrn: str | None, address: str | None, page_url}`: поля блока «Общие сведения» карточки (`td.field-name` и соседняя ячейка); у иностранного эмитента ИНН и ОГРН нет.
+- `DisclosureFileRow {file_id: int, section, doc_type_raw, period_raw, description: str | None, basis_date: date | None, published_date: date, file_ext, size_raw, page_url, download_url}`. Строка `table.files-table`: «Тип документа» (`td.type-cell`, пробелы схлопываются), колонка периода («Отчетный период» или «Отчетный год»: `2025`, `2026, 6 месяцев`; у раздела без неё `period_raw = ''`), «Дата наступления основания», «Дата размещения», ссылка `a.file-link` (`data-fileid`, подпись `zip, 2.09 МБ`). `description`: текст следующей строки `tr.description-row`; только по нему видны презентации и пресс-релизы.
 - `DownloadedFile {file_id, filename, content_type, size, sha256, storage_key}`: адаптер сразу пишет байты в `FilesPort`.
 
-URL: карточка `https://www.e-disclosure.ru/portal/company.aspx?id=<company_id>`, файлы `.../portal/files.aspx?id=<company_id>&type=<n>`, загрузка `.../portal/FileLoad.ashx?Fileid=<file_id>`. Механику поиска компаний, состав архивов, селекторы и граничные случаи фиксирует discovery (S1-12) в `docs/sources/e-disclosure.md`; снимки HTML ложатся в `backend/tests/fixtures/edisclosure/` и служат golden-тестами парсера.
+URL: карточка `https://www.e-disclosure.ru/portal/company.aspx?id=<company_id>`, файлы `.../portal/files.aspx?id=<company_id>&type=<n>`, загрузка `.../portal/FileLoad.ashx?Fileid=<file_id>`. Селекторы, состав архивов и граничные случаи зафиксированы в `docs/sources/e-disclosure.md` (S1-12). Снимки HTML (только разметка) лежат в `backend/tests/fixtures/edisclosure/` и служат golden-тестами парсера. Раздел без файлов отвечает редиректом на карточку, пагинации нет.
 
-Вежливость: не больше `EDISCLOSURE_RPS` запросов в секунду (0.5), конкурентность 1, `User-Agent` из `EDISCLOSURE_USER_AGENT` с контактом, ретраи 5xx и таймаутов (3, экспонента), кэш HTML-страниц списков 6 ч в `FilesPort`. Каждый ответ агента с данными отсюда содержит `SourceRef` со ссылкой на страницу e-disclosure (условия использования сайта требуют гиперссылку).
+Транспорт и вежливость: клиенту без браузера сайт отдаёт 403, headless Chromium получает 403 или капчу (S1-12). Адаптер ходит через Chromium (Playwright) в оконном режиме, на сервере под виртуальным дисплеем Xvfb, с User-Agent самого браузера; KoriBot не пишем. Один контекст браузера, конкурентность 1, не больше `EDISCLOSURE_RPS` запросов в секунду (0.5); файлы качаются запросом из контекста браузера (те же cookies). robots.txt читается на старте и соблюдается с wildcards по RFC 9309: `/api/*` и `/Company/Search?*` запрещены, поэтому поиска по сайту нет. Капча или 403 дают `TransientGatewayError('disclosure_unavailable')`; капчу адаптер не решает. Ретраи 5xx и таймаутов (3, экспонента), кэш HTML-страниц списков 6 ч в `FilesPort`. Сохраняемый HTML без `script`, `style`, `iframe`, `noscript`, `link` и токенов форм: сайт вписывает в DOM IP посетителя. Каждый ответ агента с данными отсюда содержит `SourceRef` со ссылкой на страницу e-disclosure (условия использования сайта требуют гиперссылку).
 
-Маппинг эмитентов: `issuers` связывает актив T-Invest (`asset_uid`) и `edisclosure_id`. Источники по убыванию приоритета: `manual` (CLI `bind-issuer`), справочник `backend/fixtures/reference/issuers.csv` (собирается в S1-12 для эмитентов индекса IMOEX и популярных бумаг), автоматический поиск `search_companies` по названию с оценкой уверенности (`auto_confirmed` при ≥ 0.9, иначе `auto_candidate`, и агент просит пользователя уточнить).
+Маппинг эмитентов: `issuers` связывает актив T-Invest (`asset_uid`) и `edisclosure_id`. Источники по убыванию приоритета: `manual` (CLI `bind-issuer`) и справочник `backend/fixtures/reference/issuers.csv` (IMOEX и популярные бумаги; собран в S1-12, пересобирается `just discover-edisclosure --issuers`). Строка справочника: `IssuerRef {ticker: str, edisclosure_id: int, inn: str | None, ogrn: str | None, name: str, short_name: str | None}`, CSV UTF-8 с заголовком; `ticker` связывает строку с `instruments.ticker`, а через него с `asset_uid`. Эмитента нет в справочнике: `resolve_status='unresolved'`, агент сообщает, что отчётность эмитента не подключена. Значения `auto_confirmed` и `auto_candidate` зарезервированы под платный шлюз.
 
 ### 8.6 Эмбеддинги и векторы
 
@@ -1468,7 +1471,7 @@ class SourceRef(BaseModel):
 | `analytics/resample.py` | `align(*series)`, `resample(series, 'week' \| 'month')` | выровненные ряды одной длины; ресэмплинг по последнему значению сохраняет последние значения периодов |
 | `analytics/numbers.py` | `extract_numbers(text)`, `format_ru(d, kind)` | `extract_numbers(format_ru(d))` возвращает d с точностью формата; на любой строке не бросает |
 | `analytics/calc.py` | `safe_eval(expr) -> Decimal` (AST: числа, `+ - * / **`, унарный минус, скобки, `%`) | совпадает с эталоном на сгенерированных деревьях; имена, вызовы, атрибуты отклоняет |
-| `disclosures/periods.py` | `parse_period(raw) -> (year, months) \| None`, `classify_doc(doc_type_raw, section) -> (kind, standard)` | не бросает; неизвестное даёт `None` или `other` |
+| `disclosures/periods.py` | `parse_period(raw) -> (year, months) \| None`, `classify_doc(doc_type_raw, section, description) -> (kind, standard)` | не бросает; неизвестное даёт `None` или `other` |
 | `disclosures/parse_ras.py` | `parse_ras_tables(tables) -> list[Fact]`, `check_identities(facts)` | перестановка строк не меняет результат; тождества §12.3 проверяются |
 | `agent/budget.py` | §9.5 | §9.5 |
 | `agent/classify.py` | `classify_rules` | детерминирована, не бросает |
@@ -1650,7 +1653,7 @@ class SourceRef(BaseModel):
 | `seed/edisclosure/` | карточки, списки файлов, маленькие архивы с PDF для фейка `DisclosurePort` |
 | `seed/docs/` | 3 PDF (РСБУ годовая, выдержка МСФО, презентация): урезанные публичные или синтетические |
 | `seed/blocks_cases.json` | тест-векторы `split_blocks` (§9.9) |
-| `reference/issuers.csv` | маппинг эмитентов (§8.5) |
+| `reference/issuers.csv` | маппинг эмитентов, строки `IssuerRef` (§8.5) |
 
 Снимки HTML реального сайта для golden-тестов парсера лежат отдельно: `backend/tests/fixtures/edisclosure/`.
 
@@ -1671,7 +1674,7 @@ class SourceRef(BaseModel):
 | Квоты | `LLM_QUOTAS=lite:250000000,pro:40000000,max:25000000,ultra:50000000`, `LLM_QUOTA_PERIOD_START=2026-09-26`, `LLM_QUOTA_PERIOD_DAYS=365`, `LLM_PACE_MAX=1.15`, `LLM_PACE_GRACE_DAYS=7`, `LLM_RESERVE_PCT=1`, `USER_DAILY_BUDGET_LITE_EQ=600000`, `BACKGROUND_DAILY_BUDGET_LITE_EQ=1500000` |
 | Агент | `AGENT_HISTORY_MESSAGES=8`, `AGENT_RUN_TIMEOUT_S=240`, `AGENT_RUN_BUDGET_LITE_EQ=400000`, `TOOL_TIMEOUT_S=60`, `RUN_EVENTS_TTL_S=600` |
 | Web | `WEB_MODE=fake`, `TAVILY_API_KEY=`, `TAVILY_MONTHLY_CREDITS=1000`, `TAVILY_USER_DAILY_CREDITS=40`, `WEB_CACHE_TTL_SEARCH_S=21600`, `WEB_CACHE_TTL_EXTRACT_S=604800` |
-| Раскрытие | `DISCLOSURE_MODE=fake`, `EDISCLOSURE_BASE_URL=https://www.e-disclosure.ru`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0 (+mailto:<контакт>)`, `EDISCLOSURE_RPS=0.5`, `DISCLOSURE_YEARS_BACK=5` |
+| Раскрытие | `DISCLOSURE_MODE=fake`, `EDISCLOSURE_BASE_URL=https://www.e-disclosure.ru`, `EDISCLOSURE_RPS=0.5`, `DISCLOSURE_YEARS_BACK=5` |
 | Векторы | `EMBEDDINGS_MODE=fake`, `EMBEDDINGS_DENSE_MODEL=intfloat/multilingual-e5-small`, `EMBEDDINGS_SPARSE_MODEL=Qdrant/bm25`, `FASTEMBED_CACHE_DIR=/data/fastembed`, `VECTORS_MODE=memory` (`qdrant` на VPS) |
 | Медиа | `FETCH_MODE=fake`, `MEDIA_MAX_BYTES=5242880` |
 | Фейки | `FAKE_FAULTS=`, `FAKE_STRICT=false` (в тестах `true`) |
@@ -1699,7 +1702,7 @@ class SourceRef(BaseModel):
 | `just gate` | всё, что проверяет PR-гейт (§20.1) |
 | `just smoke-external` | `scripts/smoke_external.py` с реальными ключами |
 | `just eval-live` | 20 эталонных вопросов на реальном GigaChat |
-| `just discover-edisclosure` | `scripts/discover_edisclosure.py` |
+| `just discover-edisclosure` | `scripts/discover_edisclosure.py`: обход выборки эмитентов; `--issuers` пересобирает `reference/issuers.csv` |
 | `just invites <n>` | `cli invites create --count <n>` |
 
 ## 16. Конвенции кода
@@ -1927,7 +1930,7 @@ MVP: один тестовый VPS, он же рабочее окружение 
 | L-03 | VPS: площадка, доступность всех внешних API с её IP (GigaChat, T-Invest, Tavily, e-disclosure, индекс пакетов T-Bank), домен, DNS; 152-ФЗ (локализация ПДн граждан РФ) при публичном запуске | S1-13 | арендовать, прогнать smoke | локальный compose |
 | L-04 | Индекс пакетов T-Bank с раннеров GitHub. Недоступен: wheel `t-tech-investments` кладётся в кэш CI или приватный mirror | CI бэка | проверить в S1-01 | локальная установка по `uv.lock` |
 | L-05 | T-Invest: read-only токен владельца для smoke и `TINVEST_SYSTEM_TOKEN` | реальные данные брокера | выпустить токен «только чтение» в Т-Инвестициях | `TINVEST_MODE=fake` |
-| L-06 | e-disclosure: хрупкость HTML; условия использования (гиперссылка на источник; обязательно раскрываемая эмитентом информация не является материалом Интерфакс-ЦРКИ); запасной вариант: платный шлюз API Интерфакса по договору | F-10 в проде | discovery в S1-12 | снимки HTML, фейк |
+| L-06 | e-disclosure: клиенту без браузера 403, headless получает капчу, robots.txt запрещает `/api/*` (поиск компаний); хрупкость HTML; условия использования (гиперссылка на источник; обязательно раскрываемая эмитентом информация не является материалом Интерфакс-ЦРКИ); запасной вариант: платный «Шлюз Раскрытие» (от 16 180 ₽ в месяц, подписка от 3 месяцев) | F-10 в проде | discovery в S1-12 (сделан); проверка адаптера с VPS в S1-13 | снимки HTML, фейк |
 | L-07 | Корневой сертификат НУЦ Минцифры для GigaChat | реальные вызовы GigaChat | положить `russian_trusted_root_ca.pem` в `infra/certs/` | `LLM_MODE=fake` |
 
 ## 22. Дорожная карта
@@ -1979,7 +1982,7 @@ AC: 1) нажатие «Эхо» показывает payload из `dev.echo`; 2
 Тесты: contract (кадры валидируются `StreamEvent`), integration реплея, fast-check `reduceRunEvent`, e2e эха.
 
 **S1-09. Порты, фейки, LLM-гейт, smoke.**
-Делает: `port.py` всех клиентов §8, фейки с `FaultPlan`, `factory.py`, `llm/gate.py` (§3.3), `llm/metering.py`, реальные адаптеры всех портов полностью (`gigachat.py`, `tinvest/real.py` по §8.2, `web/tavily.py` с кэшем и кредитами по §8.4, `disclosure/edisclosure/` с разбором HTML по снимкам S1-12, `fastembed.py`, `qdrant.py`, `safe_httpx.py`), `scripts/smoke_external.py`.
+Делает: `port.py` всех клиентов §8, фейки с `FaultPlan`, `factory.py`, `llm/gate.py` (§3.3), `llm/metering.py`, реальные адаптеры всех портов полностью (`gigachat.py`, `tinvest/real.py` по §8.2, `web/tavily.py` с кэшем и кредитами по §8.4, `disclosure/edisclosure/` на Playwright по §8.5 с разбором HTML по снимкам S1-12, Chromium и Xvfb в образе api, `fastembed.py`, `qdrant.py`, `safe_httpx.py`), `scripts/smoke_external.py`.
 AC: 1) при `*_MODE=fake` каждый фейк отдаёт сид-данные; 2) мусорный вход в фейк даёт `ContractViolation`; 3) гейт с 3 interactive и 2 background заявками выдаёт слоты строго по приоритету, внутри класса FIFO, `on_queue` сообщает позиции, превышение ожидания даёт `llm_busy`; 4) `smoke_external.py` на реальных ключах проверяет OAuth GigaChat, список моделей, вызов функции на каждом семействе (итог в `LLM_TOOLS_UNSUPPORTED`), `precached_prompt_tokens > 0` на втором вызове с тем же `X-Session-ID`, окна контекста (итог в `LLM_CONTEXT_TOKENS`), `GetAccounts` с `access_level`, поиск Tavily, карточку e-disclosure; отчёт в `docs/sources/smoke-<date>.md`.
 Тесты: unit и property гейта (порядок выдачи = приоритет, затем время), contract фейков (валидный вход проходит, мусор падает), unit metering (usage пишется в `llm_calls` и `usage_daily`, 429 ретраится через `FaultPlan`), golden разбора HTML e-disclosure на снимках, unit маппинга ответов T-Invest и Tavily на DTO (респонсы-фикстуры), unit SSRF-проверок `safe_httpx` (приватные, loopback, link-local адреса, редирект на приватный).
 
@@ -2000,7 +2003,7 @@ AC: документ отвечает на вопросы: 1) как найти 
 
 **S1-13. Деплой на тестовый VPS.**
 Делает: `deploy.yml`, `deploy.sh`, секреты, `docker-compose.yml` на VPS, `cli create-owner` на VPS, `VECTORS_MODE=qdrant`, реальные клиенты там, где есть ключи (L-02, L-05, L-07). Тестовый VPS работает с `APP_ENV=staging` (поведение prod, фейки разрешены) до получения всех ключей, затем `prod`.
-AC: 1) мёрж в `main` выкатывает версию на VPS не дольше 10 минут; 2) миграции применяются в деплой-шаге; 3) сломанный healthcheck возвращает прошлый тег; 4) HTTPS с валидным сертификатом; 5) Портфель работает на VPS под демо-пользователем.
+AC: 1) мёрж в `main` выкатывает версию на VPS не дольше 10 минут; 2) миграции применяются в деплой-шаге; 3) сломанный healthcheck возвращает прошлый тег; 4) HTTPS с валидным сертификатом; 5) Портфель работает на VPS под демо-пользователем; 6) адаптер e-disclosure открывает с VPS карточку и список файлов без капчи, иначе владелец решает по L-06.
 Тесты: проверка по AC вручную, результат в описании PR.
 
 **Чек-лист «каркас готов».** Фичи S2 не начинаются, пока каждый пункт не зелёный:
@@ -2069,12 +2072,12 @@ AC: 1) `snapshot_user` пишет одну строку на счёт и тор�
 
 **F-10. Раскрытие: синхронизация e-disclosure** (S1-12, S1-09).
 Зона: домен `disclosures` (`sync.py`, `periods.py`, `resolve.py`, `unpack.py`, `service.py`, `tasks.py`: `watch`, `sync_issuer`, `fetch_document`), CLI-обработчики домена, фикстуры `seed/edisclosure/f10_*`. Контракты: §5.4, §8.5, §10.2.
-AC: 1) `sync_issuer` на фейке создаёт `disclosure_documents` для разделов `ras`, `ifrs`, `annual`, `investors`; повтор не создаёт дублей; 2) `classify_doc` и `parse_period` дают вид, стандарт и период для всех строк снимков S1-12 (таблица ожиданий в golden-тесте); 3) `fetch_document` скачивает архив, распаковывает (zip, вложенные zip, имена в cp866 и utf-8), сохраняет части, отмечает основной PDF, считает страницы; повтор ничего не скачивает; 4) по виду документа ставятся `parse_ras`, `extract_ifrs`, `rag.index_document`; 5) `resolve`: эмитент из `issuers.csv` получает `manual`, поиск по названию с уверенностью ≥ 0.9 даёт `auto_confirmed`, ниже `auto_candidate`; 6) `watch` ставит синхронизацию только эмитентам из позиций пользователей и только по правилу §10.2; 7) недоступность сайта → ретраи, затем `fetch_status=failed`, `error_code=disclosure_unavailable`; темп вызовов не выше `EDISCLOSURE_RPS` (по времени вызовов фейка); 8) `cli disclosures-sync --issuer <name>` запускает синхронизацию вручную.
+AC: 1) `sync_issuer` на фейке создаёт `disclosure_documents` для разделов `ras`, `ifrs`, `annual`, `investors`, `other`; повтор не создаёт дублей; 2) `classify_doc` (тип документа, раздел, описание) и `parse_period` дают вид, стандарт и период для всех строк снимков S1-12 (таблица ожиданий в golden-тесте), презентации и пресс-релизы распознаются по описанию; 3) `fetch_document` скачивает архив, распаковывает (zip, вложенные zip, rar (RAR5), 7z; имена в cp866 и utf-8), сохраняет части, отмечает основной PDF, считает страницы; повтор ничего не скачивает; 4) по виду документа ставятся `parse_ras`, `extract_ifrs`, `rag.index_document`; 5) `resolve`: эмитент из `issuers.csv` получает `manual` и `edisclosure_id`, `asset_uid` находится по `ticker` в `instruments`; эмитента нет в справочнике → `unresolved`; 6) `watch` ставит синхронизацию только эмитентам из позиций пользователей и только по правилу §10.2; 7) недоступность сайта → ретраи, затем `fetch_status=failed`, `error_code=disclosure_unavailable`; темп вызовов не выше `EDISCLOSURE_RPS` (по времени вызовов фейка); 8) `cli disclosures-sync --issuer <name>` запускает синхронизацию вручную.
 Тесты: golden `periods` и `classify_doc`; property `parse_period` (не бросает); идемпотентность `sync_issuer`, `fetch_document`, `watch`; путь ошибки через `FaultPlan`; integration распаковки на фикстурных архивах.
 
 **F-11. РСБУ: разбор форм** (F-10).
 Зона: `disclosures/parse_ras.py`, задача `disclosures.parse_ras`. Контракты: §5.4 (`financial_facts`), §12.3.
-AC: 1) на трёх фикстурных годовых формах РСБУ с разными макетами извлекаются все коды §12.3 за текущий и прошлый период; 2) единицы («тыс. руб.», «млн руб.») применяются к `value`; 3) значение в скобках отрицательное, прочерк означает отсутствие факта, не ноль; 4) тождества §12.3 проверены, `check_status` проставлен; 5) повтор с той же `extractor_version` ничего не меняет, новая версия перезаписывает факты документа; 6) PDF без текстового слоя → `facts_status=failed`, `error_code=validation_error`, `details.reason='no_text_layer'`; 7) XLS и XLSX разбираются через pandas теми же правилами.
+AC: 1) на трёх фикстурных годовых формах РСБУ с разными макетами извлекаются все коды §12.3 за текущий и прошлый период; 2) единицы («тыс. руб.», «млн руб.») применяются к `value`; 3) значение в скобках отрицательное, прочерк означает отсутствие факта, не ноль; 4) тождества §12.3 проверены, `check_status` проставлен; 5) повтор с той же `extractor_version` ничего не меняет, новая версия перезаписывает факты документа; 6) PDF без текстового слоя (в выборке S1-12 таких 5 из 10) → `facts_status=failed`, `error_code=validation_error`, `details.reason='no_text_layer'`; OCR или ГИР БО ФНС для сканов требуют ADR на AD-11; 7) XLS и XLSX разбираются через pandas теми же правилами.
 Тесты: golden на фикстурах (ожидаемые значения выписаны в тест вручную из документов); property (перестановка строк не меняет результат; разбор «1 234 567», «(12 345)», «-»); идемпотентность `parse_ras`.
 
 **F-12. МСФО: извлечение через LLM** (F-10, F-05).
@@ -2089,7 +2092,7 @@ AC: 1) чанки строятся по страницам: до 1200 симво
 
 **F-14. Агент: инструменты отчётности** (F-11, F-12, F-13).
 Зона: `agent/tools/{issuer_reports,financials}.py`, домен `disclosures` (сервис чтения фактов, расчётные метрики), сценарии `f14_*`. Контракты: §9.7, §5.4, §12.3.
-AC: 1) `issuer_reports('Сбербанк', kinds=['ifrs_annual'])` отдаёт таблицу документов со ссылками на e-disclosure; данные старше 24 ч → ставится `sync_issuer`, ответ идёт по имеющимся данным с пометкой «обновление запрошено»; 2) `financials('LKOH', metrics=['revenue','net_income'], years=5)` отдаёт таблицу по годам и график динамики, конфликт источников решается правилом §5.4; 3) `standard='auto'` берёт МСФО, при отсутствии РСБУ и сообщает об этом в summary; 4) из фактов считаются `net_debt`, `fcf`, ND/EBITDA и маржи; мультипликаторы от цены берутся из `instrument_profile`; 5) каждое число ответа сопровождается источником `document` со страницей; 6) эмитент не найден или `auto_candidate` → `ok=false` с кандидатами, агент уточняет.
+AC: 1) `issuer_reports('Сбербанк', kinds=['ifrs_annual'])` отдаёт таблицу документов со ссылками на e-disclosure; данные старше 24 ч → ставится `sync_issuer`, ответ идёт по имеющимся данным с пометкой «обновление запрошено»; 2) `financials('LKOH', metrics=['revenue','net_income'], years=5)` отдаёт таблицу по годам и график динамики, конфликт источников решается правилом §5.4; 3) `standard='auto'` берёт МСФО, при отсутствии РСБУ и сообщает об этом в summary; 4) из фактов считаются `net_debt`, `fcf`, ND/EBITDA и маржи; мультипликаторы от цены берутся из `instrument_profile`; 5) каждое число ответа сопровождается источником `document` со страницей; 6) эмитент не привязан к e-disclosure (`unresolved`) → `ok=false`, `error_code=not_found`, агент сообщает, что отчётность эмитента не подключена.
 Тесты: агентные сценарии (динамика выручки; МСФО против РСБУ; нет фактов → честный ответ «данных нет»); contract инструментов; grounding: все числа ответа из фактов.
 
 **F-15. Агент: веб-поиск Tavily** (F-07).
