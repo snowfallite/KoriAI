@@ -31,6 +31,7 @@ t-tech-investments = { index = "tbank" }
 [dependency-groups]
 dev = [
     "deptry>=0.25.1",
+    "hypothesis>=6.168.3",
     "import-linter>=2.15",
     "mypy>=2.3.1",
     "pytest>=9.1.1",
