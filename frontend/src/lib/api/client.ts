@@ -5,17 +5,16 @@ import type { paths } from './schema';
 // The API shares the origin of the SPA (tech.md AD-01).
 export const api = createClient<paths>({ credentials: 'same-origin' });
 
+function internal(message: string, status: number, request_id = ''): ApiError {
+	return { code: 'internal', message, details: null, request_id, status };
+}
+
 async function apiError(response: Response): Promise<ApiError> {
 	// The API answers every error with ErrorOut (tech.md §6.1); a proxy may not.
 	const body = await response.json().catch(() => undefined);
 	if (typeof body?.code === 'string') return { ...body, status: response.status };
-	return {
-		code: 'internal',
-		message: 'Сервер недоступен, попробуйте позже',
-		details: null,
-		request_id: response.headers.get('X-Request-Id') ?? '',
-		status: response.status
-	};
+	const requestId = response.headers.get('X-Request-Id') ?? '';
+	return internal('Сервер недоступен, попробуйте позже', response.status, requestId);
 }
 
 api.use({
@@ -26,6 +25,10 @@ api.use({
 		// state of the lost session.
 		if (error.code === 'unauthorized') location.assign('/login');
 		throw error;
+	},
+	onError({ error }) {
+		// fetch fails with a TypeError when the network is down; an abort stays an abort.
+		if (error instanceof TypeError) throw internal('Нет связи с сервером', 0);
 	}
 });
 

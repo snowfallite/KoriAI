@@ -61,6 +61,18 @@ describe('api client', () => {
 		});
 	});
 
+	it('turns a network failure into an ApiError with status 0', async () => {
+		const fetch = vi.fn<(request: Request) => Promise<Response>>(async () => {
+			throw new TypeError('Failed to fetch');
+		});
+
+		await expect(api.GET('/api/health', { baseUrl: BASE, fetch })).rejects.toMatchObject({
+			code: 'internal',
+			status: 0
+		});
+		expect(assign).not.toHaveBeenCalled();
+	});
+
 	it('turns an answer without ErrorOut into an internal ApiError', async () => {
 		const fetch = answer(502, '<html>Bad Gateway</html>', { 'Content-Type': 'text/html' });
 
