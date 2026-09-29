@@ -32,8 +32,8 @@ def install(app: FastAPI) -> None:
                 [(t, "serialization", TypeAdapter(t).core_schema) for t in EXTRA_TYPES]
             )
             components = schema.setdefault("components", {})
-            # Class names are unique across app.contracts (tests/unit/contracts), so a shared
-            # name means the same model.
+            # Class names are unique across app.contracts (tests/property/contracts), so a
+            # shared name means the same model.
             components["schemas"] = dict(sorted({**extra, **components.get("schemas", {})}.items()))
             # get_openapi drops nulls this way; the extra models go through the same pass.
             app.openapi_schema = jsonable_encoder(
