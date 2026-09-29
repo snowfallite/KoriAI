@@ -33,6 +33,11 @@ migration slug:
     {{ be }} ruff format --quiet migrations
     {{ be }} ruff check --fix --quiet migrations
 
+# OpenAPI from the contracts, then the TS types of the SPA (§12.1)
+gen:
+    {{ be }} python -m app.cli openapi ../frontend/src/lib/api/openapi.json
+    {{ fe }} run gen
+
 # Format Python and frontend code
 fmt:
     {{ be }} ruff format . ../scripts
