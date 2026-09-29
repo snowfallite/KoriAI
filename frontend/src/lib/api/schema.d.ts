@@ -42,6 +42,10 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** @enum {string} */
+        AccountStatus: "new" | "open" | "closed" | "other";
+        /** @enum {string} */
+        AccountType: "broker" | "iis" | "invest_box" | "invest_fund" | "other";
         /** ArtifactCreatedEvent */
         ArtifactCreatedEvent: {
             /** Seq */
@@ -101,6 +105,19 @@ export interface components {
             /** Unit */
             unit: string | null;
         };
+        /** BrokerAccountOut */
+        BrokerAccountOut: {
+            /** Alias */
+            alias: string;
+            /** Name */
+            name: string;
+            type: components["schemas"]["AccountType"];
+            status: components["schemas"]["AccountStatus"];
+            /** Opened At */
+            opened_at: string | null;
+            /** Is Hidden */
+            is_hidden: boolean;
+        };
         /** @enum {string} */
         ChartKind: "line" | "area" | "bar" | "stacked_bar" | "pie" | "candlestick" | "scatter" | "heatmap" | "waterfall";
         /** ChartPoint */
@@ -159,6 +176,7 @@ export interface components {
             /** Digits */
             digits: number | null;
         };
+        DecimalStr: string;
         /**
          * DevEchoEvent
          * @description Only in dev and ci (POST /api/dev/echo).
@@ -276,6 +294,14 @@ export interface components {
         };
         /** @enum {string} */
         ModelFamily: "lite" | "pro" | "max" | "ultra";
+        /** Money */
+        Money: {
+            amount: components["schemas"]["DecimalStr"];
+            /** Currency */
+            currency: string;
+        };
+        /** @enum {string} */
+        PeriodCode: "1m" | "3m" | "6m" | "ytd" | "1y" | "3y" | "5y" | "max";
         /** ReadyOut */
         ReadyOut: {
             /** Db */
@@ -623,6 +649,28 @@ export interface components {
             tool: components["schemas"]["ToolName"];
             /** Title */
             title: string;
+        };
+        /** UserOut */
+        UserOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
+            /** Display Name */
+            display_name: string | null;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "user" | "owner";
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** @enum {string} */
         WarningCode: "model_downgraded" | "budget_low" | "web_credits_low" | "tool_failed" | "steps_limit" | "ungrounded_numbers" | "partial_answer" | "unknown_placeholder" | "broker_not_connected";
