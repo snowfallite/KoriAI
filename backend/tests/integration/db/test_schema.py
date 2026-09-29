@@ -243,3 +243,12 @@ async def test_unit_of_work_rolls_back_on_error(engine: AsyncEngine) -> None:
 
     async with UnitOfWork(engine) as session:
         assert await session.get(JobMarker, key) is None
+
+
+async def test_unit_of_work_refuses_to_nest(engine: AsyncEngine) -> None:
+    uow = UnitOfWork(engine)
+
+    async with uow:
+        with pytest.raises(RuntimeError):
+            async with uow:
+                pass

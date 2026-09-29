@@ -23,6 +23,9 @@ class UnitOfWork:
         return self._session
 
     async def __aenter__(self) -> AsyncSession:
+        if self._session is not None:
+            # A nested block would commit and close the outer transaction's session.
+            raise RuntimeError("UnitOfWork is already open: nest services, not transactions")
         self._session = self._sessions()
         return self._session
 
