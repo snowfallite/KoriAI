@@ -3,6 +3,8 @@
 !backend/pyproject.toml
 !backend/uv.lock
 !backend/app/
+!backend/alembic.ini
+!backend/migrations/
 !infra/certs/
 !infra/caddy/Caddyfile
 !frontend/

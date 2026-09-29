@@ -16,6 +16,9 @@ COPY --from=build /app/.venv .venv
 # GIGACHAT_CA_BUNDLE points here (L-07).
 COPY infra/certs/russian_trusted_root_ca.pem certs/
 COPY backend/app app
+# The deploy step runs `alembic upgrade head` in this image (tech.md §20.2).
+COPY backend/alembic.ini ./
+COPY backend/migrations migrations
 ENV PATH=/app/.venv/bin:$PATH
 USER app
 EXPOSE 8000

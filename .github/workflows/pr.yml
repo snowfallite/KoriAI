@@ -73,14 +73,71 @@ jobs:
   migrations:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: app
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U app"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
     steps:
-      - run: echo "No migrations yet, S1-03 adds them"
+      - uses: actions/checkout@v7
+      - name: Trust the Russian CA
+        run: |
+          cat /etc/ssl/certs/ca-certificates.crt ../infra/certs/russian_trusted_root_ca.pem > "$RUNNER_TEMP/ca.pem"
+          echo "SSL_CERT_FILE=$RUNNER_TEMP/ca.pem" >> "$GITHUB_ENV"
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --frozen
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
+      - run: uv run alembic downgrade -1
+      - run: uv run alembic upgrade head
 
   integration:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Qdrant joins with the first test that needs it (S1-09). The tests migrate their own
+    # throwaway databases on this server.
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: app
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U app"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
     steps:
-      - run: echo "No integration tests yet, S1-03 adds them"
+      - uses: actions/checkout@v7
+      - name: Trust the Russian CA
+        run: |
+          cat /etc/ssl/certs/ca-certificates.crt ../infra/certs/russian_trusted_root_ca.pem > "$RUNNER_TEMP/ca.pem"
+          echo "SSL_CERT_FILE=$RUNNER_TEMP/ca.pem" >> "$GITHUB_ENV"
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --frozen
+      - run: uv run pytest -m integration
 
   frontend:
     runs-on: ubuntu-latest
