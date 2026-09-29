@@ -9,8 +9,10 @@ from fastapi.openapi.utils import get_openapi
 from pydantic import TypeAdapter
 from pydantic.json_schema import GenerateJsonSchema
 
+from app.contracts.api.auth import UserOut
+from app.contracts.api.broker import BrokerAccountOut
 from app.contracts.artifacts import ChartSpec, ImageSpec, SourceRef, TableSpec
-from app.contracts.common import ErrorOut
+from app.contracts.common import ErrorOut, Money, PeriodCode
 from app.contracts.stream import StreamEvent
 
 # Every error leaves the API as ErrorOut (§6.1); FastAPI then skips its own 422 schema.
@@ -19,8 +21,19 @@ ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
     "5XX": {"model": ErrorOut},
 }
 
-# The SPA gets these from the SSE stream and inside artifacts, never as a route body.
-EXTRA_TYPES: tuple[Any, ...] = (StreamEvent, ChartSpec, TableSpec, ImageSpec, SourceRef)
+# The SPA gets these from the SSE stream and inside artifacts, never as a route body. The
+# §13.2 props need the rest before S1-05 and S1-11 add the routes that send them.
+EXTRA_TYPES: tuple[Any, ...] = (
+    StreamEvent,
+    ChartSpec,
+    TableSpec,
+    ImageSpec,
+    SourceRef,
+    Money,
+    UserOut,
+    BrokerAccountOut,
+    PeriodCode,
+)
 
 
 def install(app: FastAPI) -> None:

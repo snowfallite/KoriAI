@@ -32,6 +32,13 @@ def test_schemas_carry_the_stream_and_artifact_models() -> None:
     assert {"StreamEvent", "ChartSpec", "TableSpec", "ImageSpec", "SourceRef"} <= schemas.keys()
 
 
+def test_schemas_carry_the_prop_models_of_the_ui_kit() -> None:
+    # The §13.2 props need them before any route sends them.
+    schemas = openapi()["components"]["schemas"]
+
+    assert {"Money", "UserOut", "BrokerAccountOut", "PeriodCode"} <= schemas.keys()
+
+
 def test_stream_event_is_a_union_tagged_by_type() -> None:
     stream_event = openapi()["components"]["schemas"]["StreamEvent"]
 

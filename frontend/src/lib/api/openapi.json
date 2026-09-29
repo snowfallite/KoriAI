@@ -100,6 +100,25 @@
   },
   "components": {
     "schemas": {
+      "AccountStatus": {
+        "type": "string",
+        "enum": [
+          "new",
+          "open",
+          "closed",
+          "other"
+        ]
+      },
+      "AccountType": {
+        "type": "string",
+        "enum": [
+          "broker",
+          "iis",
+          "invest_box",
+          "invest_fund",
+          "other"
+        ]
+      },
       "ArtifactCreatedEvent": {
         "properties": {
           "seq": {
@@ -267,6 +286,52 @@
           "unit"
         ],
         "title": "AxisSpec"
+      },
+      "BrokerAccountOut": {
+        "properties": {
+          "alias": {
+            "type": "string",
+            "pattern": "^acc[0-9]+$",
+            "title": "Alias"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "$ref": "#/components/schemas/AccountType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AccountStatus"
+          },
+          "opened_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opened At"
+          },
+          "is_hidden": {
+            "type": "boolean",
+            "title": "Is Hidden"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alias",
+          "name",
+          "type",
+          "status",
+          "opened_at",
+          "is_hidden"
+        ],
+        "title": "BrokerAccountOut"
       },
       "ChartKind": {
         "type": "string",
@@ -511,6 +576,10 @@
           "digits"
         ],
         "title": "ColumnSpec"
+      },
+      "DecimalStr": {
+        "type": "string",
+        "pattern": "^-?\\d+(\\.\\d+)?$"
       },
       "DevEchoEvent": {
         "properties": {
@@ -869,6 +938,38 @@
           "pro",
           "max",
           "ultra"
+        ]
+      },
+      "Money": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/DecimalStr"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "title": "Money"
+      },
+      "PeriodCode": {
+        "type": "string",
+        "enum": [
+          "1m",
+          "3m",
+          "6m",
+          "ytd",
+          "1y",
+          "3y",
+          "5y",
+          "max"
         ]
       },
       "ReadyOut": {
@@ -1754,6 +1855,53 @@
           "title"
         ],
         "title": "ToolStartedEvent"
+      },
+      "UserOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "owner"
+            ],
+            "title": "Role"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "display_name",
+          "role",
+          "created_at"
+        ],
+        "title": "UserOut"
       },
       "WarningCode": {
         "type": "string",
