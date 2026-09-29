@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 5
+> CORE_VERSION: 6
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v6 (2026-09-30): OpenAPI несёт модели пропсов §13.2, которые приходят раньше своих роутов: `Money`, `UserOut`, `BrokerAccountOut`, `PeriodCode`; UI-кит S1-06 типизирует ими пропсы до S1-05 и S1-11 (S1-06).
 - v5 (2026-09-30): у каждой задачи очереди свой тип payload, `defer(payload)` находит задачу по типу; четыре задачи документа получили `FetchDocumentPayload`, `ParseRasPayload`, `ExtractIfrsPayload`, `IndexDocumentPayload` на общей базе `DocumentPayload {document_id}` с одним `lock` и своими `queueing_lock` (S1-04).
 - v4 (2026-09-29): e-disclosure по живым проверкам: адаптер ходит через Firefox в оконном режиме с постоянным профилем вместо Chromium; поиск компаний идёт в `/api/search/companies` вопреки robots.txt (решение владельца), `search_companies` и `DisclosureCompanyHit` вернулись в порт, эмитента не из `reference/issuers.csv` находит поиск (`auto_confirmed`, `auto_candidate`) (S1-12).
 - v3 (2026-09-29): итоги discovery e-disclosure. Адаптер ходит через Chromium в оконном режиме без KoriBot, ключ `EDISCLOSURE_USER_AGENT` удалён; поиска компаний по сайту нет (robots.txt запрещает `/api/*`), эмитенты берутся из `reference/issuers.csv` (строки `IssuerRef`); у строки файла появилось описание, раздел `other` входит в синхронизацию; RAR5 и 7z распаковывает libarchive (S1-12).
@@ -1489,7 +1490,7 @@ class SourceRef(BaseModel):
 
 ### 12.1 Где живут
 
-`app/contracts/common.py` и модули §4.1. TS-типы генерируются из OpenAPI (`just gen`). `app/http/openapi.py` добавляет в `components.schemas` модели, которых нет в телах роутов: `StreamEvent` и его варианты, `ChartSpec`, `TableSpec`, `ImageSpec`, `SourceRef`. `frontend/src/lib/types/index.ts` реэкспортирует алиасы (`export type Money = components['schemas']['Money']`) для типов, которые используют два слайса и больше. Там же единственный рукописный тип фронта: `ApiError = ErrorOut & {status: number}` (его бросает `client.ts`).
+`app/contracts/common.py` и модули §4.1. TS-типы генерируются из OpenAPI (`just gen`). `app/http/openapi.py` добавляет в `components.schemas` модели, которых нет в телах роутов: `StreamEvent` и его варианты, `ChartSpec`, `TableSpec`, `ImageSpec`, `SourceRef`, а также модели пропсов §13.2, которые приходят раньше своих роутов: `Money`, `UserOut`, `BrokerAccountOut`, `PeriodCode`. `frontend/src/lib/types/index.ts` реэкспортирует алиасы (`export type Money = components['schemas']['Money']`) для типов, которые используют два слайса и больше. Там же единственный рукописный тип фронта: `ApiError = ErrorOut & {status: number}` (его бросает `client.ts`).
 
 ### 12.2 Перечисления
 
