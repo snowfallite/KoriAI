@@ -8,6 +8,10 @@ import pytest
 from app.contracts.jobs import (
     CandlesPayload,
     DemoEchoPayload,
+    ExtractIfrsPayload,
+    FetchDocumentPayload,
+    IndexDocumentPayload,
+    ParseRasPayload,
     Payload,
     SnapshotPayload,
     SyncIssuerPayload,
@@ -33,6 +37,10 @@ DAY = date(2026, 9, 29)
         ),
         (SnapshotPayload(user_id=A, day=DAY), f"snap:{A}:2026-09-29", f"user:{A}"),
         (SyncIssuerPayload(issuer_id=A, sections=["ras"]), f"dsync:{A}", f"issuer:{A}"),
+        (FetchDocumentPayload(document_id=A), f"dfetch:{A}", f"doc:{A}"),
+        (ParseRasPayload(document_id=A), f"dras:{A}", f"doc:{A}"),
+        (ExtractIfrsPayload(document_id=A), f"difrs:{A}", f"doc:{A}"),
+        (IndexDocumentPayload(document_id=A), f"rag:{A}", f"doc:{A}"),
     ],
 )
 def test_payload_locks(payload: Payload, queueing_lock: str, lock: str | None) -> None:

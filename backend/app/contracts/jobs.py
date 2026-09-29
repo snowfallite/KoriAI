@@ -74,3 +74,32 @@ class SyncIssuerPayload(Payload):
 
     def lock(self) -> str | None:
         return f"issuer:{self.issuer_id}"
+
+
+class DocumentPayload(Payload):
+    """Tasks of one document wait in the queue together and run one at a time (tech.md §10.1)."""
+
+    document_id: UUID
+
+    def lock(self) -> str | None:
+        return f"doc:{self.document_id}"
+
+
+class FetchDocumentPayload(DocumentPayload):
+    def queueing_lock(self) -> str | None:
+        return f"dfetch:{self.document_id}"
+
+
+class ParseRasPayload(DocumentPayload):
+    def queueing_lock(self) -> str | None:
+        return f"dras:{self.document_id}"
+
+
+class ExtractIfrsPayload(DocumentPayload):
+    def queueing_lock(self) -> str | None:
+        return f"difrs:{self.document_id}"
+
+
+class IndexDocumentPayload(DocumentPayload):
+    def queueing_lock(self) -> str | None:
+        return f"rag:{self.document_id}"

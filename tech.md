@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 4
+> CORE_VERSION: 5
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v5 (2026-09-30): у каждой задачи очереди свой тип payload, `defer(payload)` находит задачу по типу; четыре задачи документа получили `FetchDocumentPayload`, `ParseRasPayload`, `ExtractIfrsPayload`, `IndexDocumentPayload` на общей базе `DocumentPayload {document_id}` с одним `lock` и своими `queueing_lock` (S1-04).
 - v4 (2026-09-29): e-disclosure по живым проверкам: адаптер ходит через Firefox в оконном режиме с постоянным профилем вместо Chromium; поиск компаний идёт в `/api/search/companies` вопреки robots.txt (решение владельца), `search_companies` и `DisclosureCompanyHit` вернулись в порт, эмитента не из `reference/issuers.csv` находит поиск (`auto_confirmed`, `auto_candidate`) (S1-12).
 - v3 (2026-09-29): итоги discovery e-disclosure. Адаптер ходит через Chromium в оконном режиме без KoriBot, ключ `EDISCLOSURE_USER_AGENT` удалён; поиска компаний по сайту нет (robots.txt запрещает `/api/*`), эмитенты берутся из `reference/issuers.csv` (строки `IssuerRef`); у строки файла появилось описание, раздел `other` входит в синхронизацию; RAR5 и 7z распаковывает libarchive (S1-12).
 - v2 (2026-09-28): продукт переименован в «氷 Kōri»: образ `kori-api`, `TINVEST_APP_NAME=kori`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0`.
@@ -1432,8 +1433,8 @@ class SourceRef(BaseModel):
 ### 10.1 Правила
 
 - `app/jobs/app.py`: `App(connector=PsycopgConnector(...))`. В lifespan два воркера: очереди `default` и `periodic` (`concurrency=2`), очередь `heavy` (`concurrency=1`). Оба `run_worker_async(install_signal_handlers=False)`, остановка с таймаутом 10 с.
-- Payload каждой задачи: модель в `app/contracts/jobs.py` с методами `queueing_lock() -> str | None` и `lock() -> str | None`.
-- Постановка только через `defer(payload)` из `app/jobs/app.py`: он настраивает `queueing_lock` и `lock` из payload и глотает `AlreadyEnqueued` (дубль в очереди не нужен).
+- Payload каждой задачи: своя модель в `app/contracts/jobs.py` с методами `queueing_lock() -> str | None` и `lock() -> str | None`; две задачи не делят один тип. Четыре задачи документа (§10.2) наследуют `DocumentPayload {document_id}`: `lock` у них общий, `queueing_lock` свой, поэтому задачи одного документа стоят в очереди вместе и выполняются по одной.
+- Постановка только через `defer(payload)` из `app/jobs/app.py`: он находит задачу по типу payload, настраивает `queueing_lock` и `lock` из payload и глотает `AlreadyEnqueued` (дубль в очереди не нужен).
 - Обработчик живёт в `app/domains/<domain>/tasks.py` (служебные в `app/jobs/builtin.py`) и остаётся тонким: `p = Payload.model_validate(kw)`, вызов сервиса домена. Бизнес-логики в `tasks.py` нет.
 - Идемпотентность: эффект задачи задаётся upsert по естественному ключу или условным обновлением. Второй запуск с тем же payload не даёт дополнительного эффекта. Тест обязателен (§14.2).
 - Ретраи: `RetryStrategy(max_attempts=5, exponential_wait=5, retry_exceptions={TransientGatewayError, OperationalError})`, если в таблице не указано иное. Постоянная ошибка не ретраится: сущность получает статус `failed` и `error_code`.
@@ -1454,10 +1455,10 @@ class SourceRef(BaseModel):
 | `portfolio.snapshot_user` | default | `SnapshotPayload {user_id, day}` | `snap:{user_id}:{day}` / `user:{user_id}` | upsert `portfolio_snapshots` по `(account_id, day)` | snapshot_all | F-09 |
 | `disclosures.watch` | periodic | cron `0 2 * * *` | нет / `dwatch` | поставить `sync_issuer` для эмитентов из позиций пользователей: `last_synced_at` старше 24 ч или отчёт по `get_report_schedule` в окне ±3 дня | cron | F-10 |
 | `disclosures.sync_issuer` | default | `SyncIssuerPayload {issuer_id, sections: list[FileSection]}` | `dsync:{issuer_id}` / `issuer:{issuer_id}` | upsert `disclosure_documents` по `(source, source_file_id)`; `fetch_document` для новых документов нужных видов за `DISCLOSURE_YEARS_BACK` лет | watch, `issuer_reports`, CLI | F-10 |
-| `disclosures.fetch_document` | heavy | `DocumentPayload {document_id}` | `dfetch:{id}` / `doc:{id}` | уже `downloaded` и части на месте: ничего; иначе скачать, распаковать, upsert `document_parts` по `(document_id, name)`; затем по виду поставить `parse_ras`, `extract_ifrs`, `rag.index_document` | sync_issuer | F-10 |
-| `disclosures.parse_ras` | heavy | `DocumentPayload` | `dras:{id}` / `doc:{id}` | upsert `financial_facts` по уникальному ключу, `facts_status=done`; пропуск при `extractor_version` равной текущей | fetch_document | F-11 |
-| `disclosures.extract_ifrs` | heavy | `DocumentPayload` | `difrs:{id}` / `doc:{id}` | то же для МСФО, LLM max в фоне; `max_attempts=3` | fetch_document | F-12 |
-| `rag.index_document` | heavy | `DocumentPayload` | `rag:{id}` / `doc:{id}` | `delete_document`, затем upsert точек с детерминированными id; `index_status=done` | fetch_document | F-13 |
+| `disclosures.fetch_document` | heavy | `FetchDocumentPayload {document_id}` | `dfetch:{id}` / `doc:{id}` | уже `downloaded` и части на месте: ничего; иначе скачать, распаковать, upsert `document_parts` по `(document_id, name)`; затем по виду поставить `parse_ras`, `extract_ifrs`, `rag.index_document` | sync_issuer | F-10 |
+| `disclosures.parse_ras` | heavy | `ParseRasPayload {document_id}` | `dras:{id}` / `doc:{id}` | upsert `financial_facts` по уникальному ключу, `facts_status=done`; пропуск при `extractor_version` равной текущей | fetch_document | F-11 |
+| `disclosures.extract_ifrs` | heavy | `ExtractIfrsPayload {document_id}` | `difrs:{id}` / `doc:{id}` | то же для МСФО, LLM max в фоне; `max_attempts=3` | fetch_document | F-12 |
+| `rag.index_document` | heavy | `IndexDocumentPayload {document_id}` | `rag:{id}` / `doc:{id}` | `delete_document`, затем upsert точек с детерминированными id; `index_status=done` | fetch_document | F-13 |
 
 ## 11. Чистая логика и инварианты
 
