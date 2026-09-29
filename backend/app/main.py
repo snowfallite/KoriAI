@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.config import Settings
 from app.core.logging import configure_logging
-from app.http import errors, health
+from app.http import errors, health, openapi
 from app.http.middleware import RequestContextMiddleware
 
 
@@ -27,9 +27,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         yield
         await engine.dispose()
 
-    app = FastAPI(title="Kōri", lifespan=lifespan)
+    app = FastAPI(title="Kōri", lifespan=lifespan, responses=openapi.ERROR_RESPONSES)
     app.state.settings = config
     errors.install(app)
+    openapi.install(app)
     app.add_middleware(RequestContextMiddleware)
     app.include_router(health.router)
     return app
