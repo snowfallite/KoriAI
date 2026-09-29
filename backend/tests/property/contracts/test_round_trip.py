@@ -106,6 +106,10 @@ def strings(schema: dict[str, Any]) -> st.SearchStrategy[str]:
     return st.text(min_size=schema.get("minLength", 0), max_size=schema.get("maxLength"))
 
 
+def with_tag(name: str, tag: str) -> Callable[[dict[str, Any]], dict[str, Any]]:
+    return lambda raw: {**raw, name: tag}
+
+
 def from_schema(schema: dict[str, Any], defs: dict[str, Any]) -> st.SearchStrategy[Any]:
     if "$ref" in schema:
         name = schema["$ref"].removeprefix("#/$defs/")
@@ -117,11 +121,10 @@ def from_schema(schema: dict[str, Any], defs: dict[str, Any]) -> st.SearchStrate
         return st.sampled_from(schema["enum"])
     if tagged := schema.get("discriminator"):
         # OpenAPI requires the tag even when a variant gives it a default.
-        tag = tagged["propertyName"]
         return st.one_of(
             [
-                from_schema({"$ref": ref}, defs).map(lambda value, t=value: {**value, tag: t})
-                for value, ref in tagged["mapping"].items()
+                from_schema({"$ref": ref}, defs).map(with_tag(tagged["propertyName"], tag))
+                for tag, ref in tagged["mapping"].items()
             ]
         )
     if variants := schema.get("anyOf", schema.get("oneOf")):
