@@ -21,6 +21,7 @@ just --list           # остальные команды, полный спис
 ```
 
 - Контрактные тесты (`just test`) ходят в Postgres из dev-стека: держите запущенным `just dev` или `docker compose -f docker-compose.dev.yml up -d postgres`.
+- Схему в dev-базе создаёт `just migrate`. Интеграционные тесты (`just test-int`) заводят в том же Postgres временные базы и удаляют их после себя.
 - Остановить dev-стек: `docker compose -f docker-compose.dev.yml down`.
 - Для разработки `.env` не нужен: dev-стек работает на значениях по умолчанию. `.env.example` перечисляет все ключи для VPS; API не стартует, если в `.env` есть неизвестный ключ.
 
