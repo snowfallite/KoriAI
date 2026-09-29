@@ -18,7 +18,7 @@ const assign = vi.fn();
 
 beforeEach(() => {
 	assign.mockClear();
-	vi.stubGlobal('location', { assign });
+	vi.stubGlobal('location', { assign, pathname: '/portfolio' });
 });
 
 describe('api client', () => {
@@ -40,6 +40,16 @@ describe('api client', () => {
 			status: 401
 		});
 		expect(assign).toHaveBeenCalledWith('/login');
+	});
+
+	it.each(['/login', '/register'])('does not reload %s on 401 unauthorized', async (pathname) => {
+		vi.stubGlobal('location', { assign, pathname });
+		const fetch = answer(401, errorOut('unauthorized', 'Войдите снова'));
+
+		await expect(api.GET('/api/health', { baseUrl: BASE, fetch })).rejects.toMatchObject({
+			code: 'unauthorized'
+		});
+		expect(assign).not.toHaveBeenCalled();
 	});
 
 	it('stays on the page on 401 invalid_credentials', async () => {

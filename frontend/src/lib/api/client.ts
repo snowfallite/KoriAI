@@ -5,6 +5,9 @@ import type { paths } from './schema';
 // The API shares the origin of the SPA (tech.md AD-01).
 export const api = createClient<paths>({ credentials: 'same-origin' });
 
+// A 401 there is the expected state; a reload would loop on /login.
+const AUTH_PAGES = new Set(['/login', '/register']);
+
 function internal(message: string, status: number, request_id = ''): ApiError {
 	return { code: 'internal', message, details: null, request_id, status };
 }
@@ -23,7 +26,9 @@ api.use({
 		const error = await apiError(response);
 		// A wrong password is a 401 too, but the login form shows it. A full load drops the
 		// state of the lost session.
-		if (error.code === 'unauthorized') location.assign('/login');
+		if (error.code === 'unauthorized' && !AUTH_PAGES.has(location.pathname)) {
+			location.assign('/login');
+		}
 		throw error;
 	},
 	onError({ error }) {
