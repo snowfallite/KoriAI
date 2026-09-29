@@ -12,7 +12,8 @@
 		"lint": "prettier --check . && eslint . && knip",
 		"format": "prettier --write .",
 		"test": "vitest run",
-		"test:e2e": "playwright test --pass-with-no-tests"
+		"test:e2e": "playwright test --pass-with-no-tests",
+		"gen": "openapi-typescript src/lib/api/openapi.json -o src/lib/api/schema.d.ts"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
@@ -27,6 +28,8 @@
 		"eslint-plugin-svelte": "^3.19.0",
 		"globals": "^17.6.0",
 		"knip": "^6.38.0",
+		"openapi-fetch": "^0.17.0",
+		"openapi-typescript": "^7.13.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.1.0",
 		"prettier-plugin-tailwindcss": "^0.8.0",

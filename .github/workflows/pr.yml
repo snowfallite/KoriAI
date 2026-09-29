@@ -69,6 +69,8 @@ jobs:
       - run: uv run lint-imports
       - run: uv run deptry .
       - run: uv run pytest -m "not integration"
+        env:
+          HYPOTHESIS_PROFILE: ci
 
   migrations:
     runs-on: ubuntu-latest
@@ -147,6 +149,17 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v7
+      # uv exports the OpenAPI from the backend contracts (§12.1).
+      - name: Trust the Russian CA
+        run: |
+          cat /etc/ssl/certs/ca-certificates.crt ../infra/certs/russian_trusted_root_ca.pem > "$RUNNER_TEMP/ca.pem"
+          echo "SSL_CERT_FILE=$RUNNER_TEMP/ca.pem" >> "$GITHUB_ENV"
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --frozen
+        working-directory: backend
       - uses: pnpm/action-setup@v6
         with:
           package_json_file: frontend/package.json
@@ -156,6 +169,11 @@ jobs:
           cache: pnpm
           cache-dependency-path: frontend/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
+      - uses: extractions/setup-just@v4
+      - name: Generated API types match the contracts
+        run: |
+          just gen
+          git diff --exit-code src/lib/api
       - run: pnpm exec prettier --check .
       - run: pnpm exec eslint .
       - run: pnpm check

@@ -1,0 +1,1774 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Kōri",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthOut"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/ready": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Ready",
+        "operationId": "ready_api_health_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadyOut"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadyOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArtifactCreatedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "artifact.created",
+            "title": "Type",
+            "default": "artifact.created"
+          },
+          "artifact": {
+            "$ref": "#/components/schemas/ArtifactOut"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "artifact"
+        ],
+        "title": "ArtifactCreatedEvent"
+      },
+      "ArtifactOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "local_id": {
+            "type": "string",
+            "pattern": "^[cti][0-9]+$",
+            "title": "Local Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "chart",
+              "table",
+              "image"
+            ],
+            "title": "Kind"
+          },
+          "spec": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChartSpec"
+              },
+              {
+                "$ref": "#/components/schemas/TableSpec"
+              },
+              {
+                "$ref": "#/components/schemas/ImageSpec"
+              }
+            ],
+            "title": "Spec"
+          },
+          "image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Url"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "local_id",
+          "kind",
+          "spec",
+          "image_url",
+          "created_at"
+        ],
+        "title": "ArtifactOut"
+      },
+      "AxisSpec": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "time",
+              "category",
+              "value",
+              "log"
+            ],
+            "title": "Type"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "date",
+                  "month",
+                  "quarter",
+                  "year",
+                  "money",
+                  "percent",
+                  "number",
+                  "compact"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "label",
+          "format",
+          "unit"
+        ],
+        "title": "AxisSpec"
+      },
+      "ChartKind": {
+        "type": "string",
+        "enum": [
+          "line",
+          "area",
+          "bar",
+          "stacked_bar",
+          "pie",
+          "candlestick",
+          "scatter",
+          "heatmap",
+          "waterfall"
+        ]
+      },
+      "ChartPoint": {
+        "properties": {
+          "x": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "X"
+          },
+          "y": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Y"
+          },
+          "o": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "O"
+          },
+          "h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "H"
+          },
+          "l": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "L"
+          },
+          "c": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "C"
+          },
+          "y_cat": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Y Cat"
+          },
+          "z": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Z"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "x",
+          "y",
+          "o",
+          "h",
+          "l",
+          "c",
+          "y_cat",
+          "z"
+        ],
+        "title": "ChartPoint"
+      },
+      "ChartSpec": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/ChartKind"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "subtitle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtitle"
+          },
+          "x": {
+            "$ref": "#/components/schemas/AxisSpec"
+          },
+          "y": {
+            "$ref": "#/components/schemas/AxisSpec"
+          },
+          "y2": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AxisSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/SeriesSpec"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Series"
+          },
+          "source_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Ids",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "title",
+          "subtitle",
+          "x",
+          "y",
+          "y2",
+          "series",
+          "source_ids"
+        ],
+        "title": "ChartSpec",
+        "description": "Floats serve display only; exact values live in a TableSpec as DecimalStr."
+      },
+      "ColumnSpec": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "number",
+              "money",
+              "percent",
+              "date",
+              "instrument"
+            ],
+            "title": "Type"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "digits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Digits"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "type",
+          "currency",
+          "digits"
+        ],
+        "title": "ColumnSpec"
+      },
+      "DevEchoEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "dev.echo",
+            "title": "Type",
+            "default": "dev.echo"
+          },
+          "payload": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "payload"
+        ],
+        "title": "DevEchoEvent",
+        "description": "Only in dev and ci (POST /api/dev/echo)."
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "unauthorized",
+          "invalid_credentials",
+          "forbidden",
+          "registration_closed",
+          "not_found",
+          "conflict",
+          "run_active",
+          "email_taken",
+          "broker_not_connected",
+          "gone",
+          "validation_error",
+          "invite_required",
+          "invite_invalid",
+          "token_invalid",
+          "token_not_read_only",
+          "rate_limited",
+          "user_budget_exhausted",
+          "llm_busy",
+          "llm_quota_exhausted",
+          "tinvest_unavailable",
+          "tinvest_rate_limited",
+          "web_unavailable",
+          "web_credits_exhausted",
+          "disclosure_unavailable",
+          "internal"
+        ]
+      },
+      "ErrorOut": {
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "details",
+          "request_id"
+        ],
+        "title": "ErrorOut"
+      },
+      "HealthOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "HealthOut"
+      },
+      "ImageSpec": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "logo",
+              "web",
+              "document_page"
+            ],
+            "title": "Source"
+          },
+          "logo_base": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Base"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "document_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Id"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "alt": {
+            "type": "string",
+            "title": "Alt"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "title": "Size",
+            "default": "md"
+          },
+          "source_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Ids",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source",
+          "logo_base",
+          "url",
+          "document_id",
+          "page",
+          "alt",
+          "caption",
+          "size",
+          "source_ids"
+        ],
+        "title": "ImageSpec"
+      },
+      "InstrumentBrief": {
+        "properties": {
+          "uid": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Uid"
+          },
+          "ticker": {
+            "type": "string",
+            "title": "Ticker"
+          },
+          "class_code": {
+            "type": "string",
+            "title": "Class Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "instrument_type": {
+            "$ref": "#/components/schemas/InstrumentType"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency"
+          },
+          "logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Url"
+          },
+          "brand_color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brand Color"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "uid",
+          "ticker",
+          "class_code",
+          "name",
+          "instrument_type",
+          "currency",
+          "logo_url",
+          "brand_color"
+        ],
+        "title": "InstrumentBrief"
+      },
+      "InstrumentType": {
+        "type": "string",
+        "enum": [
+          "share",
+          "bond",
+          "etf",
+          "currency",
+          "future",
+          "option",
+          "structured",
+          "index",
+          "other"
+        ]
+      },
+      "Intent": {
+        "type": "string",
+        "enum": [
+          "smalltalk",
+          "help",
+          "portfolio_status",
+          "portfolio_analysis",
+          "instrument_quote",
+          "instrument_analysis",
+          "compare",
+          "financials",
+          "news",
+          "research",
+          "other"
+        ]
+      },
+      "JsonValue": {},
+      "LlmGateOut": {
+        "properties": {
+          "capacity": {
+            "type": "integer",
+            "title": "Capacity"
+          },
+          "in_use": {
+            "type": "integer",
+            "title": "In Use"
+          },
+          "waiting": {
+            "type": "integer",
+            "title": "Waiting"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "capacity",
+          "in_use",
+          "waiting"
+        ],
+        "title": "LlmGateOut"
+      },
+      "ModelFamily": {
+        "type": "string",
+        "enum": [
+          "lite",
+          "pro",
+          "max",
+          "ultra"
+        ]
+      },
+      "ReadyOut": {
+        "properties": {
+          "db": {
+            "type": "boolean",
+            "title": "Db"
+          },
+          "qdrant": {
+            "type": "boolean",
+            "title": "Qdrant"
+          },
+          "queue": {
+            "type": "boolean",
+            "title": "Queue"
+          },
+          "llm_gate": {
+            "$ref": "#/components/schemas/LlmGateOut"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "db",
+          "qdrant",
+          "queue",
+          "llm_gate"
+        ],
+        "title": "ReadyOut"
+      },
+      "RunFinishedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "run.finished",
+            "title": "Type",
+            "default": "run.finished"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "message_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "status",
+          "message_id",
+          "error"
+        ],
+        "title": "RunFinishedEvent",
+        "description": "Always the last event; the client then takes the answer from REST."
+      },
+      "RunQueuedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "run.queued",
+            "title": "Type",
+            "default": "run.queued"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "position"
+        ],
+        "title": "RunQueuedEvent"
+      },
+      "RunRoutedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "run.routed",
+            "title": "Type",
+            "default": "run.routed"
+          },
+          "intent": {
+            "$ref": "#/components/schemas/Intent"
+          },
+          "family": {
+            "$ref": "#/components/schemas/ModelFamily"
+          },
+          "model_id": {
+            "type": "string",
+            "title": "Model Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "intent",
+          "family",
+          "model_id",
+          "reason"
+        ],
+        "title": "RunRoutedEvent"
+      },
+      "RunStartedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "run.started",
+            "title": "Type",
+            "default": "run.started"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type"
+        ],
+        "title": "RunStartedEvent"
+      },
+      "RunStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "running",
+          "done",
+          "partial",
+          "cancelled",
+          "failed",
+          "interrupted"
+        ]
+      },
+      "RunWarningEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "run.warning",
+            "title": "Type",
+            "default": "run.warning"
+          },
+          "code": {
+            "$ref": "#/components/schemas/WarningCode"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "code",
+          "message"
+        ],
+        "title": "RunWarningEvent"
+      },
+      "SeriesSpec": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/ChartPoint"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "axis": {
+            "type": "string",
+            "enum": [
+              "y",
+              "y2"
+            ],
+            "title": "Axis",
+            "default": "y"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "positive",
+                  "negative",
+                  "neutral",
+                  "benchmark"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "points",
+          "axis",
+          "role"
+        ],
+        "title": "SeriesSpec"
+      },
+      "SourceAddedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "source.added",
+            "title": "Type",
+            "default": "source.added"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRef"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "source"
+        ],
+        "title": "SourceAddedEvent"
+      },
+      "SourceRef": {
+        "properties": {
+          "local_id": {
+            "type": "string",
+            "pattern": "^s[0-9]+$",
+            "title": "Local Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "web",
+              "document",
+              "tinvest",
+              "edisclosure"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "publisher": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publisher"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "document_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Id"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "snippet": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snippet"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "local_id",
+          "kind",
+          "title",
+          "url",
+          "publisher",
+          "published_at",
+          "document_id",
+          "page",
+          "snippet"
+        ],
+        "title": "SourceRef"
+      },
+      "StepStartedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "step.started",
+            "title": "Type",
+            "default": "step.started"
+          },
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "step"
+        ],
+        "title": "StepStartedEvent"
+      },
+      "StreamEvent": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/RunQueuedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunRoutedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/StepStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ToolStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ToolFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ArtifactCreatedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/SourceAddedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TextDeltaEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TextResetEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunWarningEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/DevEchoEvent"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "artifact.created": "#/components/schemas/ArtifactCreatedEvent",
+            "dev.echo": "#/components/schemas/DevEchoEvent",
+            "run.finished": "#/components/schemas/RunFinishedEvent",
+            "run.queued": "#/components/schemas/RunQueuedEvent",
+            "run.routed": "#/components/schemas/RunRoutedEvent",
+            "run.started": "#/components/schemas/RunStartedEvent",
+            "run.warning": "#/components/schemas/RunWarningEvent",
+            "source.added": "#/components/schemas/SourceAddedEvent",
+            "step.started": "#/components/schemas/StepStartedEvent",
+            "text.delta": "#/components/schemas/TextDeltaEvent",
+            "text.reset": "#/components/schemas/TextResetEvent",
+            "tool.finished": "#/components/schemas/ToolFinishedEvent",
+            "tool.started": "#/components/schemas/ToolStartedEvent"
+          }
+        }
+      },
+      "TableSpec": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/ColumnSpec"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Rows"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "instruments": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/InstrumentBrief"
+            },
+            "type": "object",
+            "title": "Instruments",
+            "default": {}
+          },
+          "source_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Ids",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "columns",
+          "rows",
+          "total",
+          "note",
+          "instruments",
+          "source_ids"
+        ],
+        "title": "TableSpec"
+      },
+      "TextDeltaEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "text.delta",
+            "title": "Type",
+            "default": "text.delta"
+          },
+          "delta": {
+            "type": "string",
+            "title": "Delta"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "delta"
+        ],
+        "title": "TextDeltaEvent"
+      },
+      "TextResetEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "text.reset",
+            "title": "Type",
+            "default": "text.reset"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type"
+        ],
+        "title": "TextResetEvent",
+        "description": "The model called a function after some text: the client drops the text so far."
+      },
+      "ToolFinishedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "tool.finished",
+            "title": "Type",
+            "default": "tool.finished"
+          },
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "call_id": {
+            "type": "string",
+            "title": "Call Id"
+          },
+          "tool": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Summary"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "step",
+          "call_id",
+          "tool",
+          "ok",
+          "summary",
+          "error_code",
+          "duration_ms"
+        ],
+        "title": "ToolFinishedEvent"
+      },
+      "ToolName": {
+        "type": "string",
+        "enum": [
+          "portfolio_overview",
+          "portfolio_positions",
+          "operations_summary",
+          "portfolio_risk",
+          "instrument_lookup",
+          "instrument_profile",
+          "price_history",
+          "compare_instruments",
+          "issuer_reports",
+          "financials",
+          "docs_search",
+          "web_search",
+          "web_extract",
+          "web_crawl",
+          "make_chart",
+          "make_table",
+          "calc"
+        ]
+      },
+      "ToolStartedEvent": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Seq"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Run Id"
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ts"
+          },
+          "type": {
+            "type": "string",
+            "const": "tool.started",
+            "title": "Type",
+            "default": "tool.started"
+          },
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "call_id": {
+            "type": "string",
+            "title": "Call Id"
+          },
+          "tool": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seq",
+          "run_id",
+          "ts",
+          "type",
+          "step",
+          "call_id",
+          "tool",
+          "title"
+        ],
+        "title": "ToolStartedEvent"
+      },
+      "WarningCode": {
+        "type": "string",
+        "enum": [
+          "model_downgraded",
+          "budget_low",
+          "web_credits_low",
+          "tool_failed",
+          "steps_limit",
+          "ungrounded_numbers",
+          "partial_answer",
+          "unknown_placeholder",
+          "broker_not_connected"
+        ]
+      }
+    }
+  }
+}

@@ -132,4 +132,4 @@ async def test_invalid_body_is_validation_error_without_input() -> None:
 
 
 def test_every_error_code_has_a_status() -> None:
-    assert set(STATUS) == set(get_args(ErrorCode))
+    assert set(STATUS) == set(get_args(ErrorCode.__value__))

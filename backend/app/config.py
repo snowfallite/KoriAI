@@ -174,7 +174,7 @@ class Settings(BaseSettings):
     @field_validator("LLM_MODELS", "LLM_CONTEXT_TOKENS", "LLM_QUOTAS")
     @classmethod
     def _cover_all_families(cls, value: dict[str, object]) -> dict[str, object]:
-        if missing := set(get_args(ModelFamily)) - value.keys():
+        if missing := set(get_args(ModelFamily.__value__)) - value.keys():
             raise ValueError(f"missing model families: {', '.join(sorted(missing))}")
         return value
 
