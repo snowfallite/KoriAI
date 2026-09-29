@@ -13,7 +13,8 @@ Json = dict[str, object]
 UuidPk = Annotated[uuid.UUID, mapped_column(primary_key=True, server_default=text("uuidv7()"))]
 IdentityPk = Annotated[int, mapped_column(BigInteger, Identity(always=True), primary_key=True)]
 Now = Annotated[datetime, mapped_column(server_default=func.now())]
-# tech.md §5: the application sets updated_at, there are no triggers.
+# tech.md §5: the application sets updated_at, there are no triggers. on_conflict_do_update
+# skips onupdate: an upsert puts updated_at into its set_ itself.
 UpdatedAt = Annotated[datetime, mapped_column(server_default=func.now(), onupdate=func.now())]
 
 
@@ -23,7 +24,7 @@ class Base(DeclarativeBase):
     metadata = MetaData(
         naming_convention={
             "pk": "%(table_name)s_pkey",
-            "fk": "%(table_name)s_%(column_0_name)s_fkey",
+            "fk": "%(table_name)s_%(column_0_N_name)s_fkey",
             "uq": "%(table_name)s_%(column_0_N_name)s_key",
             "ck": "%(table_name)s_%(constraint_name)s_check",
         }
@@ -34,5 +35,6 @@ class Base(DeclarativeBase):
         Json: JSONB(),
         list[Json]: JSONB(),
     }
-    # Async sessions cannot lazy-load server-generated values after a flush.
+    # Async sessions cannot lazy-load server-generated values after a flush. A model with its
+    # own __mapper_args__ repeats this key.
     __mapper_args__ = {"eager_defaults": True}  # noqa: RUF012
