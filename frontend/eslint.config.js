@@ -34,8 +34,8 @@ export default defineConfig(
 		}
 	},
 	{
-		// Override or add rule settings here, such as:
-		// 'svelte/button-has-type': 'error'
-		rules: {}
+		// shadcn-svelte primitives pass hrefs through; the caller resolves them (tech.md §13.1).
+		files: ['src/lib/ui/**'],
+		rules: { 'svelte/no-navigation-without-resolve': 'off' }
 	}
 );
