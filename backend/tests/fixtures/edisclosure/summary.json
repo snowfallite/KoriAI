@@ -3150,7 +3150,7 @@
       "note": "foreign issuer (Jersey): IFRS without RAS"
     }
   ],
-  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
   "robots": "200, 5 rules, crawl-delay none",
   "pages": {
     "search/page.html": true,

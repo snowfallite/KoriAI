@@ -72,9 +72,9 @@ e2e:
 build:
     {{ fe }} build
 
-# e-disclosure discovery for S1-12: drives a browser on the real site, run by hand.
-# Playwright matches the frontend's version to reuse its Chromium.
+# e-disclosure discovery for S1-12: drives a visible Firefox on the real site, run by hand.
 discover-edisclosure *args:
+    uv run --no-project --with playwright==1.63.0 playwright install firefox
     uv run --no-project --with playwright==1.63.0 --with selectolax==0.4.12 python scripts/discover_edisclosure.py {{ args }}
 
 # Zone labels and CORE_VERSION bump against the PR base: just core-guard core-impl

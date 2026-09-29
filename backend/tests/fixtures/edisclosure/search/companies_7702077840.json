@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/api/search/companies",
+    "headers": {
+      "accept": "application/json",
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "x-requested-with": "XMLHttpRequest"
+    },
+    "body": "textfield=7702077840&radReg=FederalDistricts&districtsCheckboxGroup=-1&regionsCheckboxGroup=-1&branchesCheckboxGroup=-1&lastPageSize=10&lastPageNumber=1&query=7702077840"
+  },
+  "status": 200,
+  "response": {
+    "foundCompaniesList": [
+      {
+        "id": 43,
+        "name": "ПАО Московская Биржа",
+        "district": "Центральный",
+        "region": "Москва",
+        "branch": "Иное",
+        "lastActivity": "2026-09-22T14:00:00.02",
+        "docCount": 56
+      }
+    ],
+    "pagingInfo": {
+      "totalItems": 1,
+      "itemsPerPage": 10,
+      "currentPage": 1,
+      "totalPages": 1
+    },
+    "allFoundCompanies": 1,
+    "maxFoundCompaniesToShow": 400
+  }
+}
