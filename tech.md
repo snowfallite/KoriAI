@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 3
+> CORE_VERSION: 4
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v4 (2026-09-29): e-disclosure по живым проверкам: адаптер ходит через Firefox в оконном режиме с постоянным профилем вместо Chromium; поиск компаний идёт в `/api/search/companies` вопреки robots.txt (решение владельца), `search_companies` и `DisclosureCompanyHit` вернулись в порт, эмитента не из `reference/issuers.csv` находит поиск (`auto_confirmed`, `auto_candidate`) (S1-12).
 - v3 (2026-09-29): итоги discovery e-disclosure. Адаптер ходит через Chromium в оконном режиме без KoriBot, ключ `EDISCLOSURE_USER_AGENT` удалён; поиска компаний по сайту нет (robots.txt запрещает `/api/*`), эмитенты берутся из `reference/issuers.csv` (строки `IssuerRef`); у строки файла появилось описание, раздел `other` входит в синхронизацию; RAR5 и 7z распаковывает libarchive (S1-12).
 - v2 (2026-09-28): продукт переименован в «氷 Kōri»: образ `kori-api`, `TINVEST_APP_NAME=kori`, `EDISCLOSURE_USER_AGENT=KoriBot/1.0`.
 - v1 (2026-09-26): первичное ядро. Стек, архитектура, схема БД, контракты HTTP/SSE/портов/агента/очереди, UI-компоненты, тесты, CI/CD, long-lead, стадии S1 (каркас) и S2 (слайсы F-01..F-16).
