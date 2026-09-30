@@ -64,7 +64,7 @@
 		return {
 			text: token('--foreground'),
 			muted: token('--muted-foreground'),
-			grid: token('--border'),
+			grid: token('--chart-grid'),
 			surface: token('--card'),
 			font: css.fontFamily,
 			series: [1, 2, 3, 4, 5, 6, 7, 8].map((i) => token(`--chart-${i}`)),

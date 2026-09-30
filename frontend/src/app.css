@@ -6,9 +6,11 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Kïoku tokens (docs/ui-references/template, tech.md §13.3): day and night, radius 0,
- * no shadows, one red. --negative is a crimson apart from the brand red. The chart slots
- * are the categorical palette of the dataviz method, validated on these surfaces.
+ * Kïoku tokens (docs/ui-references/template, tech.md §13.3): night by default, day on demand,
+ * radius 0, no shadows, one red. Dividers are the soft line of the brand, controls outline in
+ * ink. --primary-deep is the red-deep plate (active tab, destructive). --negative is a crimson
+ * apart from the brand red. The chart slots are the categorical palette of the dataviz method,
+ * validated on these surfaces; --chart-grid keeps chart rules quieter than the dividers.
  */
 :root {
 	color-scheme: light;
@@ -21,7 +23,9 @@
 	--popover-foreground: #000000;
 	--primary: #fe2627;
 	--primary-foreground: #000000;
-	--secondary: #dbdbdb;
+	--primary-deep: #df342f;
+	--primary-deep-foreground: #ffffff;
+	--secondary: #cbcbcb;
 	--secondary-foreground: #000000;
 	--muted: #f6f6f6;
 	--muted-foreground: #666666;
@@ -31,9 +35,10 @@
 	--positive: #117a37;
 	--negative: #c8102e;
 	--warning: #9a5b00;
-	--border: #dbdbdb;
+	--border: #aaaaaa;
 	--input: #767676;
 	--ring: #000000;
+	--chart-grid: #dbdbdb;
 	--chart-1: #2a78d6;
 	--chart-2: #eb6834;
 	--chart-3: #1baf7a;
@@ -42,13 +47,13 @@
 	--chart-6: #008300;
 	--chart-7: #4a3aa7;
 	--chart-8: #e34948;
-	--sidebar: #f6f6f6;
+	--sidebar: #ffffff;
 	--sidebar-foreground: #000000;
 	--sidebar-primary: #fe2627;
 	--sidebar-primary-foreground: #000000;
-	--sidebar-accent: #dbdbdb;
+	--sidebar-accent: #f6f6f6;
 	--sidebar-accent-foreground: #000000;
-	--sidebar-border: #dbdbdb;
+	--sidebar-border: #aaaaaa;
 	--sidebar-ring: #000000;
 }
 
@@ -62,8 +67,10 @@
 	--popover-foreground: #ffffff;
 	--primary: #fe2627;
 	--primary-foreground: #000000;
-	--secondary: #2e2e2e;
-	--secondary-foreground: #ffffff;
+	--primary-deep: #df342f;
+	--primary-deep-foreground: #ffffff;
+	--secondary: #cbcbcb;
+	--secondary-foreground: #000000;
 	--muted: #262626;
 	--muted-foreground: #aaaaaa;
 	--accent: #2e2e2e;
@@ -72,9 +79,10 @@
 	--positive: #3ecf6e;
 	--negative: #ff6b6b;
 	--warning: #f5a524;
-	--border: #333333;
+	--border: #757575;
 	--input: #757575;
 	--ring: #fe2627;
+	--chart-grid: #333333;
 	--chart-1: #3987e5;
 	--chart-2: #d95926;
 	--chart-3: #199e70;
@@ -83,18 +91,23 @@
 	--chart-6: #008300;
 	--chart-7: #9085e9;
 	--chart-8: #e66767;
-	--sidebar: #0d0d0d;
+	--sidebar: #000000;
 	--sidebar-foreground: #ffffff;
 	--sidebar-primary: #fe2627;
 	--sidebar-primary-foreground: #000000;
 	--sidebar-accent: #1c1c1c;
 	--sidebar-accent-foreground: #ffffff;
-	--sidebar-border: #333333;
+	--sidebar-border: #757575;
 	--sidebar-ring: #fe2627;
 }
 
 @theme inline {
 	--font-mono: 'JetBrains Mono Variable', monospace;
+	/* Kïoku sets text in the regular weight; bold stays for block headings (font-bold). */
+	--font-weight-medium: 400;
+	--color-primary-deep: var(--primary-deep);
+	--color-primary-deep-foreground: var(--primary-deep-foreground);
+	--color-chart-grid: var(--chart-grid);
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -146,9 +159,32 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground antialiased;
 	}
 	html {
 		@apply font-mono;
 	}
+	/* Brand icons: 1.25px lines with square ends at any size. */
+	.lucide {
+		stroke-width: 1.25px;
+		stroke-linecap: square;
+		stroke-linejoin: miter;
+	}
+	.lucide * {
+		vector-effect: non-scaling-stroke;
+	}
+}
+
+/*
+ * The Kïoku focus ring: a 2px gap, then 2px of --ring (red at night, black by day). It stays
+ * unlayered to beat the outline-none of the primitives; menus and lists keep their highlight.
+ */
+:focus-visible:not(
+	[role='menuitem'],
+	[role='menuitemcheckbox'],
+	[role='menuitemradio'],
+	[role='option']
+) {
+	outline: 2px solid var(--ring);
+	outline-offset: 2px;
 }
