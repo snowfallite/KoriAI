@@ -52,7 +52,18 @@
 	import * as Tooltip from '$lib/ui/tooltip';
 	import { formatMoney } from '$lib/utils/format';
 	import Demo from './components/Demo.svelte';
-	import * as F from './fixtures';
+	import {
+		ACCOUNTS,
+		ARTIFACTS,
+		CHARTS,
+		ERROR,
+		IMAGES,
+		INSTRUMENTS,
+		MARKDOWN,
+		SOURCES,
+		TABLE,
+		USER
+	} from './fixtures';
 
 	let account = $state<string | null>(null);
 	let period = $state<PeriodCode>('1y');
@@ -68,7 +79,7 @@
 
 	const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 	const LOGO_SIZES = [20, 24, 32, 48] as const;
-	const [sber, gazp] = F.INSTRUMENTS as [InstrumentBrief, InstrumentBrief];
+	const [sber, gazp] = INSTRUMENTS as [InstrumentBrief, InstrumentBrief];
 </script>
 
 <div class="mx-auto max-w-[1200px] space-y-8 px-4 py-6 md:px-8">
@@ -204,7 +215,7 @@
 				<Command.List>
 					<Command.Empty>Ничего не найдено</Command.Empty>
 					<Command.Group heading="Акции">
-						{#each F.INSTRUMENTS as instrument (instrument.uid)}
+						{#each INSTRUMENTS as instrument (instrument.uid)}
 							<Command.Item value={instrument.ticker}>{instrument.name}</Command.Item>
 						{/each}
 					</Command.Group>
@@ -217,7 +228,7 @@
 	<Demo name="AppShell" note="сайдбар на десктопе, вкладки снизу на мобильном">
 		<!-- transform keeps the fixed tab bar inside the frame -->
 		<div class="h-[420px] [transform:translateZ(0)] overflow-hidden border">
-			<AppShell nav={NAV} user={F.USER}>
+			<AppShell nav={NAV} user={USER}>
 				<PageHeader title="Портфель" description="Содержимое вкладки" />
 			</AppShell>
 		</div>
@@ -244,7 +255,7 @@
 	</Demo>
 
 	<Demo name="ErrorState">
-		<ErrorState error={F.ERROR} onRetry={() => toast.info('Повторяю запрос')} />
+		<ErrorState error={ERROR} onRetry={() => toast.info('Повторяю запрос')} />
 	</Demo>
 
 	<Demo name="LoadingBlock">
@@ -259,7 +270,7 @@
 		<div class="grid gap-4 md:grid-cols-2">
 			<DataTable
 				columns={positions}
-				rows={F.INSTRUMENTS}
+				rows={INSTRUMENTS}
 				onRowClick={(row) => toast(`Выбран ${row.ticker}`)}
 			/>
 			<DataTable columns={positions} rows={[]} dense>
@@ -270,19 +281,19 @@
 
 	<Demo name="ChartView" note="все девять видов ChartKind">
 		<div class="grid gap-4 md:grid-cols-2">
-			{#each F.CHARTS as spec (spec.kind)}
+			{#each CHARTS as spec (spec.kind)}
 				<ChartView {spec} height={260} />
 			{/each}
 		</div>
 	</Demo>
 
 	<Demo name="ArtifactTable">
-		<ArtifactTable spec={F.TABLE} />
+		<ArtifactTable spec={TABLE} />
 	</Demo>
 
 	<Demo name="ArtifactImage">
 		<div class="flex flex-wrap gap-4">
-			{#each F.IMAGES as artifact (artifact.id)}
+			{#each IMAGES as artifact (artifact.id)}
 				<ArtifactImage {artifact} />
 			{/each}
 		</div>
@@ -290,7 +301,7 @@
 
 	<Demo name="ArtifactView" note="график, таблица и картинка через один компонент">
 		<div class="space-y-4">
-			{#each F.ARTIFACTS as artifact (artifact.id)}
+			{#each ARTIFACTS as artifact (artifact.id)}
 				<ArtifactView {artifact} />
 			{/each}
 		</div>
@@ -298,12 +309,12 @@
 
 	<Demo name="Markdown" note="сырой HTML и картинки из текста остаются текстом">
 		<div class="max-w-[820px]">
-			<Markdown source={F.MARKDOWN} sources={F.SOURCES} />
+			<Markdown source={MARKDOWN} sources={SOURCES} />
 		</div>
 	</Demo>
 
 	<Demo name="SourceList">
-		<SourceList sources={F.SOURCES} />
+		<SourceList sources={SOURCES} />
 	</Demo>
 
 	<Demo name="StatCard">
@@ -354,7 +365,7 @@
 
 	<Demo name="InstrumentBadge">
 		<div class="flex flex-wrap items-center gap-6">
-			{#each F.INSTRUMENTS as instrument (instrument.uid)}
+			{#each INSTRUMENTS as instrument (instrument.uid)}
 				<InstrumentBadge {instrument} />
 			{/each}
 			<InstrumentBadge instrument={gazp} size="md" />
@@ -363,11 +374,7 @@
 
 	<Demo name="AccountSelect" note="скрытый счёт не показывается">
 		<div class="flex items-center gap-3 text-xs">
-			<AccountSelect
-				accounts={F.ACCOUNTS}
-				value={account}
-				onChange={(alias) => (account = alias)}
-			/>
+			<AccountSelect accounts={ACCOUNTS} value={account} onChange={(alias) => (account = alias)} />
 			<span class="text-muted-foreground">Выбрано: {account ?? 'все счета'}</span>
 		</div>
 	</Demo>
