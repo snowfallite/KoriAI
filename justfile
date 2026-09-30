@@ -69,9 +69,11 @@ test-int:
 test-fe:
     {{ fe }} test
 
-# Playwright end-to-end tests
+# Playwright on the CI stack (§15.4); a failure leaves the stack up for a look
 e2e:
+    docker compose -f docker-compose.ci.yml up -d --build --wait
     {{ fe }} test:e2e
+    docker compose -f docker-compose.ci.yml down
 
 # SPA production build
 build:
