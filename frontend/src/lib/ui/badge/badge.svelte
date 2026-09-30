@@ -6,10 +6,12 @@
 		variants: {
 			variant: {
 				default: 'bg-primary text-primary-foreground [a]:hover:bg-primary/80',
-				secondary: 'bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80',
+				// Kïoku tags: the category plate, the red-deep counter plate, the ink frame.
+				secondary: 'bg-muted-foreground text-background [a]:hover:bg-foreground',
 				destructive:
-					'bg-destructive/10 [a]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 text-destructive dark:bg-destructive/20',
-				outline: 'border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground',
+					'bg-primary-deep text-primary-deep-foreground font-bold [a]:hover:bg-primary [a]:hover:text-primary-foreground',
+				outline:
+					'border-foreground text-foreground [a]:hover:bg-foreground [a]:hover:text-background',
 				ghost: 'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
 				link: 'text-primary underline-offset-4 hover:underline'
 			}
