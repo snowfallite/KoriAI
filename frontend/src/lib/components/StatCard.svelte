@@ -28,12 +28,12 @@
 
 <Card.Root size="sm">
 	<Card.Content class="space-y-1">
-		<p class="text-muted-foreground">{label}</p>
+		<p class="tracking-wider text-muted-foreground uppercase">{label}</p>
 		{#if loading}
 			<Skeleton class="h-7 w-32" />
 			<span class="sr-only">Загрузка</span>
 		{:else}
-			<p class="text-xl font-medium">{value}</p>
+			<p class="text-2xl">{value}</p>
 			{#if delta}
 				{@const trend = TREND[delta.trend]}
 				<p class={trend.class}>

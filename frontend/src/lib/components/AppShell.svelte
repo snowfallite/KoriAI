@@ -14,8 +14,11 @@
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- NAV holds app paths; the SPA has no base path -->
 
+<!-- The compact Kïoku logo: the name, its sign raised and quiet at the side. -->
 {#snippet brand()}
-	<span class="text-sm font-medium"><span lang="ja">氷</span> Kōri</span>
+	<span class="text-lg leading-none"
+		>Kōri<sup lang="ja" class="ml-1 font-serif text-[10px] text-muted-foreground">氷</sup></span
+	>
 {/snippet}
 
 <!-- A 240 px sidebar on the desktop, four tabs at the bottom under 768 px (tech.md §13.3). -->
@@ -27,10 +30,10 @@
 				<Sidebar.Menu>
 					{#each nav as item (item.id)}
 						<Sidebar.MenuItem>
-							<!-- Kïoku marks the active item red; hover stays a gray step. -->
+							<!-- Kïoku links: caps in ink-muted, red on hover, the current one a red plate. -->
 							<Sidebar.MenuButton
 								isActive={current(item) || undefined}
-								class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+								class="tracking-wider text-muted-foreground uppercase hover:bg-transparent hover:text-primary data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
 							>
 								{#snippet child({ props })}
 									<a href={item.href} aria-current={current(item) ? 'page' : undefined} {...props}>
@@ -72,7 +75,7 @@
 			<a
 				href={item.href}
 				aria-current={current(item) ? 'page' : undefined}
-				class="flex flex-col items-center gap-1 py-2 text-[11px] text-muted-foreground aria-[current=page]:text-foreground"
+				class="flex flex-col items-center gap-1 py-2 text-[11px] tracking-wider text-muted-foreground uppercase aria-[current=page]:bg-primary aria-[current=page]:text-primary-foreground"
 			>
 				<item.icon class="size-5" />
 				{item.label}

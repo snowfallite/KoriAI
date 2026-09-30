@@ -93,15 +93,15 @@
 	</PageHeader>
 
 	<section aria-label="Примитивы" class="space-y-4">
-		<h2 class="text-sm font-medium">Примитивы shadcn-svelte</h2>
+		<h2 class="text-xs tracking-wider text-muted-foreground uppercase">Примитивы shadcn-svelte</h2>
 		<div class="grid gap-6 md:grid-cols-2">
 			<div class="flex flex-wrap items-center gap-2">
-				<Button>Главное</Button>
+				<Button>Главное <span aria-hidden="true">→</span></Button>
 				<Button variant="secondary">Второе</Button>
-				<Button variant="outline">Рамка</Button>
+				<Button variant="outline">Рамка <span aria-hidden="true">→</span></Button>
 				<Button variant="ghost">Призрак</Button>
 				<Button variant="destructive">Удалить</Button>
-				<Button variant="link">Ссылка</Button>
+				<Button variant="link"><span aria-hidden="true">→</span> Ссылка</Button>
 				<Button disabled>Недоступно</Button>
 			</div>
 			<div class="flex flex-wrap items-center gap-2">
