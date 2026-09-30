@@ -39,6 +39,7 @@ export interface ChartTheme {
 // These kinds place marks by category whatever the spec says about the x axis.
 const BY_CATEGORY = new Set<ChartSpec['kind']>(['candlestick', 'heatmap', 'waterfall']);
 const BAR_MAX_WIDTH = 24;
+const FROM_ZERO = new Set<ChartSpec['kind']>(['bar', 'stacked_bar', 'waterfall']);
 
 /** An axis value as people read it; percent axes carry shares (0.12 is 12 %), as PercentText. */
 export function formatAxisValue(value: unknown, axis: Axis): string {
@@ -125,6 +126,8 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 		nameGap: 28,
 		axisLabel: {
 			color: theme.muted,
+			// Full dates are long: a label that would overlap its neighbour stays hidden.
+			hideOverlap: true,
 			formatter: (value: string | number) => formatAxisValue(value, spec.x)
 		},
 		axisPointer: { label: { formatter: ({ value }) => formatAxisValue(value, spec.x) } },
@@ -134,6 +137,8 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 	};
 	const yAxes = [spec.y, ...(spec.y2 ? [spec.y2] : [])].map((axis): YAXisComponentOption => ({
 		type: axis.type === 'log' ? 'log' : 'value',
+		// Bars grow from zero; prices and lines fit their own range.
+		scale: !FROM_ZERO.has(spec.kind),
 		name: axis.label ?? undefined,
 		axisLabel: { color: theme.muted, formatter: (value: number) => formatAxisValue(value, axis) },
 		splitLine: { lineStyle: { color: theme.grid } }
@@ -208,7 +213,8 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 						width: 2,
 						type: s.role === 'benchmark' || colors[i]?.cycled ? 'dashed' : 'solid'
 					},
-					...(spec.kind === 'area' ? { areaStyle: { opacity: 0.1 } } : {})
+					// A benchmark stays a dashed line over the wash of the series it measures.
+					...(spec.kind === 'area' && s.role !== 'benchmark' ? { areaStyle: { opacity: 0.1 } } : {})
 				};
 		}
 	});
