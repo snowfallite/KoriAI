@@ -55,12 +55,14 @@ test('kitchen-sink shows every component in both themes without console errors',
 	await expect(markdown).toContainText('<script>');
 	expect(await page.evaluate(() => 'hacked' in window)).toBe(false);
 
+	// Night is the Kïoku default; the day theme is one click away.
 	const html = page.locator('html');
-	await page.getByRole('button', { name: 'Тёмная тема' }).first().click();
 	await expect(html).toHaveClass(DARK);
-	await expect(charts.filter({ has: page.locator('canvas') })).toHaveCount(9);
 	await page.getByRole('button', { name: 'Светлая тема' }).first().click();
 	await expect(html).not.toHaveClass(DARK);
+	await expect(charts.filter({ has: page.locator('canvas') })).toHaveCount(9);
+	await page.getByRole('button', { name: 'Тёмная тема' }).first().click();
+	await expect(html).toHaveClass(DARK);
 
 	expect(errors).toEqual([]);
 });
