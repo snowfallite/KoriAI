@@ -31,12 +31,10 @@
 		}
 	}
 
-	// Numbers sort by value; an empty cell goes last either way.
-	const byNumber: SortingFn<Row> = (a, b, id) => {
-		const [x, y] = [a.getValue<string | null>(id), b.getValue<string | null>(id)];
-		if (x === null || y === null) return x === y ? 0 : x === null ? 1 : -1;
-		return Number(x) - Number(y);
-	};
+	// Numbers sort by value; an empty cell is undefined to the table and sortUndefined puts it
+	// last in both directions.
+	const byNumber: SortingFn<Row> = (a, b, id) =>
+		Number(a.getValue<string>(id)) - Number(b.getValue<string>(id));
 
 	const columns = $derived(
 		spec.columns.map((column): ColumnDef<Row> => ({
@@ -44,8 +42,8 @@
 			header: column.label,
 			// An instrument column sorts by the name the reader sees.
 			accessorFn: (row) => {
-				const value = row[column.key] ?? null;
-				return column.type === 'instrument' && value !== null
+				const value = row[column.key] ?? undefined;
+				return column.type === 'instrument' && value !== undefined
 					? (spec.instruments[value]?.name ?? value)
 					: value;
 			},
