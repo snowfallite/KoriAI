@@ -66,7 +66,7 @@ function knownCurrency(currency: unknown): currency is string {
 	try {
 		return typeof currency === 'string' && !!numberFormat({ style: 'currency', currency });
 	} catch {
-		return false; // Intl throws RangeError on a code it does not know
+		return false; // Intl throws RangeError on a malformed code
 	}
 }
 

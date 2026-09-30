@@ -154,6 +154,11 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 
 	if (spec.kind === 'heatmap') return { ...base, ...heatmap(spec, theme, xs, xAxis), grid };
 
+	// ECharts reads a bare date as local midnight, a day early east of Moscow; Date.parse
+	// puts it at UTC midnight, where the UTC ticks and the Moscow labels agree.
+	const time = xAxis.type === 'time';
+	const at = (x: Point['x']) => (time && typeof x === 'string' ? Date.parse(x) : x);
+
 	const series = spec.series.map((s, i): SeriesOption => {
 		const yAxisIndex = s.axis === 'y2' && spec.y2 ? 1 : 0;
 		const axis = yAxisIndex === 1 && spec.y2 ? spec.y2 : spec.y;
@@ -163,7 +168,7 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 			yAxisIndex,
 			tooltip: { valueFormatter: (value: unknown) => formatAxisValue(value, axis) }
 		};
-		const pairs = s.points.map((p) => [p.x, p.y]);
+		const pairs = s.points.map((p) => [at(p.x), p.y]);
 		switch (spec.kind) {
 			case 'bar':
 			case 'stacked_bar':
@@ -223,10 +228,12 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 
 function pies(spec: ChartSpec, theme: ChartTheme): PieSeriesOption[] {
 	const n = spec.series.length;
+	// Pies share the row; the hole keeps its share of each.
+	const outer = Math.min(70, 140 / n);
 	return spec.series.map((s, i) => ({
 		type: 'pie',
 		name: s.name,
-		radius: ['45%', `${Math.min(70, 140 / n)}%`],
+		radius: [`${outer * 0.64}%`, `${outer}%`],
 		center: [`${((i + 0.5) / n) * 100}%`, '50%'],
 		data: s.points.map((p) => ({ name: String(p.x), value: p.y ?? 0 })),
 		label: {

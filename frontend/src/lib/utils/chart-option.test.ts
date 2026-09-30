@@ -1,7 +1,7 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import type { ChartSpec } from '$lib/types';
-import { type ChartTheme, toEChartsOption } from './chart-option';
+import { type ChartTheme, formatAxisValue, toEChartsOption } from './chart-option';
 
 type Kind = ChartSpec['kind'];
 type Series = ChartSpec['series'][number];
@@ -176,6 +176,29 @@ describe('toEChartsOption', () => {
 			{ name: 'Облигации', value: 40 }
 		]);
 		expect(option.xAxis).toBeUndefined();
+	});
+
+	it('keeps the hole of a donut inside it however many pies share the row', () => {
+		for (const n of [1, 4, 12]) {
+			for (const pie of seriesOf(
+				spec(
+					'pie',
+					Array.from({ length: n }, () => ({}))
+				)
+			)) {
+				const [inner = 0, outer = 0] = (pie.radius as string[]).map(Number.parseFloat);
+				expect(inner).toBeLessThan(outer);
+			}
+		}
+	});
+
+	it('puts a calendar day of a time axis at UTC midnight, so it reads the same day anywhere', () => {
+		const time = { type: 'time' as const, label: null, format: 'date' as const, unit: null };
+		const points = [pt({ x: '2026-01-05', y: 1 })];
+		expect(seriesOf(spec('line', [{ points }], { x: time }))[0]?.data).toEqual([
+			[Date.UTC(2026, 0, 5), 1]
+		]);
+		expect(formatAxisValue(Date.UTC(2026, 0, 5), time)).toBe('05.01.2026');
 	});
 
 	it('orders candle values as ECharts reads them: open, close, low, high', () => {
