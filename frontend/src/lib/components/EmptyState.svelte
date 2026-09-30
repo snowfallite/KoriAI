@@ -14,7 +14,7 @@
 	} = $props();
 </script>
 
-<div class="flex flex-col items-center gap-3 border border-dashed px-6 py-10 text-center">
+<div class="flex flex-col items-center gap-3 border px-6 py-10 text-center">
 	{#if Icon}
 		<div class="grid size-9 place-items-center bg-muted text-muted-foreground" aria-hidden="true">
 			<Icon class="size-4" />

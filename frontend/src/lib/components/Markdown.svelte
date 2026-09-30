@@ -58,7 +58,7 @@
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- only external http(s) links here -->
 <div
-	class="space-y-3 text-sm/6 break-words [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_blockquote]:border-l-2 [&_blockquote]:pl-3 [&_blockquote]:text-muted-foreground [&_h1]:text-base [&_h1]:font-semibold [&_h2]:text-base [&_h2]:font-semibold [&_h3]:font-semibold [&_li]:my-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_table]:w-full [&_table]:text-xs [&_td]:border-b [&_td]:p-1.5 [&_th]:border-b [&_th]:p-1.5 [&_th]:text-left [&_ul]:list-disc [&_ul]:pl-5"
+	class="space-y-3 text-sm/6 break-words [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_blockquote]:border-l-2 [&_blockquote]:pl-3 [&_blockquote]:text-muted-foreground [&_h1]:text-base [&_h1]:font-semibold [&_h2]:text-base [&_h2]:font-semibold [&_h3]:font-semibold [&_li]:my-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_table]:w-full [&_table]:text-xs [&_td]:border-b [&_td]:p-1.5 [&_th]:border-b [&_th]:p-1.5 [&_th]:text-left [&_ul]:list-['→_'] [&_ul]:pl-5"
 >
 	<SvelteMarkdown
 		{source}

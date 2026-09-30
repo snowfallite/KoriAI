@@ -7,7 +7,7 @@
 
 <header class="flex flex-wrap items-end justify-between gap-3 border-b pb-4">
 	<div class="min-w-0 space-y-1">
-		<h1 class="text-lg font-medium">{title}</h1>
+		<h1 class="text-2xl">{title}</h1>
 		{#if description}
 			<p class="text-xs text-muted-foreground">{description}</p>
 		{/if}
