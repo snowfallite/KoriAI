@@ -25,7 +25,8 @@ const COMPONENTS = [
 	'ConfirmDialog',
 	'CopyButton',
 	'ThemeToggle',
-	'Disclaimer'
+	'Disclaimer',
+	'Logo'
 ];
 
 const DARK = /(^|\s)dark(\s|$)/;

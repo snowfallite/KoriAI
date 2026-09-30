@@ -18,6 +18,7 @@
 	import InstrumentBadge from '$lib/components/InstrumentBadge.svelte';
 	import InstrumentLogo from '$lib/components/InstrumentLogo.svelte';
 	import LoadingBlock from '$lib/components/LoadingBlock.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import MoneyText from '$lib/components/MoneyText.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -79,6 +80,13 @@
 
 	const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 	const LOGO_SIZES = [20, 24, 32, 48] as const;
+	const GRADIENTS = [
+		['ki-fade', 'красный → белый'],
+		['ki-ignite', 'чёрный → красный'],
+		['ki-ember', 'красный → бледно-красный'],
+		['ki-hero', 'розовый → красный → чёрный'],
+		['ki-tile', 'розовый → красный → серый']
+	] as const;
 	const [sber, gazp] = INSTRUMENTS as [InstrumentBrief, InstrumentBrief];
 </script>
 
@@ -103,6 +111,18 @@
 				<Button variant="destructive">Удалить</Button>
 				<Button variant="link"><span aria-hidden="true">→</span> Ссылка</Button>
 				<Button disabled>Недоступно</Button>
+			</div>
+			<div class="flex flex-wrap items-center gap-2 md:col-span-2">
+				<Button variant="secondary"
+					><span data-slot="button-glyph" aria-hidden="true">+</span>Добавить счёт</Button
+				>
+				<Button variant="ai"
+					><span data-slot="button-glyph" aria-hidden="true">→</span>Разобрать подробно</Button
+				>
+				<Button><span data-slot="button-glyph" aria-hidden="true">→</span>Подключить токен</Button>
+				<Button variant="secondary" disabled
+					><span data-slot="button-glyph" aria-hidden="true">+</span>Недоступно</Button
+				>
 			</div>
 			<div class="flex flex-wrap items-center gap-2">
 				<Badge>новое</Badge>
@@ -224,6 +244,48 @@
 		</div>
 		<Separator />
 	</section>
+
+	<section aria-label="Графика бренда" class="space-y-3 border-t pt-4">
+		<h2 class="text-xs tracking-wider text-muted-foreground uppercase">Графика бренда</h2>
+		<div class="grid grid-cols-2 gap-4 text-xs md:grid-cols-4">
+			{#each GRADIENTS as [utility, note] (utility)}
+				<figure>
+					<div class="h-16 {utility}" aria-hidden="true"></div>
+					<figcaption class="mt-2">
+						{utility} · <span class="text-muted-foreground">{note}</span>
+					</figcaption>
+				</figure>
+			{/each}
+			<figure>
+				<div class="h-16 ki-halftone" aria-hidden="true"></div>
+				<figcaption class="mt-2">
+					ki-halftone · <span class="text-muted-foreground">полутон, шаг 4 px</span>
+				</figcaption>
+			</figure>
+			<figure>
+				<p class="h-16 text-sm"><span class="ki-highlight px-1">Выручка выросла на 12 %</span></p>
+				<figcaption class="mt-2">
+					ki-highlight · <span class="text-muted-foreground">подсветка фразы</span>
+				</figcaption>
+			</figure>
+			<figure class="w-fit bg-grey-200 p-2">
+				<div class="h-16 w-32 ki-tile" aria-hidden="true"></div>
+				<figcaption class="pt-2 text-center text-2xl leading-none text-black">Kō</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<Demo name="Logo" note="compact в шапке, spaced на обложке, sign на плитке и в фавиконе">
+		<div class="flex flex-wrap items-end gap-8">
+			<Logo size="sm" />
+			<Logo />
+			<Logo size="lg" />
+			<Logo variant="sign" size="sm" />
+			<Logo variant="sign" />
+			<Logo variant="sign" size="lg" />
+		</div>
+		<Logo variant="spaced" />
+	</Demo>
 
 	<Demo name="AppShell" note="сайдбар на десктопе, вкладки снизу на мобильном">
 		<!-- transform keeps the fixed tab bar inside the frame -->
