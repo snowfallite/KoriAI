@@ -9,6 +9,10 @@ export type TableSpec = Schemas['TableSpec'];
 export type ImageSpec = Schemas['ImageSpec'];
 export type SourceRef = Schemas['SourceRef'];
 export type InstrumentBrief = Schemas['InstrumentBrief'];
+export type Money = Schemas['Money'];
+export type UserOut = Schemas['UserOut'];
+export type BrokerAccountOut = Schemas['BrokerAccountOut'];
+export type PeriodCode = Schemas['PeriodCode'];
 
 /** The only hand-written API type: client.ts throws it (tech.md §12.1). */
 export type ApiError = Schemas['ErrorOut'] & { status: number };

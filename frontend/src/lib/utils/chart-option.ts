@@ -41,7 +41,7 @@ const BY_CATEGORY = new Set<ChartSpec['kind']>(['candlestick', 'heatmap', 'water
 const BAR_MAX_WIDTH = 24;
 
 /** An axis value as people read it; percent axes carry shares (0.12 is 12 %), as PercentText. */
-function label(value: unknown, axis: Axis): string {
+export function formatAxisValue(value: unknown, axis: Axis): string {
 	if (typeof value !== 'number' && typeof value !== 'string') return '';
 	const text = (() => {
 		switch (axis.format) {
@@ -123,8 +123,11 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 		name: spec.x.label ?? undefined,
 		nameLocation: 'middle',
 		nameGap: 28,
-		axisLabel: { color: theme.muted, formatter: (value: string | number) => label(value, spec.x) },
-		axisPointer: { label: { formatter: ({ value }) => label(value, spec.x) } },
+		axisLabel: {
+			color: theme.muted,
+			formatter: (value: string | number) => formatAxisValue(value, spec.x)
+		},
+		axisPointer: { label: { formatter: ({ value }) => formatAxisValue(value, spec.x) } },
 		axisLine: { lineStyle: { color: theme.grid } },
 		axisTick: { show: false },
 		splitLine: { show: false }
@@ -132,7 +135,7 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 	const yAxes = [spec.y, ...(spec.y2 ? [spec.y2] : [])].map((axis): YAXisComponentOption => ({
 		type: axis.type === 'log' ? 'log' : 'value',
 		name: axis.label ?? undefined,
-		axisLabel: { color: theme.muted, formatter: (value: number) => label(value, axis) },
+		axisLabel: { color: theme.muted, formatter: (value: number) => formatAxisValue(value, axis) },
 		splitLine: { lineStyle: { color: theme.grid } }
 	}));
 	const grid = {
@@ -153,7 +156,7 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 			name: s.name,
 			color: colors[i]?.color,
 			yAxisIndex,
-			tooltip: { valueFormatter: (value: unknown) => label(value, axis) }
+			tooltip: { valueFormatter: (value: unknown) => formatAxisValue(value, axis) }
 		};
 		const pairs = s.points.map((p) => [p.x, p.y]);
 		switch (spec.kind) {
@@ -226,7 +229,7 @@ function pies(spec: ChartSpec, theme: ChartTheme): PieSeriesOption[] {
 				`${name}\n${formatPercent((percent ?? 0) / 100, { digits: 1 })}`
 		},
 		itemStyle: { borderColor: theme.surface, borderWidth: 2 },
-		tooltip: { valueFormatter: (value: unknown) => label(value, spec.y) }
+		tooltip: { valueFormatter: (value: unknown) => formatAxisValue(value, spec.y) }
 	}));
 }
 

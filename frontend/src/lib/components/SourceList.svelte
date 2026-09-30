@@ -21,6 +21,7 @@
 	}
 </script>
 
+<!-- eslint-disable svelte/no-navigation-without-resolve -- only external http(s) links here -->
 {#if sources.length}
 	<ol class="space-y-1.5 text-xs" aria-label="Источники">
 		{#each sources as source (source.local_id)}
