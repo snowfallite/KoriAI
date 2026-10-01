@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 6
+> CORE_VERSION: 7
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v7 (2026-10-01): UI-кит повторяет бренд Kïoku целиком: у `button` вариант `ai` и ячейка-глиф, общий компонент `Logo` (compact, spaced, sign), токены red-deep, лесенки серых, сетки графиков и градиентов, утилиты `ki-*` и правила бренда в §13.3, тема по умолчанию ночь (S1-06).
 - v6 (2026-09-30): OpenAPI несёт модели пропсов §13.2, которые приходят раньше своих роутов: `Money`, `UserOut`, `BrokerAccountOut`, `PeriodCode`; UI-кит S1-06 типизирует ими пропсы до S1-05 и S1-11 (S1-06).
 - v5 (2026-09-30): у каждой задачи очереди свой тип payload, `defer(payload)` находит задачу по типу; четыре задачи документа получили `FetchDocumentPayload`, `ParseRasPayload`, `ExtractIfrsPayload`, `IndexDocumentPayload` на общей базе `DocumentPayload {document_id}` с одним `lock` и своими `queueing_lock` (S1-04).
 - v4 (2026-09-29): e-disclosure по живым проверкам: адаптер ходит через Firefox в оконном режиме с постоянным профилем вместо Chromium; поиск компаний идёт в `/api/search/companies` вопреки robots.txt (решение владельца), `search_companies` и `DisclosureCompanyHit` вернулись в порт, эмитента не из `reference/issuers.csv` находит поиск (`auto_confirmed`, `auto_candidate`) (S1-12).
@@ -1548,6 +1549,8 @@ class SourceRef(BaseModel):
 
 Ставятся командой `shadcn-svelte add` в S1-06 и не переписываются руками без причины: `button`, `input`, `textarea`, `label`, `card`, `badge`, `alert`, `dialog`, `alert-dialog`, `sheet`, `dropdown-menu`, `select`, `tabs`, `tooltip`, `popover`, `separator`, `skeleton`, `scroll-area`, `switch`, `checkbox`, `radio-group`, `avatar`, `sonner`, `table`, `command`, `sidebar`, `collapsible`, `progress`, `toggle-group`. Код фич не пишет свои аналоги этих элементов.
 
+`button` говорит на языке Kïoku. Варианты: `default` (CTA: `--primary`, капс, на hover инверсия цвета текста и фона), `secondary` (ступенчатая серая: поле `--grey-300`, на hover `--grey-200`), `outline` (рамка цвета текста, капс, на hover инверсия), `ghost`, `destructive` (плашка red-deep), `link` (капс `--muted-foreground`, на hover `--primary`), `ai` (действие ИИ: подпись чёрным на `ki-fade`, на hover сплошной `--primary`). Ячейка-глиф: первый дочерний `<span data-slot="button-glyph" aria-hidden="true">` с глифом `+`, `→` или `↓` становится квадратной ячейкой высотой с кнопку без отступа слева; у `secondary` она `--grey-400`, у `default` и `ai` она `ki-ignite` с белым глифом. Disabled у залитых вариантов: поле `--grey-200`, ячейка `--grey-300`, текст `--grey-600`, без hover; у `ghost` и `link` меняется только текст.
+
 ### 13.2 Составные компоненты (`frontend/src/lib/components/`, S1-06)
 
 | Компонент | Пропсы | Где |
@@ -1576,6 +1579,7 @@ class SourceRef(BaseModel):
 | `CopyButton` | `text: string`, `label?: string` | код, ссылки |
 | `ThemeToggle` | нет | шапка |
 | `Disclaimer` | нет | под ответами с `meta.disclaimer` |
+| `Logo` | `variant?: 'compact' \| 'spaced' \| 'sign' = 'compact'`, `size?: 'sm' \| 'md' \| 'lg' = 'md'` | знак продукта по образцу Kïoku: compact «Kōri» с надстрочным 氷 (шапка AppShell), spaced «K Ō R I» с каной こ お り под буквами (страницы входа), sign «Kō» на плитке (фавикон, аватар) |
 
 `NavItem {id: 'chat' | 'history' | 'portfolio' | 'settings', label: string, href: string, icon: Component}` задаётся данными в `lib/nav.ts`. Порядок вкладок: Чат, История, Портфель, Настройки.
 
@@ -1584,7 +1588,8 @@ class SourceRef(BaseModel):
 ### 13.3 Визуал и токены
 
 - Источник визуала: `docs/ui-references/` (скриншоты, заметки, примеры кода) или шаблон в `docs/ui-references/template/`. S1-06 переносит его в токены `app.css` и компоненты §13.2. Фичи новых визуальных стилей не вводят.
-- Токены (CSS-переменные в `app.css`, `@theme` Tailwind v4), светлая и тёмная темы: `--background`, `--foreground`, `--muted`, `--muted-foreground`, `--card`, `--card-foreground`, `--border`, `--input`, `--ring`, `--primary`, `--primary-foreground`, `--accent`, `--destructive`, `--positive` (рост), `--negative` (падение), `--warning`, `--chart-1` … `--chart-8`, `--radius`. Цвета в компонентах только через токены.
+- Токены (CSS-переменные в `app.css`, `@theme` Tailwind v4), светлая и тёмная темы: `--background`, `--foreground`, `--muted`, `--muted-foreground`, `--card`, `--card-foreground`, `--border`, `--input`, `--ring`, `--primary`, `--primary-foreground`, `--primary-deep` и `--primary-deep-foreground` (плашка red-deep), `--accent`, `--destructive`, `--positive` (рост), `--negative` (падение), `--warning`, `--chart-1` … `--chart-8`, `--chart-grid` (сетка графиков), `--radius`. Одинаковые в обеих темах: лесенка серых `--grey-100`, `--grey-200`, `--grey-300`, `--grey-400`, `--grey-600`, `--grey-900` и градиенты `--grad-fade`, `--grad-ignite`, `--grad-hero`, `--grad-tile`, `--grad-ember`, `--grad-highlight`. Цвета в компонентах только через токены.
+- Бренд Kïoku (`docs/ui-references/template/README.md`), перенесённый на Kōri: тема по умолчанию ночь, дневная по выбору; радиус 0, теней нет; разделители `--border` (line-soft), рамки контролов и тегов цвета текста; обычный вес шрифта, жирный только у подзаголовков блоков; капс с трекингом у навигации, CTA, мета-подписей и заголовков таблиц; стрелки и знаки только глифами JetBrains Mono `→ ↓ ↑ + ×`; иконки линией 1.25 px с квадратными концами; фокус: зазор 2 px и кольцо 2 px цвета `--ring` (ночью красное, днём чёрное); активная вкладка и выбранный переключатель на плашке red-deep. Утилиты: `ki-fade`, `ki-ignite`, `ki-hero`, `ki-tile`, `ki-ember` (градиенты бренда), `ki-highlight` (подсветка фразы), `ki-halftone` (полутон, только декор, всегда `aria-hidden`). На одном экране не больше двух градиентов и одного паттерна.
 - Сетка: сайдбар 240 px на десктопе; меньше 768 px нижняя панель из 4 вкладок; контент до 1200 px; колонка чата до 820 px.
 - Тексты на русском. Числа и даты только через `format.ts`: даты `dd.MM.yyyy`, время `HH:mm` MSK.
 - Доступность: у каждого контрола подпись, видимый фокус, контраст AA, у графика `aria-label` из заголовка и кнопка «Данные».
