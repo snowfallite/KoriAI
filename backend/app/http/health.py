@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.config import Settings
 from app.contracts.api.health import HealthOut, LlmGateOut, ReadyOut
+from app.jobs.app import procrastinate_app
 
 log = structlog.get_logger(__name__)
 router = APIRouter(prefix="/api/health", tags=["health"])
@@ -24,15 +25,17 @@ async def health() -> HealthOut:
 @router.get("/ready", responses={503: {"model": ReadyOut}})
 async def ready(request: Request, response: Response) -> ReadyOut:
     settings: Settings = request.app.state.settings
-    db, qdrant = await asyncio.gather(_db_ready(request.app.state.engine), _qdrant_ready(settings))
-    # TODO(S1-07): report the queue workers. TODO(S1-09): report the LLM gate.
+    db, qdrant, queue = await asyncio.gather(
+        _db_ready(request.app.state.engine), _qdrant_ready(settings), _queue_ready()
+    )
+    # TODO(S1-09): report the LLM gate.
     out = ReadyOut(
         db=db,
         qdrant=qdrant,
-        queue=True,
+        queue=queue,
         llm_gate=LlmGateOut(capacity=settings.LLM_MAX_CONCURRENCY, in_use=0, waiting=0),
     )
-    if not (db and qdrant):
+    if not (db and qdrant and queue):
         response.status_code = 503
     return out
 
@@ -45,6 +48,16 @@ async def _db_ready(engine: AsyncEngine) -> bool:
         log.warning("db_not_ready", error=repr(exc))
         return False
     return True
+
+
+async def _queue_ready() -> bool:
+    # The workers restart on their own once the queue tables answer (app.jobs.app).
+    try:
+        async with asyncio.timeout(PROBE_TIMEOUT_S):
+            return await procrastinate_app.check_connection_async()
+    except Exception as exc:  # any failure means not ready
+        log.warning("queue_not_ready", error=repr(exc))
+        return False
 
 
 async def _qdrant_ready(settings: Settings) -> bool:

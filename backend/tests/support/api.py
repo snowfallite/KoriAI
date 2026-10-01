@@ -1,6 +1,7 @@
 """HTTP contract fixtures (tech.md §14.3): the app on a migrated scratch Postgres, a transaction
 per test rolled back at its end. tests/conftest.py loads them as a plugin."""
 
+import uuid
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
 
 import httpx
@@ -18,6 +19,19 @@ from tests.support.db import alembic_config, scratch_database
 # mutations only as JSON (§3.5), so every test client sends both.
 ORIGIN = "http://localhost:5173"
 HEADERS = {"Origin": ORIGIN, "Content-Type": "application/json"}
+PASSWORD = "correct-horse-1"
+
+
+async def sign_up(api: httpx.AsyncClient, invite: str | None = None) -> None:
+    """Registers a new user; the client keeps the session cookie."""
+    body = {
+        "email": f"{uuid.uuid4().hex}@example.test",
+        "password": PASSWORD,
+        "invite_code": invite,
+        "display_name": None,
+    }
+    reply = await api.post("/api/auth/register", json=body)
+    assert reply.status_code == 201, reply.text
 
 
 @pytest.fixture(scope="session")
@@ -29,8 +43,11 @@ def database_url() -> Iterator[str]:
 
 @pytest.fixture
 async def app(database_url: str) -> AsyncIterator[FastAPI]:
-    """Tests change app.state.settings with model_copy(update=...) to try other config."""
-    app = create_app(Settings(_env_file=None, DATABASE_URL=database_url))
+    """Tests change app.state.settings with model_copy(update=...) to try other config.
+
+    No workers: they would run jobs on the shared connection; tests/integration/jobs runs them.
+    """
+    app = create_app(Settings(_env_file=None, DATABASE_URL=database_url, JOBS_ENABLED=False))
     async with app.router.lifespan_context(app):
         engine = app.state.engine
         async with engine.connect() as conn:
@@ -60,6 +77,15 @@ def new_client(app: FastAPI) -> Callable[[], httpx.AsyncClient]:
 async def api(new_client: Callable[[], httpx.AsyncClient]) -> AsyncIterator[httpx.AsyncClient]:
     async with new_client() as client:
         yield client
+
+
+@pytest.fixture
+async def user_api(
+    api: httpx.AsyncClient, make_invite: Callable[[], Awaitable[str]]
+) -> httpx.AsyncClient:
+    """The api client signed in as a new user."""
+    await sign_up(api, await make_invite())
+    return api
 
 
 @pytest.fixture
