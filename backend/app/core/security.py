@@ -2,6 +2,7 @@
 
 import hashlib
 import secrets
+import threading
 import time
 from collections import deque
 from collections.abc import Callable
@@ -11,8 +12,11 @@ from uuid import UUID
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError
 
-# argon2id with the RFC 9106 low-memory profile of argon2-cffi.
+# argon2id with the RFC 9106 low-memory profile of argon2-cffi: 64 MiB a hash.
 _hasher = PasswordHasher()
+# ponytail: two hashes at a time hold a login burst to 128 MiB in the one API process (AD-02);
+# a queue of logins is the price, raise the count with the RAM.
+_hash_slots = threading.BoundedSemaphore(2)
 
 
 @dataclass(frozen=True, slots=True)
@@ -25,12 +29,14 @@ class Principal:
 
 
 def hash_password(password: str) -> str:
-    return _hasher.hash(password)
+    with _hash_slots:
+        return _hasher.hash(password)
 
 
 def verify_password(password_hash: str, password: str) -> bool:
     try:
-        return _hasher.verify(password_hash, password)
+        with _hash_slots:
+            return _hasher.verify(password_hash, password)
     except (VerificationError, InvalidHashError):
         return False
 
