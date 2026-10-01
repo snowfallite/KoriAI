@@ -75,6 +75,10 @@ e2e:
     {{ fe }} test:e2e
     docker compose -f docker-compose.ci.yml down
 
+# Registration links with new invite codes (§3.5): just invites 3
+invites n:
+    {{ be }} python -m app.cli invites create --count {{ n }}
+
 # SPA production build
 build:
     {{ fe }} build
