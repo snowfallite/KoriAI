@@ -14,12 +14,13 @@ from app.contracts.common import ErrorCode, ErrorOut
 from app.core.errors import AppError
 from app.http.errors import STATUS
 from app.main import create_app
+from tests.support.db import scratch_database
 
 CLOSED = "127.0.0.1:1"  # nothing listens on port 1
 
 
 def make_app(**overrides: Any) -> FastAPI:
-    return create_app(Settings(_env_file=None, **overrides))
+    return create_app(Settings(_env_file=None, **{"JOBS_ENABLED": False, **overrides}))
 
 
 @asynccontextmanager
@@ -40,8 +41,8 @@ async def test_health_is_ok() -> None:
     assert reply.headers["X-Request-Id"]
 
 
-async def test_ready_with_database() -> None:
-    async with client(make_app()) as api:
+async def test_ready_with_database(database_url: str) -> None:
+    async with client(make_app(DATABASE_URL=database_url)) as api:
         reply = await api.get("/api/health/ready")
 
     assert reply.status_code == 200, reply.text
@@ -58,6 +59,16 @@ async def test_ready_is_503_without_database() -> None:
 
     assert reply.status_code == 503
     assert ReadyOut.model_validate(reply.json()).db is False
+
+
+async def test_ready_is_503_without_the_queue_schema() -> None:
+    with scratch_database() as url:  # not migrated
+        async with client(make_app(DATABASE_URL=url)) as api:
+            reply = await api.get("/api/health/ready")
+
+    assert reply.status_code == 503
+    ready = ReadyOut.model_validate(reply.json())
+    assert (ready.db, ready.queue) == (True, False)
 
 
 async def test_ready_is_503_without_qdrant() -> None:

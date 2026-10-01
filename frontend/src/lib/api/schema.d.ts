@@ -38,6 +38,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/jobs/demo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Demo Job */
+        post: operations["demo_job_api_dev_jobs_demo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/register": {
         parameters: {
             query?: never;
@@ -294,6 +311,18 @@ export interface components {
             digits: number | null;
         };
         DecimalStr: string;
+        /** DemoJobIn */
+        DemoJobIn: {
+            /** Key */
+            key: string;
+            /** Value */
+            value: string;
+        };
+        /** DemoJobOut */
+        DemoJobOut: {
+            /** Job Id */
+            job_id: number;
+        };
         /**
          * DevEchoEvent
          * @description Only in dev and ci (POST /api/dev/echo).
@@ -903,6 +932,48 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReadyOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    demo_job_api_dev_jobs_demo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DemoJobIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DemoJobOut"];
                 };
             };
             /** @description Client Error */

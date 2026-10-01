@@ -13,7 +13,7 @@ from app import domains
 from app.config import Settings
 from app.core.logging import configure_logging
 from app.core.security import RateLimiter
-from app.http import errors, health, openapi
+from app.http import dev, errors, health, openapi
 from app.http.middleware import GuardMiddleware, RequestContextMiddleware
 from app.jobs.app import run_queue
 
@@ -43,6 +43,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(GuardMiddleware)
     app.add_middleware(RequestContextMiddleware)
     app.include_router(health.router)
+    app.include_router(dev.router)
     # Every domain with a router.py joins on its own: slices never edit this file (§16.1).
     for module in pkgutil.iter_modules(domains.__path__):
         name = f"{domains.__name__}.{module.name}.router"
