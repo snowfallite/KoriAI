@@ -32,6 +32,16 @@ describe('api client', () => {
 		expect(fetch.mock.calls[0]?.[0].credentials).toBe('same-origin');
 	});
 
+	it('sends JSON content type on a POST without a body', async () => {
+		const fetch = vi.fn<(request: Request) => Promise<Response>>(
+			async () => new Response(null, { status: 204 })
+		);
+
+		await api.POST('/api/auth/logout', { baseUrl: BASE, fetch });
+
+		expect(fetch.mock.calls[0]?.[0].headers.get('Content-Type')).toBe('application/json');
+	});
+
 	it('leads to /login on 401 unauthorized and throws ApiError', async () => {
 		const fetch = answer(401, errorOut('unauthorized', 'Войдите снова'));
 
