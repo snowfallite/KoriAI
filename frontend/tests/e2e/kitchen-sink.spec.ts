@@ -31,6 +31,17 @@ const COMPONENTS = [
 
 const DARK = /(^|\s)dark(\s|$)/;
 
+// The page lives behind the (app) guard: sign up first. page.request shares the cookies of the
+// page, and the API takes a mutation only with our Origin (tech.md §3.5).
+test.beforeEach(async ({ page, baseURL }) => {
+	const email = `kitchen-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`;
+	const reply = await page.request.post('/api/auth/register', {
+		headers: { Origin: baseURL ?? '' },
+		data: { email, password: 'correct-horse-1', invite_code: null, display_name: null }
+	});
+	expect(reply.status()).toBe(201);
+});
+
 test('kitchen-sink shows every component in both themes without console errors', async ({
 	page
 }) => {

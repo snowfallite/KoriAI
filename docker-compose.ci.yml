@@ -22,6 +22,8 @@ services:
       APP_ENV: ci
       APP_BASE_URL: http://localhost:8080
       APP_ALLOWED_ORIGINS: http://localhost:8080
+      # e2e specs sign up without an invite; the contract tests cover invites (S1-05).
+      REGISTRATION_MODE: open
       DATABASE_URL: postgresql+psycopg://app:app@postgres:5432/app
     depends_on:
       postgres:

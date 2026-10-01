@@ -72,6 +72,7 @@ test-fe:
 # Playwright on the CI stack (§15.4); a failure leaves the stack up for a look
 e2e:
     docker compose -f docker-compose.ci.yml up -d --build --wait
+    docker compose -f docker-compose.ci.yml exec -T api alembic upgrade head
     {{ fe }} test:e2e
     docker compose -f docker-compose.ci.yml down
 
