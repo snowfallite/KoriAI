@@ -43,7 +43,9 @@ _BAD_LOGIN = "Неверный email или пароль"
 def normalize_email(raw: str) -> str | None:
     """Trimmed and lower-cased (§5.1); None for anything but one address."""
     email = raw.strip().lower()
-    return email if len(email) <= 254 and _EMAIL.fullmatch(email) else None
+    # isprintable: Postgres text takes no NUL, and control characters belong in no address.
+    valid = len(email) <= 254 and email.isprintable() and _EMAIL.fullmatch(email)
+    return email if valid else None
 
 
 def user_out(user: object) -> UserOut:
@@ -57,10 +59,13 @@ class AuthService:
         self._limiter = limiter
         self._ttl = timedelta(days=settings.SESSION_TTL_DAYS)
 
-    def _limit(self, action: Literal["login", "register"], ip: Ip, email: str) -> None:
+    def _limit(
+        self, action: Literal["login", "register", "password"], ip: Ip, account: str
+    ) -> None:
+        # A password change checks a password too: a stolen session must not guess it fast.
         if not (
             self._limiter.hit(f"{action}:ip:{ip}", IP_LIMIT)
-            and self._limiter.hit(f"{action}:email:{email}", EMAIL_LIMIT)
+            and self._limiter.hit(f"{action}:account:{account}", EMAIL_LIMIT)
         ):
             raise AppError("rate_limited", "Слишком много попыток, повторите через минуту")
 
@@ -78,6 +83,9 @@ class AuthService:
             raise AppError("invite_required", "Нужен код приглашения")
         if email is None:
             raise AppError("validation_error", _BAD_EMAIL)
+        name = (body.display_name or "").strip() or None
+        if name is not None and not name.isprintable():
+            raise AppError("validation_error", "Проверьте имя")
         password_hash = await asyncio.to_thread(hash_password, body.password)
         token = new_token()
         async with self._uow as session:
@@ -87,7 +95,6 @@ class AuthService:
                 invite_id = await repo.claim_invite(session, token_digest(code))
                 if invite_id is None:
                     raise AppError("invite_invalid", "Код приглашения недействителен")
-            name = (body.display_name or "").strip() or None
             user = await repo.add_user(session, email, password_hash, name)
             if user is None:
                 raise AppError("email_taken", "Этот email уже зарегистрирован")
@@ -151,6 +158,7 @@ class AuthService:
 
     async def change_password(self, principal: Principal, body: PasswordChangeIn, ip: Ip) -> None:
         """Ends every other session of the user (§6.2)."""
+        self._limit("password", ip, str(principal.user_id))
         async with self._uow as session:
             user = await repo.user(session, principal.user_id)
         current = user.password_hash if user else _NO_USER_HASH

@@ -164,9 +164,16 @@ async def test_a_taken_email_is_a_conflict_and_keeps_the_invite(
 
 @pytest.mark.parametrize(
     "body",
-    [{"email": "no-at-sign.example.test"}, {"email": "a b@example.test"}, {"password": "x" * 9}],
+    [
+        {"email": "no-at-sign.example.test"},
+        {"email": "a b@example.test"},
+        # Postgres text holds no NUL: the API must refuse it, not fail on it.
+        {"email": f"a{chr(0)}b@example.test"},
+        {"display_name": f"Аня{chr(0)}"},
+        {"password": "x" * 9},
+    ],
 )
-async def test_a_bad_email_or_a_short_password_is_a_validation_error(
+async def test_bad_input_is_a_validation_error(
     api: httpx.AsyncClient, make_invite: Invites, body: dict[str, str]
 ) -> None:
     full = {"email": email(), "password": PASSWORD, "invite_code": await make_invite(), **body}
@@ -216,8 +223,9 @@ async def test_a_wrong_password_and_an_unknown_email_get_one_answer(
 
     wrong = error(await login(api, address, NEW_PASSWORD), 401)
     unknown = error(await login(api, email()), 401)
+    garbled = error(await login(api, f"a{chr(0)}@example.test"), 401)
 
-    assert wrong.code == unknown.code == "invalid_credentials"
+    assert wrong.code == unknown.code == garbled.code == "invalid_credentials"
     assert wrong.message == unknown.message
 
 
@@ -337,6 +345,20 @@ async def test_a_wrong_current_password_changes_nothing(
     assert (await api.get("/api/auth/me")).status_code == 200
     async with new_client() as phone:
         assert (await login(phone, address)).status_code == 200
+
+
+async def test_the_sixth_wrong_current_password_a_minute_is_rate_limited(
+    api: httpx.AsyncClient, make_invite: Invites
+) -> None:
+    # A stolen session must not guess the password at hashing speed.
+    await signed_up(api, make_invite)
+    guess = {"current_password": NEW_PASSWORD, "new_password": NEW_PASSWORD}
+
+    for _ in range(5):
+        reply = await api.post("/api/auth/password", json=guess)
+        assert error(reply, 401).code == "invalid_credentials"
+    right = {**guess, "current_password": PASSWORD}
+    assert error(await api.post("/api/auth/password", json=right), 429).code == "rate_limited"
 
 
 async def test_a_short_new_password_is_a_validation_error(

@@ -17,6 +17,7 @@ def test_a_normalized_email_is_stable_lower_case_and_one_address(raw: str) -> No
         assert normalize_email(email) == email
         assert email == email.lower()
         assert email.count("@") == 1
+        assert email.isprintable()  # no NUL or other control characters for Postgres text
         assert not any(char.isspace() for char in email)
 
 
