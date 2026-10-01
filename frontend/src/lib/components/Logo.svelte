@@ -14,8 +14,12 @@
 		lg: 'size-16 border-4 text-2xl'
 	};
 	const LETTERS = ['K', 'Ō', 'R', 'I'];
-	// こおり sits under Ō, R and I, as きおく sits under Ï, O and the second K of Kïoku.
-	const KANA = ['', 'こ', 'お', 'り'];
+	// こおり has three kana for four letters: each sits on a gap, spanning the letters beside it.
+	const KANA = [
+		{ kana: 'こ', column: 'col-start-1' },
+		{ kana: 'お', column: 'col-start-2' },
+		{ kana: 'り', column: 'col-start-3' }
+	];
 </script>
 
 <!-- The Kïoku logo in its three forms (tech.md §13.2): live JetBrains Mono, never red letters. -->
@@ -28,11 +32,11 @@
 		{#each LETTERS as letter (letter)}
 			<span aria-hidden="true">{letter}</span>
 		{/each}
-		{#each KANA as kana, i (i)}
+		{#each KANA as { kana, column } (kana)}
 			<span
 				lang="ja"
 				aria-hidden="true"
-				class="mt-[0.2em] text-center font-sans text-[0.21em] font-light text-muted-foreground"
+				class="{column} col-span-2 row-start-2 mt-[0.2em] text-center font-sans text-[0.21em] font-light text-muted-foreground"
 				>{kana}</span
 			>
 		{/each}

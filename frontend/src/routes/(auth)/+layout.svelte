@@ -37,19 +37,11 @@
 </script>
 
 <div class="flex min-h-svh flex-col">
-	<header class="flex h-12 shrink-0 items-center justify-end px-4"><ThemeToggle /></header>
-
-	<div class="px-4 md:px-12">
-		<!-- Decor only. The field fades into the page: black at night, white by day. -->
-		<div
-			class="relative mx-auto aspect-[1184/560] max-h-[38svh] w-full max-w-[1184px] overflow-hidden ki-tile dark:ki-hero"
-			aria-hidden="true"
-		>
-			<svg
-				viewBox="0 0 {W} {H}"
-				preserveAspectRatio="xMidYMin slice"
-				class="absolute inset-0 size-full"
-			>
+	<div class="relative isolate flex flex-1 flex-col">
+		<!-- Decor only: the art fills the screen above the form and sinks into the page under the
+		     logo, as on the Kïoku hero, so the form never stands on the gradient. -->
+		<div class="absolute inset-0 -z-10 overflow-hidden ki-tile dark:ki-hero" aria-hidden="true">
+			<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMin slice" class="size-full">
 				<g class="stroke-primary">
 					{#each rays as ray, i (i)}
 						<line
@@ -67,19 +59,15 @@
 					{/each}
 				</g>
 			</svg>
-			<div
-				class="absolute inset-0 bg-linear-to-b from-transparent from-50% to-background to-[97%]"
-			></div>
+		</div>
+		<header class="flex h-12 shrink-0 items-center justify-end px-4"><ThemeToggle /></header>
+		<div class="min-h-[22svh] flex-1"></div>
+		<div class="flex justify-center bg-linear-to-b from-transparent to-background pt-16">
+			<span class="md:hidden"><Logo variant="spaced" size="sm" /></span>
+			<span class="hidden md:inline"><Logo variant="spaced" /></span>
 		</div>
 	</div>
-
-	<!-- The logo grows out of the fade, as on the Kïoku hero. -->
-	<div class="relative -mt-5 flex justify-center md:-mt-9">
-		<span class="md:hidden"><Logo variant="spaced" size="sm" /></span>
-		<span class="hidden md:inline"><Logo variant="spaced" /></span>
-	</div>
-
-	<main class="mx-auto w-full max-w-sm flex-1 px-4 pt-10 pb-16">
-		{@render children()}
+	<main class="px-4 pt-10 pb-12">
+		<div class="mx-auto w-full max-w-sm">{@render children()}</div>
 	</main>
 </div>
