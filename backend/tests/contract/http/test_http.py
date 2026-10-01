@@ -70,15 +70,19 @@ async def test_ready_is_503_without_qdrant() -> None:
     assert ReadyOut.model_validate(reply.json()).qdrant is False
 
 
+# The routes these tests add live outside /api: there every route but the public ones needs a
+# session (tests/contract/auth).
+
+
 async def test_unhandled_error_is_internal_with_request_id() -> None:
     app = make_app()
 
-    @app.get("/api/boom")
+    @app.get("/boom")
     async def boom() -> None:
         raise RuntimeError("boom")
 
     async with client(app) as api:
-        reply = await api.get("/api/boom")
+        reply = await api.get("/boom")
 
     assert reply.status_code == 500
     error = ErrorOut.model_validate(reply.json())
@@ -89,12 +93,12 @@ async def test_unhandled_error_is_internal_with_request_id() -> None:
 async def test_app_error_keeps_its_code_and_status() -> None:
     app = make_app()
 
-    @app.get("/api/busy")
+    @app.get("/busy")
     async def busy() -> None:
         raise AppError("run_active", "Ответ ещё готовится", {"run_id": "r1"})
 
     async with client(app) as api:
-        reply = await api.get("/api/busy")
+        reply = await api.get("/busy")
 
     assert reply.status_code == 409
     assert ErrorOut.model_validate(reply.json()) == ErrorOut(
@@ -107,7 +111,7 @@ async def test_app_error_keeps_its_code_and_status() -> None:
 
 async def test_unknown_route_is_not_found() -> None:
     async with client(make_app()) as api:
-        reply = await api.get("/api/nope")
+        reply = await api.get("/nope")
 
     assert reply.status_code == 404
     assert ErrorOut.model_validate(reply.json()).code == "not_found"
@@ -120,11 +124,11 @@ async def test_invalid_body_is_validation_error_without_input() -> None:
         password: str
         attempts: int
 
-    @app.post("/api/login")
+    @app.post("/login")
     async def login(body: LoginIn) -> None: ...
 
     async with client(app) as api:
-        reply = await api.post("/api/login", json={"password": "hunter2-x", "attempts": "many"})
+        reply = await api.post("/login", json={"password": "hunter2-x", "attempts": "many"})
 
     assert reply.status_code == 422
     assert ErrorOut.model_validate(reply.json()).code == "validation_error"

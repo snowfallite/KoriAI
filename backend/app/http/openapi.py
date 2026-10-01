@@ -9,7 +9,6 @@ from fastapi.openapi.utils import get_openapi
 from pydantic import TypeAdapter
 from pydantic.json_schema import GenerateJsonSchema
 
-from app.contracts.api.auth import UserOut
 from app.contracts.api.broker import BrokerAccountOut
 from app.contracts.artifacts import ChartSpec, ImageSpec, SourceRef, TableSpec
 from app.contracts.common import ErrorOut, Money, PeriodCode
@@ -22,7 +21,7 @@ ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
 }
 
 # The SPA gets these from the SSE stream and inside artifacts, never as a route body. The
-# §13.2 props need the rest before S1-05 and S1-11 add the routes that send them.
+# §13.2 props need the rest before S1-11 adds the routes that send them.
 EXTRA_TYPES: tuple[Any, ...] = (
     StreamEvent,
     ChartSpec,
@@ -30,7 +29,6 @@ EXTRA_TYPES: tuple[Any, ...] = (
     ImageSpec,
     SourceRef,
     Money,
-    UserOut,
     BrokerAccountOut,
     PeriodCode,
 )
