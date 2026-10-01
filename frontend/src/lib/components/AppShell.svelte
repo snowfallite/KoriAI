@@ -1,8 +1,12 @@
 <script lang="ts">
+	import LogOut from '@lucide/svelte/icons/log-out';
 	import type { Snippet } from 'svelte';
+	import { toast } from 'svelte-sonner';
 	import { page } from '$app/state';
+	import { api, ok } from '$lib/api/client';
 	import type { NavItem } from '$lib/nav';
-	import type { UserOut } from '$lib/types';
+	import type { ApiError, UserOut } from '$lib/types';
+	import { Button } from '$lib/ui/button';
 	import * as Sidebar from '$lib/ui/sidebar';
 	import Logo from './Logo.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
@@ -11,6 +15,16 @@
 
 	const current = (item: NavItem) =>
 		page.url.pathname === item.href || page.url.pathname.startsWith(`${item.href}/`);
+
+	async function logout() {
+		try {
+			await ok(api.POST('/api/auth/logout'));
+			// A full load drops the state of the session, as client.ts does on a 401.
+			location.assign('/login');
+		} catch (error) {
+			toast.error((error as ApiError).message);
+		}
+	}
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- NAV holds app paths; the SPA has no base path -->
@@ -54,7 +68,12 @@
 			class="sticky top-0 z-10 flex h-12 items-center justify-between border-b bg-background px-4"
 		>
 			<div class="md:invisible"><Logo /></div>
-			<ThemeToggle />
+			<div class="flex items-center gap-1">
+				<ThemeToggle />
+				<Button variant="ghost" size="icon-sm" aria-label="Выйти" title="Выйти" onclick={logout}>
+					<LogOut />
+				</Button>
+			</div>
 		</header>
 		<main class="mx-auto w-full max-w-[1200px] flex-1 px-4 pt-6 pb-24 md:pb-6">
 			{@render children()}
