@@ -44,7 +44,11 @@ def test_other_errors_are_not_retried() -> None:
 
 
 def test_job_cut_short_by_shutdown_runs_again_at_once() -> None:
-    assert wait_s(asyncio.CancelledError(), 5) == pytest.approx(0, abs=1)
+    assert wait_s(asyncio.CancelledError(), 4) == pytest.approx(0, abs=1)
+
+
+def test_job_that_keeps_cancelling_itself_stops() -> None:
+    assert wait_s(asyncio.CancelledError(), 5) is None
 
 
 def test_tasks_follow_the_core_table() -> None:

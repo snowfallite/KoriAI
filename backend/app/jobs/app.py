@@ -33,6 +33,8 @@ type PeriodicHandler = Callable[[State], Awaitable[None]]
 
 MAX_ATTEMPTS = 5
 STOP_TIMEOUT_S = 10.0
+# ponytail: a fixed delay logs one traceback a try while the database is down; back off if
+# such outages flood the logs.
 RESTART_DELAY_S = 5.0
 
 
@@ -41,7 +43,8 @@ class Retry(procrastinate.RetryStrategy):
 
     def get_retry_decision(self, *, exception: BaseException, job: Job) -> RetryDecision | None:
         if isinstance(exception, asyncio.CancelledError):
-            return RetryDecision()
+            # Bounded: a handler that cancels itself must not loop.
+            return RetryDecision() if job.attempts < MAX_ATTEMPTS else None
         return super().get_retry_decision(exception=exception, job=job)
 
 
