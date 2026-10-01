@@ -3,30 +3,22 @@
 import re
 import uuid
 from collections.abc import AsyncIterator, Iterator
-from contextlib import contextmanager
 from datetime import date
-from pathlib import Path
 
 import psycopg
 import pytest
 from alembic import command
-from alembic.config import Config
 from sqlalchemy import Connection, Executable, create_engine, func, insert, select, text
 from sqlalchemy.dialects.postgresql import insert as pg_insert
-from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
-from app.config import Settings
 from app.db.base import UnitOfWork
 from app.db.schema.agent import AgentRun, UsageDaily
 from app.db.schema.chat import Message, Thread
 from app.db.schema.system import JobMarker
 from app.db.schema.users import User
-
-BACKEND = Path(__file__).parents[3]
-# Defaults only: model_construct reads neither the environment nor .env.
-SERVER = make_url(Settings.model_construct().DATABASE_URL.get_secret_value())
+from tests.support.db import BACKEND, alembic_config, scratch_database
 
 CATALOG = {
     "columns": """
@@ -42,27 +34,6 @@ CATALOG = {
     "indexes": "select tablename, indexname, indexdef from pg_indexes where schemaname = 'public'",
     "extensions": "select extname, extversion from pg_extension",
 }
-
-
-@contextmanager
-def scratch_database() -> Iterator[str]:
-    """An empty database on the dev or CI Postgres, dropped afterwards."""
-    name = f"kori_test_{uuid.uuid4().hex[:12]}"
-    admin = create_engine(SERVER, isolation_level="AUTOCOMMIT")
-    with admin.connect() as conn:
-        conn.execute(text(f"create database {name}"))
-    try:
-        yield SERVER.set(database=name).render_as_string(hide_password=False)
-    finally:
-        with admin.connect() as conn:
-            conn.execute(text(f"drop database {name} with (force)"))
-        admin.dispose()
-
-
-def alembic_config(url: str) -> Config:
-    config = Config(BACKEND / "alembic.ini")
-    config.attributes["database_url"] = url
-    return config
 
 
 def core_ddl() -> str:

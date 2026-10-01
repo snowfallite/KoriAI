@@ -2,7 +2,7 @@
 
 from types import TracebackType
 
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession, async_sessionmaker
 
 
 class UnitOfWork:
@@ -11,9 +11,12 @@ class UnitOfWork:
     Services wrap their writes in it; repositories read `uow.session` inside the block.
     """
 
-    def __init__(self, engine: AsyncEngine) -> None:
+    def __init__(self, bind: AsyncEngine | AsyncConnection) -> None:
         # Objects stay readable after commit: async code cannot lazy-load expired attributes.
-        self._sessions = async_sessionmaker(engine, expire_on_commit=False)
+        # On a connection inside a transaction (contract tests) a commit releases a savepoint.
+        self._sessions = async_sessionmaker(
+            bind, expire_on_commit=False, join_transaction_mode="create_savepoint"
+        )
         self._session: AsyncSession | None = None
 
     @property

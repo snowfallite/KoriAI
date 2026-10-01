@@ -2,8 +2,12 @@ import createClient from 'openapi-fetch';
 import type { ApiError } from '$lib/types';
 import type { paths } from './schema';
 
-// The API shares the origin of the SPA (tech.md AD-01).
-export const api = createClient<paths>({ credentials: 'same-origin' });
+// The API shares the origin of the SPA (tech.md AD-01). It takes mutations only as JSON (§3.5),
+// and openapi-fetch leaves the header off a request without a body, such as logout.
+export const api = createClient<paths>({
+	credentials: 'same-origin',
+	headers: { 'Content-Type': 'application/json' }
+});
 
 // A 401 there is the expected state; a reload would loop on /login.
 const AUTH_PAGES = new Set(['/login', '/register']);
