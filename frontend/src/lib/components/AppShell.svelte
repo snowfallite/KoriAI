@@ -4,6 +4,7 @@
 	import type { NavItem } from '$lib/nav';
 	import type { UserOut } from '$lib/types';
 	import * as Sidebar from '$lib/ui/sidebar';
+	import Logo from './Logo.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 
 	let { nav, user, children }: { nav: NavItem[]; user: UserOut; children: Snippet } = $props();
@@ -14,17 +15,10 @@
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- NAV holds app paths; the SPA has no base path -->
 
-<!-- The compact Kïoku logo: the name, its sign raised and quiet at the side. -->
-{#snippet brand()}
-	<span class="text-lg leading-none"
-		>Kōri<sup lang="ja" class="ml-1 font-serif text-[10px] text-muted-foreground">氷</sup></span
-	>
-{/snippet}
-
 <!-- A 240 px sidebar on the desktop, four tabs at the bottom under 768 px (tech.md §13.3). -->
 <Sidebar.Provider style="--sidebar-width: 15rem">
 	<Sidebar.Root collapsible="none" class="sticky top-0 hidden h-svh border-r md:flex">
-		<Sidebar.Header class="h-12 justify-center border-b px-4">{@render brand()}</Sidebar.Header>
+		<Sidebar.Header class="h-12 justify-center border-b px-4"><Logo /></Sidebar.Header>
 		<Sidebar.Content>
 			<Sidebar.Group>
 				<Sidebar.Menu>
@@ -59,7 +53,7 @@
 		<header
 			class="sticky top-0 z-10 flex h-12 items-center justify-between border-b bg-background px-4"
 		>
-			<div class="md:invisible">{@render brand()}</div>
+			<div class="md:invisible"><Logo /></div>
 			<ThemeToggle />
 		</header>
 		<main class="mx-auto w-full max-w-[1200px] flex-1 px-4 pt-6 pb-24 md:pb-6">
