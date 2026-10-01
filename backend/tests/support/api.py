@@ -29,8 +29,11 @@ def database_url() -> Iterator[str]:
 
 @pytest.fixture
 async def app(database_url: str) -> AsyncIterator[FastAPI]:
-    """Tests change app.state.settings with model_copy(update=...) to try other config."""
-    app = create_app(Settings(_env_file=None, DATABASE_URL=database_url))
+    """Tests change app.state.settings with model_copy(update=...) to try other config.
+
+    No workers: they would run jobs on the shared connection; tests/integration/jobs runs them.
+    """
+    app = create_app(Settings(_env_file=None, DATABASE_URL=database_url, JOBS_ENABLED=False))
     async with app.router.lifespan_context(app):
         engine = app.state.engine
         async with engine.connect() as conn:

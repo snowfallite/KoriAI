@@ -15,6 +15,7 @@ from app.core.logging import configure_logging
 from app.core.security import RateLimiter
 from app.http import errors, health, openapi
 from app.http.middleware import GuardMiddleware, RequestContextMiddleware
+from app.jobs.app import run_queue
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -29,7 +30,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             pool_pre_ping=True,
         )
         app.state.engine = engine
-        yield
+        async with run_queue(app.state):
+            yield
         await engine.dispose()
 
     app = FastAPI(title="Kōri", lifespan=lifespan, responses=openapi.ERROR_RESPONSES)
