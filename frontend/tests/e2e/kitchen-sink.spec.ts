@@ -78,3 +78,14 @@ test('kitchen-sink shows every component in both themes without console errors',
 
 	expect(errors).toEqual([]);
 });
+
+// S1-08 AC 1: the button opens an echo stream; its dev.echo frame carries the payload back.
+test('Эхо streams its payload back over SSE', async ({ page }) => {
+	await page.goto('/dev/kitchen-sink');
+	const sse = page.getByRole('region', { name: 'SSE', exact: true });
+
+	await sse.getByRole('button', { name: 'Эхо' }).click();
+
+	await expect(sse.getByLabel('Ответ эха')).toContainText('Привет, Kōri');
+	await expect(sse).toContainText('статус done · seq 2');
+});
