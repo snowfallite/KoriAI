@@ -36,7 +36,7 @@ class RunEventBus:
     def open(self, run_id: UUID, owner: UUID) -> None:
         self._streams[run_id] = _Stream(owner)
 
-    def publish[E: StreamEvent](self, run_id: UUID, kind: type[E], **fields: Any) -> E:
+    def publish(self, run_id: UUID, kind: type[StreamEvent], **fields: Any) -> None:
         """Adds the next event of the stream: seq starts at 1 and grows by 1."""
         stream = self._streams[run_id]
         if stream.finished:
@@ -48,7 +48,6 @@ class RunEventBus:
             asyncio.get_running_loop().call_later(self._ttl_s, self._expire, run_id)
         stream.changed.set()
         stream.changed = asyncio.Event()
-        return event
 
     def subscribe(self, run_id: UUID, user_id: UUID, after: int = 0) -> AsyncIterator[StreamEvent]:
         """Events with seq above `after`, live until run.finished.
