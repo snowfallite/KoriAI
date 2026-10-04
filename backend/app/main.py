@@ -13,6 +13,7 @@ from app import domains
 from app.config import Settings
 from app.core.logging import configure_logging
 from app.core.security import RateLimiter
+from app.gateways.factory import open_gateways
 from app.http import dev, errors, health, openapi, sse
 from app.http.events import RunEventBus
 from app.http.middleware import GuardMiddleware, RequestContextMiddleware
@@ -31,8 +32,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             pool_pre_ping=True,
         )
         app.state.engine = engine
-        async with run_queue(app.state):
-            yield
+        async with open_gateways(app.state) as gateways:
+            app.state.gateways = gateways
+            async with run_queue(app.state):
+                yield
         await engine.dispose()
 
     app = FastAPI(title="Kōri", lifespan=lifespan, responses=openapi.ERROR_RESPONSES)

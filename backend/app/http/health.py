@@ -9,7 +9,8 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.config import Settings
-from app.contracts.api.health import HealthOut, LlmGateOut, ReadyOut
+from app.contracts.api.health import HealthOut, ReadyOut
+from app.gateways.factory import Gateways
 from app.jobs.app import procrastinate_app
 
 log = structlog.get_logger(__name__)
@@ -28,13 +29,8 @@ async def ready(request: Request, response: Response) -> ReadyOut:
     db, qdrant, queue = await asyncio.gather(
         _db_ready(request.app.state.engine), _qdrant_ready(settings), _queue_ready()
     )
-    # TODO(S1-09): report the LLM gate.
-    out = ReadyOut(
-        db=db,
-        qdrant=qdrant,
-        queue=queue,
-        llm_gate=LlmGateOut(capacity=settings.LLM_MAX_CONCURRENCY, in_use=0, waiting=0),
-    )
+    gateways: Gateways = request.app.state.gateways
+    out = ReadyOut(db=db, qdrant=qdrant, queue=queue, llm_gate=gateways.gate.stats())
     if not (db and qdrant and queue):
         response.status_code = 503
     return out
