@@ -2,7 +2,9 @@
 	import Bold from '@lucide/svelte/icons/bold';
 	import Inbox from '@lucide/svelte/icons/inbox';
 	import type { ColumnDef } from '@tanstack/table-core';
+	import { onDestroy } from 'svelte';
 	import { toast } from 'svelte-sonner';
+	import { api, ok } from '$lib/api/client';
 	import AccountSelect from '$lib/components/AccountSelect.svelte';
 	import AppShell from '$lib/components/AppShell.svelte';
 	import ArtifactImage from '$lib/components/ArtifactImage.svelte';
@@ -29,7 +31,8 @@
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import UsageMeter from '$lib/components/UsageMeter.svelte';
 	import { NAV } from '$lib/nav';
-	import type { InstrumentBrief, PeriodCode } from '$lib/types';
+	import { LiveRun } from '$lib/state/run.svelte';
+	import type { ApiError, InstrumentBrief, PeriodCode } from '$lib/types';
 	import * as Alert from '$lib/ui/alert';
 	import { Badge } from '$lib/ui/badge';
 	import { Button, buttonVariants } from '$lib/ui/button';
@@ -71,6 +74,21 @@
 	let confirming = $state(false);
 	let notify = $state(true);
 	let agree = $state(false);
+	let echo = $state<LiveRun | null>(null);
+	const echoed = $derived(echo?.view.echo ? JSON.stringify(echo.view.echo) : null);
+	onDestroy(() => echo?.close());
+
+	// POST /api/dev/echo opens a stream of the user: dev.echo, then run.finished (tech.md §6.7).
+	async function sendEcho() {
+		echo?.close();
+		const payload = { text: 'Привет, Kōri', sent_at: new Date().toISOString() };
+		try {
+			const { stream_id } = await ok(api.POST('/api/dev/echo', { body: { payload } }));
+			echo = new LiveRun(stream_id);
+		} catch (error) {
+			toast.error((error as ApiError).message);
+		}
+	}
 
 	const positions: ColumnDef<InstrumentBrief>[] = [
 		{ accessorKey: 'ticker', header: 'Тикер' },
@@ -496,5 +514,19 @@
 
 	<Demo name="Disclaimer">
 		<Disclaimer />
+	</Demo>
+
+	<Demo name="SSE" note="поток эха: dev.echo и run.finished через 200 мс">
+		<div class="flex flex-wrap items-center gap-4">
+			<Button variant="outline" onclick={sendEcho}>Эхо</Button>
+			{#if echo}
+				<p class="text-xs text-muted-foreground">
+					статус {echo.view.status} · seq {echo.view.last_seq}
+				</p>
+			{/if}
+		</div>
+		{#if echoed}
+			<pre aria-label="Ответ эха" class="text-xs break-all whitespace-pre-wrap">{echoed}</pre>
+		{/if}
 	</Demo>
 </div>

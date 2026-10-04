@@ -55,6 +55,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/echo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Echo
+         * @description A stream of the user that sends dev.echo with the payload, then run.finished.
+         */
+        post: operations["echo_api_dev_echo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chat/runs/{run_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Run Events
+         * @description Events after Last-Event-ID, which the browser sends on a reconnect.
+         */
+        get: operations["run_events_api_chat_runs__run_id__events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/register": {
         parameters: {
             query?: never;
@@ -349,6 +389,21 @@ export interface components {
             payload: {
                 [key: string]: components["schemas"]["JsonValue"];
             };
+        };
+        /** EchoIn */
+        EchoIn: {
+            /** Payload */
+            payload: {
+                [key: string]: components["schemas"]["JsonValue"];
+            };
+        };
+        /** EchoOut */
+        EchoOut: {
+            /**
+             * Stream Id
+             * Format: uuid
+             */
+            stream_id: string;
         };
         /** @enum {string} */
         ErrorCode: "unauthorized" | "invalid_credentials" | "forbidden" | "registration_closed" | "not_found" | "conflict" | "run_active" | "email_taken" | "broker_not_connected" | "gone" | "validation_error" | "invite_required" | "invite_invalid" | "token_invalid" | "token_not_read_only" | "rate_limited" | "user_budget_exhausted" | "llm_busy" | "llm_quota_exhausted" | "tinvest_unavailable" | "tinvest_rate_limited" | "web_unavailable" | "web_credits_exhausted" | "disclosure_unavailable" | "internal";
@@ -974,6 +1029,90 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DemoJobOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    echo_api_dev_echo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EchoIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EchoOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    run_events_api_chat_runs__run_id__events_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "last-event-id"?: number;
+            };
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": unknown;
                 };
             };
             /** @description Client Error */

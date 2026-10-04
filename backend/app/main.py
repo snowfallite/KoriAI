@@ -13,7 +13,8 @@ from app import domains
 from app.config import Settings
 from app.core.logging import configure_logging
 from app.core.security import RateLimiter
-from app.http import dev, errors, health, openapi
+from app.http import dev, errors, health, openapi, sse
+from app.http.events import RunEventBus
 from app.http.middleware import GuardMiddleware, RequestContextMiddleware
 from app.jobs.app import run_queue
 
@@ -37,6 +38,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Kōri", lifespan=lifespan, responses=openapi.ERROR_RESPONSES)
     app.state.settings = config
     app.state.limiter = RateLimiter()
+    app.state.events = RunEventBus(config.RUN_EVENTS_TTL_S)
     errors.install(app)
     openapi.install(app)
     # The last one added runs first: the request id wraps the guard's answers.
@@ -44,6 +46,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(RequestContextMiddleware)
     app.include_router(health.router)
     app.include_router(dev.router)
+    app.include_router(sse.router)
     # Every domain with a router.py joins on its own: slices never edit this file (§16.1).
     for module in pkgutil.iter_modules(domains.__path__):
         name = f"{domains.__name__}.{module.name}.router"
