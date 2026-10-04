@@ -13,3 +13,22 @@ class AppError(Exception):
         self.code: ErrorCode = code
         self.message = message
         self.details = details
+
+
+class GatewayError(Exception):
+    """A call of an external client failed (tech.md §8.1)."""
+
+    def __init__(
+        self, code: ErrorCode, retryable: bool, retry_after_s: float | None = None
+    ) -> None:
+        super().__init__(code)
+        self.code: ErrorCode = code
+        self.retryable = retryable
+        self.retry_after_s = retry_after_s
+
+
+class TransientGatewayError(GatewayError):
+    """Timeout, 5xx, 429, gRPC UNAVAILABLE: the queue retries the job (§10.1)."""
+
+    def __init__(self, code: ErrorCode, retry_after_s: float | None = None) -> None:
+        super().__init__(code, retryable=True, retry_after_s=retry_after_s)
