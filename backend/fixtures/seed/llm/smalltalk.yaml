@@ -1,0 +1,8 @@
+# Сценарии ScriptedChatModel (§8.3) для приветствия: общие, без задачи-слайса.
+- match: {purpose: classify, user_regex: "(?i)привет|здравствуй"}
+  structured: {intent: smalltalk, complexity: low, needs: [], output: text, instruments: [],
+               period: null, confidence: 0.95, source: llm}
+- match: {purpose: agent_step, user_regex: "(?i)привет|здравствуй"}
+  steps:
+    - text: "Здравствуйте! Я помогу разобраться с портфелем, отчётностью эмитентов и новостями."
+  usage: {prompt_tokens: 420, completion_tokens: 24, precached_prompt_tokens: 0}

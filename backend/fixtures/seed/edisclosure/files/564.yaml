@@ -1,0 +1,174 @@
+# DisclosureFileRow (§8.5) компании 564: первые строки разделов ras, ifrs, annual, investors, other из снимков S1-12.
+- file_id: 1940384
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-07-30'
+  published_date: '2026-07-30'
+  file_ext: rar
+  size_raw: 711.26 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940384
+- file_id: 1925297
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 3 месяца
+  description: null
+  basis_date: '2026-04-30'
+  published_date: '2026-04-30'
+  file_ext: rar
+  size_raw: 1.7 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1925297
+- file_id: 1911518
+  section: ras
+  doc_type_raw: Годовая бухгалтерская отчетность (все формы)
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-02-11'
+  published_date: '2026-02-11'
+  file_ext: rar
+  size_raw: 13.62 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1911518
+- file_id: 1902352
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2025, 9 месяцев
+  description: null
+  basis_date: '2025-10-30'
+  published_date: '2025-10-30'
+  file_ext: rar
+  size_raw: 1.15 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1902352
+- file_id: 1940606
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-07-31'
+  published_date: '2026-07-31'
+  file_ext: rar
+  size_raw: 851.92 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940606
+- file_id: 1940604
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-07-31'
+  published_date: '2026-07-31'
+  file_ext: rar
+  size_raw: 1.44 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940604
+- file_id: 1911517
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-02-11'
+  published_date: '2026-02-11'
+  file_ext: rar
+  size_raw: 2.57 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1911517
+- file_id: 1911516
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-02-11'
+  published_date: '2026-02-11'
+  file_ext: rar
+  size_raw: 2.58 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1911516
+- file_id: 1935978
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-06-30'
+  published_date: '2026-06-30'
+  file_ext: rar
+  size_raw: 8.36 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1935978
+- file_id: 1888350
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-06-27'
+  published_date: '2025-06-27'
+  file_ext: rar
+  size_raw: 13.94 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1888350
+- file_id: 1844463
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2023'
+  description: null
+  basis_date: '2024-06-28'
+  published_date: '2024-06-28'
+  file_ext: rar
+  size_raw: 9.61 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1844463
+- file_id: 1940608
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: 'Пресс-релиз: ««НОРНИКЕЛЬ» ОБЪЯВЛЯЕТ ПРОМЕЖУТОЧНЫЕ КОНСОЛИДИРОВАННЫЕ ФИНАНСОВЫЕ РЕЗУЛЬТАТЫ
+    ПО МСФО ЗА ПЕРВОЕ ПОЛУГОДИЕ 2026 ГОДА»'
+  basis_date: '2026-07-31'
+  published_date: '2026-07-31'
+  file_ext: rar
+  size_raw: 470.01 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940608
+- file_id: 1939911
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: 'Пресс-релиз: «НОРНИКЕЛЬ» ОБЪЯВЛЯЕТ ИТОГИ ПРОИЗВОДСТВЕННОЙ ДЕЯТЕЛЬНОСТИ ЗА ПЕРВОЕ ПОЛУГОДИЕ
+    2026 ГОДА'
+  basis_date: '2026-07-27'
+  published_date: '2026-07-27'
+  file_ext: rar
+  size_raw: 99.55 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1939911
+- file_id: 1923546
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: 'Пресс-релиз: ««НОРНИКЕЛЬ» ОБЪЯВЛЯЕТ ИТОГИ ПРОИЗВОДСТВЕННОЙ ДЕЯТЕЛЬНОСТИ ЗА ПЕРВЫЙ КВАРТАЛ
+    2026 ГОДА»'
+  basis_date: '2026-04-27'
+  published_date: '2026-04-27'
+  file_ext: zip
+  size_raw: 92.75 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1923546
+- file_id: 1911519
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: 'Пресс-релиз: ««НОРНИКЕЛЬ» ОБЪЯВЛЯЕТ АУДИРОВАННЫЕ КОНСОЛИДИРОВАННЫЕ ФИНАНСОВЫЕ РЕЗУЛЬТАТЫ
+    ПО МСФО ЗА 2025 ГОД»'
+  basis_date: '2026-02-11'
+  published_date: '2026-02-11'
+  file_ext: rar
+  size_raw: 1.08 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=564&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1911519

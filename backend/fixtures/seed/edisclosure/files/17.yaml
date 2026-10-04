@@ -1,0 +1,229 @@
+# DisclosureFileRow (§8.5) компании 17: первые строки разделов ras, ifrs, annual, investors, other из снимков S1-12.
+- file_id: 1940241
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-07-29'
+  published_date: '2026-07-29'
+  file_ext: zip
+  size_raw: 1.9 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940241
+- file_id: 1925197
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 3 месяца
+  description: null
+  basis_date: '2026-04-29'
+  published_date: '2026-04-30'
+  file_ext: zip
+  size_raw: 5.6 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1925197
+- file_id: 1915678
+  section: ras
+  doc_type_raw: Годовая бухгалтерская отчетность (все формы)
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-03-19'
+  published_date: '2026-03-20'
+  file_ext: zip
+  size_raw: 11.9 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1915678
+- file_id: 1902644
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2025, 9 месяцев
+  description: null
+  basis_date: '2025-10-30'
+  published_date: '2025-11-01'
+  file_ext: zip
+  size_raw: 5.7 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1902644
+- file_id: 1943354
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-08-28'
+  published_date: '2026-08-28'
+  file_ext: zip
+  size_raw: 1.16 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1943354
+- file_id: 1915683
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-03-19'
+  published_date: '2026-03-20'
+  file_ext: zip
+  size_raw: 2.54 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1915683
+- file_id: 1896830
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2025, 6 месяцев
+  description: null
+  basis_date: '2025-08-29'
+  published_date: '2025-08-29'
+  file_ext: zip
+  size_raw: 2.89 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1896830
+- file_id: 1894036
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-08-01'
+  published_date: '2025-08-01'
+  file_ext: zip
+  size_raw: 2.76 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1894036
+- file_id: 1923647
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-04-24'
+  published_date: '2026-04-27'
+  file_ext: zip
+  size_raw: 2.13 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1923647
+- file_id: 1881000
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-05-19'
+  published_date: '2025-05-19'
+  file_ext: zip
+  size_raw: 1.67 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1881000
+- file_id: 1892453
+  section: annual
+  doc_type_raw: Документ, содержащий измененную (скорректированную) информацию, раскрытую в годовом отчете
+    АО
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-07-17'
+  published_date: '2025-07-17'
+  file_ext: zip
+  size_raw: 28.41 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1892453
+- file_id: 1834469
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2023'
+  description: null
+  basis_date: '2024-04-27'
+  published_date: '2024-04-27'
+  file_ext: zip
+  size_raw: 2.72 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1834469
+- file_id: 1938285
+  section: investors
+  doc_type_raw: Отчет о деятельности в области устойчивого развития
+  period_raw: '2025'
+  description: Отчет об устойчивом развитии Группы «ЛУКОЙЛ» 2025
+  basis_date: '2026-07-08'
+  published_date: '2026-07-08'
+  file_ext: zip
+  size_raw: 11.08 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1938285
+- file_id: 1891569
+  section: investors
+  doc_type_raw: Отчет о деятельности в области устойчивого развития
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-07-10'
+  published_date: '2025-07-10'
+  file_ext: zip
+  size_raw: 9.35 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1891569
+- file_id: 1851929
+  section: investors
+  doc_type_raw: Отчет о деятельности в области устойчивого развития
+  period_raw: '2023'
+  description: null
+  basis_date: '2024-08-27'
+  published_date: '2024-08-27'
+  file_ext: zip
+  size_raw: 5.28 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1851929
+- file_id: 1727088
+  section: investors
+  doc_type_raw: Отчет о деятельности в области устойчивого развития
+  period_raw: '2020'
+  description: null
+  basis_date: '2021-11-17'
+  published_date: '2021-11-17'
+  file_ext: zip
+  size_raw: 9.01 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1727088
+- file_id: 1775880
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Обязательное предложение о приобретении эмиссионных ценных бумаг акционерного общества
+  basis_date: '2023-01-09'
+  published_date: '2023-01-09'
+  file_ext: zip
+  size_raw: 705.98 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1775880
+- file_id: 1770106
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: ПРИГЛАШЕНИЯ ДЕЛАТЬ ПРЕДЛОЖЕНИЯ (ОФЕРТЫ) для облигаций ЗО-30 с учетом изменений в Документ,
+    содержащий условия размещения ценных бумаг от 18.10.2022.
+  basis_date: '2022-10-18'
+  published_date: '2022-10-18'
+  file_ext: zip
+  size_raw: 469.91 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1770106
+- file_id: 1770105
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: ПРИГЛАШЕНИЯ ДЕЛАТЬ ПРЕДЛОЖЕНИЯ (ОФЕРТЫ) для облигаций ЗО-26 с учетом изменений в Документ,
+    содержащий условия размещения ценных бумаг от 18.10.2022.
+  basis_date: '2022-10-18'
+  published_date: '2022-10-18'
+  file_ext: zip
+  size_raw: 469.77 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1770105
+- file_id: 1769767
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Редакция ПРИГЛАШЕНИЯ ДЕЛАТЬ ПРЕДЛОЖЕНИЯ (ОФЕРТЫ) для облигаций ЗО-31 с учетом изменений
+    в Документ, содержащий условия размещения ценных бумаг от 14.10.2022
+  basis_date: '2022-10-14'
+  published_date: '2022-10-14'
+  file_ext: zip
+  size_raw: 469.75 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=17&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1769767

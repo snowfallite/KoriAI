@@ -1,0 +1,36 @@
+# DisclosureCompany (§8.5): карточки из снимков S1-12; у En+ Group plc нет ИНН и ОГРН.
+- company_id: 3043
+  full_name: Публичное акционерное общество «Сбербанк России»
+  short_name: ПАО Сбербанк
+  inn: '7707083893'
+  ogrn: '1027700132195'
+  address: 117312, г. Москва, ул. Вавилова, д. 19
+  page_url: https://www.e-disclosure.ru/portal/company.aspx?id=3043
+- company_id: 17
+  full_name: Публичное акционерное общество "Нефтяная компания "ЛУКОЙЛ"
+  short_name: ПАО "ЛУКОЙЛ"
+  inn: '7708004767'
+  ogrn: '1027700035769'
+  address: 101000, г. Москва, бульвар Сретенский, д. 11
+  page_url: https://www.e-disclosure.ru/portal/company.aspx?id=17
+- company_id: 564
+  full_name: Публичное акционерное общество "Горно-металлургическая компания "Норильский никель"
+  short_name: ПАО "ГМК "Норильский никель"
+  inn: '8401005730'
+  ogrn: '1028400000298'
+  address: 647000, Красноярский кр., Таймырский Долгано-Ненецкий район, г. Дудинка, ул. Морозова, д. 1
+  page_url: https://www.e-disclosure.ru/portal/company.aspx?id=564
+- company_id: 7671
+  full_name: Публичное акционерное общество "Магнит"
+  short_name: ПАО "Магнит"
+  inn: '2309085638'
+  ogrn: '1032304945947'
+  address: 350072, Краснодарский кр., г. Краснодар, ул. Солнечная, д. 15 к. 5
+  page_url: https://www.e-disclosure.ru/portal/company.aspx?id=7671
+- company_id: 37211
+  full_name: En+ Group plc
+  short_name: En+ Group plc
+  inn: null
+  ogrn: null
+  address: 44 Esplanade, St Helier, Jersey, JE4 9WG
+  page_url: https://www.e-disclosure.ru/portal/company.aspx?id=37211

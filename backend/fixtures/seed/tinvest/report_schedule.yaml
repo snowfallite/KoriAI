@@ -1,0 +1,37 @@
+# TReportEvent (§8.2): даты отчётности эмитентов.
+# Синтетические данные S1-09, не рыночные.
+- instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
+  report_date: 2026-07-29
+  period_year: 2026
+  period_num: 2
+  period_type: quarter
+- instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
+  report_date: 2026-10-28
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
+  report_date: 2027-02-26
+  period_year: 2026
+  period_num: 1
+  period_type: annual
+- instrument_uid: af74a336-5784-5f0d-b65e-7f016d19a4bc
+  report_date: 2026-08-28
+  period_year: 2026
+  period_num: 1
+  period_type: semiannual
+- instrument_uid: af74a336-5784-5f0d-b65e-7f016d19a4bc
+  report_date: 2026-11-27
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
+  report_date: 2026-11-26
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: aa42443c-3955-5e26-ad47-4e0467fb389c
+  report_date: 2026-10-22
+  period_year: 2026
+  period_num: 3
+  period_type: quarter

@@ -1,0 +1,225 @@
+# DisclosureFileRow (§8.5) компании 7671: первые строки разделов ras, ifrs, annual, investors, other из снимков S1-12.
+- file_id: 1943480
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-08-27'
+  published_date: '2026-08-28'
+  file_ext: zip
+  size_raw: 1.69 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1943480
+- file_id: 1930716
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 3 месяца
+  description: null
+  basis_date: '2026-05-29'
+  published_date: '2026-05-29'
+  file_ext: zip
+  size_raw: 1.59 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1930716
+- file_id: 1917343
+  section: ras
+  doc_type_raw: Годовая бухгалтерская отчетность (все формы)
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-03-27'
+  published_date: '2026-03-27'
+  file_ext: zip
+  size_raw: 7.21 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1917343
+- file_id: 1905255
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2025, 9 месяцев
+  description: null
+  basis_date: '2025-11-27'
+  published_date: '2025-11-27'
+  file_ext: zip
+  size_raw: 3.06 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1905255
+- file_id: 1943481
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-08-28'
+  published_date: '2026-08-28'
+  file_ext: zip
+  size_raw: 2.89 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1943481
+- file_id: 1925487
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-04-30'
+  published_date: '2026-04-30'
+  file_ext: zip
+  size_raw: 2.31 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1925487
+- file_id: 1897085
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2025, 6 месяцев
+  description: null
+  basis_date: '2025-08-29'
+  published_date: '2025-08-29'
+  file_ext: zip
+  size_raw: 1.71 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1897085
+- file_id: 1877966
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-04-29'
+  published_date: '2025-04-29'
+  file_ext: zip
+  size_raw: 1.77 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1877966
+- file_id: 1934349
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-06-22'
+  published_date: '2026-06-22'
+  file_ext: zip
+  size_raw: 11.17 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1934349
+- file_id: 1888120
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-06-26'
+  published_date: '2025-06-27'
+  file_ext: zip
+  size_raw: 11.38 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1888120
+- file_id: 1844444
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2023'
+  description: null
+  basis_date: '2024-06-28'
+  published_date: '2024-06-28'
+  file_ext: zip
+  size_raw: 7.25 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1844444
+- file_id: 1818758
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2022'
+  description: null
+  basis_date: '2023-12-29'
+  published_date: '2023-12-29'
+  file_ext: zip
+  size_raw: 12.56 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1818758
+- file_id: 1747849
+  section: investors
+  doc_type_raw: Иной тип отчета
+  period_raw: '2021'
+  description: Годовой отчет за 2021 год
+  basis_date: '2022-04-29'
+  published_date: '2022-04-29'
+  file_ext: zip
+  size_raw: 6.1 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1747849
+- file_id: 1696851
+  section: investors
+  doc_type_raw: Иной тип отчета
+  period_raw: '2020'
+  description: Годовой отчет за 2020 год
+  basis_date: '2021-04-26'
+  published_date: '2021-04-26'
+  file_ext: zip
+  size_raw: 6.43 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1696851
+- file_id: 1628286
+  section: investors
+  doc_type_raw: Иной тип отчета
+  period_raw: '2019'
+  description: Годовой отчет за 2019 год
+  basis_date: '2020-04-13'
+  published_date: '2020-04-13'
+  file_ext: zip
+  size_raw: 6.82 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1628286
+- file_id: 1512224
+  section: investors
+  doc_type_raw: Иной тип отчета
+  period_raw: '2018'
+  description: Годовой отчет за 2018 год
+  basis_date: '2019-04-26'
+  published_date: '2019-04-26'
+  file_ext: zip
+  size_raw: 7.89 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1512224
+- file_id: 1469220
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Презентация о стратегии трансформации ПАО «Магнит»
+  basis_date: '2018-10-05'
+  published_date: '2018-10-05'
+  file_ext: zip
+  size_raw: 1.83 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1469220
+- file_id: 1464595
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Презентация о стратегии трансформации ПАО «Магнит»
+  basis_date: '2018-09-26'
+  published_date: '2018-09-26'
+  file_ext: zip
+  size_raw: 5.79 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1464595
+- file_id: 1279663
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Пресс-релиз об изменении доли участия члена органа управления в УК. Уведомление о сделке.
+  basis_date: '2016-11-09'
+  published_date: '2016-11-09'
+  file_ext: zip
+  size_raw: 89.41 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1279663
+- file_id: 1943483
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Операционные и финансовые результаты деятельности за 1 полугодие 2026 года
+  basis_date: '2026-08-28'
+  published_date: '2026-08-28'
+  file_ext: zip
+  size_raw: 268.49 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=7671&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1943483
