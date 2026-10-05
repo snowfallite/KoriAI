@@ -1,5 +1,7 @@
 """Tavily credits (tech.md §8.4): the estimate covers any answer, the formula holds its prices."""
 
+# ruff: noqa: RUF001  (Russian test data)
+
 import math
 
 from hypothesis import given

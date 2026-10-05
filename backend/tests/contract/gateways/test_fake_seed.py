@@ -1,6 +1,8 @@
 """With every *_MODE=fake the clients of the app answer from the seed (S1-09 AC 1, tech.md §8.1,
 §15.2). Expectations come from the fixture files read here, not through the fakes."""
 
+# ruff: noqa: RUF001  (Russian test data)
+
 import csv
 import hashlib
 from datetime import UTC, date, datetime

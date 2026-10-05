@@ -1,6 +1,8 @@
 """Tavily behind WebSearchPort (S1-09; tech.md §8.4) on recorded answers through a mock
 transport: the request it sends, the DTO it makes, the credits, the errors."""
 
+# ruff: noqa: RUF001  (Russian test data)
+
 import json
 from collections.abc import Callable
 from datetime import date
@@ -146,10 +148,15 @@ async def test_a_crawl_and_a_map() -> None:
     web = adapter(handler)
     crawl = await web.crawl(
         WebCrawlQuery.model_validate(
-            {"url": "https://news.example.com", "instructions": "только про Сбербанк", "max_depth": 1,
-             "limit": 5, "select_paths": []}
+            {
+                "url": "https://news.example.com",
+                "instructions": "только про Сбербанк",
+                "max_depth": 1,
+                "limit": 5,
+                "select_paths": [],
+            }
         )
-    )  # fmt: skip
+    )
     mapped = await web.map(
         WebMapQuery.model_validate(
             {"url": "https://news.example.com", "instructions": None, "max_depth": 2, "limit": 20}

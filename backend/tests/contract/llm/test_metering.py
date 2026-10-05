@@ -1,6 +1,8 @@
 """Metering of model calls (S1-09; tech.md §3.3, §5.5, §8.3): a row of llm_calls per call, usage
 of the day for the user and the service, 429 and 5xx retried inside the slot, X-Session-ID."""
 
+# ruff: noqa: RUF001  (Russian test data)
+
 import asyncio
 import uuid
 from collections.abc import Callable
@@ -160,7 +162,7 @@ async def test_a_fourth_429_gives_up_with_llm_busy(app: FastAPI, faults: Faults)
 async def test_5xx_and_timeouts_get_three_more_tries(
     app: FastAPI, faults: Faults, mode: str, times: int, status: str
 ) -> None:
-    faults(FaultRule(method="chat_model", mode=mode, times=times))  # type: ignore[arg-type]
+    faults(FaultRule(method="chat_model", mode=mode, times=times))
     model = fake_llm(app).chat_model("GigaChat-2", streaming=False)
 
     try:

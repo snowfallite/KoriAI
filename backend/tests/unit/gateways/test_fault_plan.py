@@ -81,25 +81,25 @@ async def test_match_picks_the_calls_by_their_arguments() -> None:
             TransientGatewayError,
             "tinvest_unavailable",
             None,
-        ),  # noqa: E501
+        ),
         (
             FaultRule(method="get_accounts", mode="rate_limit", latency_ms=1500),
             TransientGatewayError,
             "tinvest_rate_limited",
             1.5,
-        ),  # noqa: E501
+        ),
         (
             FaultRule(method="get_accounts", mode="error", error_code="token_invalid"),
             PermanentGatewayError,
             "token_invalid",
             None,
-        ),  # noqa: E501
+        ),
         (
             FaultRule(method="get_accounts", mode="error"),
             TransientGatewayError,
             "tinvest_unavailable",
             None,
-        ),  # noqa: E501
+        ),
     ],
     ids=["timeout", "rate limit", "permanent error", "default error"],
 )

@@ -117,9 +117,8 @@ class RealTInvest:
         operations = self._services(token).operations
         kinds = set(q.kinds or [])
         # The API has no filter for "other": then every type comes and the page gets filtered.
-        types = [] if not kinds or "other" in kinds else [
-            t for kind in kinds for t in mapping.OPERATION_TYPES[kind]
-        ]  # fmt: skip
+        server_side = kinds and "other" not in kinds
+        types = [t for kind in kinds for t in mapping.OPERATION_TYPES[kind]] if server_side else []
         request = sdk.GetOperationsByCursorRequest(
             account_id=q.account_id,
             from_=q.from_,

@@ -47,7 +47,7 @@ async def points() -> list[ChunkPoint]:
         payload = ChunkPayload(
             document_id=document_id,
             issuer_id=issuer_id,
-            kind=kind,  # type: ignore[arg-type]
+            kind=kind,
             standard="ras" if kind.startswith("ras") else "ifrs",
             period_year=year,
             period_label=str(year),

@@ -176,7 +176,7 @@ CASES: list[tuple[str, str, dict[str, Any], dict[str, Any], str]] = [
         {"texts": ["a"], "model_id": "GigaChat-2"},
         {"texts": ["a"], "model_id": 2},
         "an int model id",
-    ),  # fmt: skip
+    ),
 ]
 
 
@@ -228,6 +228,17 @@ def test_an_unknown_model_is_a_contract_violation(fakes: dict[str, Fake]) -> Non
     llm.chat_model("GigaChat-2-Max", streaming=True)
     with pytest.raises(ContractViolation):
         llm.chat_model("gpt-5", streaming=True)
+
+
+def test_tool_choice_any_is_refused_as_gigachat_refuses_it(fakes: dict[str, Fake]) -> None:
+    llm = fakes["llm"]
+    assert isinstance(llm, FakeLlm)
+    model = llm.chat_model("GigaChat-2", streaming=False)
+    tool = {"type": "function", "function": {"name": "calc", "parameters": {"type": "object"}}}
+
+    model.bind_tools([tool], tool_choice="auto")
+    with pytest.raises(ContractViolation):
+        model.bind_tools([tool], tool_choice="any")  # §8.3
 
 
 async def test_a_model_called_past_metering_is_a_contract_violation(

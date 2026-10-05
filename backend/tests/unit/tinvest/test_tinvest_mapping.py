@@ -4,6 +4,8 @@ The fixtures are protobuf JSON, the shape the REST gateway of T-Invest answers w
 them the way it reads gRPC answers. Expectations are worked out from the files by hand.
 """
 
+# ruff: noqa: RUF001  (Russian test data)
+
 from datetime import UTC, date, datetime
 from decimal import Decimal
 from pathlib import Path
