@@ -194,6 +194,9 @@ jobs:
       # The specs sign up, so the throwaway database needs the schema (§5.7).
       - name: Migrate the CI database
         run: docker compose -f docker-compose.ci.yml exec -T api alembic upgrade head
+      # The specs sign in as the seed users too (S1-10, §15.2).
+      - name: Seed the CI database
+        run: docker compose -f docker-compose.ci.yml exec -T api python -m app.cli seed
       - name: Smoke the stack through Caddy
         run: |
           curl --fail --silent --retry 15 --retry-all-errors --retry-delay 2 http://localhost:8080/api/health

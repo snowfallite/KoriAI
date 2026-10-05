@@ -69,10 +69,16 @@ test-int:
 test-fe:
     {{ fe }} test
 
+# Seed users and the demo broker in the dev stack (§15.2), after just migrate; --reset empties
+# every app table first: just seed --reset
+seed *args:
+    docker compose -f docker-compose.dev.yml exec -T api python -m app.cli seed {{ args }}
+
 # Playwright on the CI stack (§15.4); a failure leaves the stack up for a look
 e2e:
     docker compose -f docker-compose.ci.yml up -d --build --wait
     docker compose -f docker-compose.ci.yml exec -T api alembic upgrade head
+    docker compose -f docker-compose.ci.yml exec -T api python -m app.cli seed
     {{ fe }} test:e2e
     docker compose -f docker-compose.ci.yml down
 

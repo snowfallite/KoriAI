@@ -16,12 +16,16 @@
 ```sh
 just setup            # зависимости и браузер Playwright
 just dev              # Postgres, Qdrant и API в Docker на фейках, SPA на хосте: http://localhost:5173
+just migrate          # схема в dev-базе
+just seed             # пользователи сида и брокер демо в dev-стеке
 just gate core-impl   # всё, что проверяет PR-гейт; аргумент: метки PR через запятую
 just --list           # остальные команды, полный список в tech.md §15.4
 ```
 
 - Контрактные тесты (`just test`) ходят в Postgres из dev-стека: держите запущенным `just dev` или `docker compose -f docker-compose.dev.yml up -d postgres`.
 - Схему в dev-базе создаёт `just migrate`. Интеграционные тесты (`just test-int`) заводят в том же Postgres временные базы и удаляют их после себя.
+- `just seed` (tech.md §15.2) заводит владельца `owner@example.test` и пользователя `demo@example.test` с брокером на выдуманном токене и двумя счетами фейка; пароль обоих в dev и ci: `dev-password-123`. Повторный запуск ничего не меняет. `just seed --reset` очищает все таблицы приложения и создаёт данные заново, только в dev.
+- Фикстуры сида в `backend/fixtures/seed` синтетические: их воспроизводит `scripts/generate_seed.py` (команда запуска в его шапке).
 - Остановить dev-стек: `docker compose -f docker-compose.dev.yml down`.
 - Для разработки `.env` не нужен: dev-стек работает на значениях по умолчанию. `.env.example` перечисляет все ключи для VPS; API не стартует, если в `.env` есть неизвестный ключ.
 
