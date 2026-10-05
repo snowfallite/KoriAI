@@ -2,8 +2,6 @@
 file goes unchecked, and the files agree with each other, since the seed, the fakes and the
 tests read the same data."""
 
-# ruff: noqa: RUF001  (Russian test data)
-
 import functools
 import json
 import re
@@ -149,9 +147,7 @@ VALIDATORS: dict[str, Callable[[Path], object]] = {
     "edisclosure/archives/*/*.zip": archive_file,
     "docs/*.pdf": pdf_file,
 }
-SEED_FILES = sorted(
-    path.relative_to(SEED).as_posix() for path in SEED.rglob("*") if path.is_file()
-)
+SEED_FILES = sorted(path.relative_to(SEED).as_posix() for path in SEED.rglob("*") if path.is_file())
 
 
 @pytest.mark.parametrize("name", SEED_FILES)
@@ -290,20 +286,19 @@ def test_the_reference_data_names_known_instruments_of_the_right_type() -> None:
 
 def test_every_bond_has_its_coupons_and_every_payout_keeps_its_dates_in_order() -> None:
     coupons: dict[str, list[TCoupon]] = tinvest("coupons.yaml", dict[str, list[TCoupon]])
-    dividends: dict[str, list[TDividend]] = tinvest(
-        "dividends.yaml", dict[str, list[TDividend]]
-    )
+    dividends: dict[str, list[TDividend]] = tinvest("dividends.yaml", dict[str, list[TDividend]])
     bonds = {t for t, i in instruments().items() if i.instrument_type == "bond"}
 
     assert set(coupons) == bonds
-    for ticker, rows in coupons.items():
-        assert [c.number for c in rows] == sorted({c.number for c in rows}), ticker
-        assert [c.coupon_date for c in rows] == sorted({c.coupon_date for c in rows}), ticker
-        for coupon in rows:
+    for ticker, schedule in coupons.items():
+        assert [c.number for c in schedule] == sorted({c.number for c in schedule}), ticker
+        days = [c.coupon_date for c in schedule]
+        assert days == sorted(set(days)), ticker
+        for coupon in schedule:
             if coupon.amount is not None:
                 assert coupon.amount.currency == instruments()[ticker].currency
-    for ticker, rows in dividends.items():
-        for dividend in rows:
+    for ticker, payouts in dividends.items():
+        for dividend in payouts:
             assert dividend.last_buy_date <= dividend.record_date <= dividend.payment_date
             assert dividend.amount.currency == instruments()[ticker].currency
 
@@ -405,7 +400,9 @@ def test_the_last_closes_price_the_positions_and_sum_to_the_total(account: str) 
         )
         assert position.current_price is not None and position.average_price is not None
         close = (
-            Decimal(1) if instrument.ticker == "RUB000UTSTOM" else candles(instrument.ticker)[-1].close
+            Decimal(1)
+            if instrument.ticker == "RUB000UTSTOM"
+            else candles(instrument.ticker)[-1].close
         )
         if instrument.instrument_type == "bond":
             assert position.current_price.amount == close * NOMINAL / 100, instrument.ticker
@@ -414,7 +411,9 @@ def test_the_last_closes_price_the_positions_and_sum_to_the_total(account: str) 
             assert position.current_price.amount == close, instrument.ticker
             assert position.accrued_interest is None, instrument.ticker
         currency = position.current_price.currency
-        assert currency == ("RUB" if instrument.instrument_type == "currency" else instrument.currency)
+        assert currency == (
+            "RUB" if instrument.instrument_type == "currency" else instrument.currency
+        )
         accrued = position.accrued_interest.amount if position.accrued_interest else Decimal(0)
         total += (position.current_price.amount + accrued) * position.quantity * rate(currency)
 
