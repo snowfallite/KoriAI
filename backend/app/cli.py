@@ -105,6 +105,9 @@ async def seed(
         email = normalize_email(settings.SEED_OWNER_EMAIL if user.role == "owner" else user.email)
         if email is None:
             raise AppError("validation_error", "Проверьте SEED_OWNER_EMAIL и seed/users.yaml")
+        # Two seed users in one row would flip its role on every run.
+        if email in emails:
+            raise AppError("validation_error", f"SEED_OWNER_EMAIL повторяет адрес {email}")
         emails.append(email)
     keys_needed = any(user.broker_token is not None for user in users)
     if keys_needed and settings.TINVEST_TOKEN_ACTIVE_KEY not in settings.TINVEST_TOKEN_KEYS:

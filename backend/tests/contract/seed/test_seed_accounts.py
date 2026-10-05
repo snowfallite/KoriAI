@@ -157,3 +157,16 @@ async def test_without_a_token_key_the_seed_refuses_before_any_write(app: FastAP
     assert "TINVEST_TOKEN_KEYS" in refused.value.message
     for user in seed_users():  # the refusal comes before the first write
         assert await user_id(app, user.email) is None
+
+
+async def test_an_owner_address_of_another_seed_user_is_refused(
+    app: FastAPI, settings: Settings
+) -> None:
+    # One row for two seed users would flip its role on every run.
+    taken = settings.model_copy(update={"SEED_OWNER_EMAIL": the("user").email.upper()})
+
+    with pytest.raises(AppError) as refused:
+        await seed(app.state.engine, taken)
+
+    assert "SEED_OWNER_EMAIL" in refused.value.message
+    assert await user_id(app, the("user").email) is None
