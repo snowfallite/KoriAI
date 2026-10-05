@@ -5,6 +5,7 @@ requires-python = ">=3.13,<3.14"
 dependencies = [
     "alembic>=1.20.0",
     "argon2-cffi>=25.1.0",
+    "cryptography>=50.0.2",
     "fastapi>=0.141.1",
     "fastembed>=0.8.1",
     "gigachat>=0.2.3,<0.3",
