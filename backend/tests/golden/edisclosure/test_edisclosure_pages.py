@@ -17,6 +17,7 @@ from app.gateways.disclosure.edisclosure.adapter import attachment_name
 from app.gateways.disclosure.edisclosure.parse import (
     BLOCK_PAGE,
     REAL_PAGE,
+    SECTIONS,
     parse_company,
     parse_files,
     parse_hits,
@@ -238,3 +239,25 @@ def test_stored_html_keeps_only_markup() -> None:
 )
 def test_the_name_of_a_downloaded_file(header: str | None, name: str) -> None:
     assert attachment_name(header, "1940241.bin") == name
+
+
+def test_every_page_has_the_rows_the_discovery_crawl_counted() -> None:
+    """summary.json of S1-12 counted file links with its own parser: the counts must agree."""
+    sections = {number: name for name, number in SECTIONS.items()}
+    summary = json.loads(page("summary.json"))
+    counted = {
+        (issuer["company_id"], int(number)): info["rows"]
+        for issuer in summary["issuers"]
+        for number, info in issuer.get("files", {}).items()
+        if info.get("status") == "ok" and int(number) in sections
+    }
+
+    found = {
+        (company_id, number): len(
+            parse_files(page(f"files/{company_id}_{number}.html"), sections[number], "u")
+        )
+        for company_id, number in counted
+    }
+
+    assert len(counted) == 89  # pages of the sections of §8.5 in the snapshots
+    assert found == counted
