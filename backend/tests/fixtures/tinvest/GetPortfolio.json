@@ -1,0 +1,42 @@
+{
+  "totalAmountShares": {"currency": "rub", "units": "120984", "nano": 0},
+  "totalAmountBonds": {"currency": "rub", "units": "175515", "nano": 0},
+  "totalAmountEtf": {"currency": "rub", "units": "0", "nano": 0},
+  "totalAmountCurrencies": {"currency": "rub", "units": "304794", "nano": 310000000},
+  "totalAmountFutures": {"currency": "rub", "units": "0", "nano": 0},
+  "totalAmountPortfolio": {"currency": "rub", "units": "601293", "nano": 310000000},
+  "expectedYield": {"units": "8", "nano": 770000000},
+  "accountId": "2000123456",
+  "positions": [
+    {
+      "figi": "BBG004730N88",
+      "instrumentType": "share",
+      "quantity": {"units": "400", "nano": 0},
+      "averagePositionPrice": {"currency": "rub", "units": "309", "nano": 960000000},
+      "expectedYield": {"units": "-3000", "nano": 0},
+      "currentNkd": {"currency": "rub", "units": "0", "nano": 0},
+      "currentPrice": {"currency": "rub", "units": "302", "nano": 460000000},
+      "instrumentUid": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+      "blocked": false
+    },
+    {
+      "figi": "TCS00A1038V6",
+      "instrumentType": "bond",
+      "quantity": {"units": "300", "nano": 0},
+      "averagePositionPrice": {"currency": "rub", "units": "574", "nano": 890000000},
+      "expectedYield": {"units": "-4014", "nano": 0},
+      "currentNkd": {"currency": "rub", "units": "23", "nano": 540000000},
+      "currentPrice": {"currency": "rub", "units": "561", "nano": 510000000},
+      "instrumentUid": "1c2d3e4f-0000-4000-8000-000000000238",
+      "blocked": true
+    },
+    {
+      "figi": "RUB000UTSTOM",
+      "instrumentType": "currency",
+      "quantity": {"units": "304794", "nano": 310000000},
+      "averagePositionPrice": {"currency": "", "units": "0", "nano": 0},
+      "currentPrice": {"currency": "", "units": "0", "nano": 0},
+      "instrumentUid": "a92e2e25-a698-45cc-a781-167cf465257c"
+    }
+  ]
+}

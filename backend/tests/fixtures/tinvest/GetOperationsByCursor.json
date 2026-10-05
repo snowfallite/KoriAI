@@ -1,0 +1,49 @@
+{
+  "hasNext": true,
+  "nextCursor": "Q1VSU09SLTM=",
+  "items": [
+    {
+      "cursor": "1",
+      "brokerAccountId": "2000123456",
+      "id": "op-1",
+      "name": "Покупка ценных бумаг",
+      "date": "2024-10-02T07:15:00Z",
+      "type": "OPERATION_TYPE_BUY",
+      "description": "Покупка ценных бумаг",
+      "state": "OPERATION_STATE_EXECUTED",
+      "instrumentUid": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+      "payment": {"currency": "rub", "units": "-81384", "nano": 0},
+      "price": {"currency": "rub", "units": "271", "nano": 280000000},
+      "quantity": "300"
+    },
+    {
+      "cursor": "2",
+      "id": "op-2",
+      "name": "Удержание налога по дивидендам",
+      "date": "2025-07-25T09:00:01Z",
+      "type": "OPERATION_TYPE_DIVIDEND_TAX",
+      "description": "",
+      "instrumentUid": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+      "payment": {"currency": "rub", "units": "-1811", "nano": -680000000},
+      "price": {"currency": "rub", "units": "0", "nano": 0},
+      "quantity": "0"
+    },
+    {
+      "cursor": "3",
+      "id": "op-3",
+      "name": "Удержание комиссии за операцию",
+      "date": "2024-10-02T07:15:01Z",
+      "type": "OPERATION_TYPE_BROKER_FEE",
+      "description": "Удержание комиссии за операцию",
+      "payment": {"currency": "rub", "units": "-40", "nano": -690000000}
+    },
+    {
+      "cursor": "4",
+      "id": "op-4",
+      "name": "Плата за перенос позиции",
+      "date": "2025-01-15T21:00:00Z",
+      "type": "OPERATION_TYPE_OVERNIGHT",
+      "payment": {"currency": "usd", "units": "1", "nano": 500000000}
+    }
+  ]
+}

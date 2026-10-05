@@ -1,0 +1,24 @@
+{
+  "dividends": [
+    {
+      "dividendNet": {"currency": "rub", "units": "34", "nano": 840000000},
+      "paymentDate": "2025-07-25T00:00:00Z",
+      "declaredDate": "2025-06-27T00:00:00Z",
+      "lastBuyDate": "2025-07-17T00:00:00Z",
+      "dividendType": "Regular Cash",
+      "recordDate": "2025-07-18T00:00:00Z",
+      "regularity": "Annual",
+      "closePrice": {"currency": "rub", "units": "320", "nano": 0},
+      "yieldValue": {"units": "10", "nano": 890000000}
+    },
+    {
+      "dividendNet": {"currency": "rub", "units": "37", "nano": 500000000},
+      "recordDate": "2026-07-17T00:00:00Z",
+      "yieldValue": {"units": "0", "nano": 0}
+    },
+    {
+      "dividendNet": {"currency": "", "units": "0", "nano": 0},
+      "recordDate": "2027-07-16T00:00:00Z"
+    }
+  ]
+}

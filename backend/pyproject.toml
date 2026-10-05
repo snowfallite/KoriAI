@@ -89,6 +89,8 @@ testpaths = ["tests"]
 pythonpath = [".", ".."]
 addopts = ["--strict-markers", "--import-mode=importlib", "--allow-hosts=127.0.0.1,::1"]
 asyncio_mode = "auto"
+# The protobuf modules of the T-Invest SDK warn about their own deprecated fields on import.
+filterwarnings = ['ignore:.*\.figi is deprecated:DeprecationWarning']
 asyncio_default_fixture_loop_scope = "function"
 markers = [
     "unit: fast tests without services",

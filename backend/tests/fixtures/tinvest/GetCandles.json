@@ -1,0 +1,22 @@
+{
+  "candles": [
+    {
+      "open": {"units": "270", "nano": 320000000},
+      "high": {"units": "271", "nano": 30000000},
+      "low": {"units": "269", "nano": 340000000},
+      "close": {"units": "270", "nano": 0},
+      "volume": "160228",
+      "time": "2024-10-01T07:00:00Z",
+      "isComplete": true
+    },
+    {
+      "open": {"units": "302", "nano": 0},
+      "high": {"units": "303", "nano": 500000000},
+      "low": {"units": "301", "nano": 100000000},
+      "close": {"units": "302", "nano": 460000000},
+      "volume": "98000",
+      "time": "2026-10-02T07:00:00Z",
+      "isComplete": false
+    }
+  ]
+}

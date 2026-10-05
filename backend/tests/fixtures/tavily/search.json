@@ -1,0 +1,35 @@
+{
+  "query": "сбербанк новости",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [
+    {"url": "https://news.example.com/img/sber-office.png", "description": "Головной офис Сбербанка"},
+    "https://markets.example.org/img/chart.png"
+  ],
+  "results": [
+    {
+      "url": "https://news.example.com/2026/09/sber-rsbu-8m",
+      "title": "Сбербанк раскрыл прибыль по РСБУ за восемь месяцев",
+      "content": "Сбербанк сообщил о чистой прибыли по РСБУ за январь–август 2026 года.",
+      "score": 0.91234,
+      "raw_content": null,
+      "published_date": "Thu, 10 Sep 2026 08:00:00 GMT"
+    },
+    {
+      "url": "https://markets.example.org/sber-q2-2026-ifrs",
+      "title": "Сбербанк отчитался по МСФО за второй квартал",
+      "content": "Чистая прибыль группы по МСФО во втором квартале выросла год к году.",
+      "score": 0.77,
+      "raw_content": null,
+      "published_date": "2026-07-29"
+    },
+    {
+      "url": "https://wiki.example.net/sber",
+      "title": "Сбербанк",
+      "content": "Крупнейший банк России.",
+      "score": 0.5
+    }
+  ],
+  "response_time": 1.21,
+  "request_id": "0b8e9c5a-0d4a-4d3e-9a1f-1f2e3d4c5b6a"
+}
