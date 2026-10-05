@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.141.1",
     "fastembed>=0.8.1",
     "gigachat>=0.2.3,<0.3",
+    "grpcio>=1.84.0",
     "httpx>=0.28.1",
     "langchain-core>=1.6.6,<2",
     "langchain-gigachat>=0.5.1,<0.6",
@@ -105,6 +106,5 @@ markers = [
 known_first_party = ["app"]
 
 [tool.deptry.per_rule_ignores]
-# L-04 needs the SDK locked from S1-01; code imports it from S1-09.
 # SQLAlchemy loads psycopg from the URL; uvicorn runs from the command line.
-DEP002 = ["t-tech-investments", "psycopg", "uvicorn"]
+DEP002 = ["psycopg", "uvicorn"]
