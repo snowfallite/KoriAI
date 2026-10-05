@@ -1,28 +1,43 @@
 # TPortfolio (§8.2) счёта 2000000002 на 02.10.2026: позиции из operations/2000000002.yaml, цены из свечей.
-# Синтетические данные S1-09, не рыночные.
+# Синтетические данные сида (S1-10), не рыночные.
 account_id: '2000000002'
 total:
-  amount: '544515.32'
+  amount: '986218.6'
   currency: RUB
 total_by_type:
   bond:
-    amount: '148219.5'
+    amount: '183272.58'
     currency: RUB
   currency:
-    amount: '196033.82'
+    amount: '219737.02'
     currency: RUB
   share:
-    amount: '200262'
+    amount: '583209'
     currency: RUB
 expected_yield:
-  amount: '-57678.5'
+  amount: '-145080.43'
   currency: RUB
-expected_yield_pct: '-12.44'
+expected_yield_pct: '-15.46'
 positions:
+- instrument_uid: e23a0bba-a47b-54f1-bc2c-58e0f0d26b34
+  figi: BBG004S68B31
+  instrument_type: share
+  quantity: '1000'
+  average_price:
+    amount: '71.75'
+    currency: RUB
+  current_price:
+    amount: '51.65'
+    currency: RUB
+  expected_yield:
+    amount: '-20100'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
 - instrument_uid: 59b88658-376f-5cf5-ae64-a30af1e71a24
   figi: BBG0013HRTL0
   instrument_type: currency
-  quantity: '5000'
+  quantity: '2416.55'
   average_price:
     amount: '13.5444'
     currency: RUB
@@ -30,9 +45,86 @@ positions:
     amount: '11.6943'
     currency: RUB
   expected_yield:
-    amount: '-9250.5'
+    amount: '-4470.86'
     currency: RUB
   accrued_interest: null
+  blocked: false
+- instrument_uid: 704d8d19-3e42-5af4-825a-9ea455a4ee5c
+  figi: BBG004RVFCY3
+  instrument_type: share
+  quantity: '10'
+  average_price:
+    amount: '5810.3'
+    currency: RUB
+  current_price:
+    amount: '5352.1'
+    currency: RUB
+  expected_yield:
+    amount: '-4582'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  figi: BBG004S681W1
+  instrument_type: share
+  quantity: '600'
+  average_price:
+    amount: '384.89'
+    currency: RUB
+  current_price:
+    amount: '280.34'
+    currency: RUB
+  expected_yield:
+    amount: '-62730'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: fa97f800-bd49-5fa7-b702-38a65cebe2b5
+  figi: BBG004S681B4
+  instrument_type: share
+  quantity: '300'
+  average_price:
+    amount: '178.9'
+    currency: RUB
+  current_price:
+    amount: '156.64'
+    currency: RUB
+  expected_yield:
+    amount: '-6678'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 14ec6f6c-1832-58a8-8cf9-7c56f733e414
+  figi: BBG004S689R0
+  instrument_type: share
+  quantity: '10'
+  average_price:
+    amount: '6064'
+    currency: RUB
+  current_price:
+    amount: '6258'
+    currency: RUB
+  expected_yield:
+    amount: '1940'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 3fb3fbd7-8ba7-5944-9588-d780502a5bfc
+  figi: TCS00A108TS3
+  instrument_type: bond
+  quantity: '3'
+  average_price:
+    amount: '990.8'
+    currency: CNY
+  current_price:
+    amount: '989.9'
+    currency: CNY
+  expected_yield:
+    amount: '-2.7'
+    currency: CNY
+  accrued_interest:
+    amount: '9.25'
+    currency: CNY
   blocked: false
 - instrument_uid: c7a6174d-812f-53b8-9ce8-916d3c2939ab
   figi: TCS00A10B9Q9
@@ -69,7 +161,7 @@ positions:
 - instrument_uid: 8ba935e5-f519-5a8b-a177-2f23cc5a486f
   figi: RUB000UTSTOM
   instrument_type: currency
-  quantity: '137562.32'
+  quantity: '191477.16'
   average_price:
     amount: '1'
     currency: RUB

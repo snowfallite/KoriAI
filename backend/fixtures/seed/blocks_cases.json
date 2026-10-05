@@ -1,0 +1,203 @@
+{
+  "description": "Тест-векторы split_blocks (tech.md §9.9) для бэка (domains/agent/postprocess.py) и фронта (lib/utils/blocks.ts). Плейсхолдер артефакта: строка, в которой только [[c1]], [[t1]] или [[i1]]. text и artifacts (артефакты рана в порядке создания) дают blocks; unknown перечисляет плейсхолдеры, которые удалены с предупреждением unknown_placeholder. Каждая строка-плейсхолдер закрывает markdown-блок; пустые блоки выбрасываются, края блоков обрезаются; повторная ссылка на артефакт удаляется молча; артефакты без ссылки идут в конец в порядке создания; цитаты [sN] остаются в тексте.",
+  "cases": [
+    {
+      "name": "plain text",
+      "text": "Портфель стоит 1 250 000 ₽.",
+      "artifacts": [],
+      "blocks": [{"type": "markdown", "text": "Портфель стоит 1 250 000 ₽."}],
+      "unknown": []
+    },
+    {
+      "name": "empty text",
+      "text": "",
+      "artifacts": [],
+      "blocks": [],
+      "unknown": []
+    },
+    {
+      "name": "artifact between paragraphs",
+      "text": "Структура портфеля:\n\n[[c1]]\n\nКрупнейшие позиции ниже.",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "markdown", "text": "Структура портфеля:"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"},
+        {"type": "markdown", "text": "Крупнейшие позиции ниже."}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "blocks follow the text, not the creation order",
+      "text": "Итоги.\n\n[[t1]]\n\nДинамика:\n\n[[c1]]",
+      "artifacts": [
+        {"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"},
+        {"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"}
+      ],
+      "blocks": [
+        {"type": "markdown", "text": "Итоги."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"},
+        {"type": "markdown", "text": "Динамика:"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "placeholders open and close the text",
+      "text": "[[c1]]\nТекст между.\n[[t1]]",
+      "artifacts": [
+        {"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"},
+        {"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"}
+      ],
+      "blocks": [
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"},
+        {"type": "markdown", "text": "Текст между."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "spaces and tabs around a placeholder",
+      "text": "Таблица:\n   [[t1]]\t\nГотово.",
+      "artifacts": [{"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"}],
+      "blocks": [
+        {"type": "markdown", "text": "Таблица:"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"},
+        {"type": "markdown", "text": "Готово."}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "an unknown placeholder is dropped with a warning",
+      "text": "До.\n\n[[c9]]\n\nПосле.",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "markdown", "text": "До."},
+        {"type": "markdown", "text": "После."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "unknown": ["c9"]
+    },
+    {
+      "name": "only an unknown placeholder",
+      "text": "[[t7]]",
+      "artifacts": [],
+      "blocks": [],
+      "unknown": ["t7"]
+    },
+    {
+      "name": "a repeated placeholder shows the artifact once",
+      "text": "[[c1]]\n\nСнова тот же график:\n\n[[c1]]\n\nКонец.",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"},
+        {"type": "markdown", "text": "Снова тот же график:"},
+        {"type": "markdown", "text": "Конец."}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "artifacts without a placeholder go last in creation order",
+      "text": "Ответ без плейсхолдеров.",
+      "artifacts": [
+        {"local_id": "c2", "id": "01920000-0000-7000-8000-000000000102"},
+        {"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"},
+        {"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "blocks": [
+        {"type": "markdown", "text": "Ответ без плейсхолдеров."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000102"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "the text places some artifacts, the rest follow",
+      "text": "Смотрите таблицу.\n\n[[t1]]",
+      "artifacts": [
+        {"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"},
+        {"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"},
+        {"local_id": "i1", "id": "01920000-0000-7000-8000-000000000301"}
+      ],
+      "blocks": [
+        {"type": "markdown", "text": "Смотрите таблицу."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000301"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "a placeholder inside a sentence stays text",
+      "text": "График [[c1]] ниже.",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "markdown", "text": "График [[c1]] ниже."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "citations stay in the text",
+      "text": "Выручка выросла [s1].\n\n[[c1]]\n\nОтчётность за год [s2].",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "markdown", "text": "Выручка выросла [s1]."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"},
+        {"type": "markdown", "text": "Отчётность за год [s2]."}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "local ids with two digits",
+      "text": "[[c10]]\n\n[[c2]]",
+      "artifacts": [
+        {"local_id": "c2", "id": "01920000-0000-7000-8000-000000000102"},
+        {"local_id": "c10", "id": "01920000-0000-7000-8000-000000000110"}
+      ],
+      "blocks": [
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000110"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000102"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "an image placeholder",
+      "text": "Логотип эмитента:\n\n[[i1]]",
+      "artifacts": [{"local_id": "i1", "id": "01920000-0000-7000-8000-000000000301"}],
+      "blocks": [
+        {"type": "markdown", "text": "Логотип эмитента:"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000301"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "other brackets are no placeholders",
+      "text": "[[s1]]\n\n[[x1]]\n\n[[c]]",
+      "artifacts": [],
+      "blocks": [{"type": "markdown", "text": "[[s1]]\n\n[[x1]]\n\n[[c]]"}],
+      "unknown": []
+    },
+    {
+      "name": "blank lines at the edges are trimmed",
+      "text": "\n\n  Текст.  \n\n\n[[c1]]\n\n\n",
+      "artifacts": [{"local_id": "c1", "id": "01920000-0000-7000-8000-000000000101"}],
+      "blocks": [
+        {"type": "markdown", "text": "Текст."},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000101"}
+      ],
+      "unknown": []
+    },
+    {
+      "name": "markdown keeps its lines inside a block",
+      "text": "### Итоги\n\n- пункт один\n- пункт два\n\n[[t1]]\n\n| Тикер | Вес |\n|---|---|\n| SBER | 12% |",
+      "artifacts": [{"local_id": "t1", "id": "01920000-0000-7000-8000-000000000201"}],
+      "blocks": [
+        {"type": "markdown", "text": "### Итоги\n\n- пункт один\n- пункт два"},
+        {"type": "artifact", "artifact_id": "01920000-0000-7000-8000-000000000201"},
+        {"type": "markdown", "text": "| Тикер | Вес |\n|---|---|\n| SBER | 12% |"}
+      ],
+      "unknown": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Пользователи сида (§15.2). Пароль у всех один: SEED_OWNER_PASSWORD, в dev и ci по умолчанию
+# dev-password-123. Адрес владельца заменяет SEED_OWNER_EMAIL (по умолчанию тот же).
+- email: owner@example.test
+  role: owner
+  display_name: Владелец
+- email: demo@example.test
+  role: user
+  display_name: Демо
+  # Выдуманный токен: его принимает только фейк T-Invest. Сид хранит его зашифрованным (§3.5),
+  # счета берутся из tinvest/accounts.yaml.
+  broker_token: t.kori-seed-demo-read-only
