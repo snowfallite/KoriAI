@@ -52,7 +52,10 @@ async def test_a_failed_write_leaves_neither_the_file_nor_a_part(tmp_path: Path)
     assert list((tmp_path / "media" / "ab").iterdir()) == []
 
 
-@pytest.mark.parametrize("key", ["../etc/passwd", "/etc/passwd", "docs\\..\\x", "", "a/../../b"])
+@pytest.mark.parametrize(
+    "key",
+    ["../etc/passwd", "/etc/passwd", "docs\\..\\x", "", "a/../../b", "D:/x", "docs/a:stream"],
+)
 def test_a_key_stays_inside_the_data_dir(tmp_path: Path, key: str) -> None:
     with pytest.raises(ValueError, match="bad file key"):
         LocalFiles(tmp_path).local_path(key)

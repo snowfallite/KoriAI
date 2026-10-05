@@ -2,6 +2,7 @@
 
 import asyncio
 import hashlib
+import uuid
 from collections.abc import AsyncIterator
 from pathlib import Path, PurePosixPath
 
@@ -25,13 +26,15 @@ class LocalFiles:
     def local_path(self, key: str) -> Path:
         parts = PurePosixPath(key).parts
         # Keys come from code, never from users; the check keeps a bug inside DATA_DIR.
-        if not parts or key.startswith("/") or "\\" in key or ".." in parts:
+        # A colon would name a drive or a stream on Windows.
+        if not parts or key.startswith("/") or "\\" in key or ":" in key or ".." in parts:
             raise ValueError(f"bad file key: {key!r}")
         return self._root.joinpath(*parts)
 
     async def put(self, key: str, data: bytes | AsyncIterator[bytes]) -> StoredFile:
         path = self.local_path(key)
-        partial = path.with_name(f"{path.name}.part")
+        # Two writers of one key must not share the part file.
+        partial = path.with_name(f"{path.name}.{uuid.uuid4().hex}.part")
         digest, size = hashlib.sha256(), 0
         await asyncio.to_thread(path.parent.mkdir, parents=True, exist_ok=True)
         out = await asyncio.to_thread(partial.open, "wb")

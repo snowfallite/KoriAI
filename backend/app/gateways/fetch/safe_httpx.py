@@ -60,19 +60,22 @@ class SafeHttpxFetch:
     async def _send(self, target: httpx.URL) -> httpx.Response:
         if target.scheme not in {"http", "https"} or not target.host:
             raise PermanentGatewayError("not_found")
+        host = target.raw_host.decode("ascii")  # punycode of a Cyrillic domain
         port = target.port or (443 if target.scheme == "https" else 80)
-        addresses = await self._resolve(target.host, port)
+        addresses = await self._resolve(host, port)
         if not addresses:
             raise PermanentGatewayError("not_found")
         if not all(is_public(address) for address in addresses):
             raise PermanentGatewayError("forbidden")
+        # The client is shared and connects by address: cookies of one site would follow the
+        # next request to the same address. The request takes the jar as it is built, right here.
+        self._http.cookies.clear()
         # Connect to the address just checked: a second lookup could rebind it (DNS rebinding).
-        address = addresses[0]
         request = self._http.build_request(
             "GET",
-            target.copy_with(host=address),
+            target.copy_with(host=addresses[0]),
             headers={"Host": target.netloc.decode("ascii"), "Accept": "image/*"},
-            extensions={"sni_hostname": target.host},  # TLS checks the name, not the address
+            extensions={"sni_hostname": host},  # TLS checks the name, not the address
         )
         try:
             return await self._http.send(request, stream=True)

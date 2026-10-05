@@ -18,6 +18,7 @@ DNS = {
     "mixed.example.com": ["93.184.216.34", "192.168.1.10"],
     "metadata.example.com": ["169.254.169.254"],
     "127.0.0.1": ["127.0.0.1"],
+    "xn--e1afmkfd.xn--p1ai": ["93.184.216.35"],  # пример.рф
 }
 
 type Handler = Callable[[httpx.Request], httpx.Response]
@@ -57,6 +58,30 @@ async def test_a_public_image_comes_from_the_address_that_was_checked() -> None:
     assert (request.url.host, request.url.path) == ("93.184.216.34", "/logo.png")
     assert request.headers["host"] == "cdn.example.com"
     assert request.extensions["sni_hostname"] == "cdn.example.com"
+
+
+async def test_a_cyrillic_domain_goes_out_in_punycode() -> None:
+    sent: list[httpx.Request] = []
+
+    await fetcher(image, sent).fetch_image("https://пример.рф/лого.png", max_bytes=1024)
+
+    assert sent[0].url.host == "93.184.216.35"
+    assert sent[0].headers["host"] == "xn--e1afmkfd.xn--p1ai"
+    assert sent[0].extensions["sni_hostname"] == "xn--e1afmkfd.xn--p1ai"
+
+
+async def test_no_cookie_of_one_site_follows_the_next_request() -> None:
+    sent: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        headers = {"Content-Type": "image/png", "Set-Cookie": "session=secret; Path=/"}
+        return httpx.Response(200, headers=headers, content=PNG)
+
+    fetch = fetcher(handler, sent)
+    await fetch.fetch_image("https://cdn.example.com/a.png", max_bytes=1024)
+    await fetch.fetch_image("https://cdn.example.com/b.png", max_bytes=1024)
+
+    assert "cookie" not in sent[1].headers
 
 
 async def test_an_ipv6_address_goes_into_the_url_as_is() -> None:
