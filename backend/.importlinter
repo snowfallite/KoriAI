@@ -72,7 +72,13 @@ forbidden_modules =
     fastembed
     httpx
     selectolax
+    playwright
+    libarchive
 allow_indirect_imports = True
+# Disclosures unpack the archives of e-disclosure (§4.4).
+ignore_imports =
+    app.domains.disclosures.** -> libarchive
+unmatched_ignore_imports_alerting = none
 
 [importlinter:contract:domains-no-pdf]
 name = Only disclosures and media domains import pdfplumber and pypdf

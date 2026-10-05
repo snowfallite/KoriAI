@@ -1,0 +1,94 @@
+# TCoupon (§8.2) по тикерам облигаций, номинал 1000 ₽.
+# Синтетические данные S1-09, не рыночные.
+SU26238RMFS4:
+- coupon_date: 2024-06-05
+  number: 1
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2024-12-04
+  number: 2
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2025-06-04
+  number: 3
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2025-12-03
+  number: 4
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2026-06-03
+  number: 5
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2026-12-02
+  number: 6
+  amount:
+    amount: '35.4'
+    currency: RUB
+- coupon_date: 2027-06-02
+  number: 7
+  amount:
+    amount: '35.4'
+    currency: RUB
+RU000A10B9Q9:
+- coupon_date: 2024-09-20
+  number: 1
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2024-12-20
+  number: 2
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2025-03-21
+  number: 3
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2025-06-20
+  number: 4
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2025-09-19
+  number: 5
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2025-12-19
+  number: 6
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2026-03-20
+  number: 7
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2026-06-19
+  number: 8
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2026-09-18
+  number: 9
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2026-12-18
+  number: 10
+  amount:
+    amount: '41.14'
+    currency: RUB
+- coupon_date: 2027-03-19
+  number: 11
+  amount:
+    amount: '41.14'
+    currency: RUB

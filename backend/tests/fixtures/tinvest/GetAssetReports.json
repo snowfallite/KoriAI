@@ -1,0 +1,17 @@
+{
+  "events": [
+    {
+      "instrumentId": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+      "reportDate": "2026-10-28T00:00:00Z",
+      "periodYear": 2026,
+      "periodNum": 3,
+      "periodType": "PERIOD_TYPE_QUARTER"
+    },
+    {
+      "instrumentId": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+      "periodYear": 2026,
+      "periodNum": 1,
+      "periodType": "PERIOD_TYPE_ANNUAL"
+    }
+  ]
+}

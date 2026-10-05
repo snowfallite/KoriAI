@@ -5,6 +5,7 @@
 !backend/app/
 !backend/alembic.ini
 !backend/migrations/
+!backend/fixtures/
 !infra/certs/
 !infra/caddy/Caddyfile
 !frontend/

@@ -1,0 +1,21 @@
+{
+  "instrument": {
+    "figi": "BBG004730N88",
+    "ticker": "SBER",
+    "classCode": "TQBR",
+    "isin": "RU0009029540",
+    "lot": 10,
+    "currency": "rub",
+    "name": "Сбер Банк",
+    "exchange": "MOEX_EVENING_WEEKEND",
+    "countryOfRisk": "RU",
+    "countryOfRiskName": "Российская Федерация",
+    "instrumentType": "share",
+    "uid": "e6123145-9665-43e0-8413-cd61b8aa9b13",
+    "positionUid": "41eb2102-5333-4713-bf15-72b204c4bf7b",
+    "assetUid": "40d89385-a03a-4659-bf4e-d3ecba011782",
+    "forQualInvestorFlag": false,
+    "instrumentKind": "INSTRUMENT_TYPE_SHARE",
+    "brand": {"logoName": "sber.png", "logoBaseColor": "#309c0b", "textColor": "#ffffff"}
+  }
+}

@@ -1,0 +1,14 @@
+# TAccount (§8.2): брокерский счёт и ИИС демо-пользователя, оба только для чтения.
+# Синтетические данные S1-09, не рыночные.
+- id: '2000000001'
+  name: Брокерский счёт
+  type: broker
+  status: open
+  opened_date: 2021-03-15
+  access_level: read_only
+- id: '2000000002'
+  name: ИИС
+  type: iis
+  status: open
+  opened_date: 2023-01-20
+  access_level: read_only

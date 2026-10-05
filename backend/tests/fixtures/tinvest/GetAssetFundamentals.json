@@ -1,0 +1,23 @@
+{
+  "fundamentals": [
+    {
+      "assetUid": "40d89385-a03a-4659-bf4e-d3ecba011782",
+      "currency": "rub",
+      "marketCapitalization": 6529188292080.0,
+      "highPriceLast52Weeks": 514.59,
+      "lowPriceLast52Weeks": 293.14,
+      "beta": 1.1,
+      "revenueTtm": 4100000000000.0,
+      "ebitdaTtm": 0.0,
+      "netIncomeTtm": 1600000000000.0,
+      "peRatioTtm": 4.3,
+      "priceToBookTtm": 0.95,
+      "evToEbitdaMrq": 0.0,
+      "roe": 22.5,
+      "totalDebtMrq": 0.0,
+      "netDebtToEbitda": 0.0,
+      "dividendYieldDailyTtm": 12.4,
+      "freeCashFlowTtm": 0.0
+    }
+  ]
+}

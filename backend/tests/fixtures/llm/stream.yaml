@@ -1,0 +1,7 @@
+# A preamble before a function call, then the answer (tech.md §7 text.reset, §8.3).
+- match: {purpose: agent_step}
+  steps:
+    - text: "Сейчас посмотрю портфель."
+      tool_call: {name: portfolio_overview, args: {account: null}}
+    - text: "Портфель стоит 1 065 082,71 ₽."
+  usage: {prompt_tokens: 900, completion_tokens: 120, precached_prompt_tokens: 300}

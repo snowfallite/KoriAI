@@ -1,0 +1,112 @@
+# TForecasts (§8.2) по тикерам: консенсус и цели синтетических аналитиков.
+# Синтетические данные S1-09, не рыночные.
+SBER:
+  consensus:
+    recommendation: buy
+    target_avg:
+      amount: '378.08'
+      currency: RUB
+    target_min:
+      amount: '317.58'
+      currency: RUB
+    target_max:
+      amount: '393.2'
+      currency: RUB
+    upside_pct: '25'
+  targets:
+  - company: Аналитики А
+    recommendation: buy
+    target:
+      amount: '393.2'
+      currency: RUB
+    date: 2026-08-28
+  - company: Аналитики Б
+    recommendation: buy
+    target:
+      amount: '369'
+      currency: RUB
+    date: 2026-09-10
+  - company: Аналитики В
+    recommendation: hold
+    target:
+      amount: '317.58'
+      currency: RUB
+    date: 2026-07-15
+GAZP:
+  consensus:
+    recommendation: hold
+    target_avg:
+      amount: '177.38'
+      currency: RUB
+    target_min:
+      amount: '151.1'
+      currency: RUB
+    target_max:
+      amount: '180.66'
+      currency: RUB
+    upside_pct: '8'
+  targets:
+  - company: Аналитики А
+    recommendation: hold
+    target:
+      amount: '180.66'
+      currency: RUB
+    date: 2026-09-02
+  - company: Аналитики Б
+    recommendation: sell
+    target:
+      amount: '151.1'
+      currency: RUB
+    date: 2026-08-12
+LKOH:
+  consensus:
+    recommendation: buy
+    target_avg:
+      amount: '9997.56'
+      currency: RUB
+    target_min:
+      amount: '9581'
+      currency: RUB
+    target_max:
+      amount: '10414.13'
+      currency: RUB
+    upside_pct: '20'
+  targets:
+  - company: Аналитики А
+    recommendation: buy
+    target:
+      amount: '10414.13'
+      currency: RUB
+    date: 2026-09-18
+  - company: Аналитики В
+    recommendation: buy
+    target:
+      amount: '9581'
+      currency: RUB
+    date: 2026-08-30
+YDEX:
+  consensus:
+    recommendation: buy
+    target_avg:
+      amount: '4505.9'
+      currency: RUB
+    target_min:
+      amount: '4339.01'
+      currency: RUB
+    target_max:
+      amount: '4672.78'
+      currency: RUB
+    upside_pct: '35'
+  targets:
+  - company: Аналитики Б
+    recommendation: buy
+    target:
+      amount: '4672.78'
+      currency: RUB
+    date: 2026-09-25
+  - company: Аналитики В
+    recommendation: buy
+    target:
+      amount: '4339.01'
+      currency: RUB
+    date: 2026-09-01

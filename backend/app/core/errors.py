@@ -32,3 +32,21 @@ class TransientGatewayError(GatewayError):
 
     def __init__(self, code: ErrorCode, retry_after_s: float | None = None) -> None:
         super().__init__(code, retryable=True, retry_after_s=retry_after_s)
+
+
+class PermanentGatewayError(GatewayError):
+    """4xx, a wrong token, not found: a retry gets the same answer."""
+
+    def __init__(self, code: ErrorCode) -> None:
+        super().__init__(code, retryable=False)
+
+
+class QuotaExhaustedError(GatewayError):
+    """A budget of the service ran out, so the call was not made (§8.4)."""
+
+    def __init__(self, code: ErrorCode) -> None:
+        super().__init__(code, retryable=False)
+
+
+class ContractViolation(Exception):
+    """A fake got input its port contract forbids, or a test lacks a fixture (§8.1)."""

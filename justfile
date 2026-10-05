@@ -84,6 +84,11 @@ invites n:
 build:
     {{ fe }} build
 
+# Smoke of the external APIs with real keys, by hand only (§15.4): docs/sources/smoke-<date>.md
+smoke-external *args:
+    {{ be }} playwright install firefox
+    {{ be }} python ../scripts/smoke_external.py {{ args }}
+
 # e-disclosure discovery for S1-12: drives a visible Firefox on the real site, run by hand.
 discover-edisclosure *args:
     uv run --no-project --with playwright==1.63.0 playwright install firefox

@@ -1,0 +1,47 @@
+# DisclosureFileRow (§8.5) компании 37211: первые строки разделов ras, ifrs, annual, investors, other из снимков S1-12.
+- file_id: 1503935
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2018'
+  description: null
+  basis_date: '2019-03-28'
+  published_date: '2019-04-01'
+  file_ext: zip
+  size_raw: 5.05 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1503935
+- file_id: 1411015
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2017'
+  description: null
+  basis_date: '2018-03-30'
+  published_date: '2018-03-30'
+  file_ext: zip
+  size_raw: 3.93 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1411015
+- file_id: 1512415
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2018'
+  description: null
+  basis_date: '2019-04-29'
+  published_date: '2019-04-29'
+  file_ext: zip
+  size_raw: 6.28 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1512415
+- file_id: 1427744
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2017'
+  description: null
+  basis_date: '2018-04-30'
+  published_date: '2018-05-03'
+  file_ext: zip
+  size_raw: 5.51 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=37211&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1427744

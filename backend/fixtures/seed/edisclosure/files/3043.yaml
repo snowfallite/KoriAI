@@ -1,0 +1,197 @@
+# DisclosureFileRow (§8.5) компании 3043: первые строки разделов ras, ifrs, annual, investors, other из снимков S1-12.
+- file_id: 1941660
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-08-11'
+  published_date: '2026-08-12'
+  file_ext: zip
+  size_raw: 1.9 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1941660
+- file_id: 1927255
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2026, 3 месяца
+  description: null
+  basis_date: '2026-05-13'
+  published_date: '2026-05-14'
+  file_ext: zip
+  size_raw: 1.78 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1927255
+- file_id: 1914523
+  section: ras
+  doc_type_raw: Годовая бухгалтерская отчетность (все формы)
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-03-13'
+  published_date: '2026-03-16'
+  file_ext: zip
+  size_raw: 4.34 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1914523
+- file_id: 1905283
+  section: ras
+  doc_type_raw: Промежуточная бухгалтерская отчетность (все формы)
+  period_raw: 2025, 9 месяцев
+  description: null
+  basis_date: '2025-11-27'
+  published_date: '2025-11-28'
+  file_ext: zip
+  size_raw: 4.15 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=3
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1905283
+- file_id: 1940144
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 6 месяцев
+  description: null
+  basis_date: '2026-07-28'
+  published_date: '2026-07-29'
+  file_ext: zip
+  size_raw: 2.22 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1940144
+- file_id: 1924258
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2026, 3 месяца
+  description: null
+  basis_date: '2026-04-28'
+  published_date: '2026-04-29'
+  file_ext: zip
+  size_raw: 2.09 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1924258
+- file_id: 1912839
+  section: ifrs
+  doc_type_raw: Годовая консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-02-25'
+  published_date: '2026-02-26'
+  file_ext: zip
+  size_raw: 3.16 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1912839
+- file_id: 1901969
+  section: ifrs
+  doc_type_raw: Промежуточная консолидированная финансовая отчетность по МСФО или иным международно признанным
+    стандартам
+  period_raw: 2025, 9 месяцев
+  description: null
+  basis_date: '2025-10-27'
+  published_date: '2025-10-28'
+  file_ext: zip
+  size_raw: 1.93 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=4
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1901969
+- file_id: 1935962
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-06-30'
+  published_date: '2026-06-30'
+  file_ext: zip
+  size_raw: 34.24 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1935962
+- file_id: 1889220
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-06-30'
+  published_date: '2025-07-01'
+  file_ext: zip
+  size_raw: 9.85 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1889220
+- file_id: 1906346
+  section: annual
+  doc_type_raw: Документ, содержащий измененную (скорректированную) информацию, раскрытую в годовом отчете
+    АО
+  period_raw: '2024'
+  description: null
+  basis_date: '2025-12-12'
+  published_date: '2025-12-12'
+  file_ext: zip
+  size_raw: 246.78 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1906346
+- file_id: 1845304
+  section: annual
+  doc_type_raw: Годовой отчет
+  period_raw: '2023'
+  description: null
+  basis_date: '2024-06-21'
+  published_date: '2024-07-01'
+  file_ext: zip
+  size_raw: 20.61 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=2
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1845304
+- file_id: 1931479
+  section: investors
+  doc_type_raw: Отчет о деятельности в области устойчивого развития
+  period_raw: '2025'
+  description: null
+  basis_date: '2026-06-03'
+  published_date: '2026-06-03'
+  file_ext: zip
+  size_raw: 1.14 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=8
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1931479
+- file_id: 1922611
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Порядок доступа к дистанционному участию в годовом заседании ОСА в 2026 году и технические
+    требования для участия в заседании
+  basis_date: '2026-04-21'
+  published_date: '2026-04-21'
+  file_ext: zip
+  size_raw: 87.31 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1922611
+- file_id: 1876198
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Порядок доступа к дистанционному участию в годовом заседании ОСА и технические требования
+    для участия в заседании
+  basis_date: '2025-04-22'
+  published_date: '2025-04-22'
+  file_ext: zip
+  size_raw: 87.88 КБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1876198
+- file_id: 1866980
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Обобщенная консолидированная финансовая отчетность за 12 месяцев 2024 года с аудиторским
+    заключением
+  basis_date: '2025-02-26'
+  published_date: '2025-02-27'
+  file_ext: zip
+  size_raw: 3.03 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1866980
+- file_id: 1857503
+  section: other
+  doc_type_raw: Прочие документы
+  period_raw: ''
+  description: Промежуточная обобщенная консолидированная финансовая отчетность за 9 месяцев 2024 года
+    с заключением по результатам обзорной проверки
+  basis_date: '2024-10-30'
+  published_date: '2024-10-31'
+  file_ext: zip
+  size_raw: 1.72 МБ
+  page_url: https://www.e-disclosure.ru/portal/files.aspx?id=3043&type=10
+  download_url: https://www.e-disclosure.ru/portal/FileLoad.ashx?Fileid=1857503

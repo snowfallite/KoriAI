@@ -1,0 +1,13 @@
+"""Vector store port (tech.md §8.6): chunks of the reports, hybrid search."""
+
+from typing import Protocol
+from uuid import UUID
+
+from app.contracts.vectors import ChunkHit, ChunkPoint, ChunkQuery
+
+
+class VectorStorePort(Protocol):
+    async def ensure_collection(self) -> None: ...
+    async def upsert(self, points: list[ChunkPoint]) -> None: ...
+    async def delete_document(self, document_id: UUID) -> None: ...
+    async def search(self, q: ChunkQuery) -> list[ChunkHit]: ...

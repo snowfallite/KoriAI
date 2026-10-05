@@ -1,0 +1,14 @@
+{
+  "results": [
+    {
+      "url": "https://news.example.com/2026/09/sber-rsbu-8m",
+      "raw_content": "# Сбербанк раскрыл прибыль по РСБУ за восемь месяцев\n\nСбербанк сообщил о чистой прибыли.",
+      "images": []
+    }
+  ],
+  "failed_results": [
+    {"url": "https://nowhere.example.org/page", "error": "Failed to fetch url"}
+  ],
+  "response_time": 2.4,
+  "request_id": "9c1d5e7f-1b2c-4d3e-8f9a-0b1c2d3e4f5a"
+}

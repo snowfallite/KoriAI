@@ -1,0 +1,68 @@
+# TDividend (§8.2) по тикерам; у Газпрома и фонда выплат нет. Последняя выплата ЛУКОЙЛа объявлена, но ещё не прошла.
+# Синтетические данные S1-09, не рыночные.
+SBER:
+- record_date: 2025-07-18
+  payment_date: 2025-07-25
+  last_buy_date: 2025-07-17
+  amount:
+    amount: '34.84'
+    currency: RUB
+  yield_pct: '7.86'
+- record_date: 2026-07-17
+  payment_date: 2026-07-24
+  last_buy_date: 2026-07-16
+  amount:
+    amount: '37.5'
+    currency: RUB
+  yield_pct: '11.11'
+LKOH:
+- record_date: 2024-12-17
+  payment_date: 2025-01-10
+  last_buy_date: 2024-12-16
+  amount:
+    amount: '514'
+    currency: RUB
+  yield_pct: '8.06'
+- record_date: 2025-06-03
+  payment_date: 2025-06-24
+  last_buy_date: 2025-06-02
+  amount:
+    amount: '541'
+    currency: RUB
+  yield_pct: '7.66'
+- record_date: 2025-12-16
+  payment_date: 2026-01-12
+  last_buy_date: 2025-12-15
+  amount:
+    amount: '397'
+    currency: RUB
+  yield_pct: '5.11'
+- record_date: 2026-06-02
+  payment_date: 2026-06-23
+  last_buy_date: 2026-06-01
+  amount:
+    amount: '514'
+    currency: RUB
+  yield_pct: '6.74'
+- record_date: 2026-12-16
+  payment_date: 2027-01-11
+  last_buy_date: 2026-12-15
+  amount:
+    amount: '420'
+    currency: RUB
+  yield_pct: '5.04'
+YDEX:
+- record_date: 2025-10-06
+  payment_date: 2025-10-20
+  last_buy_date: 2025-10-03
+  amount:
+    amount: '80'
+    currency: RUB
+  yield_pct: '1.78'
+- record_date: 2026-04-07
+  payment_date: 2026-04-21
+  last_buy_date: 2026-04-06
+  amount:
+    amount: '110'
+    currency: RUB
+  yield_pct: '3.59'

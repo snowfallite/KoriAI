@@ -1,0 +1,83 @@
+# TPortfolio (§8.2) счёта 2000000002 на 02.10.2026: позиции из operations/2000000002.yaml, цены из свечей.
+# Синтетические данные S1-09, не рыночные.
+account_id: '2000000002'
+total:
+  amount: '544515.32'
+  currency: RUB
+total_by_type:
+  bond:
+    amount: '148219.5'
+    currency: RUB
+  currency:
+    amount: '196033.82'
+    currency: RUB
+  share:
+    amount: '200262'
+    currency: RUB
+expected_yield:
+  amount: '-57678.5'
+  currency: RUB
+expected_yield_pct: '-12.44'
+positions:
+- instrument_uid: 59b88658-376f-5cf5-ae64-a30af1e71a24
+  figi: BBG0013HRTL0
+  instrument_type: currency
+  quantity: '5000'
+  average_price:
+    amount: '13.5444'
+    currency: RUB
+  current_price:
+    amount: '11.6943'
+    currency: RUB
+  expected_yield:
+    amount: '-9250.5'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: c7a6174d-812f-53b8-9ce8-916d3c2939ab
+  figi: TCS00A10B9Q9
+  instrument_type: bond
+  quantity: '150'
+  average_price:
+    amount: '993.2'
+    currency: RUB
+  current_price:
+    amount: '981.8'
+    currency: RUB
+  expected_yield:
+    amount: '-1710'
+    currency: RUB
+  accrued_interest:
+    amount: '6.33'
+    currency: RUB
+  blocked: false
+- instrument_uid: aa42443c-3955-5e26-ad47-4e0467fb389c
+  figi: TCS00A107T19
+  instrument_type: share
+  quantity: '60'
+  average_price:
+    amount: '4116.3333'
+    currency: RUB
+  current_price:
+    amount: '3337.7'
+    currency: RUB
+  expected_yield:
+    amount: '-46718'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 8ba935e5-f519-5a8b-a177-2f23cc5a486f
+  figi: RUB000UTSTOM
+  instrument_type: currency
+  quantity: '137562.32'
+  average_price:
+    amount: '1'
+    currency: RUB
+  current_price:
+    amount: '1'
+    currency: RUB
+  expected_yield:
+    amount: '0'
+    currency: RUB
+  accrued_interest: null
+  blocked: false

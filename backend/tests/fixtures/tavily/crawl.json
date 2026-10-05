@@ -1,0 +1,9 @@
+{
+  "base_url": "https://news.example.com",
+  "results": [
+    {"url": "https://news.example.com/2026/09/sber-rsbu-8m", "raw_content": "# Прибыль по РСБУ"},
+    {"url": "https://news.example.com/2026/09/sber-dividends", "raw_content": "# Дивидендная политика"}
+  ],
+  "response_time": 5.8,
+  "request_id": "3e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a6b7"
+}

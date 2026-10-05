@@ -3,6 +3,7 @@ per test rolled back at its end. tests/conftest.py loads them as a plugin."""
 
 import uuid
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
+from pathlib import Path
 
 import httpx
 import pytest
@@ -42,12 +43,20 @@ def database_url() -> Iterator[str]:
 
 
 @pytest.fixture
-async def app(database_url: str) -> AsyncIterator[FastAPI]:
+async def app(database_url: str, tmp_path: Path) -> AsyncIterator[FastAPI]:
     """Tests change app.state.settings with model_copy(update=...) to try other config.
 
     No workers: they would run jobs on the shared connection; tests/integration/jobs runs them.
+    Fakes stay strict (§15.3): a request without a fixture fails the test.
     """
-    app = create_app(Settings(_env_file=None, DATABASE_URL=database_url, JOBS_ENABLED=False))
+    settings = Settings(
+        _env_file=None,
+        DATABASE_URL=database_url,
+        JOBS_ENABLED=False,
+        FAKE_STRICT=True,
+        DATA_DIR=tmp_path,
+    )
+    app = create_app(settings)
     async with app.router.lifespan_context(app):
         engine = app.state.engine
         async with engine.connect() as conn:

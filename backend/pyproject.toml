@@ -6,16 +6,26 @@ dependencies = [
     "alembic>=1.20.0",
     "argon2-cffi>=25.1.0",
     "fastapi>=0.141.1",
+    "fastembed>=0.8.1",
+    "gigachat>=0.2.3,<0.3",
+    "grpcio>=1.84.0",
     "httpx>=0.28.1",
+    "langchain-core>=1.6.6,<2",
+    "langchain-gigachat>=0.5.1,<0.6",
+    "playwright>=1.63.0",
     "procrastinate>=3.10,<3.11",
     "psycopg[binary]>=3.3.6",
     "pydantic>=2.13.5",
     "pydantic-settings>=2.15.0",
+    "pyyaml>=6.0.3",
+    "qdrant-client>=1.19.1",
+    "selectolax>=1.0.0",
     "sqlalchemy[asyncio]>=2.1.1",
     "sse-starlette>=3.5.0",
     "starlette>=1.7.0",
     "structlog>=26.1.0",
     "t-tech-investments>=1.51.0",
+    "tavily-python>=0.8.4",
     "uvicorn>=0.54.0",
 ]
 
@@ -41,6 +51,8 @@ dev = [
     "pytest-asyncio>=1.4.0",
     "pytest-socket>=0.8.1",
     "ruff>=0.16.9",
+    "types-grpcio>=1.84.0.20260928",
+    "types-pyyaml>=6.0.12.20260906",
 ]
 
 [tool.ruff]
@@ -68,11 +80,18 @@ files = ["app", "tests"]
 # Tests import the repo-level scripts package.
 mypy_path = "$MYPY_CONFIG_FILE_DIR/.."
 
+# The Tavily SDK ships no types.
+[[tool.mypy.overrides]]
+module = ["tavily", "tavily.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = [".", ".."]
 addopts = ["--strict-markers", "--import-mode=importlib", "--allow-hosts=127.0.0.1,::1"]
 asyncio_mode = "auto"
+# The protobuf modules of the T-Invest SDK warn about their own deprecated fields on import.
+filterwarnings = ['ignore:.*\.figi is deprecated:DeprecationWarning']
 asyncio_default_fixture_loop_scope = "function"
 markers = [
     "unit: fast tests without services",
@@ -87,6 +106,5 @@ markers = [
 known_first_party = ["app"]
 
 [tool.deptry.per_rule_ignores]
-# L-04 needs the SDK locked from S1-01; code imports it from S1-09.
 # SQLAlchemy loads psycopg from the URL; uvicorn runs from the command line.
-DEP002 = ["t-tech-investments", "psycopg", "uvicorn"]
+DEP002 = ["psycopg", "uvicorn"]

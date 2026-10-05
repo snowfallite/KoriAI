@@ -110,8 +110,8 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Qdrant joins with the first test that needs it (S1-09). The tests migrate their own
-    # throwaway databases on this server.
+    # The tests migrate their own throwaway databases on this server and make their own
+    # Qdrant collections (S1-09).
     services:
       postgres:
         image: postgres:18
@@ -125,6 +125,9 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
+      qdrant:
+        image: qdrant/qdrant:v1.19.1
+        ports: ["6333:6333"]
     defaults:
       run:
         working-directory: backend
