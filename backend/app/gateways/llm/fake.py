@@ -142,6 +142,8 @@ class ScriptedChatModel(BaseChatModel):
         tool_choice: str | None = None,
         **kwargs: Any,
     ) -> Runnable[LanguageModelInput, AIMessage]:
+        if tool_choice == "any":  # as langchain-gigachat refuses it
+            raise ContractViolation("GigaChat API does not support tool_choice='any' (§8.3)")
         formatted = [convert_to_openai_tool(tool) for tool in tools]
         return self.bind(tools=formatted, tool_choice=tool_choice, **kwargs)
 
