@@ -16,6 +16,7 @@ import pytest
 from google.protobuf import json_format
 from google.protobuf.message import Message
 from grpc import StatusCode
+from pydantic import SecretStr
 from t_tech.invest import schemas as sdk
 from t_tech.invest._grpc_helpers import protobuf_to_dataclass
 from t_tech.invest.exceptions import AioRequestError
@@ -368,3 +369,35 @@ async def test_a_read_turns_sdk_errors_into_gateway_errors() -> None:
 
     assert refusal.value.code == "token_invalid"
     assert calls == [1]  # a permanent error is not retried
+
+
+async def test_find_skips_a_hit_the_instrument_service_does_not_know(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    adapter = RealTInvest(Settings.model_construct())
+    gone = UUID("00000000-0000-4000-8000-000000000000")
+    sber = mapping.instrument(
+        answer(
+            "GetInstrumentBy", instruments_pb2.InstrumentResponse, sdk.InstrumentResponse
+        ).instrument
+    )
+
+    class Instruments:
+        async def find_instrument(self, *, query: str) -> sdk.FindInstrumentResponse:
+            hits = [sdk.InstrumentShort(uid=str(gone)), sdk.InstrumentShort(uid=str(SBER))]
+            return sdk.FindInstrumentResponse(instruments=hits)
+
+    class Services:
+        instruments = Instruments()
+
+    async def get_instrument(token: Any, uid: UUID) -> TInstrument:
+        if uid == gone:
+            raise PermanentGatewayError("not_found")
+        return sber
+
+    monkeypatch.setattr(adapter, "_services", lambda token: Services())
+    monkeypatch.setattr(adapter, "get_instrument", get_instrument)
+
+    found = await adapter.find_instruments(SecretStr("t"), "сбер")
+
+    assert [brief.ticker for brief in found] == ["SBER"]

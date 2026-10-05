@@ -142,9 +142,17 @@ class RealTInvest:
         answer = await self._read(lambda: instruments.find_instrument(query=query))
         # FindInstrument gives no currency: the full instruments do, and their cache is warm.
         found = await asyncio.gather(
-            *(self.get_instrument(token, UUID(i.uid)) for i in answer.instruments[:limit] if i.uid)
+            *(self.get_instrument(token, UUID(i.uid)) for i in answer.instruments[:limit] if i.uid),
+            return_exceptions=True,
         )
-        return [mapping.brief(i) for i in found]
+        briefs = []
+        for item in found:
+            if isinstance(item, PermanentGatewayError) and item.code == "not_found":
+                continue  # a hit the instrument service does not know: not worth a failed search
+            if isinstance(item, BaseException):
+                raise item
+            briefs.append(mapping.brief(item))
+        return briefs
 
     async def get_instrument(self, token: SecretStr, uid: UUID) -> TInstrument:
         instruments = self._services(token).instruments

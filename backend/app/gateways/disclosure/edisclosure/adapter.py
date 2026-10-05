@@ -106,12 +106,12 @@ class EDisclosure:
         self._display: asyncio.subprocess.Process | None = None
 
     async def aclose(self) -> None:
-        async with self._lock:
-            await self._close_browser()
-            if self._display is not None:
-                self._display.terminate()
-                await self._display.wait()
-                self._display = None
+        # No lock: a shutdown does not wait for a download; the step in flight just fails.
+        await self._close_browser()
+        if self._display is not None and self._display.returncode is None:
+            self._display.terminate()
+            await self._display.wait()
+        self._display = None
 
     async def search_companies(self, query: str) -> list[DisclosureCompanyHit]:
         body = urlencode(
@@ -186,7 +186,7 @@ class EDisclosure:
         """A page of the site through the HTML cache of 6 hours (§8.5)."""
         key = f"html/edisclosure/{hashlib.sha256(url.encode()).hexdigest()}"
         path = self._files.local_path(key)
-        if await asyncio.to_thread(self._fresh, path.as_posix()):
+        if await asyncio.to_thread(self._fresh, str(path)):
             return await asyncio.to_thread(path.read_text, encoding="utf-8")
 
         async def load(page: Page) -> str:
@@ -280,6 +280,9 @@ class EDisclosure:
         text = await answer.text()
         if answer.status == 200 and "user-agent" in text.lower():
             rules, delay = parse_robots(text)
+        elif answer.status in {401, 403}:
+            # The bot check, not a missing file: the rules stay unknown, so nothing goes out.
+            raise TransientGatewayError("disclosure_unavailable")
         elif 400 <= answer.status < 500:
             rules, delay = [], 0.0
         else:
@@ -290,7 +293,7 @@ class EDisclosure:
         """No display on the server: a virtual one, since headless gets the captcha."""
         if sys.platform != "linux" or os.environ.get("DISPLAY"):
             return None
-        if self._display is None:
+        if self._display is None or self._display.returncode is not None:  # none yet, or it died
             self._display = await asyncio.create_subprocess_exec(
                 "Xvfb", ":99", "-screen", "0", "1280x1024x24", "-nolisten", "tcp",
                 stdout=asyncio.subprocess.DEVNULL, stderr=asyncio.subprocess.DEVNULL,

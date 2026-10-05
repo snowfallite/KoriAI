@@ -134,6 +134,8 @@ class Metering:
                             status, error = failure
                             error_code = error.code
                             if not error.retryable or attempt == RETRIES:
+                                if error is exc:  # a GatewayError of a model goes up as it is
+                                    raise
                                 raise error from exc
                         await asyncio.sleep(backoff(attempt, error.retry_after_s, self._backoff_s))
                         if before_retry is not None:
