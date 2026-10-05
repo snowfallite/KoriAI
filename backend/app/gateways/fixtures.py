@@ -2,13 +2,26 @@
 
 import csv
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
-from pydantic import TypeAdapter
+from pydantic import BaseModel, ConfigDict, SecretStr, TypeAdapter
 
 # backend/fixtures/seed; the API image keeps it at /app/fixtures/seed.
 SEED = Path(__file__).resolve().parents[2] / "fixtures" / "seed"
+
+
+class SeedUser(BaseModel):
+    """A row of seed/users.yaml. Every seed user signs in with SEED_OWNER_PASSWORD; the owner
+    takes the address of SEED_OWNER_EMAIL."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    email: str
+    role: Literal["user", "owner"]  # users.role (§5.1)
+    display_name: str | None = None
+    # A made-up token of the broker connection: only the T-Invest fake answers to it.
+    broker_token: SecretStr | None = None
 
 
 def read_yaml(path: Path) -> Any:
@@ -23,3 +36,7 @@ def load[T](path: Path, adapter: TypeAdapter[T]) -> T:
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8", newline="") as rows:
         return list(csv.DictReader(rows))
+
+
+def seed_users() -> list[SeedUser]:
+    return load(SEED / "users.yaml", TypeAdapter(list[SeedUser]))
