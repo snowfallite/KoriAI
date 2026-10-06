@@ -14,8 +14,12 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg://app:app@postgres:5432/app
       QDRANT_URL: http://qdrant:6333
+      # A public dev key: it seals only the made-up token of the seed demo (just seed).
+      TINVEST_TOKEN_KEYS: k1:a29yaS1kZXYtb25seS10b2tlbi1rZXktMzItYnl0ZXM=
     volumes:
       - ./backend/app:/app/app
+      # just seed and the fakes read the fixtures of the working tree.
+      - ./backend/fixtures:/app/fixtures:ro
       - data:/data
     depends_on:
       postgres:

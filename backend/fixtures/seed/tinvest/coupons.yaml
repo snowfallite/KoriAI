@@ -1,5 +1,5 @@
-# TCoupon (§8.2) по тикерам облигаций, номинал 1000 ₽.
-# Синтетические данные S1-09, не рыночные.
+# TCoupon (§8.2) по тикерам облигаций, номинал 1000 в валюте облигации; у флоатера ОФЗ 29024 дальний купон ещё не определён.
+# Синтетические данные сида (S1-10), не рыночные.
 SU26238RMFS4:
 - coupon_date: 2024-06-05
   number: 1
@@ -92,3 +92,73 @@ RU000A10B9Q9:
   amount:
     amount: '41.14'
     currency: RUB
+SU29024RMFS5:
+- coupon_date: 2024-09-11
+  number: 1
+  amount:
+    amount: '112.4'
+    currency: RUB
+- coupon_date: 2025-03-12
+  number: 2
+  amount:
+    amount: '105.21'
+    currency: RUB
+- coupon_date: 2025-09-10
+  number: 3
+  amount:
+    amount: '98.74'
+    currency: RUB
+- coupon_date: 2026-03-11
+  number: 4
+  amount:
+    amount: '87.29'
+    currency: RUB
+- coupon_date: 2026-09-09
+  number: 5
+  amount:
+    amount: '79.52'
+    currency: RUB
+- coupon_date: 2027-03-10
+  number: 6
+  amount:
+    amount: '74.8'
+    currency: RUB
+- coupon_date: 2027-09-08
+  number: 7
+  amount: null
+RU000A108TS3:
+- coupon_date: 2024-08-20
+  number: 1
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2025-02-18
+  number: 2
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2025-08-19
+  number: 3
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2026-02-17
+  number: 4
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2026-08-18
+  number: 5
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2027-02-16
+  number: 6
+  amount:
+    amount: '37.4'
+    currency: CNY
+- coupon_date: 2027-08-17
+  number: 7
+  amount:
+    amount: '37.4'
+    currency: CNY

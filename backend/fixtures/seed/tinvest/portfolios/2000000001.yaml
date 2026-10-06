@@ -1,27 +1,57 @@
 # TPortfolio (§8.2) счёта 2000000001 на 02.10.2026: позиции из operations/2000000001.yaml, цены из свечей.
-# Синтетические данные S1-09, не рыночные.
+# Синтетические данные сида (S1-10), не рыночные.
 account_id: '2000000001'
 total:
-  amount: '1065082.71'
+  amount: '3454637.9'
   currency: RUB
 total_by_type:
   bond:
-    amount: '175515'
+    amount: '376545'
     currency: RUB
   currency:
-    amount: '426489.71'
+    amount: '1380123.9'
     currency: RUB
   etf:
-    amount: '76924'
+    amount: '382334'
     currency: RUB
   share:
-    amount: '386154'
+    amount: '1315635'
     currency: RUB
 expected_yield:
-  amount: '60707.6'
+  amount: '53813.6'
   currency: RUB
-expected_yield_pct: '8.77'
+expected_yield_pct: '2.52'
 positions:
+- instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  figi: BBG004S683W7
+  instrument_type: share
+  quantity: '1000'
+  average_price:
+    amount: '46.91'
+    currency: RUB
+  current_price:
+    amount: '36.32'
+    currency: RUB
+  expected_yield:
+    amount: '-10590'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  figi: BBG00475K6C3
+  instrument_type: share
+  quantity: '60'
+  average_price:
+    amount: '971.1'
+    currency: RUB
+  current_price:
+    amount: '872.4'
+    currency: RUB
+  expected_yield:
+    amount: '-5922'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
 - instrument_uid: af74a336-5784-5f0d-b65e-7f016d19a4bc
   figi: BBG004730RP0
   instrument_type: share
@@ -37,6 +67,21 @@ positions:
     currency: RUB
   accrued_interest: null
   blocked: false
+- instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  figi: BBG004731489
+  instrument_type: share
+  quantity: '1000'
+  average_price:
+    amount: '130.06'
+    currency: RUB
+  current_price:
+    amount: '119.34'
+    currency: RUB
+  expected_yield:
+    amount: '-10720'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
 - instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
   figi: BBG004731032
   instrument_type: share
@@ -49,6 +94,96 @@ positions:
     currency: RUB
   expected_yield:
     amount: '25540'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: ab940219-569a-5f83-b5c4-f1862004d7cb
+  figi: TCS00A1014L8
+  instrument_type: etf
+  quantity: '50000'
+  average_price:
+    amount: '1.7027'
+    currency: RUB
+  current_price:
+    amount: '2.1602'
+    currency: RUB
+  expected_yield:
+    amount: '22875'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  figi: BBG004730JJ5
+  instrument_type: share
+  quantity: '500'
+  average_price:
+    amount: '217.1'
+    currency: RUB
+  current_price:
+    amount: '186.39'
+    currency: RUB
+  expected_yield:
+    amount: '-15355'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  figi: BBG004S681W1
+  instrument_type: share
+  quantity: '400'
+  average_price:
+    amount: '381.03'
+    currency: RUB
+  current_price:
+    amount: '280.34'
+    currency: RUB
+  expected_yield:
+    amount: '-40276'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  figi: BBG00475KKY8
+  instrument_type: share
+  quantity: '100'
+  average_price:
+    amount: '1053.1'
+    currency: RUB
+  current_price:
+    amount: '688.4'
+    currency: RUB
+  expected_yield:
+    amount: '-36470'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  figi: BBG000R607Y3
+  instrument_type: share
+  quantity: '50'
+  average_price:
+    amount: '3081.7'
+    currency: RUB
+  current_price:
+    amount: '4795.8'
+    currency: RUB
+  expected_yield:
+    amount: '85705'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  figi: BBG004731354
+  instrument_type: share
+  quantity: '200'
+  average_price:
+    amount: '595.41'
+    currency: RUB
+  current_price:
+    amount: '595.53'
+    currency: RUB
+  expected_yield:
+    amount: '24'
     currency: RUB
   accrued_interest: null
   blocked: false
@@ -84,6 +219,53 @@ positions:
     amount: '23.54'
     currency: RUB
   blocked: false
+- instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  figi: TCS00A107MK6
+  instrument_type: bond
+  quantity: '200'
+  average_price:
+    amount: '993.5'
+    currency: RUB
+  current_price:
+    amount: '995.7'
+    currency: RUB
+  expected_yield:
+    amount: '440'
+    currency: RUB
+  accrued_interest:
+    amount: '9.45'
+    currency: RUB
+  blocked: false
+- instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  figi: BBG004RVFFC0
+  instrument_type: share
+  quantity: '150'
+  average_price:
+    amount: '624.1'
+    currency: RUB
+  current_price:
+    amount: '589.4'
+    currency: RUB
+  expected_yield:
+    amount: '-5205'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
+- instrument_uid: deb3ec4d-8b15-5f95-a993-74457a80d653
+  figi: TCS10A101X50
+  instrument_type: etf
+  quantity: '20000'
+  average_price:
+    amount: '9.44'
+    currency: RUB
+  current_price:
+    amount: '9.87'
+    currency: RUB
+  expected_yield:
+    amount: '8600'
+    currency: RUB
+  accrued_interest: null
+  blocked: false
 - instrument_uid: e44cf1d4-6767-529d-89a4-c32b46b7d05e
   figi: TCS60A101X76
   instrument_type: etf
@@ -117,7 +299,7 @@ positions:
 - instrument_uid: 8ba935e5-f519-5a8b-a177-2f23cc5a486f
   figi: RUB000UTSTOM
   instrument_type: currency
-  quantity: '304794.31'
+  quantity: '1258428.5'
   average_price:
     amount: '1'
     currency: RUB

@@ -1,5 +1,5 @@
-# TDividend (§8.2) по тикерам; у Газпрома и фонда выплат нет. Последняя выплата ЛУКОЙЛа объявлена, но ещё не прошла.
-# Синтетические данные S1-09, не рыночные.
+# TDividend (§8.2) по тикерам; выплаты после 02.10.2026 объявлены, но ещё не прошли.
+# Синтетические данные сида (S1-10), не рыночные.
 SBER:
 - record_date: 2025-07-18
   payment_date: 2025-07-25
@@ -66,3 +66,248 @@ YDEX:
     amount: '110'
     currency: RUB
   yield_pct: '3.59'
+GMKN:
+- record_date: 2025-06-17
+  payment_date: 2025-07-08
+  last_buy_date: 2025-06-16
+  amount:
+    amount: '5.25'
+    currency: RUB
+  yield_pct: '3.76'
+- record_date: 2026-06-16
+  payment_date: 2026-07-07
+  last_buy_date: 2026-06-15
+  amount:
+    amount: '4.8'
+    currency: RUB
+  yield_pct: '3.58'
+ROSN:
+- record_date: 2025-01-17
+  payment_date: 2025-02-07
+  last_buy_date: 2025-01-16
+  amount:
+    amount: '36.47'
+    currency: RUB
+  yield_pct: '6.27'
+- record_date: 2025-07-14
+  payment_date: 2025-08-04
+  last_buy_date: 2025-07-11
+  amount:
+    amount: '14.68'
+    currency: RUB
+  yield_pct: '2.14'
+- record_date: 2026-01-16
+  payment_date: 2026-02-06
+  last_buy_date: 2026-01-15
+  amount:
+    amount: '11.56'
+    currency: RUB
+  yield_pct: '1.74'
+- record_date: 2026-07-13
+  payment_date: 2026-08-03
+  last_buy_date: 2026-07-10
+  amount:
+    amount: '20.12'
+    currency: RUB
+  yield_pct: '3.3'
+TATN:
+- record_date: 2025-07-08
+  payment_date: 2025-07-29
+  last_buy_date: 2025-07-07
+  amount:
+    amount: '60.04'
+    currency: RUB
+  yield_pct: '8.99'
+- record_date: 2026-01-09
+  payment_date: 2026-01-30
+  last_buy_date: 2026-01-08
+  amount:
+    amount: '41.3'
+    currency: RUB
+  yield_pct: '6.09'
+- record_date: 2026-07-07
+  payment_date: 2026-07-28
+  last_buy_date: 2026-07-06
+  amount:
+    amount: '52.8'
+    currency: RUB
+  yield_pct: '8.43'
+MOEX:
+- record_date: 2025-05-15
+  payment_date: 2025-06-05
+  last_buy_date: 2025-05-14
+  amount:
+    amount: '26.11'
+    currency: RUB
+  yield_pct: '10.94'
+- record_date: 2026-05-14
+  payment_date: 2026-06-04
+  last_buy_date: 2026-05-13
+  amount:
+    amount: '23.4'
+    currency: RUB
+  yield_pct: '12.22'
+MTSS:
+- record_date: 2025-07-08
+  payment_date: 2025-07-29
+  last_buy_date: 2025-07-07
+  amount:
+    amount: '35'
+    currency: RUB
+  yield_pct: '10.02'
+- record_date: 2026-07-07
+  payment_date: 2026-07-28
+  last_buy_date: 2026-07-06
+  amount:
+    amount: '35'
+    currency: RUB
+  yield_pct: '10.59'
+PLZL:
+- record_date: 2025-10-10
+  payment_date: 2025-10-31
+  last_buy_date: 2025-10-09
+  amount:
+    amount: '70.06'
+    currency: RUB
+  yield_pct: '1.98'
+- record_date: 2026-04-24
+  payment_date: 2026-05-15
+  last_buy_date: 2026-04-23
+  amount:
+    amount: '76.8'
+    currency: RUB
+  yield_pct: '2.11'
+NVTK:
+- record_date: 2025-05-06
+  payment_date: 2025-05-27
+  last_buy_date: 2025-05-05
+  amount:
+    amount: '46.65'
+    currency: RUB
+  yield_pct: '4.64'
+- record_date: 2025-10-10
+  payment_date: 2025-10-31
+  last_buy_date: 2025-10-09
+  amount:
+    amount: '35.5'
+    currency: RUB
+  yield_pct: '3.89'
+- record_date: 2026-05-05
+  payment_date: 2026-05-26
+  last_buy_date: 2026-05-04
+  amount:
+    amount: '48.1'
+    currency: RUB
+  yield_pct: '5.37'
+CHMF:
+- record_date: 2025-06-17
+  payment_date: 2025-07-08
+  last_buy_date: 2025-06-16
+  amount:
+    amount: '36.04'
+    currency: RUB
+  yield_pct: '2.52'
+- record_date: 2026-06-16
+  payment_date: 2026-07-07
+  last_buy_date: 2026-06-15
+  amount:
+    amount: '31.2'
+    currency: RUB
+  yield_pct: '3.29'
+- record_date: 2026-12-15
+  payment_date: 2027-01-12
+  last_buy_date: 2026-12-14
+  amount:
+    amount: '18.5'
+    currency: RUB
+  yield_pct: '2.12'
+NLMK:
+- record_date: 2025-06-10
+  payment_date: 2025-07-01
+  last_buy_date: 2025-06-09
+  amount:
+    amount: '6'
+    currency: RUB
+  yield_pct: '3.09'
+- record_date: 2026-06-09
+  payment_date: 2026-06-30
+  last_buy_date: 2026-06-08
+  amount:
+    amount: '7.2'
+    currency: RUB
+  yield_pct: '4.22'
+PHOR:
+- record_date: 2025-06-09
+  payment_date: 2025-06-30
+  last_buy_date: 2025-06-06
+  amount:
+    amount: '387'
+    currency: RUB
+  yield_pct: '5.14'
+- record_date: 2025-12-08
+  payment_date: 2025-12-29
+  last_buy_date: 2025-12-05
+  amount:
+    amount: '171'
+    currency: RUB
+  yield_pct: '2.84'
+- record_date: 2026-06-08
+  payment_date: 2026-06-29
+  last_buy_date: 2026-06-05
+  amount:
+    amount: '324'
+    currency: RUB
+  yield_pct: '4.98'
+MGNT:
+- record_date: 2025-06-03
+  payment_date: 2025-06-24
+  last_buy_date: 2025-06-02
+  amount:
+    amount: '315'
+    currency: RUB
+  yield_pct: '4.68'
+- record_date: 2026-06-02
+  payment_date: 2026-06-23
+  last_buy_date: 2026-06-01
+  amount:
+    amount: '412'
+    currency: RUB
+  yield_pct: '7.04'
+ALRS:
+- record_date: 2025-07-15
+  payment_date: 2025-08-05
+  last_buy_date: 2025-07-14
+  amount:
+    amount: '2.4'
+    currency: RUB
+  yield_pct: '3.54'
+- record_date: 2026-07-14
+  payment_date: 2026-08-04
+  last_buy_date: 2026-07-13
+  amount:
+    amount: '3.1'
+    currency: RUB
+  yield_pct: '5.37'
+VTBR:
+- record_date: 2025-07-11
+  payment_date: 2025-08-01
+  last_buy_date: 2025-07-10
+  amount:
+    amount: '25.58'
+    currency: RUB
+  yield_pct: '21.1'
+AFLT:
+- record_date: 2025-07-11
+  payment_date: 2025-08-01
+  last_buy_date: 2025-07-10
+  amount:
+    amount: '3.68'
+    currency: RUB
+  yield_pct: '6.53'
+- record_date: 2026-07-10
+  payment_date: 2026-07-31
+  last_buy_date: 2026-07-09
+  amount:
+    amount: '4.1'
+    currency: RUB
+  yield_pct: '9.35'

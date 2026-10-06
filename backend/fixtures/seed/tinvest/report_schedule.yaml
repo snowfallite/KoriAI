@@ -1,5 +1,5 @@
 # TReportEvent (§8.2): даты отчётности эмитентов.
-# Синтетические данные S1-09, не рыночные.
+# Синтетические данные сида (S1-10), не рыночные.
 - instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
   report_date: 2026-07-29
   period_year: 2026
@@ -32,6 +32,86 @@
   period_type: quarter
 - instrument_uid: aa42443c-3955-5e26-ad47-4e0467fb389c
   report_date: 2026-10-22
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  report_date: 2026-08-25
+  period_year: 2026
+  period_num: 1
+  period_type: semiannual
+- instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  report_date: 2027-02-09
+  period_year: 2026
+  period_num: 1
+  period_type: annual
+- instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  report_date: 2026-11-03
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  report_date: 2026-10-29
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  report_date: 2026-11-12
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 704d8d19-3e42-5af4-825a-9ea455a4ee5c
+  report_date: 2026-10-27
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  report_date: 2026-11-18
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  report_date: 2026-08-20
+  period_year: 2026
+  period_num: 1
+  period_type: semiannual
+- instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  report_date: 2027-03-03
+  period_year: 2026
+  period_num: 1
+  period_type: annual
+- instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  report_date: 2026-10-23
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: fa97f800-bd49-5fa7-b702-38a65cebe2b5
+  report_date: 2026-10-21
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: e23a0bba-a47b-54f1-bc2c-58e0f0d26b34
+  report_date: 2026-11-10
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  report_date: 2026-11-20
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  report_date: 2026-10-30
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  report_date: 2026-11-25
+  period_year: 2026
+  period_num: 3
+  period_type: quarter
+- instrument_uid: 14ec6f6c-1832-58a8-8cf9-7c56f733e414
+  report_date: 2026-11-17
   period_year: 2026
   period_num: 3
   period_type: quarter

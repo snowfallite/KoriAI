@@ -1,5 +1,5 @@
 # TOperation (§8.2) счёта 2000000001: сделки, выплаты, налоги и комиссии за два года.
-# Синтетические данные S1-09, не рыночные.
+# Синтетические данные сида (S1-10), не рыночные.
 - id: 2000000001-0001
   kind: input
   date: 2024-10-01 07:00:00+00:00
@@ -139,7 +139,7 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
+  description: Удержание НДФЛ по купонам
 - id: 2000000001-0014
   kind: dividend
   date: 2025-01-10 09:00:00+00:00
@@ -159,8 +159,172 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
+  description: Удержание налога по дивидендам
 - id: 2000000001-0016
+  kind: input
+  date: 2025-02-03 07:00:00+00:00
+  instrument_uid: null
+  payment:
+    amount: '1400000'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Пополнение брокерского счёта
+- id: 2000000001-0017
+  kind: buy
+  date: 2025-02-04 07:15:00+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '-130060'
+    currency: RUB
+  quantity: '1000'
+  price:
+    amount: '130.06'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0018
+  kind: buy
+  date: 2025-02-04 07:15:00+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '-108550'
+    currency: RUB
+  quantity: '500'
+  price:
+    amount: '217.1'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0019
+  kind: buy
+  date: 2025-02-04 07:15:00+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '-105310'
+    currency: RUB
+  quantity: '100'
+  price:
+    amount: '1053.1'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0020
+  kind: buy
+  date: 2025-02-04 07:15:00+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '-119082'
+    currency: RUB
+  quantity: '200'
+  price:
+    amount: '595.41'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0021
+  kind: buy
+  date: 2025-02-04 07:15:00+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '-93615'
+    currency: RUB
+  quantity: '150'
+  price:
+    amount: '624.1'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0022
+  kind: commission
+  date: 2025-02-04 07:15:01+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '-65.03'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0023
+  kind: commission
+  date: 2025-02-04 07:15:01+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '-54.28'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0024
+  kind: commission
+  date: 2025-02-04 07:15:01+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '-52.66'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0025
+  kind: commission
+  date: 2025-02-04 07:15:01+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '-59.54'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0026
+  kind: commission
+  date: 2025-02-04 07:15:01+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '-46.81'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0027
+  kind: buy
+  date: 2025-02-05 07:15:00+00:00
+  instrument_uid: ab940219-569a-5f83-b5c4-f1862004d7cb
+  payment:
+    amount: '-170270'
+    currency: RUB
+  quantity: '100000'
+  price:
+    amount: '1.7027'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0028
+  kind: buy
+  date: 2025-02-05 07:15:00+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-198700'
+    currency: RUB
+  quantity: '200'
+  price:
+    amount: '993.5'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0029
+  kind: commission
+  date: 2025-02-05 07:15:01+00:00
+  instrument_uid: ab940219-569a-5f83-b5c4-f1862004d7cb
+  payment:
+    amount: '-85.14'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0030
+  kind: commission
+  date: 2025-02-05 07:15:01+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-99.35'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0031
   kind: buy
   date: 2025-03-12 07:15:00+00:00
   instrument_uid: b3f3dbe5-015e-5942-9c36-f318ba45de1d
@@ -172,7 +336,7 @@
     amount: '105.8528'
     currency: RUB
   description: Покупка ценных бумаг
-- id: 2000000001-0017
+- id: 2000000001-0032
   kind: commission
   date: 2025-03-12 07:15:01+00:00
   instrument_uid: b3f3dbe5-015e-5942-9c36-f318ba45de1d
@@ -182,7 +346,69 @@
   quantity: null
   price: null
   description: Удержание комиссии за операцию
-- id: 2000000001-0018
+- id: 2000000001-0033
+  kind: coupon
+  date: 2025-03-12 09:00:00+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '21042'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата купонов
+- id: 2000000001-0034
+  kind: tax
+  date: 2025-03-12 09:00:01+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-2735.46'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0035
+  kind: buy
+  date: 2025-04-15 07:15:00+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '-127500'
+    currency: RUB
+  quantity: '1000'
+  price:
+    amount: '127.5'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0036
+  kind: commission
+  date: 2025-04-15 07:15:01+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '-63.75'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0037
+  kind: dividend
+  date: 2025-05-27 09:00:00+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '4665'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0038
+  kind: tax
+  date: 2025-05-27 09:00:01+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '-606.45'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0039
   kind: coupon
   date: 2025-06-04 09:00:00+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -192,7 +418,7 @@
   quantity: null
   price: null
   description: Выплата купонов
-- id: 2000000001-0019
+- id: 2000000001-0040
   kind: tax
   date: 2025-06-04 09:00:01+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -201,8 +427,28 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0020
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0041
+  kind: dividend
+  date: 2025-06-05 09:00:00+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '13055'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0042
+  kind: tax
+  date: 2025-06-05 09:00:01+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '-1697.15'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0043
   kind: buy
   date: 2025-06-10 07:15:00+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -214,7 +460,7 @@
     amount: '426'
     currency: RUB
   description: Покупка ценных бумаг
-- id: 2000000001-0021
+- id: 2000000001-0044
   kind: commission
   date: 2025-06-10 07:15:01+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -224,7 +470,7 @@
   quantity: null
   price: null
   description: Удержание комиссии за операцию
-- id: 2000000001-0022
+- id: 2000000001-0045
   kind: dividend
   date: 2025-06-24 09:00:00+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -234,7 +480,7 @@
   quantity: null
   price: null
   description: Выплата дивидендов
-- id: 2000000001-0023
+- id: 2000000001-0046
   kind: tax
   date: 2025-06-24 09:00:01+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -243,8 +489,28 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0024
+  description: Удержание налога по дивидендам
+- id: 2000000001-0047
+  kind: dividend
+  date: 2025-07-08 09:00:00+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '5250'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0048
+  kind: tax
+  date: 2025-07-08 09:00:01+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '-682.5'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0049
   kind: dividend
   date: 2025-07-25 09:00:00+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -254,7 +520,7 @@
   quantity: null
   price: null
   description: Выплата дивидендов
-- id: 2000000001-0025
+- id: 2000000001-0050
   kind: tax
   date: 2025-07-25 09:00:01+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -263,8 +529,226 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0026
+  description: Удержание налога по дивидендам
+- id: 2000000001-0051
+  kind: dividend
+  date: 2025-07-29 09:00:00+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '9006'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0052
+  kind: tax
+  date: 2025-07-29 09:00:01+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '-1170.78'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0053
+  kind: dividend
+  date: 2025-08-01 09:00:00+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '25580'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0054
+  kind: tax
+  date: 2025-08-01 09:00:01+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '-3325.4'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0055
+  kind: dividend
+  date: 2025-08-04 09:00:00+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '2936'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0056
+  kind: tax
+  date: 2025-08-04 09:00:01+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '-381.68'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0057
+  kind: input
+  date: 2025-09-01 07:00:00+00:00
+  instrument_uid: null
+  payment:
+    amount: '600000'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Пополнение брокерского счёта
+- id: 2000000001-0058
+  kind: buy
+  date: 2025-09-02 07:15:00+00:00
+  instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  payment:
+    amount: '-152412'
+    currency: RUB
+  quantity: '400'
+  price:
+    amount: '381.03'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0059
+  kind: buy
+  date: 2025-09-02 07:15:00+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '-154085'
+    currency: RUB
+  quantity: '50'
+  price:
+    amount: '3081.7'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0060
+  kind: buy
+  date: 2025-09-02 07:15:00+00:00
+  instrument_uid: deb3ec4d-8b15-5f95-a993-74457a80d653
+  payment:
+    amount: '-188800'
+    currency: RUB
+  quantity: '20000'
+  price:
+    amount: '9.44'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0061
+  kind: commission
+  date: 2025-09-02 07:15:01+00:00
+  instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  payment:
+    amount: '-76.21'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0062
+  kind: commission
+  date: 2025-09-02 07:15:01+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '-77.04'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0063
+  kind: commission
+  date: 2025-09-02 07:15:01+00:00
+  instrument_uid: deb3ec4d-8b15-5f95-a993-74457a80d653
+  payment:
+    amount: '-94.4'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0064
+  kind: coupon
+  date: 2025-09-10 09:00:00+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '19748'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата купонов
+- id: 2000000001-0065
+  kind: tax
+  date: 2025-09-10 09:00:01+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-2567.24'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0066
+  kind: dividend
+  date: 2025-10-31 09:00:00+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '3503'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0067
+  kind: dividend
+  date: 2025-10-31 09:00:00+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '3550'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0068
+  kind: tax
+  date: 2025-10-31 09:00:01+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '-455.39'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0069
+  kind: tax
+  date: 2025-10-31 09:00:01+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '-461.5'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0070
+  kind: sell
+  date: 2025-11-20 07:15:00+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '129320'
+    currency: RUB
+  quantity: '1000'
+  price:
+    amount: '129.32'
+    currency: RUB
+  description: Продажа ценных бумаг
+- id: 2000000001-0071
+  kind: commission
+  date: 2025-11-20 07:15:01+00:00
+  instrument_uid: 02d8a01f-9354-5923-b009-1ba3a9d26d7b
+  payment:
+    amount: '-64.66'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0072
   kind: coupon
   date: 2025-12-03 09:00:00+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -274,7 +758,7 @@
   quantity: null
   price: null
   description: Выплата купонов
-- id: 2000000001-0027
+- id: 2000000001-0073
   kind: tax
   date: 2025-12-03 09:00:01+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -283,8 +767,8 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0028
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0074
   kind: dividend
   date: 2026-01-12 09:00:00+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -294,7 +778,7 @@
   quantity: null
   price: null
   description: Выплата дивидендов
-- id: 2000000001-0029
+- id: 2000000001-0075
   kind: tax
   date: 2026-01-12 09:00:01+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -303,8 +787,90 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0030
+  description: Удержание налога по дивидендам
+- id: 2000000001-0076
+  kind: dividend
+  date: 2026-01-30 09:00:00+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '6195'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0077
+  kind: tax
+  date: 2026-01-30 09:00:01+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '-805.35'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0078
+  kind: dividend
+  date: 2026-02-06 09:00:00+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '2312'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0079
+  kind: tax
+  date: 2026-02-06 09:00:01+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '-300.56'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0080
+  kind: sell
+  date: 2026-02-10 07:15:00+00:00
+  instrument_uid: ab940219-569a-5f83-b5c4-f1862004d7cb
+  payment:
+    amount: '98490'
+    currency: RUB
+  quantity: '50000'
+  price:
+    amount: '1.9698'
+    currency: RUB
+  description: Продажа ценных бумаг
+- id: 2000000001-0081
+  kind: commission
+  date: 2026-02-10 07:15:01+00:00
+  instrument_uid: ab940219-569a-5f83-b5c4-f1862004d7cb
+  payment:
+    amount: '-49.25'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0082
+  kind: coupon
+  date: 2026-03-11 09:00:00+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '17458'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата купонов
+- id: 2000000001-0083
+  kind: tax
+  date: 2026-03-11 09:00:01+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-2269.54'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0084
   kind: sell
   date: 2026-03-16 07:15:00+00:00
   instrument_uid: af74a336-5784-5f0d-b65e-7f016d19a4bc
@@ -316,7 +882,7 @@
     amount: '134.11'
     currency: RUB
   description: Продажа ценных бумаг
-- id: 2000000001-0031
+- id: 2000000001-0085
   kind: commission
   date: 2026-03-16 07:15:01+00:00
   instrument_uid: af74a336-5784-5f0d-b65e-7f016d19a4bc
@@ -326,7 +892,101 @@
   quantity: null
   price: null
   description: Удержание комиссии за операцию
-- id: 2000000001-0032
+- id: 2000000001-0086
+  kind: input
+  date: 2026-05-13 07:00:00+00:00
+  instrument_uid: null
+  payment:
+    amount: '200000'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Пополнение брокерского счёта
+- id: 2000000001-0087
+  kind: buy
+  date: 2026-05-14 07:15:00+00:00
+  instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  payment:
+    amount: '-46910'
+    currency: RUB
+  quantity: '1000'
+  price:
+    amount: '46.91'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0088
+  kind: buy
+  date: 2026-05-14 07:15:00+00:00
+  instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  payment:
+    amount: '-58266'
+    currency: RUB
+  quantity: '60'
+  price:
+    amount: '971.1'
+    currency: RUB
+  description: Покупка ценных бумаг
+- id: 2000000001-0089
+  kind: commission
+  date: 2026-05-14 07:15:01+00:00
+  instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  payment:
+    amount: '-23.46'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0090
+  kind: commission
+  date: 2026-05-14 07:15:01+00:00
+  instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  payment:
+    amount: '-29.13'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание комиссии за операцию
+- id: 2000000001-0091
+  kind: dividend
+  date: 2026-05-15 09:00:00+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '3840'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0092
+  kind: tax
+  date: 2026-05-15 09:00:01+00:00
+  instrument_uid: e0e15e6f-05f4-5c8e-abcc-b6000debf18a
+  payment:
+    amount: '-499.2'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0093
+  kind: dividend
+  date: 2026-05-26 09:00:00+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '4810'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0094
+  kind: tax
+  date: 2026-05-26 09:00:01+00:00
+  instrument_uid: 38cef920-363a-5ffc-a53d-52f13d8e9bca
+  payment:
+    amount: '-625.3'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0095
   kind: coupon
   date: 2026-06-03 09:00:00+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -336,7 +996,7 @@
   quantity: null
   price: null
   description: Выплата купонов
-- id: 2000000001-0033
+- id: 2000000001-0096
   kind: tax
   date: 2026-06-03 09:00:01+00:00
   instrument_uid: eee19004-f4f9-5c35-ae8d-76f991c54e85
@@ -345,8 +1005,28 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0034
+  description: Удержание НДФЛ по купонам
+- id: 2000000001-0097
+  kind: dividend
+  date: 2026-06-04 09:00:00+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '11700'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0098
+  kind: tax
+  date: 2026-06-04 09:00:01+00:00
+  instrument_uid: b00cb12e-3f8b-5935-82b9-b56bbefc793f
+  payment:
+    amount: '-1521'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0099
   kind: dividend
   date: 2026-06-23 09:00:00+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -356,7 +1036,7 @@
   quantity: null
   price: null
   description: Выплата дивидендов
-- id: 2000000001-0035
+- id: 2000000001-0100
   kind: tax
   date: 2026-06-23 09:00:01+00:00
   instrument_uid: 62c94592-3ca1-5ce9-bbb7-d9fea64d4d77
@@ -365,8 +1045,48 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0036
+  description: Удержание налога по дивидендам
+- id: 2000000001-0101
+  kind: dividend
+  date: 2026-07-07 09:00:00+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '4800'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0102
+  kind: dividend
+  date: 2026-07-07 09:00:00+00:00
+  instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  payment:
+    amount: '1872'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0103
+  kind: tax
+  date: 2026-07-07 09:00:01+00:00
+  instrument_uid: df3ffa4b-6f6c-5e31-ab34-73f9522fca37
+  payment:
+    amount: '-624'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0104
+  kind: tax
+  date: 2026-07-07 09:00:01+00:00
+  instrument_uid: f31ff60b-17b6-50c2-86a0-d0b02efacd80
+  payment:
+    amount: '-243.36'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0105
   kind: dividend
   date: 2026-07-24 09:00:00+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -376,7 +1096,7 @@
   quantity: null
   price: null
   description: Выплата дивидендов
-- id: 2000000001-0037
+- id: 2000000001-0106
   kind: tax
   date: 2026-07-24 09:00:01+00:00
   instrument_uid: ab9bea9c-dda2-5b58-94a5-474347be4e9d
@@ -385,8 +1105,68 @@
     currency: RUB
   quantity: null
   price: null
-  description: Удержание налога
-- id: 2000000001-0038
+  description: Удержание налога по дивидендам
+- id: 2000000001-0107
+  kind: dividend
+  date: 2026-07-28 09:00:00+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '7920'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0108
+  kind: dividend
+  date: 2026-07-28 09:00:00+00:00
+  instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  payment:
+    amount: '14000'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0109
+  kind: tax
+  date: 2026-07-28 09:00:01+00:00
+  instrument_uid: 200eb60e-a590-5aac-817e-347ea1d4bef1
+  payment:
+    amount: '-1029.6'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0110
+  kind: tax
+  date: 2026-07-28 09:00:01+00:00
+  instrument_uid: 7d2b335b-e090-50b9-a77b-ec75ebc1455f
+  payment:
+    amount: '-1820'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0111
+  kind: dividend
+  date: 2026-07-31 09:00:00+00:00
+  instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  payment:
+    amount: '4100'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0112
+  kind: tax
+  date: 2026-07-31 09:00:01+00:00
+  instrument_uid: 6d9a293f-1619-54a0-8138-8a64b81d4806
+  payment:
+    amount: '-533'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0113
   kind: output
   date: 2026-08-03 07:00:00+00:00
   instrument_uid: null
@@ -396,3 +1176,43 @@
   quantity: null
   price: null
   description: Вывод денежных средств
+- id: 2000000001-0114
+  kind: dividend
+  date: 2026-08-03 09:00:00+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '4024'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата дивидендов
+- id: 2000000001-0115
+  kind: tax
+  date: 2026-08-03 09:00:01+00:00
+  instrument_uid: 6b8b89bf-f8b7-5348-a824-4bb6e31f56c1
+  payment:
+    amount: '-523.12'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание налога по дивидендам
+- id: 2000000001-0116
+  kind: coupon
+  date: 2026-09-09 09:00:00+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '15904'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Выплата купонов
+- id: 2000000001-0117
+  kind: tax
+  date: 2026-09-09 09:00:01+00:00
+  instrument_uid: abd435fe-6d27-5093-b1cd-41d370857bd4
+  payment:
+    amount: '-2067.52'
+    currency: RUB
+  quantity: null
+  price: null
+  description: Удержание НДФЛ по купонам

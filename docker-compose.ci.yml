@@ -25,6 +25,8 @@ services:
       # e2e specs sign up without an invite; the contract tests cover invites (S1-05).
       REGISTRATION_MODE: open
       DATABASE_URL: postgresql+psycopg://app:app@postgres:5432/app
+      # A public test key: it seals only the made-up token of the seed demo (S1-10).
+      TINVEST_TOKEN_KEYS: k1:a29yaS1kZXYtb25seS10b2tlbi1rZXktMzItYnl0ZXM=
     depends_on:
       postgres:
         condition: service_healthy
