@@ -8,7 +8,7 @@ import pytest
 
 from app.config import Settings
 
-pytest_plugins = ["tests.support.api", "tests.support.faults"]
+pytest_plugins = ["tests.support.api", "tests.support.faults", "tests.support.seed"]
 
 LAYERS = frozenset({"unit", "property", "contract", "integration", "agent", "golden"})
 TESTS_DIR = Path(__file__).parent
