@@ -1,7 +1,9 @@
 """Every error leaves the API as ErrorOut (tech.md §6.1, §6.7)."""
 
+import math
 from collections.abc import Mapping
 
+import structlog
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -9,7 +11,9 @@ from pydantic import JsonValue
 from starlette.exceptions import HTTPException
 
 from app.contracts.common import ErrorCode, ErrorOut
-from app.core.errors import AppError
+from app.core.errors import AppError, GatewayError
+
+log = structlog.get_logger(__name__)
 
 STATUS: dict[ErrorCode, int] = {
     "unauthorized": 401,
@@ -45,6 +49,20 @@ HTTP_ERRORS: dict[int, tuple[ErrorCode, str]] = {
     405: ("not_found", "Метод не поддерживается"),
 }
 INTERNAL_MESSAGE = "Внутренняя ошибка сервера"
+TINVEST = "Т-Инвестиции"  # noqa: RUF001 - the brand starts with a Cyrillic letter
+# What the reader sees when an external client fails and no domain says it better.
+GATEWAY_MESSAGES: dict[ErrorCode, str] = {
+    "not_found": "Ничего не найдено",
+    "token_invalid": "Токен брокера не подходит: подключите брокера заново в Настройках",
+    "tinvest_unavailable": f"{TINVEST} не отвечают, попробуйте позже",
+    "tinvest_rate_limited": f"{TINVEST} просят подождать, повторите через минуту",
+    "web_unavailable": "Внешний сайт не отвечает, попробуйте позже",
+    "web_credits_exhausted": "Кредиты веб-поиска закончились",
+    "disclosure_unavailable": "Сайт раскрытия информации не отвечает, попробуйте позже",
+    "llm_busy": "Модель занята, попробуйте позже",
+    "llm_quota_exhausted": "Квота модели исчерпана",
+}
+GATEWAY_FALLBACK = "Внешний сервис не ответил, попробуйте позже"
 
 
 def error_response(
@@ -64,6 +82,20 @@ def install(app: FastAPI) -> None:
     async def app_error(request: Request, exc: AppError) -> JSONResponse:
         return error_response(
             request.state.request_id, STATUS[exc.code], exc.code, exc.message, exc.details
+        )
+
+    @app.exception_handler(GatewayError)
+    async def gateway_error(request: Request, exc: GatewayError) -> JSONResponse:
+        log.warning("gateway_failed", code=exc.code, retryable=exc.retryable)
+        headers = None
+        if exc.retry_after_s is not None:
+            headers = {"Retry-After": str(max(1, math.ceil(exc.retry_after_s)))}
+        return error_response(
+            request.state.request_id,
+            STATUS[exc.code],
+            exc.code,
+            GATEWAY_MESSAGES.get(exc.code, GATEWAY_FALLBACK),
+            headers=headers,
         )
 
     @app.exception_handler(HTTPException)
