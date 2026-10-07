@@ -515,6 +515,130 @@
           }
         }
       }
+    },
+    "/api/media/logos/{logo_base}": {
+      "get": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Logo",
+        "operationId": "logo_api_media_logos__logo_base__get",
+        "parameters": [
+          {
+            "name": "logo_base",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Logo Base"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                160,
+                320,
+                640
+              ],
+              "default": 160,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "image/png": {}
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/portfolio": {
+      "get": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "Portfolio",
+        "description": "Every visible account, or the one `account` names (acc1, acc2, …).",
+        "operationId": "portfolio_api_portfolio_get",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^acc[0-9]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioOut"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Client Error"
+          },
+          "5XX": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -528,6 +652,52 @@
           "other"
         ]
       },
+      "AccountSummaryOut": {
+        "properties": {
+          "alias": {
+            "type": "string",
+            "pattern": "^acc[0-9]+$",
+            "title": "Alias"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "expected_yield": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_yield_pct": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecimalStr"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alias",
+          "name",
+          "total",
+          "expected_yield",
+          "expected_yield_pct"
+        ],
+        "title": "AccountSummaryOut"
+      },
       "AccountType": {
         "type": "string",
         "enum": [
@@ -537,6 +707,32 @@
           "invest_fund",
           "other"
         ]
+      },
+      "AllocationSliceOut": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/InstrumentType"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "weight": {
+            "$ref": "#/components/schemas/DecimalStr"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "value",
+          "weight"
+        ],
+        "title": "AllocationSliceOut"
       },
       "AnswerStyle": {
         "type": "string",
@@ -1595,6 +1791,145 @@
           "5y",
           "max"
         ]
+      },
+      "PortfolioOut": {
+        "properties": {
+          "as_of": {
+            "type": "string",
+            "format": "date-time",
+            "title": "As Of"
+          },
+          "currency": {
+            "type": "string",
+            "const": "RUB",
+            "title": "Currency"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "accounts": {
+            "items": {
+              "$ref": "#/components/schemas/AccountSummaryOut"
+            },
+            "type": "array",
+            "title": "Accounts"
+          },
+          "allocation": {
+            "items": {
+              "$ref": "#/components/schemas/AllocationSliceOut"
+            },
+            "type": "array",
+            "title": "Allocation"
+          },
+          "positions": {
+            "items": {
+              "$ref": "#/components/schemas/PositionOut"
+            },
+            "type": "array",
+            "title": "Positions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "as_of",
+          "currency",
+          "total",
+          "accounts",
+          "allocation",
+          "positions"
+        ],
+        "title": "PortfolioOut"
+      },
+      "PositionOut": {
+        "properties": {
+          "instrument": {
+            "$ref": "#/components/schemas/InstrumentBrief"
+          },
+          "account_alias": {
+            "type": "string",
+            "pattern": "^acc[0-9]+$",
+            "title": "Account Alias"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/DecimalStr"
+          },
+          "avg_price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current_price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "value": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "value_rub": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "weight": {
+            "$ref": "#/components/schemas/DecimalStr"
+          },
+          "yield_abs": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "yield_pct": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecimalStr"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accrued_interest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "instrument",
+          "account_alias",
+          "quantity",
+          "avg_price",
+          "current_price",
+          "value",
+          "value_rub",
+          "weight",
+          "yield_abs",
+          "yield_pct",
+          "accrued_interest"
+        ],
+        "title": "PositionOut"
       },
       "ReadyOut": {
         "properties": {
