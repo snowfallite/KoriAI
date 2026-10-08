@@ -54,11 +54,11 @@
 			<EmptyState
 				icon={PlugZap}
 				title="Брокер не подключён"
-				description="Подключите токен Т-Инвестиций с доступом только на чтение: здесь появятся счета, структура и позиции."
+				description="Подключите в Настройках токен Т-Инвестиций с доступом только на чтение: здесь появятся счета, структура и позиции."
 			>
 				{#snippet action()}
-					<Button href={resolve('/settings')} variant="outline">
-						Открыть Настройки <span aria-hidden="true">→</span>
+					<Button href={resolve('/settings')}>
+						<span data-slot="button-glyph" aria-hidden="true">→</span>Подключить токен
 					</Button>
 				{/snippet}
 			</EmptyState>

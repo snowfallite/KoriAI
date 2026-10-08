@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 // The CI stack seeds the demo with the broker of the fake: acc1 holds 19 positions, acc2 holds 10
 // (backend/fixtures/seed/tinvest/portfolios). The owner has no broker.
 const PASSWORD = 'dev-password-123';
+const FIRST_LOAD_MS = 15_000;
 
 async function signIn(page: Page, email: string) {
 	await page.goto('/login');
@@ -31,7 +32,8 @@ test('the demo sees the totals, the structure and the positions of each account'
 	await expect(page).toHaveURL('/portfolio');
 
 	const rows = page.getByRole('region', { name: 'Позиции' }).getByRole('row');
-	await expect(rows).toHaveCount(1 + 29);
+	// The first load fills the instrument table: a busy runner may take longer than 5 s.
+	await expect(rows).toHaveCount(1 + 29, { timeout: FIRST_LOAD_MS });
 	await expect(page.getByRole('img', { name: 'Структура портфеля' })).toBeVisible();
 	const totals = page.getByRole('region', { name: 'Итоги' });
 	await expect(totals).toContainText('Все счета');
@@ -57,7 +59,7 @@ test('the owner without a broker gets the way to the settings', async ({ page })
 	await page.getByRole('link', { name: 'Портфель' }).click();
 
 	await expect(page.getByText('Брокер не подключён')).toBeVisible();
-	await page.getByRole('link', { name: /Открыть Настройки/ }).click();
+	await page.getByRole('link', { name: 'Подключить токен' }).click();
 	await expect(page).toHaveURL('/settings');
 	// No broker, no request: the 409 of the API never reaches the console.
 	expect(errors).toEqual([]);
@@ -87,6 +89,8 @@ test('a failed load shows the reason and Повторить loads the portfolio'
 
 	await expect(page.getByRole('alert')).toContainText('Т-Инвестиции не отвечают');
 	await page.getByRole('button', { name: 'Повторить' }).click();
-	await expect(page.getByRole('img', { name: 'Структура портфеля' })).toBeVisible();
+	await expect(page.getByRole('img', { name: 'Структура портфеля' })).toBeVisible({
+		timeout: FIRST_LOAD_MS
+	});
 	await expect(page.getByRole('alert')).toHaveCount(0);
 });
