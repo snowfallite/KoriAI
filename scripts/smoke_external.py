@@ -233,7 +233,8 @@ async def tinvest(smoke: Smoke) -> None:
                     (h for h in hits if (h.ticker, h.class_code) == (ticker, LOGO_BOARD)), None
                 )
                 if hit is None:
-                    failed.append(f"{ticker}: нет в поиске")
+                    seen = ", ".join(f"{h.ticker}/{h.class_code}" for h in hits[:5]) or "пусто"
+                    failed.append(f"{ticker}: нет {ticker}/{LOGO_BOARD} в поиске, первые: {seen}")
                     continue
                 instrument = await adapter.get_instrument(token, hit.uid)
                 base = logo_base(instrument.logo_name)
