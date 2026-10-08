@@ -227,7 +227,8 @@ async def tinvest(smoke: Smoke) -> None:
         failed: list[str] = []
         try:
             for ticker in LOGO_TICKERS:
-                hits = await adapter.find_instruments(token, ticker)
+                # Every hit costs a GetInstrumentBy: ten are plenty for an exact ticker.
+                hits = await adapter.find_instruments(token, ticker, limit=10)
                 hit = next(
                     (h for h in hits if (h.ticker, h.class_code) == (ticker, LOGO_BOARD)), None
                 )
