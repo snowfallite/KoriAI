@@ -6,8 +6,8 @@ through metering, so llm_calls and usage_daily count them while the database ans
 
 Writes docs/sources/smoke-<date>.md. Costs: a call with a function per model family, two calls
 for the prompt cache, probes of 32k and 128k tokens per family for the context windows (skip them
-with --skip-context), one Tavily credit, a few T-Invest reads, robots.txt and one card of
-e-disclosure.
+with --skip-context), one Tavily credit, a few T-Invest reads, nine logos of the T-Invest CDN,
+robots.txt and one card of e-disclosure.
 """
 
 # ruff: noqa: E402, RUF001, RUF002  (the backend joins sys.path first; the texts are Russian)
@@ -38,7 +38,10 @@ from app.contracts.web import WebSearchQuery
 from app.core import time
 from app.core.errors import GatewayError
 from app.core.logging import configure_logging
+from app.domains.instruments.mapping import logo_base, logo_cdn_url
+from app.domains.media.router import LOGO_SIZES
 from app.gateways.disclosure.edisclosure.adapter import EDisclosure
+from app.gateways.fetch.safe_httpx import SafeHttpxFetch
 from app.gateways.files.local import LocalFiles
 from app.gateways.llm.gate import InProcessPriorityGate
 from app.gateways.llm.gigachat import GigaChatLlm
@@ -47,6 +50,8 @@ from app.gateways.tinvest.real import RealTInvest
 from app.gateways.web.tavily import TavilyWebSearch
 
 SBER_CARD, SBER_INN = 3043, "7707083893"  # e-disclosure card and INN of PJSC Sberbank
+# Three shares of the main board: the logo URL of §8.2 is checked on them (S1-11 AC 6).
+LOGO_TICKERS, LOGO_BOARD = ("SBER", "GAZP", "LKOH"), "TQBR"
 WINDOWS = (32_000, 128_000)
 FILLER = "Портфель инвестора состоит из акций, облигаций и фондов, доходность считается по свечам. "
 RULES = (
@@ -215,6 +220,46 @@ async def tinvest(smoke: Smoke) -> None:
         return ("ok" if found and set(levels) == {"read_only"} else "нет"), detail
 
     await smoke.check("T-Invest: GetAccounts и access_level", accounts)
+
+    async def logos() -> tuple[str, str]:
+        adapter, fetch = RealTInvest(smoke.settings), SafeHttpxFetch()
+        found: list[str] = []
+        failed: list[str] = []
+        try:
+            for ticker in LOGO_TICKERS:
+                hits = await adapter.find_instruments(token, ticker)
+                hit = next(
+                    (h for h in hits if (h.ticker, h.class_code) == (ticker, LOGO_BOARD)), None
+                )
+                if hit is None:
+                    failed.append(f"{ticker}: нет в поиске")
+                    continue
+                instrument = await adapter.get_instrument(token, hit.uid)
+                base = logo_base(instrument.logo_name)
+                if base is None:
+                    failed.append(f"{ticker}: logo_name {instrument.logo_name!r}")
+                    continue
+                for size in LOGO_SIZES:
+                    url = logo_cdn_url(base, size)
+                    try:
+                        image = await fetch.fetch_image(
+                            url, max_bytes=smoke.settings.MEDIA_MAX_BYTES
+                        )
+                    except GatewayError as error:
+                        failed.append(f"{url}: {error.code}")
+                        continue
+                    if image.content_type != "image/png":
+                        failed.append(f"{url}: {image.content_type}")
+                found.append(
+                    f"{ticker} {instrument.logo_name} → {logo_cdn_url(base, LOGO_SIZES[0])}"
+                )
+        finally:
+            await fetch.aclose()
+            await adapter.aclose()
+        detail = "; ".join(found + failed)
+        return ("ok" if not failed else "нет"), detail
+
+    await smoke.check("T-Invest: логотипы на CDN, размеры 160, 320 и 640", logos)
 
 
 async def tavily(smoke: Smoke) -> None:
