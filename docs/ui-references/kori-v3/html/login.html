@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kōri · вход</title>
+<!-- Static export of the Kōri v3 canvas (docs/ui-references/kori-v3/README.md). Visual reference, not app code. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&amp;family=Noto+Sans+JP:wght@300&amp;family=Noto+Serif+JP:wght@400;600&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+a{color:inherit;text-decoration:none}
+.ki-ladder:hover .ki-ladder-label{background:#DBDBDB !important}
+.ki-cta:hover .ki-cta-label{background:#262626 !important}
+.ki-ink:hover{background:#000000 !important;color:#FFFFFF !important}
+.ki-quiet:hover{color:#000000 !important}
+a:focus-visible,button:focus-visible{outline:2px solid transparent;box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px #000000}
+.ki-panel input:focus{outline:none;box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px #000000}
+</style>
+</head>
+<body>
+<div style="position: relative; min-height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; -webkit-font-smoothing: antialiased">
+<svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; display: block">
+<defs>
+<linearGradient id="kl-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FD4B61"></stop><stop offset="0.4" stop-color="#FE2627"></stop><stop offset="0.72" stop-color="#4A0709"></stop><stop offset="0.9" stop-color="#000000"></stop></linearGradient>
+<linearGradient id="kl-sink" x1="0" y1="0" x2="0" y2="1"><stop offset="0.5" stop-color="#000000" stop-opacity="0"></stop><stop offset="0.88" stop-color="#000000" stop-opacity="1"></stop></linearGradient>
+</defs>
+<rect width="1440" height="900" fill="url(#kl-sky)"></rect>
+<g fill="#FF1F22">
+<rect x="626" y="672" width="34" height="56"></rect>
+<rect x="780" y="672" width="34" height="56"></rect>
+<rect x="586" y="728" width="34" height="56"></rect>
+<rect x="820" y="728" width="34" height="56"></rect>
+<rect x="564" y="784" width="34" height="56"></rect>
+<rect x="842" y="784" width="34" height="56"></rect>
+<rect x="554" y="840" width="34" height="56"></rect>
+<rect x="852" y="840" width="34" height="56"></rect>
+<rect x="686" y="504" width="34" height="56"></rect>
+<rect x="720" y="504" width="34" height="56"></rect>
+<rect x="576" y="560" width="34" height="56"></rect>
+<rect x="830" y="560" width="34" height="56"></rect>
+<rect x="532" y="616" width="34" height="56"></rect>
+<rect x="874" y="616" width="34" height="56"></rect>
+<rect x="504" y="672" width="34" height="56"></rect>
+<rect x="902" y="672" width="34" height="56"></rect>
+<rect x="484" y="728" width="34" height="56"></rect>
+<rect x="922" y="728" width="34" height="56"></rect>
+<rect x="472" y="784" width="34" height="56"></rect>
+<rect x="934" y="784" width="34" height="56"></rect>
+<rect x="466" y="840" width="34" height="56"></rect>
+<rect x="940" y="840" width="34" height="56"></rect>
+<rect x="602" y="392" width="34" height="56"></rect>
+<rect x="804" y="392" width="34" height="56"></rect>
+<rect x="526" y="448" width="34" height="56"></rect>
+<rect x="880" y="448" width="34" height="56"></rect>
+<rect x="480" y="504" width="34" height="56"></rect>
+<rect x="926" y="504" width="34" height="56"></rect>
+<rect x="446" y="560" width="34" height="56"></rect>
+<rect x="960" y="560" width="34" height="56"></rect>
+<rect x="422" y="616" width="34" height="56"></rect>
+<rect x="984" y="616" width="34" height="56"></rect>
+<rect x="404" y="672" width="34" height="56"></rect>
+<rect x="1002" y="672" width="34" height="56"></rect>
+<rect x="390" y="728" width="34" height="56"></rect>
+<rect x="1016" y="728" width="34" height="56"></rect>
+<rect x="382" y="784" width="34" height="56"></rect>
+<rect x="1024" y="784" width="34" height="56"></rect>
+<rect x="378" y="840" width="34" height="56"></rect>
+<rect x="1028" y="840" width="34" height="56"></rect>
+<rect x="544" y="280" width="34" height="56"></rect>
+<rect x="862" y="280" width="34" height="56"></rect>
+<rect x="476" y="336" width="34" height="56"></rect>
+<rect x="930" y="336" width="34" height="56"></rect>
+<rect x="428" y="392" width="34" height="56"></rect>
+<rect x="978" y="392" width="34" height="56"></rect>
+<rect x="392" y="448" width="34" height="56"></rect>
+<rect x="1014" y="448" width="34" height="56"></rect>
+<rect x="364" y="504" width="34" height="56"></rect>
+<rect x="1042" y="504" width="34" height="56"></rect>
+<rect x="342" y="560" width="34" height="56"></rect>
+<rect x="1064" y="560" width="34" height="56"></rect>
+<rect x="324" y="616" width="34" height="56"></rect>
+<rect x="1082" y="616" width="34" height="56"></rect>
+<rect x="310" y="672" width="34" height="56"></rect>
+<rect x="1096" y="672" width="34" height="56"></rect>
+<rect x="300" y="728" width="34" height="56"></rect>
+<rect x="1106" y="728" width="34" height="56"></rect>
+<rect x="292" y="784" width="34" height="56"></rect>
+<rect x="1114" y="784" width="34" height="56"></rect>
+<rect x="290" y="840" width="34" height="56"></rect>
+<rect x="1116" y="840" width="34" height="56"></rect>
+<rect x="596" y="112" width="34" height="56"></rect>
+<rect x="810" y="112" width="34" height="56"></rect>
+<rect x="490" y="168" width="34" height="56"></rect>
+<rect x="916" y="168" width="34" height="56"></rect>
+<rect x="426" y="224" width="34" height="56"></rect>
+<rect x="980" y="224" width="34" height="56"></rect>
+<rect x="378" y="280" width="34" height="56"></rect>
+<rect x="1028" y="280" width="34" height="56"></rect>
+<rect x="340" y="336" width="34" height="56"></rect>
+<rect x="1066" y="336" width="34" height="56"></rect>
+<rect x="308" y="392" width="34" height="56"></rect>
+<rect x="1098" y="392" width="34" height="56"></rect>
+<rect x="282" y="448" width="34" height="56"></rect>
+<rect x="1124" y="448" width="34" height="56"></rect>
+<rect x="260" y="504" width="34" height="56"></rect>
+<rect x="1146" y="504" width="34" height="56"></rect>
+<rect x="244" y="560" width="34" height="56"></rect>
+<rect x="1162" y="560" width="34" height="56"></rect>
+<rect x="228" y="616" width="34" height="56"></rect>
+<rect x="1178" y="616" width="34" height="56"></rect>
+<rect x="218" y="672" width="34" height="56"></rect>
+<rect x="1188" y="672" width="34" height="56"></rect>
+<rect x="210" y="728" width="34" height="56"></rect>
+<rect x="1196" y="728" width="34" height="56"></rect>
+<rect x="204" y="784" width="34" height="56"></rect>
+<rect x="1202" y="784" width="34" height="56"></rect>
+<rect x="202" y="840" width="34" height="56"></rect>
+<rect x="1204" y="840" width="34" height="56"></rect>
+<rect x="526" y="0" width="34" height="56"></rect>
+<rect x="880" y="0" width="34" height="56"></rect>
+<rect x="436" y="56" width="34" height="56"></rect>
+<rect x="970" y="56" width="34" height="56"></rect>
+<rect x="374" y="112" width="34" height="56"></rect>
+<rect x="1032" y="112" width="34" height="56"></rect>
+<rect x="326" y="168" width="34" height="56"></rect>
+<rect x="1080" y="168" width="34" height="56"></rect>
+<rect x="286" y="224" width="34" height="56"></rect>
+<rect x="1120" y="224" width="34" height="56"></rect>
+<rect x="254" y="280" width="34" height="56"></rect>
+<rect x="1152" y="280" width="34" height="56"></rect>
+<rect x="224" y="336" width="34" height="56"></rect>
+<rect x="1182" y="336" width="34" height="56"></rect>
+<rect x="200" y="392" width="34" height="56"></rect>
+<rect x="1206" y="392" width="34" height="56"></rect>
+<rect x="180" y="448" width="34" height="56"></rect>
+<rect x="1226" y="448" width="34" height="56"></rect>
+<rect x="162" y="504" width="34" height="56"></rect>
+<rect x="1244" y="504" width="34" height="56"></rect>
+<rect x="148" y="560" width="34" height="56"></rect>
+<rect x="1258" y="560" width="34" height="56"></rect>
+<rect x="136" y="616" width="34" height="56"></rect>
+<rect x="1270" y="616" width="34" height="56"></rect>
+<rect x="128" y="672" width="34" height="56"></rect>
+<rect x="1278" y="672" width="34" height="56"></rect>
+<rect x="120" y="728" width="34" height="56"></rect>
+<rect x="1286" y="728" width="34" height="56"></rect>
+<rect x="116" y="784" width="34" height="56"></rect>
+<rect x="1290" y="784" width="34" height="56"></rect>
+<rect x="114" y="840" width="34" height="56"></rect>
+<rect x="1292" y="840" width="34" height="56"></rect>
+<rect x="324" y="0" width="34" height="56"></rect>
+<rect x="1082" y="0" width="34" height="56"></rect>
+<rect x="276" y="56" width="34" height="56"></rect>
+<rect x="1130" y="56" width="34" height="56"></rect>
+<rect x="234" y="112" width="34" height="56"></rect>
+<rect x="1172" y="112" width="34" height="56"></rect>
+<rect x="200" y="168" width="34" height="56"></rect>
+<rect x="1206" y="168" width="34" height="56"></rect>
+<rect x="170" y="224" width="34" height="56"></rect>
+<rect x="1236" y="224" width="34" height="56"></rect>
+<rect x="142" y="280" width="34" height="56"></rect>
+<rect x="1264" y="280" width="34" height="56"></rect>
+<rect x="120" y="336" width="34" height="56"></rect>
+<rect x="1286" y="336" width="34" height="56"></rect>
+<rect x="100" y="392" width="34" height="56"></rect>
+<rect x="1306" y="392" width="34" height="56"></rect>
+<rect x="82" y="448" width="34" height="56"></rect>
+<rect x="1324" y="448" width="34" height="56"></rect>
+<rect x="68" y="504" width="34" height="56"></rect>
+<rect x="1338" y="504" width="34" height="56"></rect>
+<rect x="56" y="560" width="34" height="56"></rect>
+<rect x="1350" y="560" width="34" height="56"></rect>
+<rect x="46" y="616" width="34" height="56"></rect>
+<rect x="1360" y="616" width="34" height="56"></rect>
+<rect x="38" y="672" width="34" height="56"></rect>
+<rect x="1368" y="672" width="34" height="56"></rect>
+<rect x="32" y="728" width="34" height="56"></rect>
+<rect x="1374" y="728" width="34" height="56"></rect>
+<rect x="28" y="784" width="34" height="56"></rect>
+<rect x="1378" y="784" width="34" height="56"></rect>
+<rect x="26" y="840" width="34" height="56"></rect>
+<rect x="1380" y="840" width="34" height="56"></rect>
+</g>
+<g stroke="#B0141A" stroke-opacity="0.55" stroke-width="1" vector-effect="non-scaling-stroke">
+<line x1="720" y1="880" x2="-144" y2="0"></line>
+<line x1="720" y1="880" x2="-117" y2="0"></line>
+<line x1="720" y1="880" x2="-90" y2="0"></line>
+<line x1="720" y1="880" x2="-63" y2="0"></line>
+<line x1="720" y1="880" x2="-36" y2="0"></line>
+<line x1="720" y1="880" x2="-9" y2="0"></line>
+<line x1="720" y1="880" x2="18" y2="0"></line>
+<line x1="720" y1="880" x2="45" y2="0"></line>
+<line x1="720" y1="880" x2="72" y2="0"></line>
+<line x1="720" y1="880" x2="99" y2="0"></line>
+<line x1="720" y1="880" x2="126" y2="0"></line>
+<line x1="720" y1="880" x2="153" y2="0"></line>
+<line x1="720" y1="880" x2="180" y2="0"></line>
+<line x1="720" y1="880" x2="207" y2="0"></line>
+<line x1="720" y1="880" x2="234" y2="0"></line>
+<line x1="720" y1="880" x2="261" y2="0"></line>
+<line x1="720" y1="880" x2="288" y2="0"></line>
+<line x1="720" y1="880" x2="315" y2="0"></line>
+<line x1="720" y1="880" x2="342" y2="0"></line>
+<line x1="720" y1="880" x2="369" y2="0"></line>
+<line x1="720" y1="880" x2="396" y2="0"></line>
+<line x1="720" y1="880" x2="423" y2="0"></line>
+<line x1="720" y1="880" x2="450" y2="0"></line>
+<line x1="720" y1="880" x2="477" y2="0"></line>
+<line x1="720" y1="880" x2="504" y2="0"></line>
+<line x1="720" y1="880" x2="531" y2="0"></line>
+<line x1="720" y1="880" x2="558" y2="0"></line>
+<line x1="720" y1="880" x2="585" y2="0"></line>
+<line x1="720" y1="880" x2="612" y2="0"></line>
+<line x1="720" y1="880" x2="639" y2="0"></line>
+<line x1="720" y1="880" x2="666" y2="0"></line>
+<line x1="720" y1="880" x2="693" y2="0"></line>
+<line x1="720" y1="880" x2="720" y2="0"></line>
+<line x1="720" y1="880" x2="747" y2="0"></line>
+<line x1="720" y1="880" x2="774" y2="0"></line>
+<line x1="720" y1="880" x2="801" y2="0"></line>
+<line x1="720" y1="880" x2="828" y2="0"></line>
+<line x1="720" y1="880" x2="855" y2="0"></line>
+<line x1="720" y1="880" x2="882" y2="0"></line>
+<line x1="720" y1="880" x2="909" y2="0"></line>
+<line x1="720" y1="880" x2="936" y2="0"></line>
+<line x1="720" y1="880" x2="963" y2="0"></line>
+<line x1="720" y1="880" x2="990" y2="0"></line>
+<line x1="720" y1="880" x2="1017" y2="0"></line>
+<line x1="720" y1="880" x2="1044" y2="0"></line>
+<line x1="720" y1="880" x2="1071" y2="0"></line>
+<line x1="720" y1="880" x2="1098" y2="0"></line>
+<line x1="720" y1="880" x2="1125" y2="0"></line>
+<line x1="720" y1="880" x2="1152" y2="0"></line>
+<line x1="720" y1="880" x2="1179" y2="0"></line>
+<line x1="720" y1="880" x2="1206" y2="0"></line>
+<line x1="720" y1="880" x2="1233" y2="0"></line>
+<line x1="720" y1="880" x2="1260" y2="0"></line>
+<line x1="720" y1="880" x2="1287" y2="0"></line>
+<line x1="720" y1="880" x2="1314" y2="0"></line>
+<line x1="720" y1="880" x2="1341" y2="0"></line>
+<line x1="720" y1="880" x2="1368" y2="0"></line>
+<line x1="720" y1="880" x2="1395" y2="0"></line>
+<line x1="720" y1="880" x2="1422" y2="0"></line>
+<line x1="720" y1="880" x2="1449" y2="0"></line>
+<line x1="720" y1="880" x2="1476" y2="0"></line>
+<line x1="720" y1="880" x2="1503" y2="0"></line>
+<line x1="720" y1="880" x2="1530" y2="0"></line>
+<line x1="720" y1="880" x2="1557" y2="0"></line>
+<line x1="720" y1="880" x2="1584" y2="0"></line>
+<line x1="720" y1="880" x2="0" y2="60"></line>
+<line x1="720" y1="880" x2="0" y2="130"></line>
+<line x1="720" y1="880" x2="0" y2="200"></line>
+<line x1="720" y1="880" x2="0" y2="270"></line>
+<line x1="720" y1="880" x2="0" y2="340"></line>
+<line x1="720" y1="880" x2="0" y2="410"></line>
+<line x1="720" y1="880" x2="0" y2="480"></line>
+<line x1="720" y1="880" x2="0" y2="550"></line>
+<line x1="720" y1="880" x2="0" y2="620"></line>
+<line x1="720" y1="880" x2="0" y2="690"></line>
+<line x1="720" y1="880" x2="1440" y2="60"></line>
+<line x1="720" y1="880" x2="1440" y2="130"></line>
+<line x1="720" y1="880" x2="1440" y2="200"></line>
+<line x1="720" y1="880" x2="1440" y2="270"></line>
+<line x1="720" y1="880" x2="1440" y2="340"></line>
+<line x1="720" y1="880" x2="1440" y2="410"></line>
+<line x1="720" y1="880" x2="1440" y2="480"></line>
+<line x1="720" y1="880" x2="1440" y2="550"></line>
+<line x1="720" y1="880" x2="1440" y2="620"></line>
+<line x1="720" y1="880" x2="1440" y2="690"></line>
+</g>
+<rect width="1440" height="900" fill="url(#kl-sink)"></rect>
+</svg>
+<header style="position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px; padding: 16px 48px; color: #000000; font-size: 12px; line-height: 15px; letter-spacing: 0.04em; text-transform: uppercase">
+<span>Kōri · аналитик портфеля</span>
+<span>Вход для закрытого круга</span>
+<div role="group" aria-label="Тема" style="display: flex">
+<button type="button" aria-pressed="true" style="height: 28px; padding: 0 10px; border: 1px solid #000000; background: #000000; color: #FFFFFF; font-family: inherit; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer">Ночь</button>
+<button type="button" aria-pressed="false" class="ki-ink" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #000000; background: transparent; color: #000000; font-family: inherit; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer">День</button>
+</div>
+</header>
+
+<main style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 16px 0">
+<form class="ki-panel" aria-labelledby="login-title" style="width: 100%; max-width: 440px; background: #FFFFFF; color: #000000; border: 1px solid #FFFFFF">
+<div style="height: 52px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 16px">
+<span style="display: flex; align-items: center; gap: 9px">
+<span aria-hidden="true" lang="ja" style="position: relative; flex: 0 0 24px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-family: 'Noto Serif JP', serif; font-size: 14px; line-height: 1"><span style="position: absolute; top: 2px; right: 2px; bottom: 2px; left: 2px; border: 1px solid #FFFFFF"></span>氷</span>
+<span style="font-size: 18px; line-height: 22px; letter-spacing: -0.01em">Kōri</span>
+</span>
+<span style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Email и пароль</span>
+</div>
+<h1 id="login-title" style="margin: 0; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #000000; color: #FFFFFF; font-size: 28px; line-height: 32px; font-weight: 400">Вход<span aria-hidden="true" style="font-size: 20px; color: #FE2627">↓</span></h1>
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 24px 16px 28px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="login-email" style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase">Email</label>
+<input id="login-email" type="email" autocomplete="email" value="demo@example.test" style="height: 44px; box-sizing: border-box; padding: 0 12px; border: 1px solid #000000; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 15px">
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<label for="login-password" style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase">Пароль</label>
+<button type="button" class="ki-quiet" style="padding: 0; border: 0; background: transparent; color: #757575; font-family: inherit; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer">Показать</button>
+</div>
+<input id="login-password" type="password" autocomplete="current-password" value="dev-password-123" style="height: 44px; box-sizing: border-box; padding: 0 12px; border: 1px solid #000000; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 15px">
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; min-height: 48px">
+<a href="register.html" class="ki-ladder" style="flex: 1 1 180px; display: flex; min-height: 48px; color: #000000; font-size: 13px"><span aria-hidden="true" style="flex: 0 0 48px; display: flex; align-items: center; justify-content: center; background: #AAAAAA; font-size: 16px">+</span><span class="ki-ladder-label" style="flex: 1; display: flex; align-items: center; padding: 0 14px; background: #CBCBCB">Регистрация</span></a>
+<a href="chat-start.html" class="ki-cta" style="flex: 1 1 180px; display: flex; min-height: 48px; color: #FFFFFF; font-size: 13px"><span aria-hidden="true" style="flex: 0 0 48px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span class="ki-cta-label" style="flex: 1; display: flex; align-items: center; padding: 0 14px; background: #000000">Войти</span></a>
+</div>
+</form>
+</main>
+
+<div style="position: relative; display: flex; justify-content: center; padding: 48px 16px 8px">
+<span role="img" aria-label="Kōri" style="display: grid; grid-template-columns: repeat(7, auto); font-size: 44px; line-height: 44px">
+<span aria-hidden="true">K</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true">Ō</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true">R</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true">I</span>
+<span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 10px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 11px; line-height: 12px; color: #AAAAAA">こ</span><span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 10px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 11px; line-height: 12px; color: #AAAAAA">お</span><span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 10px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 11px; line-height: 12px; color: #AAAAAA">り</span><span aria-hidden="true"></span>
+</span>
+</div>
+
+<footer style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 16px 48px 20px; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">
+<span>Т-Инвестиции · доступ только на чтение</span>
+<span>Токен хранится зашифрованным</span>
+</footer>
+</div>
+</body>
+</html>
