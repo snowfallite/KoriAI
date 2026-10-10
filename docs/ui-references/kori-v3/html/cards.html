@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kōri · карточки</title>
+<!-- Static export of the Kōri v3 canvas (docs/ui-references/kori-v3/README.md). Visual reference, not app code. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&amp;family=Noto+Sans+JP:wght@300&amp;family=Noto+Serif+JP:wght@400;600&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+a{color:inherit;text-decoration:none}
+.ki-link:hover{color:#FE2627 !important}
+.ki-ladder:hover .ki-ladder-label{background:#DBDBDB !important}
+.ki-cta:hover .ki-cta-label{background:#DBDBDB !important}
+.ki-cta-dark:hover .ki-cta-label{background:#262626 !important}
+.ki-outline:hover{background:#FFFFFF !important;color:#000000 !important}
+.ki-row:hover{background:#0D0D0D}
+.ki-seg:hover{background:#262626}
+a:focus-visible,button:focus-visible{outline:2px solid transparent;box-shadow:0 0 0 2px #000000,0 0 0 4px #FE2627}
+.ki-dialog a:focus-visible,.ki-dialog button:focus-visible{box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px #000000}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; background: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; -webkit-font-smoothing: antialiased">
+
+<header style="min-height: 56px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px; padding: 12px 48px; border-bottom: 1px solid #262626; font-size: 12px; line-height: 15px; letter-spacing: 0.04em; text-transform: uppercase">
+<span>Карточки</span>
+<span style="color: #757575">Рамка вместо заливки · белое там, где действуют</span>
+<span lang="ja" style="font-family: 'Noto Sans JP', sans-serif; font-weight: 300; letter-spacing: 0.6em; text-transform: none; color: #757575">こおり</span>
+</header>
+
+<section style="padding: 56px 48px 48px">
+<h1 style="margin: 0; font-size: 64px; line-height: 68px; letter-spacing: -0.01em; font-weight: 400">Рамка вместо коробки</h1>
+<p style="margin: 20px 0 0; max-width: 76ch; font-size: 16px; line-height: 26px; color: #CBCBCB">Серых заливок нет. Секция настроек держится на тонкой рамке и шапке капсом, сводка держится на числе, выбранное белое. Белые панели только там, где человек действует: ввод вопроса, вход, диалог.</p>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap: 48px; padding: 0 48px 56px">
+
+<div style="display: flex; flex-direction: column; gap: 40px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Секция настроек</figcaption>
+<section aria-labelledby="c-broker" style="border: 1px solid #262626">
+<header style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px 24px; padding: 20px 24px; border-bottom: 1px solid #262626">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h3 id="c-broker" style="margin: 0; font-size: 12px; line-height: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400">Брокер</h3>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #AAAAAA">Т-Инвестиции, токен с доступом только на чтение</p>
+</div>
+<span style="height: 24px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 8px; background: #FFFFFF; color: #000000; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Подключён</span>
+</header>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px; padding: 20px 24px; border-bottom: 1px solid #1A1A1A">
+<div><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Токен</p><p style="margin: 6px 0 0; font-size: 15px; line-height: 20px">t.••••only</p></div>
+<div><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Доступ</p><p style="margin: 6px 0 0; font-size: 15px; line-height: 20px">Только чтение</p></div>
+<div><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Проверен</p><p style="margin: 6px 0 0; font-size: 15px; line-height: 20px">10.10.2026 09:00</p></div>
+</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 13px; line-height: 18px">
+<thead>
+<tr style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">
+<th scope="col" style="height: 36px; padding: 0 0 0 24px; text-align: left; font-weight: 400; border-bottom: 1px solid #1A1A1A">Счёт</th>
+<th scope="col" style="padding: 0 0 0 16px; text-align: left; font-weight: 400; border-bottom: 1px solid #1A1A1A">Название</th>
+<th scope="col" style="padding: 0 0 0 16px; text-align: left; font-weight: 400; border-bottom: 1px solid #1A1A1A">Открыт</th>
+<th scope="col" style="padding: 0 24px 0 16px; text-align: right; font-weight: 400; border-bottom: 1px solid #1A1A1A">Показывать</th>
+</tr>
+</thead>
+<tbody>
+<tr class="ki-row">
+<td style="height: 52px; padding: 0 0 0 24px; border-bottom: 1px solid #1A1A1A"><span style="height: 22px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 7px; border: 1px solid #FFFFFF; font-size: 11px">acc1</span></td>
+<td style="padding: 0 0 0 16px; border-bottom: 1px solid #1A1A1A">Брокерский</td>
+<td style="padding: 0 0 0 16px; border-bottom: 1px solid #1A1A1A; color: #AAAAAA">15.03.2021</td>
+<td style="padding: 0 24px 0 16px; border-bottom: 1px solid #1A1A1A; text-align: right"><button type="button" role="switch" aria-checked="true" aria-label="Показывать acc1" style="width: 40px; height: 22px; box-sizing: border-box; display: inline-flex; justify-content: flex-end; padding: 2px; border: 1px solid #FFFFFF; background: #FFFFFF; cursor: pointer"><span style="width: 16px; height: 16px; background: #000000"></span></button></td>
+</tr>
+<tr class="ki-row">
+<td style="height: 52px; padding: 0 0 0 24px; border-bottom: 1px solid #1A1A1A"><span style="height: 22px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 7px; border: 1px solid #FFFFFF; font-size: 11px">acc2</span></td>
+<td style="padding: 0 0 0 16px; border-bottom: 1px solid #1A1A1A">ИИС</td>
+<td style="padding: 0 0 0 16px; border-bottom: 1px solid #1A1A1A; color: #AAAAAA">20.01.2023</td>
+<td style="padding: 0 24px 0 16px; border-bottom: 1px solid #1A1A1A; text-align: right"><button type="button" role="switch" aria-checked="true" aria-label="Показывать acc2" style="width: 40px; height: 22px; box-sizing: border-box; display: inline-flex; justify-content: flex-end; padding: 2px; border: 1px solid #FFFFFF; background: #FFFFFF; cursor: pointer"><span style="width: 16px; height: 16px; background: #000000"></span></button></td>
+</tr>
+<tr class="ki-row">
+<td style="height: 52px; padding: 0 0 0 24px"><span style="height: 22px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 7px; border: 1px solid #757575; color: #AAAAAA; font-size: 11px">acc3</span></td>
+<td style="padding: 0 0 0 16px; color: #757575">Копилка · скрыт</td>
+<td style="padding: 0 0 0 16px; color: #757575">02.06.2025</td>
+<td style="padding: 0 24px 0 16px; text-align: right"><button type="button" role="switch" aria-checked="false" aria-label="Показывать acc3" style="width: 40px; height: 22px; box-sizing: border-box; display: inline-flex; justify-content: flex-start; padding: 2px; border: 1px solid #757575; background: transparent; cursor: pointer"><span style="width: 16px; height: 16px; background: #757575"></span></button></td>
+</tr>
+</tbody>
+</table>
+<footer style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 24px; border-top: 1px solid #262626">
+<a href="#" class="ki-outline" style="height: 40px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 16px; border: 1px solid #FFFFFF; color: #FFFFFF; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase">Проверить токен</a>
+<a href="#" class="ki-cta" style="display: inline-flex; height: 40px; color: #000000; font-size: 13px"><span aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 15px">→</span><span class="ki-cta-label" style="display: flex; align-items: center; padding: 0 16px; background: #FFFFFF">Отключить</span></a>
+</footer>
+</section>
+</figure>
+
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Выбор</figcaption>
+<section aria-labelledby="c-model" style="border: 1px solid #262626">
+<header style="display: flex; flex-direction: column; gap: 6px; padding: 20px 24px; border-bottom: 1px solid #262626">
+<h3 id="c-model" style="margin: 0; font-size: 12px; line-height: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400">Модель</h3>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #AAAAAA">Авто подбирает модель под вопрос. Остаток считается от годовой квоты.</p>
+</header>
+<div role="radiogroup" aria-labelledby="c-model" style="display: flex; flex-direction: column">
+<button type="button" role="radio" aria-checked="true" style="display: grid; grid-template-columns: 14px 72px minmax(0, 1fr) auto; align-items: center; column-gap: 16px; height: 52px; padding: 0 24px; border: 0; border-bottom: 1px solid #262626; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 14px; text-align: left; cursor: pointer"><span style="width: 12px; height: 12px; border: 1px solid #000000; background: #000000"></span><span>Авто</span><span style="font-size: 13px; color: #555555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">подберёт модель по вопросу</span><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #555555">Сейчас</span></button>
+<button type="button" role="radio" aria-checked="false" class="ki-row" style="display: grid; grid-template-columns: 14px 72px minmax(0, 1fr) auto; align-items: center; column-gap: 16px; height: 52px; padding: 0 24px; border: 0; border-bottom: 1px solid #1A1A1A; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 14px; text-align: left; cursor: pointer"><span style="width: 12px; height: 12px; border: 1px solid #757575"></span><span>Lite</span><span style="font-size: 13px; color: #AAAAAA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">короткие ответы и сводки</span><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #AAAAAA">Остаток 97&nbsp;%</span></button>
+<button type="button" role="radio" aria-checked="false" class="ki-row" style="display: grid; grid-template-columns: 14px 72px minmax(0, 1fr) auto; align-items: center; column-gap: 16px; height: 52px; padding: 0 24px; border: 0; border-bottom: 1px solid #1A1A1A; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 14px; text-align: left; cursor: pointer"><span style="width: 12px; height: 12px; border: 1px solid #757575"></span><span>Pro</span><span style="font-size: 13px; color: #AAAAAA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">анализ портфеля и бумаг</span><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #AAAAAA">Остаток 97&nbsp;%</span></button>
+<button type="button" role="radio" aria-checked="false" class="ki-row" style="display: grid; grid-template-columns: 14px 72px minmax(0, 1fr) auto; align-items: center; column-gap: 16px; height: 52px; padding: 0 24px; border: 0; border-bottom: 1px solid #1A1A1A; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 14px; text-align: left; cursor: pointer"><span style="width: 12px; height: 12px; border: 1px solid #757575"></span><span>Max</span><span style="font-size: 13px; color: #AAAAAA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">отчётность МСФО и РСБУ</span><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #AAAAAA">Остаток 98&nbsp;%</span></button>
+<button type="button" role="radio" aria-checked="false" class="ki-row" style="display: grid; grid-template-columns: 14px 72px minmax(0, 1fr) auto; align-items: center; column-gap: 16px; height: 52px; padding: 0 24px; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 14px; text-align: left; cursor: pointer"><span style="width: 12px; height: 12px; border: 1px solid #757575"></span><span>Ultra</span><span style="font-size: 13px; color: #AAAAAA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">подробные исследования</span><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #AAAAAA">Остаток 100&nbsp;%</span></button>
+</div>
+<footer style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 24px; border-top: 1px solid #262626">
+<span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Стиль ответа</span>
+<div role="group" aria-label="Стиль ответа" style="display: flex; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase">
+<button type="button" aria-pressed="true" style="height: 28px; padding: 0 12px; border: 1px solid #FFFFFF; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer">Кратко</button>
+<button type="button" aria-pressed="false" class="ki-seg" style="height: 28px; padding: 0 12px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer">Подробно</button>
+</div>
+</footer>
+</section>
+</figure>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 40px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Сводка</figcaption>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #262626; border-bottom: 1px solid #262626">
+<div style="padding: 16px 16px 18px 0"><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Стоимость</p><p style="margin: 10px 0 0; font-size: 22px; line-height: 26px; white-space: nowrap">1&nbsp;195&nbsp;145&nbsp;₽</p><p style="margin: 6px 0 0; font-size: 12px; line-height: 16px; color: #AAAAAA">все счета</p></div>
+<div style="padding: 16px 16px 18px; border-left: 1px solid #262626"><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Результат</p><p style="margin: 10px 0 0; font-size: 22px; line-height: 26px; white-space: nowrap">↑ +42&nbsp;090&nbsp;₽</p><p style="margin: 6px 0 0; font-size: 12px; line-height: 16px; color: #AAAAAA">+3,65&nbsp;% от покупки</p></div>
+<div style="padding: 16px 0 18px 16px; border-left: 1px solid #262626"><p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Позиции</p><p style="margin: 10px 0 0; font-size: 22px; line-height: 26px">10</p><p style="margin: 6px 0 0; font-size: 12px; line-height: 16px; color: #AAAAAA">на 2 счетах</p></div>
+</div>
+</figure>
+
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Расход</figcaption>
+<section aria-labelledby="c-usage" style="border: 1px solid #262626">
+<header style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding: 20px 24px; border-bottom: 1px solid #262626">
+<h3 id="c-usage" style="margin: 0; font-size: 12px; line-height: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400">Расход</h3>
+<span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Год квоты с 26.09.2026</span>
+</header>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 20px 24px 22px; font-size: 13px; line-height: 16px; font-variant-numeric: tabular-nums">
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Lite</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 2.4%; background: #CBCBCB"></span><span style="position: absolute; left: 3.8%; top: -5px; bottom: -5px; width: 2px; background: #FE2627"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">6,1 млн</span> из 250 млн</span></div>
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Pro</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 3%; background: #CBCBCB"></span><span style="position: absolute; left: 3.8%; top: -5px; bottom: -5px; width: 2px; background: #FE2627"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">1,2 млн</span> из 40 млн</span></div>
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Max</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 2.4%; background: #CBCBCB"></span><span style="position: absolute; left: 3.8%; top: -5px; bottom: -5px; width: 2px; background: #FE2627"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">0,6 млн</span> из 25 млн</span></div>
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Ultra</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 3.8%; top: -5px; bottom: -5px; width: 2px; background: #FE2627"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">0</span> из 50 млн</span></div>
+<div style="height: 1px; background: #1A1A1A"></div>
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Веб</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 3.8%; background: #CBCBCB"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">38</span> из 1000 в октябре</span></div>
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 164px; align-items: center; column-gap: 16px"><span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase">Вы</span><span style="position: relative; display: block; height: 6px; background: #262626"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 2.1%; background: #CBCBCB"></span></span><span style="text-align: right; color: #AAAAAA"><span style="color: #FFFFFF">12 400</span> из 600 000 сегодня</span></div>
+</div>
+<footer style="padding: 14px 24px; border-top: 1px solid #1A1A1A; display: flex; align-items: center; gap: 10px; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575"><span aria-hidden="true" style="width: 2px; height: 14px; background: #FE2627"></span>Засечка: где расход должен быть к сегодняшнему дню</footer>
+</section>
+</figure>
+
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Уведомления</figcaption>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 18px">
+<div role="alert" style="display: flex; min-height: 44px; background: #1A1A1A"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 15px">×</span><p style="flex: 1; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 12px 14px">Т-Инвестиции недоступны, попробуйте позже<span style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">req-7f3a2c</span></p><button type="button" class="ki-link" style="padding: 0 16px; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer">Повторить</button></div>
+<div role="status" style="display: flex; min-height: 44px; background: #1A1A1A"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #757575; color: #FFFFFF; font-size: 15px">↓</span><p style="flex: 1; margin: 0; display: flex; align-items: center; padding: 12px 14px">Модель понижена до Pro: Max идёт выше темпа расхода</p></div>
+<div role="status" style="display: flex; min-height: 44px; background: #1A1A1A"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #AAAAAA; color: #000000"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"><path d="M3 8.5l3 3 7-7"></path></svg></span><p style="flex: 1; margin: 0; display: flex; align-items: center; padding: 12px 14px">Токен подключён, найдено 2 счёта</p></div>
+<div role="status" style="display: flex; min-height: 44px; background: #1A1A1A"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #262626; color: #FFFFFF; font-size: 15px">→</span><p style="flex: 1; margin: 0; display: flex; align-items: center; padding: 12px 14px">2 числа в ответе не подтверждены инструментами</p><button type="button" class="ki-link" style="padding: 0 16px; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer">Показать</button></div>
+</div>
+</figure>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap: 48px; padding: 0 48px 56px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Пустое состояние</figcaption>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 40px 32px; border: 1px solid #262626">
+<p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Портфель</p>
+<h3 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 400">Брокер не подключён</h3>
+<p style="margin: 0; max-width: 52ch; font-size: 14px; line-height: 22px; color: #AAAAAA">Подключите токен Т-Инвестиций с доступом только на чтение: появятся счета, структура и позиции.</p>
+<a href="#" class="ki-cta" style="display: inline-flex; height: 44px; margin-top: 8px; color: #000000; font-size: 13px"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span class="ki-cta-label" style="display: flex; align-items: center; padding: 0 18px; background: #FFFFFF">Подключить токен</span></a>
+</div>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Ошибка загрузки</figcaption>
+<div style="display: flex; align-items: flex-start; gap: 16px; padding: 32px; border: 1px solid #262626">
+<span aria-hidden="true" style="flex: 0 0 36px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 17px">×</span>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px">
+<p style="margin: 0; font-size: 18px; line-height: 24px">Т-Инвестиции недоступны, попробуйте позже</p>
+<p style="margin: 0; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Код запроса: req-7f3a2c</p>
+<a href="#" class="ki-outline" style="height: 40px; box-sizing: border-box; display: inline-flex; align-items: center; margin-top: 8px; padding: 0 16px; border: 1px solid #FFFFFF; color: #FFFFFF; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase">Повторить</a>
+</div>
+</div>
+</figure>
+</section>
+
+<section style="padding: 0 48px 56px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<figcaption style="font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575">Диалог</figcaption>
+<div style="position: relative; height: 380px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #262626; background: #000000">
+<div aria-hidden="true" style="position: absolute; top: 32px; right: 32px; bottom: 32px; left: 32px; display: flex; flex-direction: column; gap: 16px; opacity: 0.22">
+<span style="display: block; width: 46%; height: 18px; background: #DBDBDB"></span>
+<span style="display: block; width: 88%; height: 10px; background: #757575"></span>
+<span style="display: block; width: 80%; height: 10px; background: #757575"></span>
+<span style="display: block; width: 84%; height: 10px; background: #757575"></span>
+<span style="display: block; width: 62%; height: 10px; background: #757575"></span>
+<span style="display: block; width: 90%; height: 120px; margin-top: 12px; border: 1px solid #757575"></span>
+</div>
+<div role="dialog" aria-modal="true" aria-labelledby="d-title" aria-describedby="d-text" class="ki-dialog" style="position: relative; width: 100%; max-width: 420px; border: 1px solid #FFFFFF; background: #FFFFFF; color: #000000">
+<h3 id="d-title" style="margin: 0; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #000000; color: #FFFFFF; font-size: 22px; line-height: 28px; font-weight: 400">Удалить тред?<button type="button" aria-label="Закрыть" style="width: 32px; height: 32px; margin-right: -8px; padding: 0; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 18px; cursor: pointer">×</button></h3>
+<p id="d-text" style="margin: 0; padding: 20px 16px 24px; font-size: 14px; line-height: 22px">«Что с моим портфелем и почему?» и 4 сообщения удалятся без возврата.</p>
+<div style="display: flex; min-height: 44px">
+<button type="button" class="ki-ladder" style="flex: 1 1 50%; display: flex; padding: 0; border: 0; background: transparent; color: #000000; font-family: inherit; font-size: 13px; cursor: pointer"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; align-self: stretch; background: #AAAAAA; font-size: 15px">×</span><span class="ki-ladder-label" style="flex: 1; display: flex; align-items: center; align-self: stretch; padding: 0 14px; background: #CBCBCB">Отмена</span></button>
+<button type="button" class="ki-cta-dark" style="flex: 1 1 50%; display: flex; padding: 0; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; align-self: stretch; background: #DF342F; color: #FFFFFF; font-size: 15px">→</span><span class="ki-cta-label" style="flex: 1; display: flex; align-items: center; align-self: stretch; padding: 0 14px; background: #000000">Удалить</span></button>
+</div>
+</div>
+</div>
+</figure>
+</section>
+
+<section style="padding: 0 48px 72px">
+<h2 style="margin: 0 0 8px; padding-bottom: 12px; border-bottom: 1px solid #262626; font-size: 11px; line-height: 14px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase">Правила карточек</h2>
+<ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap: 0 64px; font-size: 16px; line-height: 26px; color: #CBCBCB">
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Карточка это рамка 1 px без заливки. Шапка капсом, пояснение серым, действия внизу за линией.</span></li>
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Сводка без рамки: подпись капсом, крупное число, между сводками вертикальная линия.</span></li>
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Выбранная строка, вкладка и включённый переключатель белые.</span></li>
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Главная кнопка: ячейка со стрелкой и подпись цветом текста. Удаление: та же кнопка с ячейкой red-deep. Знак × только у закрытия и ошибки.</span></li>
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Уведомление: ячейка-знак слева (× ошибка, ↓ понижение, галочка готово, → справка), текст на #1A1A1A.</span></li>
+<li style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="color: #FE2627">→</span><span>Белая панель только там, где действуют: ввод вопроса, вход и регистрация, диалог.</span></li>
+</ul>
+</section>
+</div>
+</body>
+</html>
