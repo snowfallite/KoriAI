@@ -2,21 +2,18 @@
 	import { mode } from 'mode-watcher';
 	import { Toaster as Sonner, type ToasterProps as SonnerProps } from 'svelte-sonner';
 	import Loader2Icon from '@lucide/svelte/icons/loader-2';
-	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
-	import OctagonXIcon from '@lucide/svelte/icons/octagon-x';
-	import InfoIcon from '@lucide/svelte/icons/info';
-	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 
 	let { ...restProps }: SonnerProps = $props();
 </script>
 
+<!-- Toasts speak like the notifications of v3: a row on the accent with a glyph cell. -->
 <Sonner
 	theme={mode.current}
 	class="toaster group"
-	style="--normal-bg: var(--color-popover); --normal-text: var(--color-popover-foreground); --normal-border: var(--color-border);"
+	style="--normal-bg: var(--color-accent); --normal-text: var(--color-foreground); --normal-border: var(--color-accent); --border-radius: 0px;"
 	toastOptions={{
 		classes: {
-			toast: 'cn-toast'
+			toast: 'cn-toast font-mono text-ui'
 		}
 	}}
 	{...restProps}
@@ -25,15 +22,21 @@
 		<Loader2Icon class="size-4 animate-spin" />
 	{/snippet}
 	{#snippet successIcon()}
-		<CircleCheckIcon class="size-4" />
+		<span aria-hidden="true" class="grid size-5 place-items-center bg-grey-400 text-black">
+			<svg viewBox="0 0 16 16" class="size-3" fill="none" stroke="currentColor"
+				><path d="M3 8.5l3 3 7-7" stroke-width="1.25" stroke-linecap="square" /></svg
+			>
+		</span>
 	{/snippet}
 	{#snippet errorIcon()}
-		<OctagonXIcon class="size-4" />
+		<span aria-hidden="true" class="grid size-5 place-items-center bg-primary-deep text-white"
+			>×</span
+		>
 	{/snippet}
 	{#snippet infoIcon()}
-		<InfoIcon class="size-4" />
+		<span aria-hidden="true" class="grid size-5 place-items-center bg-border">→</span>
 	{/snippet}
 	{#snippet warningIcon()}
-		<TriangleAlertIcon class="size-4" />
+		<span aria-hidden="true" class="grid size-5 place-items-center bg-grey-600 text-white">↓</span>
 	{/snippet}
 </Sonner>

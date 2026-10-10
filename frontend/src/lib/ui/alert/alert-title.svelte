@@ -14,7 +14,7 @@
 	bind:this={ref}
 	data-slot="alert-title"
 	class={cn(
-		'font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
+		'col-start-2 row-start-1 self-end px-3.5 pt-3 pb-3 group-has-[>[data-slot=alert-description]]/alert:pb-0.5 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
 		className
 	)}
 	{...restProps}

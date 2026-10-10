@@ -1,13 +1,17 @@
 <script lang="ts" module>
 	import { type VariantProps, tv } from 'tailwind-variants';
 
+	// A notification of v3: a row on the accent, a glyph cell on the left (× error, ↓ downgrade,
+	// a tick when done, → for a note), the text, an action in caps on the right. The glyph is the
+	// first child <span data-slot="alert-glyph" aria-hidden="true">; its color comes from the variant
+	// or from the class of the span.
 	export const alertVariants = tv({
-		base: "grid gap-0.5 rounded-none border px-2.5 py-2 text-left text-xs has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 *:[svg]:row-span-2 *:[svg]:translate-y-0 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4 group/alert relative w-full",
+		base: 'group/alert relative grid min-h-11 w-full grid-cols-[auto_minmax(0,1fr)_auto] rounded-none bg-accent text-left text-ui text-foreground *:data-[slot=alert-glyph]:col-start-1 *:data-[slot=alert-glyph]:row-span-2 *:data-[slot=alert-glyph]:row-start-1 *:data-[slot=alert-glyph]:grid *:data-[slot=alert-glyph]:min-h-11 *:data-[slot=alert-glyph]:w-11 *:data-[slot=alert-glyph]:place-items-center *:data-[slot=alert-glyph]:text-[15px] *:data-[slot=alert-glyph]:[&>svg]:size-3.5',
 		variants: {
 			variant: {
-				default: 'bg-card text-card-foreground',
+				default: '*:data-[slot=alert-glyph]:bg-border *:data-[slot=alert-glyph]:text-foreground',
 				destructive:
-					'border-destructive bg-transparent text-foreground *:data-[slot=alert-description]:text-muted-foreground *:[svg]:text-destructive'
+					'*:data-[slot=alert-glyph]:bg-primary-deep *:data-[slot=alert-glyph]:text-primary-deep-foreground'
 			}
 		},
 		defaultVariants: {
