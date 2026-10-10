@@ -300,6 +300,23 @@ def brief(item: TInstrument) -> TInstrumentBrief:
     return TInstrumentBrief(**item.model_dump(include=set(TInstrumentBrief.model_fields)))
 
 
+def search_rank(query: str, hit: sdk.InstrumentShort) -> tuple[int, bool]:
+    """The order of FindInstrument hits the fake keeps too: the exact ticker or code first, then
+    tickers that start with the query, then the rest; tradable hits first within each step."""
+    needle = query.strip().casefold()
+    ticker = hit.ticker.casefold()
+    codes = {hit.isin.casefold(), hit.figi.casefold(), hit.uid.casefold()} - {""}
+    if ticker == needle or needle in codes:
+        step = 0
+    elif ticker.startswith(needle):
+        step = 1
+    else:
+        step = 2
+    # The SDK annotates the flag as str; protobuf gives a bool.
+    tradable: object = hit.api_trade_available_flag
+    return step, tradable is not True
+
+
 def _figure(value: float) -> Decimal | None:
     # A double the API did not fill in comes as 0: no figure rather than a zero.
     return Decimal(repr(value)) if value else None

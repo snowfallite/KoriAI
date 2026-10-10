@@ -197,14 +197,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/media/logos/{logo_base}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Logo */
+        get: operations["logo_api_media_logos__logo_base__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/portfolio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Portfolio
+         * @description Every visible account, or the one `account` names (acc1, acc2, …).
+         */
+        get: operations["portfolio_api_portfolio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         /** @enum {string} */
         AccountStatus: "new" | "open" | "closed" | "other";
+        /** AccountSummaryOut */
+        AccountSummaryOut: {
+            /** Alias */
+            alias: string;
+            /** Name */
+            name: string;
+            total: components["schemas"]["Money"];
+            expected_yield: components["schemas"]["Money"] | null;
+            expected_yield_pct: components["schemas"]["DecimalStr"] | null;
+        };
         /** @enum {string} */
         AccountType: "broker" | "iis" | "invest_box" | "invest_fund" | "other";
+        /** AllocationSliceOut */
+        AllocationSliceOut: {
+            key: components["schemas"]["InstrumentType"];
+            /** Label */
+            label: string;
+            value: components["schemas"]["Money"];
+            weight: components["schemas"]["DecimalStr"];
+        };
         /** @enum {string} */
         AnswerStyle: "concise" | "detailed";
         /** ArtifactCreatedEvent */
@@ -525,6 +580,41 @@ export interface components {
         };
         /** @enum {string} */
         PeriodCode: "1m" | "3m" | "6m" | "ytd" | "1y" | "3y" | "5y" | "max";
+        /** PortfolioOut */
+        PortfolioOut: {
+            /**
+             * As Of
+             * Format: date-time
+             */
+            as_of: string;
+            /**
+             * Currency
+             * @constant
+             */
+            currency: "RUB";
+            total: components["schemas"]["Money"];
+            /** Accounts */
+            accounts: components["schemas"]["AccountSummaryOut"][];
+            /** Allocation */
+            allocation: components["schemas"]["AllocationSliceOut"][];
+            /** Positions */
+            positions: components["schemas"]["PositionOut"][];
+        };
+        /** PositionOut */
+        PositionOut: {
+            instrument: components["schemas"]["InstrumentBrief"];
+            /** Account Alias */
+            account_alias: string;
+            quantity: components["schemas"]["DecimalStr"];
+            avg_price: components["schemas"]["Money"] | null;
+            current_price: components["schemas"]["Money"] | null;
+            value: components["schemas"]["Money"];
+            value_rub: components["schemas"]["Money"];
+            weight: components["schemas"]["DecimalStr"];
+            yield_abs: components["schemas"]["Money"] | null;
+            yield_pct: components["schemas"]["DecimalStr"] | null;
+            accrued_interest: components["schemas"]["Money"] | null;
+        };
         /** ReadyOut */
         ReadyOut: {
             /** Db */
@@ -1348,6 +1438,88 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    logo_api_media_logos__logo_base__get: {
+        parameters: {
+            query?: {
+                size?: 160 | 320 | 640;
+            };
+            header?: never;
+            path: {
+                logo_base: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": unknown;
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    portfolio_api_portfolio_get: {
+        parameters: {
+            query?: {
+                account?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioOut"];
+                };
             };
             /** @description Client Error */
             "4XX": {

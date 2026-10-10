@@ -143,7 +143,7 @@ class AuthService:
         return MeOut(
             user=user_out(user),
             settings=await SettingsService(self._uow).get(principal.user_id),
-            broker=await BrokerService(self._uow).connection(principal.user_id),
+            broker=await BrokerService(self._uow, self._settings).connection(principal.user_id),
         )
 
     async def logout(self, principal: Principal, ip: Ip) -> None:

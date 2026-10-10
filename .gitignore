@@ -13,3 +13,6 @@ node_modules/
 
 # Files downloaded by scripts/discover_edisclosure.py
 /.discovery/
+
+# DATA_DIR of scripts/smoke_external.py on a workstation: the Firefox profile of e-disclosure
+/.smoke/

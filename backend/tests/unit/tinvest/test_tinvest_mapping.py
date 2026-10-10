@@ -9,8 +9,8 @@ them the way it reads gRPC answers. Expectations are worked out from the files b
 from datetime import UTC, date, datetime
 from decimal import Decimal
 from pathlib import Path
-from typing import Any
-from uuid import UUID
+from typing import Any, cast
+from uuid import UUID, uuid4
 
 import pytest
 from google.protobuf import json_format
@@ -384,7 +384,7 @@ async def test_find_skips_a_hit_the_instrument_service_does_not_know(
 
     class Instruments:
         async def find_instrument(self, *, query: str) -> sdk.FindInstrumentResponse:
-            hits = [sdk.InstrumentShort(uid=str(gone)), sdk.InstrumentShort(uid=str(SBER))]
+            hits = [short("SBERX", "TQBR", uid=str(gone)), short("SBER", "TQBR", uid=str(SBER))]
             return sdk.FindInstrumentResponse(instruments=hits)
 
     class Services:
@@ -401,3 +401,72 @@ async def test_find_skips_a_hit_the_instrument_service_does_not_know(
     found = await adapter.find_instruments(SecretStr("t"), "сбер")
 
     assert [brief.ticker for brief in found] == ["SBER"]
+
+
+def short(
+    ticker: str, class_code: str, *, tradable: bool = True, **codes: str
+) -> sdk.InstrumentShort:
+    return sdk.InstrumentShort(
+        ticker=ticker,
+        class_code=class_code,
+        uid=codes.get("uid", str(uuid4())),
+        isin=codes.get("isin", ""),
+        figi=codes.get("figi", ""),
+        # The SDK annotates the flag as str; protobuf gives a bool.
+        api_trade_available_flag=cast(Any, tradable),
+    )
+
+
+def test_search_ranks_the_exact_ticker_then_its_prefix_then_the_rest() -> None:
+    hits = [
+        short("SR250", "SPBOPT"),
+        short("SBERP", "TQBR"),
+        short("SBER", "SPBDE", tradable=False),
+        short("GAZP", "TQBR", isin="RU0009029540"),
+        short("SBER", "TQBR"),
+    ]
+
+    ranked = sorted(hits, key=lambda hit: mapping.search_rank(" sber ", hit))
+
+    assert [(hit.ticker, hit.class_code) for hit in ranked] == [
+        ("SBER", "TQBR"),
+        ("SBER", "SPBDE"),
+        ("SBERP", "TQBR"),
+        ("SR250", "SPBOPT"),
+        ("GAZP", "TQBR"),
+    ]
+    by_isin = sorted(hits, key=lambda hit: mapping.search_rank("ru0009029540", hit))
+    assert (by_isin[0].ticker, by_isin[0].class_code) == ("GAZP", "TQBR")
+
+
+async def test_find_fetches_the_best_hits_within_the_limit(monkeypatch: pytest.MonkeyPatch) -> None:
+    adapter = RealTInvest(Settings.model_construct())
+    sber = mapping.instrument(
+        answer(
+            "GetInstrumentBy", instruments_pb2.InstrumentResponse, sdk.InstrumentResponse
+        ).instrument
+    )
+    # The share comes last in the answer, behind derivatives named after it.
+    hits = [short(f"SBER{n:02}", "SPBOPT") for n in range(12)] + [
+        short("SBER", "TQBR", uid=str(SBER))
+    ]
+    fetched: list[UUID] = []
+
+    class Instruments:
+        async def find_instrument(self, *, query: str) -> sdk.FindInstrumentResponse:
+            return sdk.FindInstrumentResponse(instruments=hits)
+
+    class Services:
+        instruments = Instruments()
+
+    async def get_instrument(token: Any, uid: UUID) -> TInstrument:
+        fetched.append(uid)
+        return sber if uid == SBER else sber.model_copy(update={"uid": uid, "ticker": "SBER00"})
+
+    monkeypatch.setattr(adapter, "_services", lambda token: Services())
+    monkeypatch.setattr(adapter, "get_instrument", get_instrument)
+
+    found = await adapter.find_instruments(SecretStr("t"), "SBER", limit=3)
+
+    assert (found[0].ticker, found[0].class_code) == ("SBER", "TQBR")
+    assert len(fetched) == 3  # one GetInstrumentBy per hit within the limit

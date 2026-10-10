@@ -140,9 +140,12 @@ class RealTInvest:
     ) -> list[TInstrumentBrief]:
         instruments = self._services(token).instruments
         answer = await self._read(lambda: instruments.find_instrument(query=query))
+        # The API order is no ranking: SBER on TQBR was not among the first ten hits of "SBER"
+        # (smoke of 2026-10-08). Rank before the limit, as the fake does.
+        hits = sorted(answer.instruments, key=lambda hit: mapping.search_rank(query, hit))
         # FindInstrument gives no currency: the full instruments do, and their cache is warm.
         found = await asyncio.gather(
-            *(self.get_instrument(token, UUID(i.uid)) for i in answer.instruments[:limit] if i.uid),
+            *(self.get_instrument(token, UUID(i.uid)) for i in hits[:limit] if i.uid),
             return_exceptions=True,
         )
         briefs = []
