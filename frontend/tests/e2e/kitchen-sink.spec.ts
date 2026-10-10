@@ -28,6 +28,8 @@ const COMPONENTS = [
 	'Disclaimer',
 	'Logo'
 ];
+// The sheets of the v3 mockup the page repeats (S1-14 AC 7).
+const SHEETS = ['Кнопки', 'Выбранное', 'Карточки', 'Уведомления'];
 
 const DARK = /(^|\s)dark(\s|$)/;
 
@@ -53,28 +55,42 @@ test('kitchen-sink shows every component in both themes without console errors',
 
 	await page.goto('/dev/kitchen-sink');
 
-	await expect(page.getByRole('region', { name: 'Примитивы' })).toBeVisible();
-	for (const name of COMPONENTS) {
-		await expect(page.getByRole('region', { name, exact: true })).toBeVisible();
-	}
-	// Every ChartKind draws on a canvas (S1-06 AC 2); ECharts may add layers, so count charts.
+	const html = page.locator('html');
+	const theme = page.getByRole('group', { name: 'Тема' }).first();
+	// Every ChartKind draws (S1-06 AC 2): a pie as plates, the other eight on a canvas.
 	const charts = page.getByRole('region', { name: 'ChartView' }).locator('[role="img"]');
-	await expect(charts).toHaveCount(9);
-	await expect(charts.filter({ has: page.locator('canvas') })).toHaveCount(9);
+	const canvases = charts.filter({ has: page.locator('canvas') });
+
+	// Night is the Kïoku default; the day theme is one click away (S1-14 AC 7).
+	await expect(html).toHaveClass(DARK);
+	for (const day of [false, true]) {
+		if (day) {
+			await theme.getByRole('radio', { name: 'День' }).click();
+			await expect(html).not.toHaveClass(DARK);
+		}
+		await expect(page.getByRole('region', { name: 'Примитивы' })).toBeVisible();
+		for (const name of [...SHEETS, ...COMPONENTS]) {
+			await expect(page.getByRole('region', { name, exact: true })).toBeVisible();
+		}
+		await expect(charts).toHaveCount(9);
+		await expect(canvases).toHaveCount(8);
+	}
+	await theme.getByRole('radio', { name: 'Ночь' }).click();
+	await expect(html).toHaveClass(DARK);
+
 	// The XSS vectors of the Markdown demo stay text (S1-06 AC 3).
 	const markdown = page.getByRole('region', { name: 'Markdown', exact: true });
 	await expect(markdown.locator('img, script')).toHaveCount(0);
 	await expect(markdown).toContainText('<script>');
 	expect(await page.evaluate(() => 'hacked' in window)).toBe(false);
 
-	// Night is the Kïoku default; the day theme is one click away.
-	const html = page.locator('html');
-	await expect(html).toHaveClass(DARK);
-	await page.getByRole('button', { name: 'Светлая тема' }).first().click();
-	await expect(html).not.toHaveClass(DARK);
-	await expect(charts.filter({ has: page.locator('canvas') })).toHaveCount(9);
-	await page.getByRole('button', { name: 'Тёмная тема' }).first().click();
-	await expect(html).toHaveClass(DARK);
+	// The dialog is a white panel with a black title strip and two actions (tech.md §13.2).
+	const confirm = page.getByRole('region', { name: 'ConfirmDialog', exact: true });
+	await confirm.getByRole('button', { name: 'Удалить тред' }).click();
+	const dialog = page.getByRole('alertdialog', { name: 'Удалить тред?' });
+	await expect(dialog).toBeVisible();
+	await dialog.getByRole('button', { name: 'Отмена' }).click();
+	await expect(dialog).toBeHidden();
 
 	expect(errors).toEqual([]);
 });
