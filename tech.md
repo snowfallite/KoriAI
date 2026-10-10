@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 7
+> CORE_VERSION: 8
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v8 (2026-10-10): визуал v3 по макету `docs/ui-references/kori-v3/`: выбранное белое вместо красной заливки, главная кнопка из красной ячейки со стрелкой и подписи цветом текста, `ai` размера `icon` для отправки, белые панели только у ввода, входа и диалогов, карточки рамкой без заливки, печать 氷 в `Logo`, нейтральные плитки бумаг, данные цветами бренда (плюс цветом текста, минус красным, крупная доля белая), токены `--prose`, `--line-faint` и шкала шрифта `--text-*`, ссылка `/chat?q=`; задача S1-14 и вид F-03, F-07 (S1-14).
 - v7 (2026-10-01): UI-кит повторяет бренд Kïoku целиком: у `button` вариант `ai` и ячейка-глиф, общий компонент `Logo` (compact, spaced, sign), токены red-deep, лесенки серых, сетки графиков и градиентов, утилиты `ki-*` и правила бренда в §13.3, тема по умолчанию ночь (S1-06).
 - v6 (2026-09-30): OpenAPI несёт модели пропсов §13.2, которые приходят раньше своих роутов: `Money`, `UserOut`, `BrokerAccountOut`, `PeriodCode`; UI-кит S1-06 типизирует ими пропсы до S1-05 и S1-11 (S1-06).
 - v5 (2026-09-30): у каждой задачи очереди свой тип payload, `defer(payload)` находит задачу по типу; четыре задачи документа получили `FetchDocumentPayload`, `ParseRasPayload`, `ExtractIfrsPayload`, `IndexDocumentPayload` на общей базе `DocumentPayload {document_id}` с одним `lock` и своими `queueing_lock` (S1-04).
@@ -195,7 +196,7 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
 │   └── discover_edisclosure.py   # dev-only: кравлинг структуры e-disclosure (S1-12)
 ├── docs/
 │   ├── sources/e-disclosure.md   # итоги discovery
-│   ├── ui-references/            # референсы и шаблон визуала (§13.3)
+│   ├── ui-references/            # шаблон бренда Kïoku (template/) и макет v3 (kori-v3/), §13.3
 │   └── adr/                      # ADR на изменение решений §3.2
 ├── backend/
 │   ├── pyproject.toml, uv.lock, alembic.ini, .importlinter
@@ -1549,16 +1550,16 @@ class SourceRef(BaseModel):
 
 Ставятся командой `shadcn-svelte add` в S1-06 и не переписываются руками без причины: `button`, `input`, `textarea`, `label`, `card`, `badge`, `alert`, `dialog`, `alert-dialog`, `sheet`, `dropdown-menu`, `select`, `tabs`, `tooltip`, `popover`, `separator`, `skeleton`, `scroll-area`, `switch`, `checkbox`, `radio-group`, `avatar`, `sonner`, `table`, `command`, `sidebar`, `collapsible`, `progress`, `toggle-group`. Код фич не пишет свои аналоги этих элементов.
 
-`button` говорит на языке Kïoku. Варианты: `default` (CTA: `--primary`, капс, на hover инверсия цвета текста и фона), `secondary` (ступенчатая серая: поле `--grey-300`, на hover `--grey-200`), `outline` (рамка цвета текста, капс, на hover инверсия), `ghost`, `destructive` (плашка red-deep), `link` (капс `--muted-foreground`, на hover `--primary`), `ai` (действие ИИ: подпись чёрным на `ki-fade`, на hover сплошной `--primary`). Ячейка-глиф: первый дочерний `<span data-slot="button-glyph" aria-hidden="true">` с глифом `+`, `→` или `↓` становится квадратной ячейкой высотой с кнопку без отступа слева; у `secondary` она `--grey-400`, у `default` и `ai` она `ki-ignite` с белым глифом. Disabled у залитых вариантов: поле `--grey-200`, ячейка `--grey-300`, текст `--grey-600`, без hover; у `ghost` и `link` меняется только текст.
+`button` говорит на языке Kïoku. Кнопка с действием собирается из ячейки-глифа и подписи: первый дочерний `<span data-slot="button-glyph" aria-hidden="true">` становится квадратной ячейкой высотой с кнопку без отступа слева. Варианты: `default` (главная: ячейка `--primary` с чёрным глифом, подпись цветом текста, то есть белая с чёрным текстом на ночи и чёрная с белым на белой панели; на hover подпись на шаг серее), `destructive` (как `default`, ячейка `--primary-deep` с белым глифом), `secondary` (ступенчатая серая: ячейка `--grey-400`, подпись `--grey-300`, на hover `--grey-200`), `outline` (рамка цвета текста, капс, на hover инверсия), `ghost`, `link` (капс `--muted-foreground`, на hover `--primary`), `ai` (действие ИИ: ячейка `ki-ignite` с белым глифом, подпись чёрным на `ki-fade`, на hover сплошной `--primary`; размер `icon` даёт квадрат 40 px `ki-ignite` со стрелкой, это кнопка отправки в поле ввода). Сплошной красной заливки нет ни у одной кнопки. Глифы: `→` действие и переход, `+` создать, `↓` раскрыть, `×` только закрыть, отменить и ошибка. Disabled у залитых вариантов: поле `--grey-200`, ячейка `--grey-300`, текст `--grey-600`, без hover; у `ghost` и `link` меняется только текст.
 
 ### 13.2 Составные компоненты (`frontend/src/lib/components/`, S1-06)
 
 | Компонент | Пропсы | Где |
 |---|---|---|
-| `AppShell` | `nav: NavItem[]`, `user: UserOut`, `children: Snippet` | layout `(app)`: сайдбар на десктопе, нижние вкладки на мобильном |
-| `PageHeader` | `title: string`, `description?: string`, `actions?: Snippet` | все вкладки |
-| `EmptyState` | `icon?: Component`, `title: string`, `description?: string`, `action?: Snippet` | пустые списки |
-| `ErrorState` | `error: ApiError`, `onRetry?: () => void` | ошибки загрузки |
+| `AppShell` | `nav: NavItem[]`, `user: UserOut`, `children: Snippet` | layout `(app)`: на десктопе сайдбар (логотип, «+ Новый чат» на `/chat`, меню текстом, внизу пользователь, `ThemeToggle`, «Выйти»), на мобильном нижние вкладки с иконками |
+| `PageHeader` | `title: string`, `description?: string`, `actions?: Snippet` | все вкладки: мета-строка 56 px, заголовок капсом в `h1`, пояснение и действия в той же строке |
+| `EmptyState` | `icon?: Component`, `title: string`, `description?: string`, `action?: Snippet` | пустые списки: рамка без заливки, заголовок 28 px, главная кнопка; иконка не рисуется |
+| `ErrorState` | `error: ApiError`, `onRetry?: () => void` | ошибки загрузки: ячейка `×` red-deep, сообщение, код запроса, `outline` «Повторить» |
 | `LoadingBlock` | `rows?: number = 3`, `variant?: 'text' \| 'table' \| 'chart'` | загрузка |
 | `DataTable<T>` | `columns: ColumnDef<T>[]`, `rows: T[]`, `sort?: SortingState`, `onSortChange?`, `onRowClick?: (row: T) => void`, `dense?: boolean`, `empty?: Snippet`, `footer?: Snippet` | таблицы, до 500 строк, сортировка на клиенте |
 | `ChartView` | `spec: ChartSpec`, `height?: number = 320`, `class?: string` | графики: ленивая загрузка ECharts, ResizeObserver, тема из токенов, кнопки «PNG» и «Данные» (серии таблицей) |
@@ -1567,19 +1568,19 @@ class SourceRef(BaseModel):
 | `ArtifactView` | `artifact: ArtifactOut` | выбор chart, table, image |
 | `Markdown` | `source: string`, `sources?: SourceRef[]`, `streaming?: boolean` | ответ агента: HTML выводится текстом, картинки скрыты, ссылки безопасные, код с копированием, `[sN]` превращается в сноску |
 | `SourceList` | `sources: SourceRef[]` | источники под ответом |
-| `StatCard` | `label: string`, `value: string`, `delta?: {text: string, trend: 'up' \| 'down' \| 'flat'}`, `hint?: string`, `loading?: boolean` | сводки |
+| `StatCard` | `label: string`, `value: string`, `delta?: {text: string, trend: 'up' \| 'down' \| 'flat'}`, `hint?: string`, `loading?: boolean` | сводки без рамки, между соседними вертикальная линия |
 | `MoneyText` | `money: Money`, `signed?: boolean`, `compact?: boolean`, `colorize?: boolean` | суммы |
 | `PercentText` | `value: DecimalStr \| number` (доля), `signed?: boolean`, `digits?: number = 2`, `colorize?: boolean` | проценты |
-| `InstrumentLogo` | `src: string \| null`, `name: string`, `color?: string \| null`, `size?: 20 \| 24 \| 32 \| 48 = 24` | логотип, при отсутствии инициалы на цвете бренда |
+| `InstrumentLogo` | `src: string \| null`, `name: string`, `color?: string \| null`, `size?: 20 \| 24 \| 32 \| 48 = 24` | логотип, при отсутствии инициалы на нейтральной плитке `--grey-900`; `color` плитку не красит |
 | `InstrumentBadge` | `instrument: InstrumentBrief`, `showTicker?: boolean = true`, `size?: 'sm' \| 'md' = 'sm'` | логотип + название + тикер |
-| `AccountSelect` | `accounts: BrokerAccountOut[]`, `value: string \| null` (null = все счета), `onChange: (alias: string \| null) => void` | портфель |
+| `AccountSelect` | `accounts: BrokerAccountOut[]`, `value: string \| null` (null = все счета), `onChange: (alias: string \| null) => void` | портфель: до 4 счетов вкладками, больше выпадающим списком |
 | `PeriodSelect` | `value: PeriodCode`, `options?: PeriodCode[]`, `onChange: (p: PeriodCode) => void` | графики |
-| `UsageMeter` | `label: string`, `used: number`, `quota: number`, `pace?: number`, `unit?: string` | расход |
-| `ConfirmDialog` | `open: boolean` (bindable), `title: string`, `description?: string`, `confirmLabel?: string = 'Подтвердить'`, `destructive?: boolean`, `onConfirm: () => Promise<void> \| void` | удаление, отключение |
+| `UsageMeter` | `label: string`, `used: number`, `quota: number`, `pace?: number`, `unit?: string` | расход: полоса 6 px, красная засечка темпа |
+| `ConfirmDialog` | `open: boolean` (bindable), `title: string`, `description?: string`, `confirmLabel?: string = 'Подтвердить'`, `destructive?: boolean`, `onConfirm: () => Promise<void> \| void` | удаление, отключение: белая панель, чёрная плашка заголовка, полоса кнопок «Отмена» и подтверждение |
 | `CopyButton` | `text: string`, `label?: string` | код, ссылки |
-| `ThemeToggle` | нет | шапка |
+| `ThemeToggle` | нет | сайдбар и страницы входа: сегменты «Ночь» и «День», выбранный белый |
 | `Disclaimer` | нет | под ответами с `meta.disclaimer` |
-| `Logo` | `variant?: 'compact' \| 'spaced' \| 'sign' = 'compact'`, `size?: 'sm' \| 'md' \| 'lg' = 'md'` | знак продукта по образцу Kïoku: compact «Kōri» с надстрочным 氷 (шапка AppShell), spaced «K Ō R I» с каной こ お り под буквами (страницы входа), sign «Kō» на плитке (фавикон, аватар) |
+| `Logo` | `variant?: 'compact' \| 'spaced' \| 'sign' = 'compact'`, `size?: 'sm' \| 'md' \| 'lg' = 'md'` | знак продукта: sign это печать 氷 (квадрат red-deep, белая рамка внутри, белый 氷; фавикон, метка агента у ответа), compact это печать и «Kōri» (шапка AppShell, панели входа), spaced «K Ō R I» с каной こ お り в промежутках (страницы входа) |
 
 `NavItem {id: 'chat' | 'history' | 'portfolio' | 'settings', label: string, href: string, icon: Component}` задаётся данными в `lib/nav.ts`. Порядок вкладок: Чат, История, Портфель, Настройки.
 
@@ -1587,19 +1588,20 @@ class SourceRef(BaseModel):
 
 ### 13.3 Визуал и токены
 
-- Источник визуала: `docs/ui-references/` (скриншоты, заметки, примеры кода) или шаблон в `docs/ui-references/template/`. S1-06 переносит его в токены `app.css` и компоненты §13.2. Фичи новых визуальных стилей не вводят.
-- Токены (CSS-переменные в `app.css`, `@theme` Tailwind v4), светлая и тёмная темы: `--background`, `--foreground`, `--muted`, `--muted-foreground`, `--card`, `--card-foreground`, `--border`, `--input`, `--ring`, `--primary`, `--primary-foreground`, `--primary-deep` и `--primary-deep-foreground` (плашка red-deep), `--accent`, `--destructive`, `--positive` (рост), `--negative` (падение), `--warning`, `--chart-1` … `--chart-8`, `--chart-grid` (сетка графиков), `--radius`. Одинаковые в обеих темах: лесенка серых `--grey-100`, `--grey-200`, `--grey-300`, `--grey-400`, `--grey-600`, `--grey-900` и градиенты `--grad-fade`, `--grad-ignite`, `--grad-hero`, `--grad-tile`, `--grad-ember`, `--grad-highlight`. Цвета в компонентах только через токены.
-- Бренд Kïoku (`docs/ui-references/template/README.md`), перенесённый на Kōri: тема по умолчанию ночь, дневная по выбору; радиус 0, теней нет; разделители `--border` (line-soft), рамки контролов и тегов цвета текста; обычный вес шрифта, жирный только у подзаголовков блоков; капс с трекингом у навигации, CTA, мета-подписей и заголовков таблиц; стрелки и знаки только глифами JetBrains Mono `→ ↓ ↑ + ×`; иконки линией 1.25 px с квадратными концами; фокус: зазор 2 px и кольцо 2 px цвета `--ring` (ночью красное, днём чёрное); активная вкладка и выбранный переключатель на плашке red-deep. Утилиты: `ki-fade`, `ki-ignite`, `ki-hero`, `ki-tile`, `ki-ember` (градиенты бренда), `ki-highlight` (подсветка фразы), `ki-halftone` (полутон, только декор, всегда `aria-hidden`). На одном экране не больше двух градиентов и одного паттерна.
-- Сетка: сайдбар 240 px на десктопе; меньше 768 px нижняя панель из 4 вкладок; контент до 1200 px; колонка чата до 820 px.
+- Источник визуала: макет v3 в `docs/ui-references/kori-v3/` (снимки, статичная вёрстка, спецификация с числами) поверх бренда Kïoku из `docs/ui-references/template/`. S1-06 и S1-14 переносят его в токены `app.css` и компоненты §13.2. Фичи новых визуальных стилей не вводят: вид экранов чата, портфеля, настроек и входа берётся из того же макета.
+- Токены (CSS-переменные в `app.css`, `@theme` Tailwind v4), светлая и тёмная темы: `--background`, `--foreground`, `--prose` (текст ответа агента), `--muted`, `--muted-foreground`, `--card`, `--card-foreground`, `--border`, `--line-faint` (линии строк), `--input`, `--ring`, `--primary`, `--primary-foreground`, `--primary-deep` и `--primary-deep-foreground` (плашка red-deep), `--accent` (выбранная строка меню, наведение строки), `--destructive`, `--positive` (рост, цвет текста), `--negative` (падение, красный), `--warning`, `--chart-1` … `--chart-8`, `--chart-grid` (сетка графиков), `--radius`. Одинаковые в обеих темах: лесенка серых `--grey-100`, `--grey-200`, `--grey-300`, `--grey-400`, `--grey-600`, `--grey-900` и градиенты `--grad-fade`, `--grad-ignite`, `--grad-hero`, `--grad-tile`, `--grad-ember`, `--grad-highlight`. Шкала шрифта: `--text-hero`, `--text-display`, `--text-quote`, `--text-title`, `--text-lead`, `--text-body`, `--text-ui`, `--text-caps`, `--text-caption`. Значения токенов и шкалы: `docs/ui-references/kori-v3/README.md`. Цвета в компонентах только через токены.
+- Бренд Kïoku (`docs/ui-references/template/README.md`), перенесённый на Kōri: тема по умолчанию ночь, дневная по выбору; радиус 0, теней нет; разделители `--border`, линии строк `--line-faint`, рамки контролов и тегов цвета текста; обычный вес шрифта, жирный только у подзаголовков блоков; капс с трекингом у навигации, кнопок, мета-подписей и заголовков таблиц; стрелки и знаки только глифами JetBrains Mono `→ ↓ ↑ + ×`; иконки линией 1.25 px с квадратными концами; фокус: зазор 2 px и кольцо 2 px цвета `--ring` (ночью красное, днём чёрное). Выбранное белое: в меню белый текст, красная `→` и строка `--accent`; вкладки, сегменты, переключатели и строки выбора инвертируются; красной заливки у выбранного нет. Утилиты: `ki-fade`, `ki-ignite`, `ki-hero`, `ki-tile`, `ki-ember` (градиенты бренда), `ki-highlight` (подсветка фразы), `ki-halftone` (полутон, только декор, всегда `aria-hidden`). На одном экране не больше двух градиентов и одного паттерна; градиент значит «ИИ работает» или действие ИИ.
+- Композиция v3: карточек с заливкой нет, секция это рамка 1 px `--border`, сводка держится на числе; крупно одно главное на экране; белая панель только там, где человек действует: поле ввода вопроса, вход и регистрация, диалог. Данные цветами бренда: плюс `--positive`, минус `--negative`, всегда со стрелкой и знаком; самая крупная доля структуры белая; синего и зелёного нет. Лучи и линии волосяные, 1 px, красный только у рекомендованного или наведённого пути. На десктопе навигация текстом, иконки только в нижних вкладках телефона.
+- Сетка: сайдбар 240 px на десктопе; меньше 768 px нижняя панель из 4 вкладок; мета-строка 56 px; поля страницы 48 px, на телефоне 16 px; контент до 1200 px; колонка чата до 820 px.
 - Тексты на русском. Числа и даты только через `format.ts`: даты `dd.MM.yyyy`, время `HH:mm` MSK.
 - Доступность: у каждого контрола подпись, видимый фокус, контраст AA, у графика `aria-label` из заголовка и кнопка «Данные».
 
 Содержимое вкладок:
-- **Чат** `/chat/[[threadId]]`: лента сообщений, поле ввода, статус рана (позиция в очереди, модель, шаги инструментов), артефакты в тексте, источники, дисклеймер, отмена.
+- **Чат** `/chat/[[threadId]]`: лента сообщений, поле ввода, статус рана (позиция в очереди, модель, шаги инструментов), артефакты в тексте, источники, дисклеймер, отмена. Старт нового треда: крупный вопрос, белое поле ввода с кнопкой отправки внутри, веер подсказок. `/chat?q=<текст>` подставляет вопрос в поле ввода и не отправляет его.
 - **История** `/history`: поиск, список тредов (заголовок, дата, число сообщений, фрагмент совпадения), переименование, архив, удаление, фильтр архивных.
-- **Портфель** `/portfolio`: выбор счёта, карточки итогов, структура, таблица позиций; с F-09 история стоимости, доходы, риск-метрики.
+- **Портфель** `/portfolio`: выбор счёта, итог крупным числом, счета, структура плашками, таблица позиций; кнопка «Спросить Kōri о портфеле» и строка позиции ведут в чат через `/chat?q=`; с F-09 история стоимости, доходы, риск-метрики.
 - **Настройки** `/settings`: Брокер (токен, счета), Модель (`model_mode`, `answer_style`), Расход, Профиль (имя, пароль, выход со всех устройств).
-- Вход и регистрация: `/login`, `/register?invite=<code>`.
+- Вход и регистрация: `/login`, `/register?invite=<code>`: обложка с арками на весь экран, белая панель формы, ошибки у полей.
 
 ## 14. Тесты
 
@@ -1949,7 +1951,7 @@ MVP: один тестовый VPS, он же рабочее окружение 
 
 ### 22.1 S1: каркас
 
-Порядок: 01 → 02 → 12 → 03 → 04 → 06 → 05 → 07 → 08 → 09 → 10 → 11 → 13. S1-12 (discovery) идёт до S1-09: адаптер e-disclosure строится по его снимкам.
+Порядок: 01 → 02 → 12 → 03 → 04 → 06 → 05 → 07 → 08 → 09 → 10 → 11 → 14 → 13. S1-12 (discovery) идёт до S1-09: адаптер e-disclosure строится по его снимкам. S1-14 переводит уже собранный кит на визуал v3 до деплоя и до слайсов S2.
 
 **S1-01. Репозиторий и PR-гейт.**
 Делает: раскладку §4.1; `backend/` (uv с индексом T-Bank §4.3, ruff, mypy, import-linter §4.4, deptry, pytest с маркерами слоёв); `frontend/` (SvelteKit 2 SPA, `adapter-static`, TS strict, Tailwind v4, eslint, prettier, knip, vitest, Playwright); `justfile`; `.claude/settings.json`; `scripts/check_contract_bump.py`, `scripts/check_forbidden_apis.py`; `pr.yml` со всеми job §20.1 (пустые пока проходят тривиально); шаблон PR, метки, защита `main`.
@@ -2016,10 +2018,16 @@ AC: документ отвечает на вопросы: 1) как найти 
 AC: 1) мёрж в `main` выкатывает версию на VPS не дольше 10 минут; 2) миграции применяются в деплой-шаге; 3) сломанный healthcheck возвращает прошлый тег; 4) HTTPS с валидным сертификатом; 5) Портфель работает на VPS под демо-пользователем; 6) адаптер e-disclosure открывает с VPS карточку и список файлов без капчи, иначе владелец решает по L-06.
 Тесты: проверка по AC вручную, результат в описании PR.
 
+**S1-14. Визуал v3.**
+Делает: переносит макет `docs/ui-references/kori-v3/` в код. Значения токенов, новые `--prose` и `--line-faint`, шкалу `--text-*` и серии графиков в `app.css`; варианты `button` по §13.1 (ячейка-глиф, `ai` размера `icon`, без сплошной красной заливки); выбранное белое в `tabs`, `toggle-group`, `switch`, `radio-group`, `sidebar`; `Logo` с печатью 氷 и фавикон `lib/assets/favicon.svg`; `AppShell`, `ThemeToggle`, `PageHeader`, `StatCard`, `EmptyState`, `ErrorState`, `UsageMeter`, `AccountSelect`, `InstrumentLogo`, `ConfirmDialog`, `Disclaimer`, `SourceList`, `Markdown`, `ChartView` и `chart-option.ts` по спецификации; обложку с арками и белые панели входа и регистрации; вкладку Портфель по экрану `portfolio` после мёржа S1-11; kitchen-sink со всеми компонентами v3 в обеих темах. Экраны чата не трогает: их делает F-03.
+AC: 1) ни у кнопки, ни у выбранного состояния нет сплошной красной заливки: выбранный пункт меню белый с красной `→`, выбранные вкладка, сегмент, переключатель и строка выбора белые; 2) `--chart-1` … `--chart-8` из таблицы спецификации, минус красный, плюс цветом текста, самая крупная доля структуры белая, бенчмарк серым пунктиром; 3) печать 氷 стоит в шапке `AppShell`, на панелях входа и в фавиконе, доступное имя логотипа «Kōri»; 4) вход и регистрация повторяют `screens/login.png` и `screens/register.png`: арки ступенчатыми дугами по алгоритму спецификации, белая панель, ошибки у полей с `aria-invalid`; 5) вкладка Портфель повторяет `screens/portfolio.png`, строка позиции и кнопка «Спросить Kōri о портфеле» ведут на `/chat?q=…`; 6) карточек с заливкой нет: секции рамкой 1 px, сводки без рамки; 7) kitchen-sink показывает кнопки, выбранное, логотип, карточки, уведомления, диалог, расход и артефакты в ночной и дневной темах; 8) контраст AA, видимый фокус, лучи, глифы-ячейки и счётчики `aria-hidden`; 9) `prefers-reduced-motion` выключает анимацию.
+Тесты: vitest `chart-option.ts` (ни одного цвета вне палитры, минус красный, бенчмарк пунктиром); компонентные тесты `Button` (ячейка-глиф у `default` и `destructive`), `Logo` (печать скрыта от чтения с экрана, имя «Kōri»), `InstrumentLogo` (инициалы на нейтральной плитке); e2e входа, регистрации, вкладок и kitchen-sink с новыми подписями; снимки экранов из AC 4 и 5 в описании PR.
+
 **Чек-лист «каркас готов».** Фичи S2 не начинаются, пока каждый пункт не зелёный:
 - [ ] CI зелёный на тривиальном PR (S1-01);
 - [ ] layout, навигация данными и гард авторизации в `main` (S1-05);
 - [ ] UI-примитивы и компоненты импортируются и отрендерены в kitchen-sink (S1-06);
+- [ ] визуал v3 из `docs/ui-references/kori-v3/` в `main` (S1-14);
 - [ ] очередь гоняет демо-джоб, тест идемпотентности зелёный (S1-07);
 - [ ] SSE эхает тестовое событие, e2e зелёный (S1-08);
 - [ ] фейки всех внешних клиентов отдают сид-данные (S1-09, S1-10);
@@ -2046,9 +2054,9 @@ AC: 1) `GET` и `PATCH /api/settings` читают и меняют `model_mode`,
 Тесты: contract settings и password (включая ошибки); e2e: настройки сохраняются после перезагрузки.
 
 **F-03. Чат: треды, ран, стрим** (S1).
-Зона: домены `chat`, `agent` (граф в минимальной форме: `load_context → agent → postprocess`, решение маршрутизации фиксировано: lite без инструментов), роут `chat/[[threadId]]` с локальными `MessageView`, `Composer`, `RunStatus`, сценарии `f03_*`. Контракты: §3.4, §6.5, §6.6, §7, §9.1, §9.9. UI: `Markdown`, `Textarea`, `Button`, `ScrollArea`, `Skeleton`, `Disclaimer`.
-AC: 1) `POST /api/chat/messages` без `thread_id` создаёт тред и ран, 202; чужой `thread_id` → 404; 2) второй запрос при активном ране → 409 `run_active`; 3) SSE: `run.started`, `step.started`, `text.delta`…, `run.finished(done)`; после финала `GET` треда отдаёт ответ с `blocks`; 4) отмена во время стрима → `run.finished(cancelled)`, сообщение `partial` с накопленным текстом; 5) три 5xx от LLM (FaultPlan) → `run.finished(failed)` с `ErrorOut`, UI показывает ошибку и «Повторить» (повтор отправляет тот же текст новым сообщением); 6) занятый гейт → `run.queued` с позицией, UI показывает «В очереди: N»; 7) рестарт процесса переводит `running` в `interrupted`, UI показывает «Ответ прерван»; 8) Enter отправляет, Shift+Enter переносит строку, пустое не отправляется, лимит 4000 символов; 9) в LLM уходит `X-Session-ID = thread_id` (проверка по записи фейка).
-Тесты: contract (202, 404, 409); агентный сценарий `f03_basic`; integration `interrupted`; vitest `blocks.ts` на `blocks_cases.json`; e2e «отправка → стрим → финал» и «отмена».
+Зона: домены `chat`, `agent` (граф в минимальной форме: `load_context → agent → postprocess`, решение маршрутизации фиксировано: lite без инструментов), роут `chat/[[threadId]]` с локальными `MessageView`, `Composer`, `RunStatus`, сценарии `f03_*`. Контракты: §3.4, §6.5, §6.6, §7, §9.1, §9.9. UI: `Markdown`, `Textarea`, `Button`, `ScrollArea`, `Skeleton`, `Disclaimer`; вид по `docs/ui-references/kori-v3/` (`chat-start`, `chat-thread`, `phone-chat`): старт с крупным вопросом и веером подсказок, белое поле ввода с кнопкой `ai` размера `icon` внутри, вопрос в ленте полосой, теги рана с печатью 氷.
+AC: 1) `POST /api/chat/messages` без `thread_id` создаёт тред и ран, 202; чужой `thread_id` → 404; 2) второй запрос при активном ране → 409 `run_active`; 3) SSE: `run.started`, `step.started`, `text.delta`…, `run.finished(done)`; после финала `GET` треда отдаёт ответ с `blocks`; 4) отмена во время стрима → `run.finished(cancelled)`, сообщение `partial` с накопленным текстом; 5) три 5xx от LLM (FaultPlan) → `run.finished(failed)` с `ErrorOut`, UI показывает ошибку и «Повторить» (повтор отправляет тот же текст новым сообщением); 6) занятый гейт → `run.queued` с позицией, UI показывает «В очереди: N»; 7) рестарт процесса переводит `running` в `interrupted`, UI показывает «Ответ прерван»; 8) Enter отправляет, Shift+Enter переносит строку, пустое не отправляется, лимит 4000 символов; 9) в LLM уходит `X-Session-ID = thread_id` (проверка по записи фейка); 10) `/chat?q=<текст>` подставляет вопрос в поле ввода и не отправляет его, клик по подсказке делает то же.
+Тесты: contract (202, 404, 409); агентный сценарий `f03_basic`; integration `interrupted`; vitest `blocks.ts` на `blocks_cases.json`; e2e «отправка → стрим → финал», «отмена» и «`?q=` заполняет поле».
 
 **F-04. История** (F-03).
 Зона: домен `chat` (список, поиск, правка, удаление), `chat/tasks.py` (`threads.title`, `threads.summarize`), роут `history`, сценарии `f04_*`. Контракты: §6.5, §10.2, §9.12. UI: `Input`, `DataTable` или список карточек, `DropdownMenu`, `ConfirmDialog`, `EmptyState`, `Tabs` (Активные, Архив).
@@ -2066,7 +2074,7 @@ AC: 1) `used` по семействам считается с начала пе�
 Тесты: contract; property: `pace_ratio` в `usage` совпадает с `budget.py` на одинаковых входах; integration сверки `usage_daily` и `llm_calls`; e2e секции.
 
 **F-07. Агент: инструменты портфеля и артефакты** (F-05).
-Зона: `agent/tools/{portfolio_overview,portfolio_positions,operations_summary,make_chart,make_table,calc}.py`, `agent/datasets.py`, `agent/postprocess.py` (плейсхолдеры, grounding, meta, дисклеймер), домен `portfolio` (сервис операций), `analytics/{numbers,calc}.py`, роут `chat` (`ArtifactView` в `MessageView`, локальный `ToolStepList`), сценарии `f07_*`. Контракты: §9.7-§9.11, §7. UI: `ArtifactView`, `ChartView`, `ArtifactTable`, `SourceList`, `Collapsible`, `Badge`.
+Зона: `agent/tools/{portfolio_overview,portfolio_positions,operations_summary,make_chart,make_table,calc}.py`, `agent/datasets.py`, `agent/postprocess.py` (плейсхолдеры, grounding, meta, дисклеймер), домен `portfolio` (сервис операций), `analytics/{numbers,calc}.py`, роут `chat` (`ArtifactView` в `MessageView`, локальный `ToolStepList`), сценарии `f07_*`. Контракты: §9.7-§9.11, §7. UI: `ArtifactView`, `ChartView`, `ArtifactTable`, `SourceList`, `Collapsible`, `Badge`; шаги, артефакты и сноски по экрану `chat-thread` из `docs/ui-references/kori-v3/`.
 AC: 1) «Что у меня в портфеле?» → `portfolio_overview` → ответ с `t1` и `c1` в тексте, блоки в порядке текста; 2) `make_chart` строит `ChartSpec` нужного вида по датасету рана, неизвестная колонка → `ok=false` со списком колонок; 3) `make_table` сортирует и режет, `TableSpec` валиден; 4) `calc('(1250000-1000000)/1000000*100')` даёт 25, выражение с именами → `ok=false`; 5) неизвестный плейсхолдер удаляется с `unknown_placeholder`, неупомянутый артефакт уходит в конец; 6) число вне фактов попадает в `meta.ungrounded_numbers`, UI показывает метку «Числа не подтверждены инструментами»; 7) `tool.*` и `artifact.created` приходят раньше финального `text.delta`, UI показывает шаги со статусами; 8) наблюдение в LLM не длиннее 1500 символов, датасеты описаны сводкой; 9) `portfolio_analysis` получает дисклеймер.
 Тесты: агентные сценарии (обзор портфеля; сбой инструмента через `FaultPlan` → ответ с объяснением); contract `ToolResult`, `ChartSpec`, `TableSpec`; property `split_blocks` (общие векторы + генерация), `extract_numbers`, `format_ru`, `safe_eval`; vitest `blocks.ts` на тех же векторах; e2e «обзор портфеля в чате».
 
