@@ -3,20 +3,23 @@
 @import 'shadcn-svelte/tailwind.css';
 @import '@fontsource-variable/jetbrains-mono';
 
-@custom-variant dark (&:is(.dark *));
+/* A day surface (.theme-day) keeps the day look inside the night: the white panels of tech.md §13.3. */
+@custom-variant dark (&:is(.dark *):not(.theme-day, .theme-day *));
 
 /*
- * Kïoku tokens (docs/ui-references/template, tech.md §13.3): night by default, day on demand,
- * radius 0, no shadows, one red. Dividers are the soft line of the brand, controls outline in
- * ink. --primary-deep is the red-deep plate (active tab, destructive). --negative is a crimson
- * apart from the brand red. The chart slots are the categorical palette of the dataviz method,
- * validated on these surfaces; --chart-grid keeps chart rules quieter than the dividers.
+ * Kōri v3 tokens (tech.md §13.3, docs/ui-references/kori-v3/README.md): night by default, day on
+ * demand, radius 0, no shadows, one red. Selection is white, data wear the brand: the ink color
+ * for growth, red for losses, the grey ladder for the rest. Values outside the README table keep
+ * the primitives coherent: --muted repeats --accent, --destructive repeats --negative.
+ * .theme-day re-applies the day set on a subtree: a white panel where a person acts, at night too.
  */
-:root {
+:root,
+.dark .theme-day {
 	color-scheme: light;
 	--radius: 0rem;
 	--background: #ffffff;
 	--foreground: #000000;
+	--prose: #1c1c1c;
 	--card: #ffffff;
 	--card-foreground: #000000;
 	--popover: #ffffff;
@@ -28,32 +31,33 @@
 	--secondary: #cbcbcb;
 	--secondary-foreground: #000000;
 	--muted: #f6f6f6;
-	--muted-foreground: #666666;
+	--muted-foreground: #757575;
 	--accent: #f6f6f6;
 	--accent-foreground: #000000;
-	--destructive: #c8102e;
-	--positive: #117a37;
-	--negative: #c8102e;
-	--warning: #9a5b00;
-	--border: #aaaaaa;
-	--input: #767676;
+	--destructive: #df342f;
+	--positive: #000000;
+	--negative: #df342f;
+	--warning: #df342f;
+	--border: #dbdbdb;
+	--line-faint: #f0f0f0;
+	--input: #000000;
 	--ring: #000000;
-	--chart-grid: #dbdbdb;
-	--chart-1: #2a78d6;
-	--chart-2: #eb6834;
-	--chart-3: #1baf7a;
-	--chart-4: #eda100;
-	--chart-5: #e87ba4;
-	--chart-6: #008300;
-	--chart-7: #4a3aa7;
-	--chart-8: #e34948;
+	--chart-grid: #f0f0f0;
+	--chart-1: #000000;
+	--chart-2: #fe2627;
+	--chart-3: #757575;
+	--chart-4: #fd4b61;
+	--chart-5: #aaaaaa;
+	--chart-6: #df342f;
+	--chart-7: #4e4e4e;
+	--chart-8: #cbcbcb;
 	--sidebar: #ffffff;
 	--sidebar-foreground: #000000;
 	--sidebar-primary: #fe2627;
 	--sidebar-primary-foreground: #000000;
 	--sidebar-accent: #f6f6f6;
 	--sidebar-accent-foreground: #000000;
-	--sidebar-border: #aaaaaa;
+	--sidebar-border: #dbdbdb;
 	--sidebar-ring: #000000;
 	--grey-100: #f6f6f6;
 	--grey-200: #dbdbdb;
@@ -73,9 +77,10 @@
 	color-scheme: dark;
 	--background: #000000;
 	--foreground: #ffffff;
-	--card: #1c1c1c;
+	--prose: #cbcbcb;
+	--card: #000000;
 	--card-foreground: #ffffff;
-	--popover: #1c1c1c;
+	--popover: #000000;
 	--popover-foreground: #ffffff;
 	--primary: #fe2627;
 	--primary-foreground: #000000;
@@ -83,40 +88,70 @@
 	--primary-deep-foreground: #ffffff;
 	--secondary: #cbcbcb;
 	--secondary-foreground: #000000;
-	--muted: #262626;
+	--muted: #1a1a1a;
 	--muted-foreground: #aaaaaa;
-	--accent: #2e2e2e;
+	--accent: #1a1a1a;
 	--accent-foreground: #ffffff;
-	--destructive: #ff6b6b;
-	--positive: #3ecf6e;
-	--negative: #ff6b6b;
-	--warning: #f5a524;
-	--border: #757575;
+	--destructive: #fe2627;
+	--positive: #ffffff;
+	--negative: #fe2627;
+	--warning: #ffa5a5;
+	--border: #262626;
+	--line-faint: #1a1a1a;
 	--input: #757575;
 	--ring: #fe2627;
-	--chart-grid: #333333;
-	--chart-1: #3987e5;
-	--chart-2: #d95926;
-	--chart-3: #199e70;
-	--chart-4: #c98500;
-	--chart-5: #d55181;
-	--chart-6: #008300;
-	--chart-7: #9085e9;
-	--chart-8: #e66767;
+	--chart-grid: #1a1a1a;
+	--chart-1: #ffffff;
+	--chart-2: #fe2627;
+	--chart-3: #aaaaaa;
+	--chart-4: #ffa5a5;
+	--chart-5: #757575;
+	--chart-6: #df342f;
+	--chart-7: #cbcbcb;
+	--chart-8: #4e4e4e;
 	--sidebar: #000000;
 	--sidebar-foreground: #ffffff;
 	--sidebar-primary: #fe2627;
 	--sidebar-primary-foreground: #000000;
-	--sidebar-accent: #1c1c1c;
+	--sidebar-accent: #1a1a1a;
 	--sidebar-accent-foreground: #ffffff;
-	--sidebar-border: #757575;
+	--sidebar-border: #262626;
 	--sidebar-ring: #fe2627;
+}
+
+/* The type scale of v3: one size per role, the same in both themes. */
+@theme static {
+	--text-hero: 88px;
+	--text-hero--line-height: 88px;
+	--text-hero--letter-spacing: -0.03em;
+	--text-display: 64px;
+	--text-display--line-height: 68px;
+	--text-display--letter-spacing: -0.01em;
+	--text-quote: 36px;
+	--text-quote--line-height: 40px;
+	--text-quote--letter-spacing: -0.01em;
+	--text-title: 24px;
+	--text-title--line-height: 28px;
+	--text-lead: 18px;
+	--text-lead--line-height: 24px;
+	--text-body: 16px;
+	--text-body--line-height: 26px;
+	--text-ui: 13px;
+	--text-ui--line-height: 18px;
+	--text-caps: 12px;
+	--text-caps--line-height: 15px;
+	--text-caps--letter-spacing: 0.08em;
+	--text-caption: 11px;
+	--text-caption--line-height: 14px;
+	--text-caption--letter-spacing: 0.06em;
 }
 
 @theme inline {
 	--font-mono: 'JetBrains Mono Variable', monospace;
 	/* Kïoku sets text in the regular weight; bold stays for block headings (font-bold). */
 	--font-weight-medium: 400;
+	--color-prose: var(--prose);
+	--color-line-faint: var(--line-faint);
 	--color-primary-deep: var(--primary-deep);
 	--color-primary-deep-foreground: var(--primary-deep-foreground);
 	--color-chart-grid: var(--chart-grid);
@@ -172,7 +207,8 @@
 	--radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Kïoku gradients and textures (tech.md §13.3): at most two gradients and one pattern a screen. */
+/* Kïoku gradients and textures (tech.md §13.3): a gradient means the AI at work or its action;
+   at most two gradients and one pattern a screen. */
 @utility ki-fade {
 	background-image: var(--grad-fade);
 }
@@ -188,16 +224,25 @@
 @utility ki-ember {
 	background-image: var(--grad-ember);
 }
-/* The printed highlight of a phrase: pink wash, halftone dots, fading into the ground. */
+/* The printed highlight of a phrase: a wash fading out over halftone dots. Pink by day,
+   red-deep at night (docs/ui-references/kori-v3/README.md). */
 @utility ki-highlight {
 	background-image:
-		var(--grad-highlight), linear-gradient(90deg, transparent 45%, var(--background) 100%),
-		radial-gradient(circle, #fd4b61 0.9px, #fd4b6100 1.3px);
+		var(--grad-highlight), radial-gradient(circle, #fd4b61 0.9px, #fd4b6100 1.3px);
 	background-size:
-		100% 100%,
 		100% 100%,
 		3px 3px;
 	box-decoration-break: clone;
+	@variant dark {
+		background-image:
+			linear-gradient(
+				90deg,
+				var(--primary-deep) 0%,
+				color-mix(in srgb, var(--primary-deep) 55%, transparent) 55%,
+				transparent 100%
+			),
+			radial-gradient(circle, var(--primary-deep) 0.9px, transparent 1.3px);
+	}
 }
 /* Decor only: always aria-hidden. */
 @utility ki-halftone {
@@ -227,8 +272,9 @@
 }
 
 /*
- * The Kïoku focus ring: a 2px gap, then 2px of --ring (red at night, black by day). It stays
- * unlayered to beat the outline-none of the primitives; menus and lists keep their highlight.
+ * The Kïoku focus ring: a 2px gap, then 2px of --ring (red at night, black by day and on white
+ * panels). It stays unlayered to beat the outline-none of the primitives; menus and lists keep
+ * their highlight.
  */
 :focus-visible:not(
 	[role='menuitem'],
@@ -238,4 +284,16 @@
 ) {
 	outline: 2px solid var(--ring);
 	outline-offset: 2px;
+}
+
+/* tech.md S1-14 AC 9: no motion for those who ask; every animation shows its end state. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
