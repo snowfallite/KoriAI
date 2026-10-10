@@ -50,8 +50,10 @@ describe('Button', () => {
 
 	it('rests on no solid red field in any variant', () => {
 		for (const variant of VARIANTS) {
-			const { own } = classesOf(renderButton(variant));
+			const { unmount } = render(GlyphButton, { variant });
+			const { own } = classesOf(screen.getByRole('button', { name: 'Войти' }));
 			expect(own.filter((token) => RED.test(token)), variant).toEqual([]);
+			unmount();
 		}
 	});
 });
