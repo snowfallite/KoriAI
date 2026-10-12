@@ -39,12 +39,13 @@
 	const GAP = 16;
 	// A label of 14 px JetBrains Mono: 0.6 em a character, 12 px of padding on each side.
 	const fits = (label: string, width: number) => label.length * 8.4 + 24 <= width;
-	// The ladder steps toward the ground (ladderOn): light greys at night, dark ones by day.
+	// The ladder steps toward the ground (ladderOn): light greys at night, dark ones by day. A
+	// label inside a plate takes the ground or the ink, whichever reads better (Plate.ink).
 	const PLATE = [
-		'bg-foreground',
-		'bg-grey-600 dark:bg-grey-300',
-		'bg-grey-400',
-		'bg-grey-300 dark:bg-grey-600'
+		'bg-foreground text-background',
+		'bg-grey-600 text-background dark:bg-grey-300',
+		'bg-grey-400 text-foreground dark:text-background',
+		'bg-grey-300 text-foreground dark:bg-grey-600 dark:text-background'
 	];
 </script>
 
@@ -183,8 +184,8 @@
 				const span = Math.max(plate.share * lane, 1);
 				ctx.fillStyle = plate.color;
 				ctx.fillRect(pad, y, span, ROW);
-				const inside = plate.lead && ctx.measureText(plate.label).width + 24 <= span;
-				text(plate.label, inside ? pad + 12 : pad + span + 12, inside ? t.surface : t.text);
+				const inside = ctx.measureText(plate.label).width + 24 <= span;
+				text(plate.label, inside ? pad + 12 : pad + span + 12, inside ? plate.ink : t.text);
 				text(valueOf(plate.value), full - pad - 72, t.muted, 'right');
 				text(shareOf(plate.share), full - pad, t.text, 'right');
 				y += ROW + ROW_GAP;
@@ -278,7 +279,7 @@
 						<p class="text-caption text-muted-foreground uppercase">{group.name}</p>
 					{/if}
 					{#each group.plates as plate, i (i)}
-						{@const inside = plate.lead && fits(plate.label, plate.share * track)}
+						{@const inside = fits(plate.label, plate.share * track)}
 						<div class="grid grid-cols-[minmax(0,1fr)_190px] items-center gap-x-4">
 							<div class="flex h-9 min-w-0 items-center">
 								<span
@@ -289,7 +290,7 @@
 									style="width: {plate.share * 100}%"
 								>
 									{#if inside}
-										<span class="truncate px-3 text-[14px] text-background">{plate.label}</span>
+										<span class="truncate px-3 text-[14px]">{plate.label}</span>
 									{/if}
 								</span>
 								{#if !inside}

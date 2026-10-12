@@ -359,6 +359,8 @@ export interface Plate {
 	/** The largest share: the plate in the ink color. */
 	lead: boolean;
 	color: string;
+	/** A label inside the plate: the ground or the ink, whichever reads better on it. */
+	ink: string;
 }
 
 export interface PlateGroup {
@@ -390,12 +392,12 @@ export function toPlates(spec: ChartSpec, theme: ChartTheme): PlateGroup[] {
 			plates: drawn.map((entry, i) => {
 				const rank = rankOf.get(i) ?? 0;
 				const step = theme.ladder[Math.min(rank, theme.ladder.length) - 1];
-				return {
-					...entry,
-					rank,
-					lead: rank === 0,
-					color: rank === 0 ? theme.text : (step ?? theme.muted)
-				};
+				const color = rank === 0 ? theme.text : (step ?? theme.muted);
+				const ink =
+					contrast(color, theme.surface) >= contrast(color, theme.text)
+						? theme.surface
+						: theme.text;
+				return { ...entry, rank, lead: rank === 0, color, ink };
 			})
 		};
 	});

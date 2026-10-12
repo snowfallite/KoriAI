@@ -390,6 +390,20 @@ describe('toPlates', () => {
 		);
 	});
 
+	it('inks a label inside a plate in the ground or the ink, whichever reads better', () => {
+		const points = [
+			pt({ x: 'Акции', y: 3 }),
+			pt({ x: 'Облигации', y: 2 }),
+			pt({ x: 'Фонды', y: 1 })
+		];
+		const [night] = toPlates(spec('pie', [{ points }]), theme);
+		expect(night?.plates.map((p) => p.ink)).toEqual([theme.surface, theme.surface, theme.surface]);
+
+		const day = { ...theme, text: '#000000', surface: '#ffffff', ladder: ['#757575', '#aaaaaa'] };
+		const [light] = toPlates(spec('pie', [{ points }]), day);
+		expect(light?.plates.map((p) => p.ink)).toEqual(['#ffffff', '#ffffff', '#000000']);
+	});
+
 	it('leaves out a share it cannot draw: empty, zero or below zero', () => {
 		const points = [
 			pt({ x: 'Акции', y: 10 }),
