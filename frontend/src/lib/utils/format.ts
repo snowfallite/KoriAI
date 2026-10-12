@@ -70,16 +70,22 @@ function knownCurrency(currency: unknown): currency is string {
 	}
 }
 
+/** Kopecks by default; `digits` keeps exactly that many decimals (0 for whole rubles). */
 export function formatMoney(
 	amount: Numeric,
 	currency: string,
-	{ signed = false, compact = false }: { signed?: boolean; compact?: boolean } = {}
+	{
+		signed = false,
+		compact = false,
+		digits
+	}: { signed?: boolean; compact?: boolean; digits?: number } = {}
 ): string {
+	const exact = digits === undefined ? {} : fraction(digits, 2);
 	const options: Intl.NumberFormatOptions = compact
 		? { notation: 'compact', maximumSignificantDigits: 3, ...sign(signed) }
-		: sign(signed);
+		: { ...exact, ...sign(signed) };
 	if (knownCurrency(currency)) return format(amount, { ...options, style: 'currency', currency });
-	const number = format(amount, compact ? options : { ...options, ...fraction(2, 2) });
+	const number = format(amount, compact ? options : { ...fraction(2, 2), ...options });
 	return number === DASH || typeof currency !== 'string' ? number : `${number}\u00a0${currency}`;
 }
 
@@ -144,4 +150,26 @@ export function formatQuarter(value: DateLike): string {
 
 export function formatYear(value: DateLike): string {
 	return byDay(value, (year) => String(year));
+}
+
+const moscowClock = new Intl.DateTimeFormat('en-GB', {
+	timeZone: 'Europe/Moscow',
+	hour: '2-digit',
+	minute: '2-digit',
+	hourCycle: 'h23'
+});
+
+/** HH:mm in Moscow. A calendar date has no time: it shows a dash. */
+export function formatTime(value: DateLike): string {
+	if (
+		typeof value === 'string'
+			? !INSTANT.test(value)
+			: typeof value !== 'number' && !(value instanceof Date)
+	)
+		return DASH;
+	const date = new Date(value);
+	if (Number.isNaN(date.getTime())) return DASH;
+	const parts = moscowClock.formatToParts(date);
+	const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value;
+	return `${part('hour') ?? '00'}:${part('minute') ?? '00'}`;
 }

@@ -8,6 +8,7 @@ import {
 	formatNumber,
 	formatPercent,
 	formatQuarter,
+	formatTime,
 	formatYear
 } from './format';
 
@@ -67,7 +68,9 @@ describe('format.ts never throws', () => {
 		(v: never) => formatDate(v),
 		(v: never) => formatMonth(v),
 		(v: never) => formatQuarter(v),
-		(v: never) => formatYear(v)
+		(v: never) => formatYear(v),
+		(v: never) => formatTime(v),
+		(v: never) => formatMoney(v, 'RUB', { digits: v })
 	];
 
 	it('returns a string for any input', () => {
@@ -110,6 +113,22 @@ describe('formatMoney', () => {
 		fc.assert(
 			fc.property(decimalStr, fc.boolean(), (amount, signed) => {
 				expect(scaled(formatMoney(amount, 'RUB', { signed }), 2)).toBe(rounded(amount, 2));
+			})
+		);
+	});
+
+	// The hero of the portfolio shows whole rubles (docs/ui-references/kori-v3/README.md).
+	it('keeps exactly the requested digits', () => {
+		expect(formatMoney('4440857.12', 'RUB', { digits: 0 })).toBe(`4${NBSP}440${NBSP}857${NBSP}₽`);
+		expect(formatMoney('42090.5', 'RUB', { signed: true, digits: 0 })).toBe(
+			`+42${NBSP}091${NBSP}₽`
+		);
+		expect(formatMoney('5', 'RUBX', { digits: 0 })).toBe(`5${NBSP}RUBX`);
+		fc.assert(
+			fc.property(decimalStr, fc.integer({ min: 0, max: 4 }), (amount, digits) => {
+				expect(scaled(formatMoney(amount, 'RUB', { digits }), digits)).toBe(
+					rounded(amount, digits)
+				);
 			})
 		);
 	});
@@ -192,6 +211,24 @@ describe('dates in Moscow time', () => {
 				}
 			})
 		);
+	});
+
+	it('prints HH:mm of the Moscow clock', () => {
+		expect(formatTime('2026-10-10T16:00:00Z')).toBe('19:00');
+		expect(formatTime('2026-10-10T21:05:00Z')).toBe('00:05');
+		fc.assert(
+			fc.property(instant, (date) => {
+				const m = moscow(date);
+				const clock = `${pad(m.getUTCHours())}:${pad(m.getUTCMinutes())}`;
+				for (const value of [date.toISOString(), date.getTime(), date]) {
+					expect(formatTime(value)).toBe(clock);
+				}
+			})
+		);
+	});
+
+	it('shows no time for a calendar date', () => {
+		expect(formatTime('2026-10-10')).toBe('—');
 	});
 
 	it('keeps a calendar date as it is', () => {
