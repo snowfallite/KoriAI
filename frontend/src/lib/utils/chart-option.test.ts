@@ -6,6 +6,7 @@ import {
 	type ChartTheme,
 	formatAxisValue,
 	isCartesian,
+	ladderOn,
 	toEChartsOption,
 	toPlates
 } from './chart-option';
@@ -320,6 +321,22 @@ describe('toEChartsOption', () => {
 		const without = toEChartsOption(spec('line', [{}, { axis: 'y2' }]), theme);
 		expect(list(without.yAxis)).toHaveLength(1);
 		expect(list(without.series).map((s) => s.yAxisIndex)).toEqual([0, 0]);
+	});
+});
+
+// The ladder steps toward the ground: plates fade into the page in either theme.
+describe('ladderOn', () => {
+	const greys = ['#cbcbcb', '#aaaaaa', '#757575'];
+
+	it('puts the grey that stands out most on the ground first', () => {
+		expect(ladderOn(greys, '#000000')).toEqual(['#cbcbcb', '#aaaaaa', '#757575']);
+		expect(ladderOn(greys, '#ffffff')).toEqual(['#757575', '#aaaaaa', '#cbcbcb']);
+		expect(ladderOn(greys, '#fff')).toEqual(['#757575', '#aaaaaa', '#cbcbcb']);
+	});
+
+	it('keeps the order of colors it cannot read', () => {
+		expect(ladderOn(['var(--grey)', 'red'], '#000000')).toEqual(['var(--grey)', 'red']);
+		expect(ladderOn(greys, 'black')).toEqual(greys);
 	});
 });
 
