@@ -48,7 +48,10 @@
 	// K Ō R I: 44 px on the desktop, 32 on a phone; the kana sit on the gaps between letters.
 	const SPACED: Record<Size, { letters: string; kana: string }> = {
 		sm: { letters: 'text-[32px]/8', kana: 'mt-2 text-[10px]/3' },
-		md: { letters: 'text-[32px]/8 md:text-[44px]/[44px]', kana: 'mt-2 text-[10px]/3 md:mt-2.5 md:text-[11px]/3' },
+		md: {
+			letters: 'text-[32px]/8 md:text-[44px]/[44px]',
+			kana: 'mt-2 text-[10px]/3 md:mt-2.5 md:text-[11px]/3'
+		},
 		lg: { letters: 'text-[64px]/[64px]', kana: 'mt-3 text-sm/4' }
 	};
 	const LETTERS = ['K', 'Ō', 'R', 'I'];
@@ -68,6 +71,8 @@
      decor: the name «Kōri» comes from the text next to it or from the label of the sign. -->
 {#snippet seal({ side, inset, frame, glyph }: Seal, box: string)}
 	{@const scale = glyph / 1000}
+	{@const center = `translate(${side / 2} ${side / 2})`}
+	{@const flip = `scale(${scale} ${-scale}) translate(${-CENTER[0]} ${-CENTER[1]})`}
 	<svg
 		data-slot="logo-seal"
 		aria-hidden="true"
@@ -79,7 +84,7 @@
 		{#if side >= 64}
 			<defs>
 				<pattern id="{uid}-dots" width="4" height="4" patternUnits="userSpaceOnUse">
-					<circle cx="2" cy="2" r="1.1" fill="#000000" fill-opacity="0.18" />
+					<circle cx="2" cy="2" r="1.1" class="fill-black" fill-opacity="0.18" />
 				</pattern>
 			</defs>
 			<rect width={side} height={side} fill="url(#{uid}-dots)" />
@@ -94,11 +99,7 @@
 			stroke-width={frame}
 			vector-effect="non-scaling-stroke"
 		/>
-		<path
-			d={GLYPH}
-			class="fill-white"
-			transform="translate({side / 2} {side / 2}) scale({scale} {-scale}) translate({-CENTER[0]} {-CENTER[1]})"
-		/>
+		<path d={GLYPH} class="fill-white" transform="{center} {flip}" />
 	</svg>
 {/snippet}
 
