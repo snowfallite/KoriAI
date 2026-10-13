@@ -41,6 +41,14 @@ describe('Button', () => {
 		expect(own).toContain('text-background');
 	});
 
+	// The variants merge with a config that knows the type scale (lib/utils/cn.ts).
+	it('keeps the 13 px label next to its ink color', () => {
+		const { own } = classesOf(renderButton('default'));
+
+		expect(own).toContain('text-ui');
+		expect(own).toContain('text-background');
+	});
+
 	it('gives the destructive action the red-deep cell and the same ink label', () => {
 		const { own, cell } = classesOf(renderButton('destructive'));
 
@@ -52,7 +60,10 @@ describe('Button', () => {
 		for (const variant of VARIANTS) {
 			const { unmount } = render(GlyphButton, { variant });
 			const { own } = classesOf(screen.getByRole('button', { name: 'Войти' }));
-			expect(own.filter((token) => RED.test(token)), variant).toEqual([]);
+			expect(
+				own.filter((token) => RED.test(token)),
+				variant
+			).toEqual([]);
 			unmount();
 		}
 	});
