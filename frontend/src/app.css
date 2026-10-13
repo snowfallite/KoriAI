@@ -227,8 +227,7 @@
 /* The printed highlight of a phrase: a wash fading out over halftone dots. Pink by day,
    red-deep at night (docs/ui-references/kori-v3/README.md). */
 @utility ki-highlight {
-	background-image:
-		var(--grad-highlight), radial-gradient(circle, #fd4b61 0.9px, #fd4b6100 1.3px);
+	background-image: var(--grad-highlight), radial-gradient(circle, #fd4b61 0.9px, #fd4b6100 1.3px);
 	background-size:
 		100% 100%,
 		3px 3px;

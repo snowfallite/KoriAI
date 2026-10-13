@@ -101,9 +101,7 @@ test('a wrong password keeps the visitor on the login page with the reason at th
 
 	await expect(page.getByRole('alert')).toContainText('Неверный email или пароль');
 	await expect(page.getByLabel('Пароль')).toHaveAttribute('aria-invalid', 'true');
-	await expect(page.getByLabel('Пароль')).toHaveAccessibleDescription(
-		'Неверный email или пароль'
-	);
+	await expect(page.getByLabel('Пароль')).toHaveAccessibleDescription('Неверный email или пароль');
 	await expect(page).toHaveURL('/login');
 });
 

@@ -8,8 +8,7 @@
 				default: 'bg-foreground text-background [a]:hover:bg-grey-200',
 				// Kïoku tags: the category plate, the red-deep counter plate, the ink frame.
 				secondary: 'bg-grey-300 text-black [a]:hover:bg-grey-200',
-				destructive:
-					'border-primary-deep text-negative [a]:hover:bg-accent',
+				destructive: 'border-primary-deep text-negative [a]:hover:bg-accent',
 				outline:
 					'border-foreground text-foreground [a]:hover:bg-foreground [a]:hover:text-background',
 				ghost: 'hover:bg-accent hover:text-foreground',
