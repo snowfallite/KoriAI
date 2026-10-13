@@ -71,10 +71,11 @@
 	</Table.Row>
 {/snippet}
 
-<figure class="space-y-2">
-	<figcaption class="text-sm font-medium">{spec.title}</figcaption>
+<!-- A caption over a hairline, as over a chart (docs/ui-references/kori-v3). -->
+<figure class="min-w-0 space-y-2">
+	<figcaption class="border-b pb-3 text-caption uppercase">{spec.title}</figcaption>
 	<DataTable {columns} rows={spec.rows} dense footer={spec.total ? totalRow : undefined} />
 	{#if spec.note}
-		<p class="text-xs text-muted-foreground">{spec.note}</p>
+		<p class="text-caption text-grey-600">{spec.note}</p>
 	{/if}
 </figure>
