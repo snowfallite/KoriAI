@@ -2,6 +2,7 @@
 	import type { Component, Snippet } from 'svelte';
 
 	// The icon stays in the props of tech.md §13.2, but v3 draws none: the title carries the state.
+	// eslint-disable-next-line svelte/no-unused-props -- the contract keeps icon
 	let {
 		title,
 		description,

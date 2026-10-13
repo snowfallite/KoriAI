@@ -6,11 +6,17 @@
 
 	// The brand color stays in the props of tech.md §13.2, but it paints nothing: the tile is
 	// neutral (docs/ui-references/kori-v3).
+	// eslint-disable-next-line svelte/no-unused-props -- the contract keeps color
 	let {
 		src,
 		name,
 		size = 24
-	}: { src: string | null; name: string; color?: string | null; size?: Size } = $props();
+	}: {
+		src: string | null;
+		name: string;
+		color?: string | null;
+		size?: Size;
+	} = $props();
 
 	// A square tile and initials to scale: 11 px on the 32 px tile of the positions.
 	const TILE: Record<Size, string> = { 20: 'size-5', 24: 'size-6', 32: 'size-8', 48: 'size-12' };
