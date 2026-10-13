@@ -17,7 +17,5 @@
 		className
 	)}
 	{...restProps}
->
-	<!-- The fill of the square is the mark: nothing goes inside. -->
-	{#snippet children()}{/snippet}
-</RadioGroupPrimitive.Item>
+/>
+<!-- The fill of the square is the mark: nothing goes inside. -->

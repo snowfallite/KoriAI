@@ -349,7 +349,7 @@ function waterfall(
 }
 
 /** One share of a pie drawn as a plate. */
-export interface Plate {
+interface Plate {
 	label: string;
 	value: number;
 	/** The part of the series total, in (0, 1]. */

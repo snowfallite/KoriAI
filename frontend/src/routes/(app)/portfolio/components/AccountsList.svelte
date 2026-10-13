@@ -6,6 +6,15 @@
 	let { accounts }: { accounts: Account[] } = $props();
 
 	const isLoss = (account: Account) => Number(account.expected_yield?.amount ?? 0) < 0;
+
+	/** «+53 814 ₽ · +2,52 %»: the result of an account from the purchase prices. */
+	function result(account: Account): string {
+		const money = account.expected_yield;
+		if (!money) return '';
+		const amount = formatMoney(money.amount, money.currency, { signed: true, digits: 0 });
+		const share = account.expected_yield_pct;
+		return share === null ? amount : `${amount} · ${formatPercent(share, { signed: true })}`;
+	}
 </script>
 
 <!-- Accounts as a list (kori-v3, Портфель): the alias tag, the name, the value and its result. -->
@@ -30,11 +39,7 @@
 							class={cn('text-[12px]/[15px]', loss ? 'text-negative' : 'text-muted-foreground')}
 						>
 							<span aria-hidden="true">{loss ? '↓' : '↑'}</span>
-							{formatMoney(account.expected_yield.amount, account.expected_yield.currency, {
-								signed: true,
-								digits: 0
-							})}{#if account.expected_yield_pct !== null}
-								{' · '}{formatPercent(account.expected_yield_pct, { signed: true })}{/if}
+							{result(account)}
 						</span>
 					{/if}
 				</span>

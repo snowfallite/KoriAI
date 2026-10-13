@@ -13,6 +13,13 @@
 	const CELL = 'pr-0 pl-4 in-[tbody]:h-15';
 	const RIGHT = `${CELL} text-right`;
 	const amount = (money: { amount: string } | null) => (money ? Number(money.amount) : undefined);
+	/** «SU26240 · НКД 8,20 ₽»: the ticker, and the accrued interest of a bond. */
+	function tickerLine(position: Position): string {
+		const accrued = position.accrued_interest;
+		const ticker = position.instrument.ticker;
+		return accrued ? `${ticker} · НКД ${formatMoney(accrued.amount, accrued.currency)}` : ticker;
+	}
+
 	// The bar of a share is as long as the share against the largest one.
 	const largest = $derived(Math.max(0, ...positions.map((p) => Number(p.weight))));
 
@@ -87,18 +94,12 @@
 {#snippet hidden(text: string)}<span class="sr-only">{text}</span>{/snippet}
 
 {#snippet instrument(position: Position)}
-	{@const { name, ticker, logo_url } = position.instrument}
+	{@const { name, logo_url } = position.instrument}
 	<span class="flex items-center gap-3">
 		<InstrumentLogo src={logo_url} {name} size={32} />
 		<span class="flex min-w-0 flex-col">
 			<span class="truncate text-[14px]/[18px]">{name}</span>
-			<span class="text-caption text-grey-600"
-				>{ticker}{#if position.accrued_interest}
-					{' · НКД '}{formatMoney(
-						position.accrued_interest.amount,
-						position.accrued_interest.currency
-					)}{/if}</span
-			>
+			<span class="text-caption text-grey-600">{tickerLine(position)}</span>
 		</span>
 	</span>
 {/snippet}
