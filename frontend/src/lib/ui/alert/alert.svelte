@@ -7,11 +7,13 @@
 	// or from the class of the span.
 	export const alertVariants = tv({
 		base: 'group/alert relative grid min-h-11 w-full grid-cols-[auto_minmax(0,1fr)_auto] rounded-none bg-accent text-left text-ui text-foreground *:data-[slot=alert-glyph]:col-start-1 *:data-[slot=alert-glyph]:row-span-2 *:data-[slot=alert-glyph]:row-start-1 *:data-[slot=alert-glyph]:grid *:data-[slot=alert-glyph]:min-h-11 *:data-[slot=alert-glyph]:w-11 *:data-[slot=alert-glyph]:place-items-center *:data-[slot=alert-glyph]:text-[15px] *:data-[slot=alert-glyph]:[&>svg]:size-3.5',
+		// The colors of the cell sit in :where(): no specificity, so a class on the span wins.
 		variants: {
 			variant: {
-				default: '*:data-[slot=alert-glyph]:bg-border *:data-[slot=alert-glyph]:text-foreground',
+				default:
+					'[:where(&>[data-slot=alert-glyph])]:bg-border [:where(&>[data-slot=alert-glyph])]:text-foreground',
 				destructive:
-					'*:data-[slot=alert-glyph]:bg-primary-deep *:data-[slot=alert-glyph]:text-primary-deep-foreground'
+					'[:where(&>[data-slot=alert-glyph])]:bg-primary-deep [:where(&>[data-slot=alert-glyph])]:text-primary-deep-foreground'
 			}
 		},
 		defaultVariants: {
