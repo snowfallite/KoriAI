@@ -378,7 +378,11 @@ export const SOURCES: SourceRef[] = [
 export const MARKDOWN = [
 	'### Итог по портфелю',
 	'',
-	'Портфель вырос на **3,2 %** за месяц [s1]. Дивиденды пришли по двум бумагам [s2], отчётность эмитента лежит на e-disclosure [s3]. Сноска без источника скрыта [s9].',
+	'Портфель стоит 1 195 145 ₽. Бумажная прибыль от средней цены покупки: ==+42 090 ₽, или +3,65 %== [s1].',
+	'',
+	'### Что тянет вверх и вниз',
+	'',
+	'Прибыль держат **Сбербанк** (+28 050 ₽) и Т-Технологии (+11 400 ₽). Главный минус даёт Газпром: −23 800 ₽, или −14,7 % [s2]. Отчётность эмитента лежит на e-disclosure [s3], сноска без источника скрыта [s9].',
 	'',
 	'- Крупнейшая позиция: SBER',
 	'- Облигации дают стабильный купон',
@@ -429,6 +433,22 @@ export const ACCOUNTS: BrokerAccountOut[] = [
 		is_hidden: true
 	}
 ];
+
+/** Five visible accounts: AccountSelect turns from tabs into a list. */
+export const MANY_ACCOUNTS: BrokerAccountOut[] = [
+	'Брокерский',
+	'ИИС',
+	'Копилка',
+	'Детский',
+	'Валютный'
+].map((name, i): BrokerAccountOut => ({
+	alias: `acc${i + 1}`,
+	name,
+	type: 'broker',
+	status: 'open',
+	opened_at: '2024-01-15',
+	is_hidden: false
+}));
 
 export const ERROR: ApiError = {
 	code: 'tinvest_unavailable',
