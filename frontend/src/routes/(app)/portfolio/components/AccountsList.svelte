@@ -34,7 +34,7 @@
 								signed: true,
 								digits: 0
 							})}{#if account.expected_yield_pct !== null}
-								· {formatPercent(account.expected_yield_pct, { signed: true })}{/if}
+								{' · '}{formatPercent(account.expected_yield_pct, { signed: true })}{/if}
 						</span>
 					{/if}
 				</span>

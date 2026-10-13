@@ -38,7 +38,7 @@
 			<span aria-hidden="true" class="text-primary-deep">×</span>
 			<span
 				>{error}{#if link}. <a href={link.href} class="underline underline-offset-3"
-						>{link.label}<span aria-hidden="true"> →</span></a
+						>{link.label}<span aria-hidden="true">&nbsp;→</span></a
 					>{/if}</span
 			>
 		</p>

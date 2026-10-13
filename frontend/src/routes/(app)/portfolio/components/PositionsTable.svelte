@@ -94,7 +94,7 @@
 			<span class="truncate text-[14px]/[18px]">{name}</span>
 			<span class="text-caption text-grey-600"
 				>{ticker}{#if position.accrued_interest}
-					· НКД {formatMoney(
+					{' · НКД '}{formatMoney(
 						position.accrued_interest.amount,
 						position.accrued_interest.currency
 					)}{/if}</span
