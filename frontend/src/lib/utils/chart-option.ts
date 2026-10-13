@@ -277,7 +277,7 @@ function heatmap(
 	const zs = finite(points.map((p) => p.z));
 	// Zero is the ground: grey below it, red above it. Correlations keep the whole −1…+1 scale;
 	// larger values stretch it evenly on both sides.
-	const bound = Math.max(1, ...zs.map(Math.abs));
+	const bound = zs.reduce((most, z) => Math.max(most, Math.abs(z)), 1);
 	const cells = xs.length * ys.length;
 	return {
 		xAxis,

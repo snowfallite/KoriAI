@@ -85,14 +85,14 @@
 				<span aria-hidden="true">+</span>
 			</a>
 		</header>
-		<main class="flex-1 pb-16 md:pb-0">
+		<main class="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
 			{@render children()}
 		</main>
 	</div>
 
 	<nav
 		aria-label="Разделы"
-		class="fixed inset-x-0 bottom-0 z-20 grid h-16 grid-cols-4 border-t bg-background pb-[env(safe-area-inset-bottom)] md:hidden"
+		class="fixed inset-x-0 bottom-0 z-20 grid h-[calc(4rem+env(safe-area-inset-bottom))] grid-cols-4 border-t bg-background pb-[env(safe-area-inset-bottom)] md:hidden"
 	>
 		{#each nav as item (item.id)}
 			<a
