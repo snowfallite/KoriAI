@@ -32,10 +32,10 @@
 </script>
 
 <!-- A white panel up to 420 px (kori-v3, Карточки): a black title strip with ×, the text, a strip
-     of two 44 px buttons. -->
+     of two 44 px buttons. A white hairline keeps the strip apart from the dimmed page. -->
 <AlertDialog.Root bind:open>
 	<AlertDialog.Content
-		class="max-w-[420px] gap-0 p-0 data-[size=default]:max-w-[420px] data-[size=default]:sm:max-w-[420px]"
+		class="max-w-[420px] gap-0 border border-background p-0 data-[size=default]:max-w-[420px] data-[size=default]:sm:max-w-[420px]"
 	>
 		<div
 			class="flex items-center justify-between gap-4 bg-foreground py-3.5 pr-2 pl-4 text-background"
