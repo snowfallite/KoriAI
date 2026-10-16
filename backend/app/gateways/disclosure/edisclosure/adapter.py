@@ -79,6 +79,22 @@ SEARCH_JS = """async ([url, body]) => {
 }"""
 
 
+# Playwright's Firefox build ships automation defaults that a normal Firefox never has, and the
+# anti-bot (ServicePipe) scores those tells; aligning them lowers the odds of a captcha without
+# solving one. Measured against a plain Firefox 155 (S1-12 discovery): pdfjs off leaves
+# navigator.plugins and mimeTypes empty and pdfViewerEnabled false; the colour standins and focus
+# test mode are the test harness, not a user; lazy iframes are on by default off-harness. The
+# window size and timezone come from no_viewport and timezone_id at the call site.
+# navigator.webdriver stays true (baked into the build, no pref); leave it until S1-13 shows from
+# the VPS whether it is the deciding factor.
+BROWSER_PREFS: dict[str, str | float | bool] = {
+    "pdfjs.disabled": False,
+    "ui.use_standins_for_native_colors": False,
+    "focusmanager.testmode": False,
+    "dom.iframe_lazy_loading.enabled": True,
+}
+
+
 class _Flaky(Exception):
     """A 5xx or a timeout of the site: worth another try."""
 
@@ -261,7 +277,13 @@ class EDisclosure:
             await self._close_browser()
             self._playwright = await async_playwright().start()
             self._context = await self._playwright.firefox.launch_persistent_context(
-                self._profile, headless=False, locale="ru-RU", env=await self._display_env()
+                self._profile,
+                headless=False,
+                locale="ru-RU",
+                timezone_id="Europe/Moscow",
+                no_viewport=True,
+                env=await self._display_env(),
+                firefox_user_prefs=BROWSER_PREFS,
             )
             pages = self._context.pages
             self._page = pages[0] if pages else await self._context.new_page()
