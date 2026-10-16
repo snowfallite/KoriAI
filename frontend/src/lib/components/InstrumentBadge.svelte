@@ -9,20 +9,23 @@
 	}: { instrument: InstrumentBrief; showTicker?: boolean; size?: 'sm' | 'md' } = $props();
 </script>
 
-<span class="inline-flex min-w-0 items-center gap-2">
-	<InstrumentLogo
-		src={instrument.logo_url}
-		name={instrument.name}
-		color={instrument.brand_color}
-		size={size === 'md' ? 32 : 20}
-	/>
-	<span class={size === 'md' ? 'min-w-0 text-sm' : 'min-w-0 text-xs'}>
-		<span class="block truncate">{instrument.name}</span>
-		{#if showTicker && size === 'md'}
-			<span class="block text-xs text-muted-foreground">{instrument.ticker}</span>
+<!-- The tile, the name and the ticker in a grey caption (kori-v3, Портфель). -->
+{#if size === 'md'}
+	<span class="inline-flex min-w-0 items-center gap-3">
+		<InstrumentLogo src={instrument.logo_url} name={instrument.name} size={32} />
+		<span class="flex min-w-0 flex-col">
+			<span class="truncate text-[14px]/4">{instrument.name}</span>
+			{#if showTicker}
+				<span class="text-caption text-grey-600">{instrument.ticker}</span>
+			{/if}
+		</span>
+	</span>
+{:else}
+	<span class="inline-flex min-w-0 items-center gap-2">
+		<InstrumentLogo src={instrument.logo_url} name={instrument.name} size={20} />
+		<span class="truncate text-ui">{instrument.name}</span>
+		{#if showTicker}
+			<span class="text-caption text-grey-600">{instrument.ticker}</span>
 		{/if}
 	</span>
-	{#if showTicker && size === 'sm'}
-		<span class="text-xs text-muted-foreground">{instrument.ticker}</span>
-	{/if}
-</span>
+{/if}

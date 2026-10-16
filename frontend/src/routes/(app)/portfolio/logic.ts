@@ -1,11 +1,12 @@
-// Pure logic of the portfolio tab (tech.md §16.2): the account in the URL, the structure chart
-// and the summary cards.
+// Pure logic of the portfolio tab (tech.md §16.2): the account in the URL, the structure chart,
+// the totals and the questions the tab leaves in the chat.
 import type { components } from '$lib/api/schema';
 import type { BrokerAccountOut, ChartSpec, Money } from '$lib/types';
-import { formatNumber } from '$lib/utils/format';
+import { formatNumber, formatPercent } from '$lib/utils/format';
 
 export type Portfolio = components['schemas']['PortfolioOut'];
 export type Position = Portfolio['positions'][number];
+export type Account = Portfolio['accounts'][number];
 type Trend = 'up' | 'down' | 'flat';
 
 export interface Summary {
@@ -82,4 +83,38 @@ export function summarize(portfolio: Portfolio): Summary {
 export function accountsHint(count: number): string {
 	const noun = PLURAL.select(count) === 'one' ? 'счёте' : 'счетах';
 	return `на ${formatNumber(count, 0)} ${noun}`;
+}
+
+const POSITIONS: Record<string, string> = { one: 'позиция', few: 'позиции', many: 'позиций' };
+
+/** What the total covers: «29 позиций на 2 счетах», or the one account: «10 позиций · acc2 · ИИС». */
+export function coverage(positions: number, accounts: Pick<Account, 'alias' | 'name'>[]): string {
+	const count = `${formatNumber(positions, 0)} ${POSITIONS[PLURAL.select(positions)] ?? 'позиции'}`;
+	const [only] = accounts;
+	return accounts.length === 1 && only
+		? `${count} · ${only.alias} · ${only.name}`
+		: `${count} ${accountsHint(accounts.length)}`;
+}
+
+/** The total of the hero in whole units, its currency sign apart (docs/ui-references/kori-v3). */
+export function hero(money: Money): { number: string; unit: string } {
+	return {
+		number: formatNumber(money.amount, 0),
+		unit: money.currency === 'RUB' ? '₽' : money.currency
+	};
+}
+
+export const PORTFOLIO_QUESTION = 'Что с моим портфелем и почему?';
+
+/** The chat with a question waiting in its field (tech.md §13.3: /chat?q= fills, never sends). */
+export function askHref(question: string): string {
+	return `/chat?${new URLSearchParams({ q: question })}`;
+}
+
+/** The question a row of the positions asks: why it moved since the purchase. */
+export function positionQuestion(position: Position): string {
+	const name = position.instrument.name;
+	return position.yield_pct === null
+		? `Что с позицией «${name}»?`
+		: `Почему ${name} ${formatPercent(position.yield_pct, { signed: true, digits: 1 })} с покупки?`;
 }

@@ -1,7 +1,4 @@
 <script lang="ts" generics="T">
-	import ArrowDown from '@lucide/svelte/icons/arrow-down';
-	import ArrowUp from '@lucide/svelte/icons/arrow-up';
-	import ArrowUpDown from '@lucide/svelte/icons/arrow-up-down';
 	import {
 		type ColumnDef,
 		type SortingState,
@@ -83,21 +80,21 @@
 					>
 						{#if !header.isPlaceholder}
 							{#if header.column.getCanSort()}
+								<!-- The sorted column turns to the ink color with a glyph arrow (kori-v3). -->
 								<button
 									type="button"
-									class="inline-flex items-center gap-1 hover:text-muted-foreground"
+									class={cn(
+										'inline-flex items-center gap-1 uppercase hover:text-foreground',
+										sorted && 'text-foreground'
+									)}
 									onclick={header.column.getToggleSortingHandler()}
 								>
 									<FlexRender
 										content={header.column.columnDef.header}
 										context={header.getContext()}
 									/>
-									{#if sorted === 'asc'}
-										<ArrowUp class="size-3" aria-hidden="true" />
-									{:else if sorted === 'desc'}
-										<ArrowDown class="size-3" aria-hidden="true" />
-									{:else}
-										<ArrowUpDown class="size-3 opacity-40" aria-hidden="true" />
+									{#if sorted}
+										<span aria-hidden="true">{sorted === 'asc' ? '↑' : '↓'}</span>
 									{/if}
 								</button>
 							{:else}

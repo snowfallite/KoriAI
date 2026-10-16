@@ -39,10 +39,10 @@
 			aria-label={spec.alt}
 		>
 			<ImageOff class="size-5" aria-hidden="true" />
-			<span class="text-xs">Изображение недоступно</span>
+			<span class="text-caption">Изображение недоступно</span>
 		</div>
 	{/if}
 	{#if spec.caption}
-		<figcaption class="text-xs text-muted-foreground">{spec.caption}</figcaption>
+		<figcaption class="text-caption text-grey-600">{spec.caption}</figcaption>
 	{/if}
 </figure>

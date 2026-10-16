@@ -1,8 +1,21 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import type { BrokerAccountOut } from '$lib/types';
-import { accountOf, accountsHint, allocationChart, summarize, withAccount } from './logic';
-import type { Portfolio } from './logic';
+import {
+	accountOf,
+	accountsHint,
+	allocationChart,
+	askHref,
+	coverage,
+	hero,
+	PORTFOLIO_QUESTION,
+	positionQuestion,
+	summarize,
+	withAccount
+} from './logic';
+import type { Portfolio, Position } from './logic';
+
+const NBSP = ' ';
 
 const BASE = 'http://localhost/portfolio';
 
@@ -159,5 +172,89 @@ describe('accountsHint', () => {
 		expect(accountsHint(5)).toBe('на 5 счетах');
 		expect(accountsHint(11)).toBe('на 11 счетах');
 		expect(accountsHint(21)).toBe('на 21 счёте');
+	});
+});
+
+// The caption under the total of v3: «от средней цены покупки · 10 позиций на 2 счетах».
+describe('coverage', () => {
+	const both = [account('acc1', '1', null, null), account('acc2', '1', null, null)];
+
+	it('counts the positions over every account', () => {
+		expect(coverage(29, both)).toBe('29 позиций на 2 счетах');
+		expect(coverage(1, both)).toBe('1 позиция на 2 счетах');
+		expect(coverage(3, both)).toBe('3 позиции на 2 счетах');
+	});
+
+	it('names the one account it covers', () => {
+		expect(coverage(10, [account('acc2', '1', null, null)])).toBe('10 позиций · acc2 · Счёт acc2');
+	});
+});
+
+describe('hero', () => {
+	it('shows whole rubles and the sign of the ruble apart', () => {
+		expect(hero({ amount: '4440857.62', currency: 'RUB' })).toEqual({
+			number: `4${NBSP}440${NBSP}858`,
+			unit: '₽'
+		});
+		expect(hero({ amount: '12', currency: 'USD' })).toEqual({ number: '12', unit: 'USD' });
+	});
+});
+
+// tech.md §13.3: /chat?q=<текст> fills the question field and never sends it.
+describe('askHref', () => {
+	it('leaves the question in the query of the chat', () => {
+		const url = new URL(askHref(PORTFOLIO_QUESTION), 'http://kori.test');
+
+		expect(url.pathname).toBe('/chat');
+		expect(url.searchParams.get('q')).toBe('Что с моим портфелем и почему?');
+	});
+
+	it('carries any question through the URL', () => {
+		fc.assert(
+			fc.property(fc.string({ minLength: 1 }), (question) => {
+				expect(new URL(askHref(question), 'http://kori.test').searchParams.get('q')).toBe(question);
+			})
+		);
+	});
+});
+
+describe('positionQuestion', () => {
+	function position(name: string, yield_pct: string | null): Position {
+		const money = { amount: '1', currency: 'RUB' };
+		return {
+			instrument: {
+				uid: '00000000-0000-0000-0000-000000000001',
+				ticker: 'X',
+				class_code: 'TQBR',
+				name,
+				instrument_type: 'share',
+				currency: 'RUB',
+				logo_url: null,
+				brand_color: null
+			},
+			account_alias: 'acc1',
+			quantity: '1',
+			avg_price: money,
+			current_price: money,
+			value: money,
+			value_rub: money,
+			weight: '0.1',
+			yield_abs: yield_pct === null ? null : money,
+			yield_pct,
+			accrued_interest: null
+		};
+	}
+
+	it('asks why a position moved since the purchase', () => {
+		expect(positionQuestion(position('Сбербанк', '0.176'))).toBe(
+			`Почему Сбербанк +17,6${NBSP}% с покупки?`
+		);
+		expect(positionQuestion(position('Газпром', '-0.147'))).toBe(
+			`Почему Газпром −14,7${NBSP}% с покупки?`
+		);
+	});
+
+	it('asks about the position itself when it has no result', () => {
+		expect(positionQuestion(position('Доллар США', null))).toBe('Что с позицией «Доллар США»?');
 	});
 });

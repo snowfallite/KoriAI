@@ -4,18 +4,27 @@
 
 	type Size = 20 | 24 | 32 | 48;
 
+	// The brand color stays in the props of tech.md §13.2, but it paints nothing: the tile is
+	// neutral (docs/ui-references/kori-v3).
+	// eslint-disable-next-line svelte/no-unused-props -- the contract keeps color
 	let {
 		src,
 		name,
-		color = null,
 		size = 24
-	}: { src: string | null; name: string; color?: string | null; size?: Size } = $props();
+	}: {
+		src: string | null;
+		name: string;
+		color?: string | null;
+		size?: Size;
+	} = $props();
 
-	const SIZE: Record<Size, string> = {
-		20: 'size-5 text-[8px]',
-		24: 'size-6 text-[9px]',
-		32: 'size-8 text-[11px]',
-		48: 'size-12 text-sm'
+	// A square tile and initials to scale: 11 px on the 32 px tile of the positions.
+	const TILE: Record<Size, string> = { 20: 'size-5', 24: 'size-6', 32: 'size-8', 48: 'size-12' };
+	const INITIALS: Record<Size, string> = {
+		20: 'text-[8px]',
+		24: 'text-[9px]',
+		32: 'text-[11px]',
+		48: 'text-[14px]'
 	};
 
 	const initials = $derived.by(() => {
@@ -26,28 +35,14 @@
 				: (words[0] ?? '').slice(0, 2);
 		return letters.toUpperCase();
 	});
-
-	const brand = $derived(color && /^#[0-9a-f]{6}$/i.test(color) ? color : null);
-
-	/** Black or white ink, whichever reads better on the brand color (WCAG luminance). */
-	function inkOn(hex: string): string {
-		const [r, g, b] = [1, 3, 5].map((i) => {
-			const c = parseInt(hex.slice(i, i + 2), 16) / 255;
-			return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-		}) as [number, number, number];
-		return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.179 ? 'text-black' : 'text-white';
-	}
 </script>
 
-<!-- Square like every Kïoku shape (radius 0, tech.md §13.3). -->
-<Avatar.Root class={cn(SIZE[size], 'rounded-none after:rounded-none')}>
+<Avatar.Root class={cn(TILE[size], 'rounded-none after:hidden')}>
 	{#if src}
 		<Avatar.Image {src} alt={name} class="rounded-none" />
 	{/if}
-	<Avatar.Fallback
-		class={cn('rounded-none font-medium', brand && inkOn(brand))}
-		style={brand ? `background-color: ${brand}` : undefined}
-	>
+	<!-- Without a logo the initials stand in white on the grey-900 tile, in both themes. -->
+	<Avatar.Fallback class={cn('rounded-none bg-grey-900 text-white', INITIALS[size])}>
 		{initials}
 	</Avatar.Fallback>
 </Avatar.Root>

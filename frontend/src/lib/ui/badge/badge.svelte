@@ -2,18 +2,17 @@
 	import { type VariantProps, tv } from 'tailwind-variants';
 
 	export const badgeVariants = tv({
-		base: 'h-5 gap-1 rounded-none border border-transparent px-2 py-0.5 text-xs font-medium transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none',
+		base: 'h-6 gap-1 rounded-none border border-transparent px-2 text-caption transition-colors has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none',
 		variants: {
 			variant: {
-				default: 'bg-primary text-primary-foreground [a]:hover:bg-primary/80',
+				default: 'bg-foreground text-background [a]:hover:bg-grey-200',
 				// Kïoku tags: the category plate, the red-deep counter plate, the ink frame.
-				secondary: 'bg-muted-foreground text-background [a]:hover:bg-foreground',
-				destructive:
-					'bg-primary-deep text-primary-deep-foreground font-bold [a]:hover:bg-primary [a]:hover:text-primary-foreground',
+				secondary: 'bg-grey-300 text-black [a]:hover:bg-grey-200',
+				destructive: 'border-primary-deep text-negative [a]:hover:bg-accent',
 				outline:
 					'border-foreground text-foreground [a]:hover:bg-foreground [a]:hover:text-background',
-				ghost: 'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
-				link: 'text-primary underline-offset-4 hover:underline'
+				ghost: 'hover:bg-accent hover:text-foreground',
+				link: 'text-muted-foreground uppercase hover:text-primary'
 			}
 		},
 		defaultVariants: {

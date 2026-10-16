@@ -3,25 +3,31 @@
 	import { resolve } from '$app/paths';
 	import { api, ok } from '$lib/api/client';
 	import type { ApiError } from '$lib/types';
-	import * as Alert from '$lib/ui/alert';
 	import { Button } from '$lib/ui/button';
 	import { Input } from '$lib/ui/input';
-	import { Label } from '$lib/ui/label';
+	import AuthField from '../components/AuthField.svelte';
+	import AuthPanel from '../components/AuthPanel.svelte';
+	import { type Field, fieldError } from '../logic';
 
 	let email = $state('');
 	let password = $state('');
+	let shown = $state(false);
 	let pending = $state(false);
-	let error = $state<ApiError | null>(null);
+	let failure = $state<ApiError | null>(null);
+
+	// A wrong password shows at its field; too many attempts and the like above the fields.
+	const atField = $derived(failure ? fieldError(failure) : null);
+	const errorOf = (field: Field) => (atField?.field === field ? atField.message : null);
 
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
 		pending = true;
-		error = null;
+		failure = null;
 		try {
 			await ok(api.POST('/api/auth/login', { body: { email, password } }));
 			await goto(resolve('/chat'));
-		} catch (failure) {
-			error = failure as ApiError;
+		} catch (error) {
+			failure = error as ApiError;
 		} finally {
 			pending = false;
 		}
@@ -30,30 +36,52 @@
 
 <svelte:head><title>Вход · Kōri</title></svelte:head>
 
-<form class="space-y-5" onsubmit={submit}>
-	<h1 class="text-2xl">Вход</h1>
-	{#if error}
-		<Alert.Root variant="destructive"><Alert.Title>{error.message}</Alert.Title></Alert.Root>
-	{/if}
-	<div class="space-y-2">
-		<Label for="email">Email</Label>
-		<Input id="email" type="email" autocomplete="email" required bind:value={email} />
-	</div>
-	<div class="space-y-2">
-		<Label for="password">Пароль</Label>
-		<Input
-			id="password"
-			type="password"
-			autocomplete="current-password"
-			required
-			bind:value={password}
-		/>
-	</div>
-	<Button type="submit" size="lg" class="w-full" disabled={pending}>
-		Войти <span aria-hidden="true">→</span>
-	</Button>
-	<p class="flex flex-wrap items-center gap-x-1 text-xs text-muted-foreground">
-		Нет аккаунта?
-		<Button variant="link" class="h-auto px-0" href={resolve('/register')}>Регистрация</Button>
-	</p>
-</form>
+<AuthPanel title="Вход" note="Email и пароль" error={atField ? null : failure} onsubmit={submit}>
+	{#snippet fields()}
+		<AuthField id="email" label="Email" error={errorOf('email')}>
+			<Input
+				id="email"
+				type="email"
+				autocomplete="email"
+				required
+				class="h-11 md:text-[15px]"
+				aria-invalid={errorOf('email') ? true : undefined}
+				aria-describedby={errorOf('email') ? 'email-error' : undefined}
+				bind:value={email}
+			/>
+		</AuthField>
+		<AuthField id="password" label="Пароль" error={errorOf('password')}>
+			{#snippet aside()}
+				<Button
+					variant="link"
+					class="text-caption"
+					aria-controls="password"
+					onclick={() => (shown = !shown)}>{shown ? 'Скрыть' : 'Показать'}</Button
+				>
+			{/snippet}
+			<Input
+				id="password"
+				type={shown ? 'text' : 'password'}
+				autocomplete="current-password"
+				required
+				class="h-11 md:text-[15px]"
+				aria-invalid={errorOf('password') ? true : undefined}
+				aria-describedby={errorOf('password') ? 'password-error' : undefined}
+				bind:value={password}
+			/>
+		</AuthField>
+	{/snippet}
+	{#snippet actions()}
+		<Button
+			variant="secondary"
+			size="lg"
+			href={resolve('/register')}
+			class="min-w-44 flex-1 justify-start"
+		>
+			<span data-slot="button-glyph" aria-hidden="true">+</span>Регистрация
+		</Button>
+		<Button type="submit" size="lg" disabled={pending} class="min-w-44 flex-1 justify-start">
+			<span data-slot="button-glyph" aria-hidden="true">→</span>Войти
+		</Button>
+	{/snippet}
+</AuthPanel>

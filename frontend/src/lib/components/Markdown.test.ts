@@ -74,6 +74,42 @@ describe('Markdown', () => {
 		expect(el.querySelector('code')?.textContent).toBe('[s1]');
 	});
 
+	// docs/ui-references/kori-v3: the answer is grey prose, its numbers in the ink color, losses red.
+	it('sets numbers in the ink color and losses in red', () => {
+		const el = view(
+			'Портфель стоит 1 195 145 ₽, Газпром дал −23 800 ₽ и -14,7 %, доля 11,6 %. ' +
+				'На 10.10.2026 в 19:00.'
+		);
+		const numbers = [...el.querySelectorAll('[data-number]')];
+
+		expect(numbers.map((n) => [n.textContent, n.getAttribute('data-number')])).toEqual([
+			['1 195 145 ₽', 'value'],
+			['−23 800 ₽', 'loss'],
+			['-14,7 %', 'loss'],
+			['11,6 %', 'value'],
+			['10.10.2026', 'value'],
+			['19:00', 'value']
+		]);
+		expect(el.textContent).toContain('Портфель стоит 1 195 145 ₽, Газпром дал −23 800 ₽');
+	});
+
+	it('leaves digits inside words, names and ranges as text', () => {
+		const el = view('GigaChat-2-Pro, счёт acc1, годы 2020-2025, код `42`, ссылка [s1].', [
+			source('s1', 'https://example.com')
+		]);
+
+		expect([...el.querySelectorAll('[data-number]')].map((n) => n.textContent)).toEqual(['2020']);
+	});
+
+	it('marks a key phrase between double equals signs', () => {
+		const el = view('Итог: ==прибыль +42 090 ₽== за год.');
+		const mark = el.querySelector('mark');
+
+		expect(mark?.textContent).toBe('прибыль +42 090 ₽');
+		expect(mark?.querySelector('[data-number]')?.textContent).toBe('+42 090 ₽');
+		expect(el.textContent).not.toContain('==');
+	});
+
 	it('renders a code block with a copy button', () => {
 		const el = view('```ts\nconst a = 1\n```');
 

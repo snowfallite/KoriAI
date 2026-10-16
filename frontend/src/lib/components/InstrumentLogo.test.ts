@@ -26,16 +26,20 @@ afterEach(() => {
 });
 
 describe('InstrumentLogo', () => {
-	it('shows initials on the brand color without a logo', () => {
+	// tech.md §13.2: initials on the neutral grey-900 tile; the brand color paints nothing.
+	it('shows initials in white on the neutral tile, whatever the brand color', () => {
 		const { container } = render(InstrumentLogo, {
 			src: null,
 			name: 'Газпром нефть',
 			color: '#1a9f29'
 		});
 		const fallback = fallbackOf(container);
+		const classes = fallback?.className.split(/\s+/) ?? [];
 
 		expect(fallback?.textContent?.trim()).toBe('ГН');
-		expect(fallback?.style.backgroundColor).toBe('rgb(26, 159, 41)');
+		expect(classes).toContain('bg-grey-900');
+		expect(classes).toContain('text-white');
+		expect(fallback?.style.backgroundColor).toBe('');
 		expect(container.querySelector('img')).toBeNull();
 	});
 

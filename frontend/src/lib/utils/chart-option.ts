@@ -2,7 +2,6 @@ import type {
 	CustomSeriesOption,
 	CustomSeriesRenderItem,
 	EChartsOption,
-	PieSeriesOption,
 	SeriesOption,
 	XAXisComponentOption,
 	YAXisComponentOption
@@ -34,12 +33,25 @@ export interface ChartTheme {
 	series: string[];
 	positive: string;
 	negative: string;
+	/** --primary: the red end of a correlation. */
+	primary: string;
+	/** The grey ladder under the ink, from the boldest on this ground to the faintest. */
+	ladder: string[];
+}
+
+/** Every kind but the pie draws on the ECharts canvas; a pie draws as plates (toPlates). */
+export type CartesianSpec = ChartSpec & { kind: Exclude<ChartSpec['kind'], 'pie'> };
+
+export function isCartesian(spec: ChartSpec): spec is CartesianSpec {
+	return spec.kind !== 'pie';
 }
 
 // These kinds place marks by category whatever the spec says about the x axis.
 const BY_CATEGORY = new Set<ChartSpec['kind']>(['candlestick', 'heatmap', 'waterfall']);
 const BAR_MAX_WIDTH = 24;
 const FROM_ZERO = new Set<ChartSpec['kind']>(['bar', 'stacked_bar', 'waterfall']);
+// The benchmark dash of v3: 4 px of line, 4 px of gap.
+const DASH = [4, 4];
 
 /** An axis value as people read it; percent axes carry shares (0.12 is 12 %), as PercentText. */
 export function formatAxisValue(value: unknown, axis: Axis): string {
@@ -71,14 +83,41 @@ export function formatAxisValue(value: unknown, axis: Axis): string {
 	return text === '—' ? String(value) : text;
 }
 
+/** WCAG relative luminance of a #rgb or #rrggbb color; null for any other notation. */
+function luminance(color: string): number | null {
+	const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(color.trim())?.[1];
+	if (!hex) return null;
+	const full = hex.length === 3 ? [...hex].map((digit) => digit + digit).join('') : hex;
+	const channel = (at: number) => {
+		const c = parseInt(full.slice(at, at + 2), 16) / 255;
+		return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+	};
+	return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
+}
+
+function contrast(a: string, b: string): number {
+	const [la, lb] = [luminance(a), luminance(b)];
+	if (la === null || lb === null) return 1;
+	return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** The greys from the one that stands out most on the ground to the faintest: light first at
+ * night, dark first by day. Colors it cannot read keep their order. */
+export function ladderOn(greys: string[], ground: string): string[] {
+	return greys
+		.map((grey, i) => ({ grey, i, contrast: contrast(grey, ground) }))
+		.sort((a, b) => b.contrast - a.contrast || a.i - b.i)
+		.map(({ grey }) => grey);
+}
+
 /** Categorical slots go in order to series without a role; roles keep fixed colors. */
 function paint(series: Series[], theme: ChartTheme): { color: string; cycled: boolean }[] {
 	let slot = 0;
 	return series.map(({ role }) => {
 		if (role === 'positive') return { color: theme.positive, cycled: false };
 		if (role === 'negative') return { color: theme.negative, cycled: false };
-		if (role === 'neutral') return { color: theme.muted, cycled: false };
-		if (role === 'benchmark') return { color: theme.text, cycled: false };
+		// A benchmark and a neutral series step back into grey; the benchmark also dashes.
+		if (role === 'neutral' || role === 'benchmark') return { color: theme.muted, cycled: false };
 		const n = slot++;
 		const color = theme.series[n % theme.series.length] ?? theme.text;
 		// Past the eighth slot a color repeats; a dashed line keeps the series apart.
@@ -94,10 +133,10 @@ function finite(values: (number | null)[]): number[] {
 	return values.filter((v): v is number => v !== null && Number.isFinite(v));
 }
 
-export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOption {
+export function toEChartsOption(spec: CartesianSpec, theme: ChartTheme): EChartsOption {
 	const colors = paint(spec.series, theme);
-	const legend = spec.series.length > 1 && spec.kind !== 'pie';
-	const item = spec.kind === 'pie' || spec.kind === 'scatter' || spec.kind === 'heatmap';
+	const legend = spec.series.length > 1;
+	const item = spec.kind === 'scatter' || spec.kind === 'heatmap';
 	const base: EChartsOption = {
 		backgroundColor: 'transparent',
 		// Ticks at UTC midnight fall on the same day in Moscow (UTC+3).
@@ -113,8 +152,6 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 			textStyle: { color: theme.text, fontFamily: theme.font }
 		}
 	};
-
-	if (spec.kind === 'pie') return { ...base, series: pies(spec, theme) };
 
 	const categories = BY_CATEGORY.has(spec.kind) || spec.x.type === 'category';
 	const xs = unique(spec.series.flatMap((s) => s.points.map((p) => String(p.x))));
@@ -175,7 +212,10 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 				return {
 					...common,
 					type: 'bar',
-					data: pairs,
+					// A loss is red in any series: a bar below zero wears the negative color.
+					data: pairs.map((pair, j) =>
+						(s.points[j]?.y ?? 0) < 0 ? { value: pair, itemStyle: { color: theme.negative } } : pair
+					),
 					barMaxWidth: BAR_MAX_WIDTH,
 					// Stacked segments part with a surface gap, not a stroke.
 					...(spec.kind === 'stacked_bar'
@@ -197,7 +237,7 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 					data: s.points.map((p) => [String(p.x), p.o, p.c, p.l, p.h]),
 					encode: { x: 0, y: [1, 2, 3, 4] },
 					barMaxWidth: BAR_MAX_WIDTH,
-					// A hollow rise and a filled fall read apart without color too.
+					// A hollow rise and a filled red fall read apart without color too.
 					itemStyle: {
 						color: theme.surface,
 						color0: theme.negative,
@@ -214,10 +254,10 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 					data: pairs,
 					showSymbol: false,
 					symbolSize: 8,
-					lineStyle: {
-						width: 2,
-						type: s.role === 'benchmark' || colors[i]?.cycled ? 'dashed' : 'solid'
-					},
+					lineStyle:
+						s.role === 'benchmark'
+							? { width: 1.25, type: DASH }
+							: { width: 2, type: colors[i]?.cycled ? 'dashed' : 'solid' },
 					// A benchmark stays a dashed line over the wash of the series it measures.
 					...(spec.kind === 'area' && s.role !== 'benchmark' ? { areaStyle: { opacity: 0.1 } } : {})
 				};
@@ -226,28 +266,8 @@ export function toEChartsOption(spec: ChartSpec, theme: ChartTheme): EChartsOpti
 	return { ...base, grid, xAxis, yAxis: yAxes, series };
 }
 
-function pies(spec: ChartSpec, theme: ChartTheme): PieSeriesOption[] {
-	const n = spec.series.length;
-	// Pies share the row; the hole keeps its share of each.
-	const outer = Math.min(70, 140 / n);
-	return spec.series.map((s, i) => ({
-		type: 'pie',
-		name: s.name,
-		radius: [`${outer * 0.64}%`, `${outer}%`],
-		center: [`${((i + 0.5) / n) * 100}%`, '50%'],
-		data: s.points.map((p) => ({ name: String(p.x), value: p.y ?? 0 })),
-		label: {
-			color: theme.text,
-			formatter: ({ name, percent }: { name: string; percent?: number }) =>
-				`${name}\n${formatPercent((percent ?? 0) / 100, { digits: 1 })}`
-		},
-		itemStyle: { borderColor: theme.surface, borderWidth: 2 },
-		tooltip: { valueFormatter: (value: unknown) => formatAxisValue(value, spec.y) }
-	}));
-}
-
 function heatmap(
-	spec: ChartSpec,
+	spec: CartesianSpec,
 	theme: ChartTheme,
 	xs: string[],
 	xAxis: XAXisComponentOption
@@ -255,11 +275,9 @@ function heatmap(
 	const points = spec.series.flatMap((s) => s.points);
 	const ys = unique(points.map((p) => p.y_cat ?? ''));
 	const zs = finite(points.map((p) => p.z));
-	const [low, high] = zs.length ? [Math.min(...zs), Math.max(...zs)] : [0, 1];
-	// Values on both sides of zero diverge from a gray midpoint; the rest run on one hue.
-	const diverging = low < 0 && high > 0;
-	const bound = Math.max(Math.abs(low), Math.abs(high));
-	const [min, max] = diverging ? [-bound, bound] : [low, high > low ? high : low + 1];
+	// Zero is the ground: grey below it, red above it. Correlations keep the whole −1…+1 scale;
+	// larger values stretch it evenly on both sides.
+	const bound = zs.reduce((most, z) => Math.max(most, Math.abs(z)), 1);
 	const cells = xs.length * ys.length;
 	return {
 		xAxis,
@@ -272,8 +290,8 @@ function heatmap(
 		},
 		visualMap: {
 			type: 'continuous',
-			min,
-			max,
+			min: -bound,
+			max: bound,
 			orient: 'horizontal',
 			left: 'center',
 			bottom: 0,
@@ -281,11 +299,7 @@ function heatmap(
 			itemWidth: 10,
 			textStyle: { color: theme.muted },
 			formatter: (value: unknown) => formatNumber(value as number, 2),
-			inRange: {
-				color: diverging
-					? [theme.negative, theme.grid, theme.series[0] ?? theme.text]
-					: [theme.grid, theme.series[0] ?? theme.text]
-			}
+			inRange: { color: [theme.ladder.at(-1) ?? theme.muted, theme.surface, theme.primary] }
 		},
 		series: spec.series.map((s) => ({
 			type: 'heatmap',
@@ -332,4 +346,59 @@ function waterfall(
 		};
 	};
 	return { ...common, type: 'custom', data, renderItem, encode: { x: 0, y: [1, 2], tooltip: [3] } };
+}
+
+/** One share of a pie drawn as a plate. */
+interface Plate {
+	label: string;
+	value: number;
+	/** The part of the series total, in (0, 1]. */
+	share: number;
+	/** 0 for the largest share, then 1, 2 … by size. */
+	rank: number;
+	/** The largest share: the plate in the ink color. */
+	lead: boolean;
+	color: string;
+	/** A label inside the plate: the ground or the ink, whichever reads better on it. */
+	ink: string;
+}
+
+export interface PlateGroup {
+	name: string;
+	plates: Plate[];
+}
+
+/**
+ * A pie as plates (docs/ui-references/kori-v3): one row per share in the order of the spec, as
+ * wide as the share. The largest wears the ink color, the rest step down the grey ladder by
+ * size. A share that cannot draw stays out: empty, zero, below zero or too small for a pixel.
+ */
+export function toPlates(spec: ChartSpec, theme: ChartTheme): PlateGroup[] {
+	return spec.series.map((series) => {
+		const values = series.points.flatMap((p) =>
+			p.y !== null && Number.isFinite(p.y) && p.y > 0 ? [{ label: String(p.x), value: p.y }] : []
+		);
+		const total = values.reduce((sum, { value }) => sum + value, 0);
+		const drawn = values
+			.map((entry) => ({ ...entry, share: entry.value / total }))
+			.filter(({ share }) => share > 0);
+		// Of two equal shares the first in the spec ranks higher.
+		const order = drawn
+			.map((_, i) => i)
+			.sort((a, b) => (drawn[b]?.value ?? 0) - (drawn[a]?.value ?? 0) || a - b);
+		const rankOf = new Map(order.map((index, rank) => [index, rank]));
+		return {
+			name: series.name,
+			plates: drawn.map((entry, i) => {
+				const rank = rankOf.get(i) ?? 0;
+				const step = theme.ladder[Math.min(rank, theme.ladder.length) - 1];
+				const color = rank === 0 ? theme.text : (step ?? theme.muted);
+				const ink =
+					contrast(color, theme.surface) >= contrast(color, theme.text)
+						? theme.surface
+						: theme.text;
+				return { ...entry, rank, lead: rank === 0, color, ink };
+			})
+		};
+	});
 }

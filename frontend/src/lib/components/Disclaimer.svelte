@@ -1,9 +1,4 @@
-<script lang="ts">
-	import Info from '@lucide/svelte/icons/info';
-</script>
-
-<!-- The fixed text of tech.md §9.11: the model never writes it. -->
-<p class="flex items-center gap-1.5 text-xs text-muted-foreground">
-	<Info class="size-3.5 shrink-0" aria-hidden="true" />
+<!-- The fixed text of tech.md §9.11 in a grey caption; the model never writes it. -->
+<p class="text-caption text-grey-600 uppercase">
 	Информация не является индивидуальной инвестиционной рекомендацией.
 </p>

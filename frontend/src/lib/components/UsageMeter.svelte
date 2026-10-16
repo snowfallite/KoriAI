@@ -23,28 +23,21 @@
 	const ahead = $derived(mark !== undefined && share > mark);
 </script>
 
-<div class="space-y-1.5 text-xs">
-	<div class="flex items-baseline justify-between gap-2">
-		<span>{label}</span>
-		<span class={cn(ahead ? 'text-warning' : 'text-muted-foreground')}>
-			{formatCompact(used)} / {formatCompact(quota)}{unit ? ` ${unit}` : ''}
-		</span>
-	</div>
+<!-- A row of the usage sheet (kori-v3, Карточки): the family in caps, a 6 px bar with the red mark
+     of the pace, «6,1 млн из 250 млн» on the right. Usage ahead of the pace turns to warning. -->
+<div
+	class="grid grid-cols-[52px_minmax(0,1fr)_minmax(164px,max-content)] items-center gap-x-4 text-ui tabular-nums"
+>
+	<span class="truncate text-caption uppercase">{label}</span>
 	<div class="relative">
-		<!-- Ink fill by default; the warning color once usage runs ahead of the pace. -->
 		<Progress
 			value={Math.min(share, 1) * 100}
 			aria-label={label}
-			class={cn(
-				'h-1.5',
-				ahead
-					? '[&_[data-slot=progress-indicator]]:bg-warning'
-					: '[&_[data-slot=progress-indicator]]:bg-foreground'
-			)}
+			class={cn('h-1.5', ahead && '[&_[data-slot=progress-indicator]]:bg-warning')}
 		/>
 		{#if mark !== undefined}
 			<span
-				class="absolute -top-1 h-3.5 w-0.5 -translate-x-1/2 bg-primary"
+				class="absolute -top-[5px] h-4 w-0.5 -translate-x-1/2 bg-primary"
 				style="left: {mark * 100}%"
 				aria-hidden="true"
 			></span>
@@ -53,4 +46,8 @@
 			>
 		{/if}
 	</div>
+	<span class="text-right text-muted-foreground">
+		<span class={ahead ? 'text-warning' : 'text-foreground'}>{formatCompact(used)}</span>
+		из {formatCompact(quota)}{unit ? ` ${unit}` : ''}
+	</span>
 </div>

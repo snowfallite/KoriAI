@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { Component, Snippet } from 'svelte';
 
+	// The icon stays in the props of tech.md §13.2, but v3 draws none: the title carries the state.
+	// eslint-disable-next-line svelte/no-unused-props -- the contract keeps icon
 	let {
-		icon: Icon,
 		title,
 		description,
 		action
@@ -14,17 +15,13 @@
 	} = $props();
 </script>
 
-<div class="flex flex-col items-center gap-3 border px-6 py-10 text-center">
-	{#if Icon}
-		<div class="grid size-9 place-items-center bg-muted text-muted-foreground" aria-hidden="true">
-			<Icon class="size-4" />
-		</div>
+<!-- A frame without fill (kori-v3, Карточки): a 28 px title, a grey note, the main action. -->
+<div class="flex flex-col items-start gap-4 border px-8 py-10">
+	<p class="text-[28px]/8">{title}</p>
+	{#if description}
+		<p class="max-w-[52ch] text-[14px]/[22px] text-muted-foreground">{description}</p>
 	{/if}
-	<div class="space-y-1">
-		<p class="text-sm font-medium">{title}</p>
-		{#if description}
-			<p class="max-w-sm text-xs text-muted-foreground">{description}</p>
-		{/if}
-	</div>
-	{@render action?.()}
+	{#if action}
+		<div class="mt-2">{@render action()}</div>
+	{/if}
 </div>
