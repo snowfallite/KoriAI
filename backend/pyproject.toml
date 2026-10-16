@@ -34,13 +34,9 @@ dependencies = [
 package = false
 native-tls = true
 
-[[tool.uv.index]]
-name = "tbank"
-url = "https://opensource.tbank.ru/api/v4/projects/238/packages/pypi/simple"
-explicit = true
-
+# tech.md §4.3: the wheel T-Bank publishes on GitHub, pinned to a commit.
 [tool.uv.sources]
-t-tech-investments = { index = "tbank" }
+t-tech-investments = { url = "https://github.com/Invest-SDK/invest-python/raw/285aebba846b7d51b730b643610a74a5929c24ba/t_tech_investments-1.51.0-py3-none-any.whl" }
 
 [dependency-groups]
 dev = [
