@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «氷 Kōri»
 
-> CORE_VERSION: 8
+> CORE_VERSION: 9
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v9 (2026-10-16): `t-tech-investments` ставится из wheel, который T-Bank выложил на GitHub (`Invest-SDK/invest-python`), по ссылке на коммит; индекс opensource.tbank.ru недоступен с 2026-10-13 после атак на дата-центры банка (L-04).
 - v8 (2026-10-10): визуал v3 по макету `docs/ui-references/kori-v3/`: выбранное белое вместо красной заливки, главная кнопка из красной ячейки со стрелкой и подписи цветом текста, `ai` размера `icon` для отправки, белые панели только у ввода, входа и диалогов, карточки рамкой без заливки, печать 氷 в `Logo`, нейтральные плитки бумаг, данные цветами бренда (плюс цветом текста, минус красным, крупная доля белая), токены `--prose`, `--line-faint` и шкала шрифта `--text-*`, ссылка `/chat?q=`; задача S1-14 и вид F-03, F-07 (S1-14).
 - v7 (2026-10-01): UI-кит повторяет бренд Kïoku целиком: у `button` вариант `ai` и ячейка-глиф, общий компонент `Logo` (compact, spaced, sign), токены red-deep, лесенки серых, сетки графиков и градиентов, утилиты `ki-*` и правила бренда в §13.3, тема по умолчанию ночь (S1-06).
 - v6 (2026-09-30): OpenAPI несёт модели пропсов §13.2, которые приходят раньше своих роутов: `Money`, `UserOut`, `BrokerAccountOut`, `PeriodCode`; UI-кит S1-06 типизирует ими пропсы до S1-05 и S1-11 (S1-06).
@@ -65,7 +66,7 @@
 | | SQLAlchemy 2.0 async + psycopg 3 + Alembic | |
 | | procrastinate 3.x | очередь на Postgres, воркер внутри процесса API |
 | | LangChain 1.x (`langchain-core`), LangGraph 1.x, `langchain-gigachat` 0.5.x, `gigachat` | |
-| | `t-tech-investments` | только из индекса T-Bank (§4.3) |
+| | `t-tech-investments` | только wheel T-Bank с GitHub по ссылке на коммит (§4.3) |
 | | `tavily-python` (`AsyncTavilyClient`) | search, extract, crawl, map |
 | | httpx, selectolax | HTTP-клиенты; разбор HTML e-disclosure |
 | | playwright (Python), Firefox | транспорт e-disclosure: без браузера сайт отдаёт 403 или JS-проверку, headless получает капчу (S1-12) |
@@ -309,19 +310,14 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
 
 **Зона задачи.** Всё остальное: домены задачи в `backend/app/domains/<domain>/` (включая `tasks.py`), инструменты агента в `backend/app/domains/agent/tools/<tool>.py`, тесты доменов задачи, роут задачи и его локальные компоненты, файлы фикстур с префиксом ID задачи (`backend/fixtures/seed/**/f07_*`). Зона каждой задачи S2 перечислена в §22.2. Задача в режиме `feature` пишет только сюда.
 
-### 4.3 Индекс пакетов T-Bank
+### 4.3 Пакет T-Bank
 
-Проект `t-tech-investments` на PyPI в карантине. Ставим только из индекса T-Bank, импорт `t_tech.invest`.
+Проект `t-tech-investments` на PyPI в карантине. Индекс T-Bank (opensource.tbank.ru) не отвечает с 2026-10-13: банк перенёс SDK в GitHub-организацию `Invest-SDK`. Ставим только wheel оттуда по ссылке на коммит, а не на ветку; `uv.lock` хранит его sha256. Импорт `t_tech.invest`. Новая версия SDK: новый коммит в ссылке, сверка содержимого wheel с прошлой версией, `uv lock`. Вернуться на индекс, когда он заработает: решение владельца, режим `contract`.
 
 ```toml
 # backend/pyproject.toml
-[[tool.uv.index]]
-name = "tbank"
-url = "https://opensource.tbank.ru/api/v4/projects/238/packages/pypi/simple"
-explicit = true
-
 [tool.uv.sources]
-t-tech-investments = { index = "tbank" }
+t-tech-investments = { url = "https://github.com/Invest-SDK/invest-python/raw/285aebba846b7d51b730b643610a74a5929c24ba/t_tech_investments-1.51.0-py3-none-any.whl" }
 ```
 
 ```python
@@ -329,7 +325,7 @@ from t_tech.invest import AsyncClient
 from t_tech.invest.constants import INVEST_GRPC_API  # боевой контур; песочница не используется
 ```
 
-Доступность индекса с раннеров GitHub проверяется в S1-01 (L-04).
+Wheel 1.51.0 с GitHub совпадает со сборкой индекса по коду; в сертификаты SDK (`t_tech/invest/certs/RussianTrustedRootCA.pem`, gRPC-канал к T-Invest) добавлен корень `TINKOFFBANK-ROOTCA` (L-04).
 
 ### 4.4 Границы импортов (`.importlinter`)
 
@@ -1939,8 +1935,8 @@ MVP: один тестовый VPS, он же рабочее окружение 
 |---|---|---|---|---|
 | L-01 | GigaChat: freemium только для личного некоммерческого использования (соглашение для физлиц, п. 2.4 и 5.3.1; ПДн третьих лиц в сервис не передаются, п. 8.7). Публичный многопользовательский сервис требует договора юрлица или ИП и платных пакетов (10 потоков по умолчанию). Ultra на платных тарифах пока недоступна. Новые клиенты с 01.09.2026 оплачивают модели через cloud.ru | публичный запуск, больше 1 потока | получить ключ авторизации (scope `GIGACHAT_API_PERS`); решить юрформу, если нужен публичный запуск | `REGISTRATION_MODE=invite`, `LLM_MAX_CONCURRENCY=1` |
 | L-02 | Tavily: ключ; free 1000 кредитов в месяц; прод-нагрузка требует PAYGO или плана; доступность API с IP VPS | реальный веб-поиск | получить ключ, `just smoke-external` с VPS | `WEB_MODE=fake` |
-| L-03 | VPS: площадка, доступность всех внешних API с её IP (GigaChat, T-Invest, Tavily, e-disclosure, индекс пакетов T-Bank), домен, DNS; 152-ФЗ (локализация ПДн граждан РФ) при публичном запуске | S1-13 | арендовать, прогнать smoke | локальный compose |
-| L-04 | Индекс пакетов T-Bank с раннеров GitHub. Недоступен: wheel `t-tech-investments` кладётся в кэш CI или приватный mirror | CI бэка | проверить в S1-01 | локальная установка по `uv.lock` |
+| L-03 | VPS: площадка, доступность всех внешних API с её IP (GigaChat, T-Invest, Tavily, e-disclosure, github.com для wheel T-Bank), домен, DNS; 152-ФЗ (локализация ПДн граждан РФ) при публичном запуске | S1-13 | арендовать, прогнать smoke | локальный compose |
+| L-04 | Пакет `t-tech-investments`: индекс T-Bank недоступен с 2026-10-13, источник теперь wheel на GitHub (§4.3). Пропадёт и он: wheel кладётся в кэш CI или приватный mirror | CI бэка | сделано: S1-01 (индекс), v9 (GitHub) | локальная установка по `uv.lock` |
 | L-05 | T-Invest: read-only токен владельца для smoke и `TINVEST_SYSTEM_TOKEN` | реальные данные брокера | выпустить токен «только чтение» в Т-Инвестициях | `TINVEST_MODE=fake` |
 | L-06 | e-disclosure: клиенту без браузера 403, headless получает капчу, robots.txt запрещает `/api/*`, поиск компаний идёт туда по решению владельца; хрупкость HTML; условия использования (гиперссылка на источник; обязательно раскрываемая эмитентом информация не является материалом Интерфакс-ЦРКИ); запасной вариант: платный «Шлюз Раскрытие» (от 16 180 ₽ в месяц, подписка от 3 месяцев) | F-10 в проде | discovery в S1-12 (сделан); проверка адаптера с VPS в S1-13 | снимки HTML, фейк |
 | L-07 | Корневой сертификат НУЦ Минцифры для GigaChat | реальные вызовы GigaChat | положить `russian_trusted_root_ca.pem` в `infra/certs/` | `LLM_MODE=fake` |
