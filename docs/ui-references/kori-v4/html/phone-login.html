@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kōri: вход на телефоне</title>
+<!-- Static export of the Kōri v4 canvas (docs/ui-references/kori-v4/README.md). Visual reference, not app code. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&amp;family=Noto+Sans+JP:wght@300&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+a{color:inherit;text-decoration:none}
+.ki-cta:hover .ki-cta-label{background:#262626 !important}
+.ki-quiet:hover{color:#000000 !important}
+.ki-under:hover{color:#DF342F !important}
+a:focus-visible,button:focus-visible{outline:2px solid transparent;box-shadow:0 0 0 2px #FFFFFF,0 0 0 4px #000000}
+.ki-panel input{outline:none}
+.ki-panel input:focus{box-shadow:inset 0 -2px 0 #000000}
+</style>
+</head>
+<body>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; -webkit-font-smoothing: antialiased">
+<div aria-hidden="true" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: radial-gradient(ellipse 90% 45% at 92% 0%, rgba(254, 38, 39, 0.95) 0%, rgba(223, 52, 47, 0.6) 28%, rgba(110, 10, 13, 0.4) 52%, rgba(0, 0, 0, 0) 78%), radial-gradient(ellipse 70% 30% at 0% 62%, rgba(253, 75, 97, 0.22) 0%, rgba(0, 0, 0, 0) 70%)"></div>
+<div aria-hidden="true" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, rgba(0, 0, 0, 0) 1px, rgba(0, 0, 0, 0) 40px)"></div>
+<svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position: absolute; top: 0; left: 0; width: 390px; height: 520px; display: block">
+<defs>
+<linearGradient id="kp-fall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FE2627"></stop><stop offset="1" stop-color="#4A0709"></stop></linearGradient>
+</defs>
+<g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1" vector-effect="non-scaling-stroke">
+<line x1="408.5" y1="462" x2="408.5" y2="476"></line>
+<line x1="456.5" y1="462" x2="456.5" y2="477"></line>
+<line x1="456.5" y1="532" x2="456.5" y2="574"></line>
+<line x1="504.5" y1="378" x2="504.5" y2="421"></line>
+<line x1="504.5" y1="476" x2="504.5" y2="490"></line>
+<line x1="552.5" y1="364" x2="552.5" y2="420"></line>
+<line x1="552.5" y1="476" x2="552.5" y2="504"></line>
+<line x1="600.5" y1="434" x2="600.5" y2="476"></line>
+<line x1="600.5" y1="532" x2="600.5" y2="574"></line>
+<line x1="648.5" y1="420" x2="648.5" y2="477"></line>
+<line x1="648.5" y1="532" x2="648.5" y2="560"></line>
+<line x1="696.5" y1="406" x2="696.5" y2="421"></line>
+<line x1="696.5" y1="476" x2="696.5" y2="490"></line>
+<line x1="744.5" y1="336" x2="744.5" y2="365"></line>
+<line x1="744.5" y1="420" x2="744.5" y2="448"></line>
+<line x1="792.5" y1="308" x2="792.5" y2="364"></line>
+<line x1="792.5" y1="448" x2="792.5" y2="462"></line>
+<line x1="840.5" y1="378" x2="840.5" y2="393"></line>
+<line x1="840.5" y1="448" x2="840.5" y2="462"></line>
+<line x1="888.5" y1="294" x2="888.5" y2="337"></line>
+<line x1="888.5" y1="392" x2="888.5" y2="406"></line>
+<line x1="936.5" y1="238" x2="936.5" y2="253"></line>
+<line x1="936.5" y1="336" x2="936.5" y2="364"></line>
+<line x1="984.5" y1="224" x2="984.5" y2="252"></line>
+<line x1="984.5" y1="336" x2="984.5" y2="364"></line>
+<line x1="1032.5" y1="238" x2="1032.5" y2="253"></line>
+<line x1="1032.5" y1="336" x2="1032.5" y2="364"></line>
+</g>
+<g fill="url(#kp-fall)">
+<rect x="391" y="476" width="34" height="56"></rect>
+<rect x="535" y="420" width="34" height="56"></rect>
+<rect x="583" y="476" width="34" height="56"></rect>
+<rect x="775" y="364" width="34" height="84"></rect>
+<rect x="967" y="252" width="34" height="84"></rect>
+</g>
+<g fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="1" vector-effect="non-scaling-stroke">
+<rect x="439.5" y="476.5" width="33" height="55"></rect>
+<rect x="487.5" y="420.5" width="33" height="55"></rect>
+<rect x="631.5" y="476.5" width="33" height="55"></rect>
+<rect x="679.5" y="420.5" width="33" height="55"></rect>
+<rect x="727.5" y="364.5" width="33" height="55"></rect>
+<rect x="823.5" y="392.5" width="33" height="55"></rect>
+<rect x="871.5" y="336.5" width="33" height="55"></rect>
+<rect x="919.5" y="252.5" width="33" height="83"></rect>
+<rect x="1015.5" y="252.5" width="33" height="83"></rect>
+</g>
+</svg>
+<svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; opacity: 0.07"><filter id="kp-grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#kp-grain)"></rect></svg>
+
+<div style="position: relative; display: flex; justify-content: center; padding: 44px 16px 0">
+<div role="img" aria-label="Kōri" style="display: grid; grid-template-columns: repeat(7, auto); font-weight: 300; font-size: 52px; line-height: 52px">
+<span aria-hidden="true" style="background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 46%, rgba(255, 255, 255, 0.3) 100%); -webkit-background-clip: text; background-clip: text; color: transparent">K</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true" style="background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 46%, rgba(255, 255, 255, 0.3) 100%); -webkit-background-clip: text; background-clip: text; color: transparent">Ō</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true" style="background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 46%, rgba(255, 255, 255, 0.3) 100%); -webkit-background-clip: text; background-clip: text; color: transparent">R</span><span aria-hidden="true" style="width: 0.6em"></span><span aria-hidden="true" style="background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 46%, rgba(255, 255, 255, 0.3) 100%); -webkit-background-clip: text; background-clip: text; color: transparent">I</span>
+<span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 8px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 13px; line-height: 16px; color: #FE2627">こ</span><span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 8px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 13px; line-height: 16px; color: #FE2627">お</span><span aria-hidden="true"></span><span lang="ja" aria-hidden="true" style="margin-top: 8px; text-align: center; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; font-size: 13px; line-height: 16px; color: #FE2627">り</span><span aria-hidden="true"></span>
+</div>
+</div>
+<div style="flex: 1"></div>
+
+<form class="ki-panel" aria-labelledby="phone-login-title" style="position: relative; margin: 0 12px 12px; padding: 28px 20px 24px; background: #FFFFFF; color: #000000">
+<div aria-hidden="true" style="height: 3px; margin: -28px -20px 25px; background-image: linear-gradient(90deg, #FE2627 0%, #FD4B61 40%, rgba(255, 255, 255, 0) 100%)"></div>
+<h1 id="phone-login-title" style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 400; letter-spacing: -0.01em">Вход</h1>
+<div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="phone-email" style="font-size: 12px; line-height: 16px; color: #757575">Email</label>
+<input id="phone-email" type="email" autocomplete="email" value="demo@example.test" style="height: 52px; box-sizing: border-box; padding: 0 14px; border: 0; background: #F6F6F6; color: #000000; font-family: inherit; font-size: 16px">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="phone-password" style="font-size: 12px; line-height: 16px; color: #757575">Пароль</label>
+<div style="position: relative; display: flex">
+<input id="phone-password" type="password" autocomplete="current-password" value="dev-password-123" style="flex: 1; min-width: 0; height: 52px; box-sizing: border-box; padding: 0 104px 0 14px; border: 0; background: #F6F6F6; color: #000000; font-family: inherit; font-size: 16px">
+<button type="button" class="ki-quiet" aria-controls="phone-password" style="position: absolute; top: 0; right: 0; height: 52px; padding: 0 14px; border: 0; background: transparent; color: #757575; font-family: inherit; font-size: 13px; cursor: pointer">Показать</button>
+</div>
+</div>
+</div>
+<a href="#" class="ki-cta" style="display: flex; height: 56px; margin-top: 24px; color: #FFFFFF; font-size: 14px"><span aria-hidden="true" style="flex: 0 0 56px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 18px">→</span><span class="ki-cta-label" style="flex: 1; display: flex; align-items: center; padding: 0 18px; background: #000000">Войти</span></a>
+<p style="margin: 16px 0 0; font-size: 13px; line-height: 18px; color: #757575">Нет аккаунта? <a href="#" class="ki-under" style="color: #000000; text-decoration: underline; text-underline-offset: 3px">Регистрация по приглашению</a></p>
+</form>
+</div>
+</body>
+</html>
