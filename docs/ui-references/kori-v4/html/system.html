@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kōri v4: система</title>
+<!-- Static export of the Kōri v4 canvas (docs/ui-references/kori-v4/README.md). Visual reference, not app code. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Serif+JP:wght@400&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+a{color:inherit;text-decoration:none}
+.ki-link:hover{color:#FE2627 !important}
+.n{font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-size:0.88em;color:#FFFFFF;font-variant-numeric:tabular-nums}
+.n-loss{color:#FE2627}
+a:focus-visible,button:focus-visible{outline:2px solid transparent;box-shadow:0 0 0 2px #000000,0 0 0 4px #FE2627}
+</style>
+</head>
+<body>
+<div style="width: 1440px; min-height: 2240px; box-sizing: border-box; padding: 64px 72px 80px; background: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; -webkit-font-smoothing: antialiased">
+
+<header style="display: flex; align-items: center; gap: 16px; padding-bottom: 32px; border-bottom: 1px solid #262626">
+<h1 style="margin: 0; font-size: 28px; line-height: 32px; font-weight: 400">Kōri: система v4</h1>
+<p style="margin: 0 0 0 auto; font-size: 13px; line-height: 18px; color: #757575">Бренд Kïoku, каждый приём со своим смыслом в Kōri</p>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px 72px; margin-top: 48px">
+
+<div style="display: flex; flex-direction: column; gap: 64px">
+
+<section aria-labelledby="s-glyphs">
+<h2 id="s-glyphs" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Глифы</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Глиф ставится, только когда говорит то, чего нет в подписи.</p>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #262626; font-size: 13px; line-height: 18px">
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span>Действие вперёд</span><span style="color: #AAAAAA">Войти, отправить вопрос, спросить о портфеле</span></div>
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #AAAAAA; color: #000000; font-size: 16px">+</span><span>Создать</span><span style="color: #AAAAAA">Новый чат, создать аккаунт</span></div>
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid #757575; box-sizing: border-box; font-size: 16px">↓</span><span>Раскрыть</span><span style="color: #AAAAAA">Выбор модели, шаги ответа</span></div>
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 16px">×</span><span>Прервать, удалить, закрыть</span><span style="color: #AAAAAA">Остановить ответ, удалить чат, закрыть окно</span></div>
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 15px">↑↓</span><span>Порядок и направление</span><span style="color: #AAAAAA">Сортировка колонки; рост или падение у итога портфеля</span></div>
+<div style="display: grid; grid-template-columns: 40px 200px minmax(0, 1fr); align-items: center; column-gap: 16px; min-height: 52px; border-bottom: 1px solid #1A1A1A"><span aria-hidden="true" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #AAAAAA; color: #000000; font-size: 14px">2</span><span>Номер</span><span style="color: #AAAAAA">Номер вопроса в чате, счётчик у раздела: История¹²</span></div>
+</div>
+<p style="margin: 16px 0 0; font-size: 13px; line-height: 20px; color: #757575">Не ставим: стрелку в заголовке, стрелку после ссылки, крестик как знак ошибки, стрелку у каждой строки таблицы.</p>
+</section>
+
+<section aria-labelledby="s-buttons">
+<h2 id="s-buttons" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Кнопки</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Ячейка-глиф только у главного действия экрана. Отмена, ссылки и второстепенное без ячейки.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px">
+<a href="#" style="display: flex; height: 40px; font-size: 13px"><span aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span style="display: flex; align-items: center; padding: 0 20px 0 16px; background: #FFFFFF; color: #000000">Открыть настройки</span></a>
+<a href="#" style="display: flex; height: 40px; font-size: 13px; color: #000000"><span aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #000000 0%, #FE2627 100%); color: #FFFFFF; font-size: 16px">→</span><span style="display: flex; align-items: center; padding: 0 32px 0 14px; background: linear-gradient(90deg, #FE2627 0%, #FFFFFF 100%)">Спросить о портфеле</span></a>
+<a href="#" aria-label="Спросить" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #000000 0%, #FE2627 100%); color: #FFFFFF; font-size: 18px">→</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; margin-top: 16px">
+<a href="#" style="display: flex; height: 40px; font-size: 13px; color: #000000"><span aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center; background: #AAAAAA; font-size: 16px">+</span><span style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #CBCBCB">Новый чат</span></a>
+<button type="button" style="height: 40px; padding: 0 16px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer">Повторить</button>
+<button type="button" style="height: 40px; padding: 0 16px; border: 0; background: #1A1A1A; color: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer">Отмена</button>
+<a href="#" class="ki-link" style="font-size: 13px; color: #AAAAAA">Выйти</a>
+<span style="display: flex; height: 40px; font-size: 13px; color: #757575"><span aria-hidden="true" style="flex: 0 0 40px; display: flex; align-items: center; justify-content: center; background: #CBCBCB; font-size: 16px">→</span><span style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #DBDBDB">Недоступно</span></span>
+</div>
+<div style="margin-top: 24px; padding: 20px; background: #FFFFFF; color: #000000">
+<p style="margin: 0 0 14px; font-size: 12px; line-height: 16px; color: #757575">На белой панели: вход, регистрация, диалог</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#" style="display: flex; height: 44px; font-size: 13px; color: #FFFFFF"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #000000">Войти</span></a>
+<a href="#" style="display: flex; height: 44px; font-size: 13px; color: #FFFFFF"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">+</span><span style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #000000">Создать аккаунт</span></a>
+<a href="#" style="display: flex; height: 44px; font-size: 13px; color: #FFFFFF"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 16px">×</span><span style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #000000">Удалить</span></a>
+<button type="button" style="height: 44px; padding: 0 18px; border: 0; background: #CBCBCB; color: #000000; font-family: inherit; font-size: 13px; cursor: pointer">Отмена</button>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="s-type">
+<h2 id="s-type" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Шрифты</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Две гарнитуры Kïoku. Моно звучит как интерфейс и данные, serif набирает то, что читают.</p>
+<div style="border-top: 1px solid #262626; padding-top: 20px">
+<p style="margin: 0 0 12px; font-size: 12px; line-height: 16px; color: #757575">JetBrains Mono: интерфейс, числа, тикеры</p>
+<p style="margin: 0; font-size: 64px; line-height: 64px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums">1&nbsp;195&nbsp;145<span style="margin-left: 12px; font-size: 32px; letter-spacing: 0; color: #757575">₽</span></p>
+<p style="margin: 18px 0 0; font-size: 24px; line-height: 28px">Позиции</p>
+<p style="margin: 10px 0 0; font-size: 14px; line-height: 20px; font-weight: 700">Структура портфеля</p>
+<p style="margin: 6px 0 0; font-size: 13px; line-height: 18px; color: #CBCBCB">Брокерский, 846&nbsp;865&nbsp;₽, SBER, LKOH, ОФЗ 26240</p>
+<p style="margin: 6px 0 0; font-size: 12px; line-height: 16px; color: #757575">Цены Т-Инвестиций на 10.10.2026, 19:00 МСК</p>
+</div>
+<div style="margin-top: 24px; border-top: 1px solid #262626; padding-top: 20px">
+<p style="margin: 0 0 12px; font-size: 12px; line-height: 16px; color: #757575">Noto Serif: ответ агента, цитаты из отчётов</p>
+<p style="margin: 0; font-family: 'Noto Serif', Georgia, serif; font-size: 17px; line-height: 28px; color: #CBCBCB">Главный минус даёт Газпром: <span class="n n-loss">−23&nbsp;800&nbsp;₽</span>, или <span class="n n-loss">−14,7&nbsp;%</span>, при доле <span class="n">11,6&nbsp;%</span> портфеля. Числа внутри текста набраны моно: это данные, а не слова.</p>
+<p style="margin: 14px 0 0; padding-left: 14px; border-left: 1px solid #757575; font-family: 'Noto Serif', Georgia, serif; font-style: italic; font-size: 15px; line-height: 24px; color: #AAAAAA">«Выручка Группы за отчётный год составила <span class="n" style="font-style: normal">[ЧИСЛО]&nbsp;трлн&nbsp;₽</span>»: так выглядит цитата из отчёта МСФО</p>
+</div>
+<div style="margin-top: 24px; border-top: 1px solid #262626; padding-top: 20px">
+<p style="margin: 0 0 12px; font-size: 12px; line-height: 16px; color: #757575">Капс: только заголовки колонок таблиц</p>
+<p style="margin: 0; display: flex; gap: 28px; font-size: 11px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #757575"><span>Инструмент</span><span>Счёт</span><span>Кол-во</span><span>Доля</span><span>Результат</span></p>
+</div>
+</section>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 64px">
+
+<section aria-labelledby="s-notes">
+<h2 id="s-notes" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Уведомления и тосты</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Вид сообщает полоса слева и сам текст. Ячеек-знаков нет.</p>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 18px">
+<div role="alert" style="display: flex; align-items: center; gap: 16px; min-height: 44px; padding: 0 16px 0 14px; border-left: 2px solid #DF342F; background: #1A1A1A"><span style="flex: 1">Т-Инвестиции не отвечают. Повторите позже.</span><button type="button" class="ki-link" style="padding: 0; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px; cursor: pointer">Повторить</button></div>
+<div role="status" style="display: flex; align-items: center; gap: 16px; min-height: 44px; padding: 0 16px 0 14px; border-left: 2px solid #757575; background: #1A1A1A"><span style="flex: 1">Ответила модель Pro: лимит Max на сегодня почти израсходован</span></div>
+<div role="status" style="display: flex; align-items: center; gap: 16px; min-height: 44px; padding: 0 16px 0 14px; border-left: 2px solid #AAAAAA; background: #1A1A1A"><span style="flex: 1">Т-Инвестиции подключены, найдено 2 счёта</span></div>
+<div role="status" style="display: flex; align-items: center; gap: 16px; min-height: 44px; padding: 0 16px 0 14px; border-left: 2px solid #FFFFFF; background: #1A1A1A"><span style="flex: 1">2 числа в ответе не нашлись в данных</span><button type="button" class="ki-link" style="padding: 0; border: 0; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px; cursor: pointer">Показать</button></div>
+</div>
+</section>
+
+<section aria-labelledby="s-error">
+<h2 id="s-error" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Ошибка загрузки</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Без красного квадрата с крестиком: его принимают за кнопку «закрыть».</p>
+<div role="alert" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 28px 32px; border: 1px solid #262626; border-left: 2px solid #DF342F">
+<p style="margin: 0; font-size: 18px; line-height: 24px">Т-Инвестиции не отвечают, попробуйте позже</p>
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 16px; color: #757575">Код запроса 0190a000-dead-7000-8000-0000000000ff<button type="button" aria-label="Копировать код запроса" style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; color: #AAAAAA; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"><rect x="5" y="5" width="9" height="9"></rect><path d="M11 5V2H2v9h3"></path></svg></button></p>
+<button type="button" style="margin-top: 6px; height: 40px; padding: 0 16px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer">Повторить</button>
+</div>
+</section>
+
+<section aria-labelledby="s-dialog">
+<h2 id="s-dialog" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Диалог удаления</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Один крестик на окно: у действия «Удалить». Закрыть можно «Отменой» и Esc.</p>
+<div style="display: flex; justify-content: center; padding: 40px 0; background: #0D0D0D">
+<div role="dialog" aria-labelledby="dlg-title" style="width: 420px; background: #FFFFFF; color: #000000; border: 1px solid #FFFFFF">
+<h3 id="dlg-title" style="margin: 0; padding: 14px 16px; background: #000000; color: #FFFFFF; font-size: 22px; line-height: 28px; font-weight: 400">Удалить чат?</h3>
+<p style="margin: 0; padding: 20px 16px 24px; font-size: 14px; line-height: 22px">«Что с моим портфелем и почему?» и 4 сообщения удалятся без возврата.</p>
+<div style="display: flex">
+<button type="button" style="flex: 1; height: 44px; padding: 0 16px; border: 0; background: #CBCBCB; color: #000000; font-family: inherit; font-size: 13px; text-align: left; cursor: pointer">Отмена</button>
+<a href="#" style="flex: 1; display: flex; height: 44px; font-size: 13px; color: #FFFFFF"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #DF342F; color: #FFFFFF; font-size: 16px">×</span><span style="flex: 1; display: flex; align-items: center; padding: 0 14px; background: #000000">Удалить</span></a>
+</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="s-choice">
+<h2 id="s-choice" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Выбор</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Выбранное белое. Подписи строчными, счета по имени.</p>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; font-size: 12px">
+<div role="group" aria-label="Тема" style="display: flex"><button type="button" aria-pressed="true" style="height: 28px; padding: 0 10px; border: 1px solid #FFFFFF; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 11px">Тёмная</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 11px">Светлая</button></div>
+<div role="group" aria-label="Счёт" style="display: flex"><button type="button" aria-pressed="true" style="height: 28px; padding: 0 12px; border: 1px solid #FFFFFF; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 12px">Все счета</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 12px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">Брокерский</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 12px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">ИИС</button></div>
+<div role="group" aria-label="Период" style="display: flex; flex-wrap: wrap"><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">1 мес</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">6 мес</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">С начала года</button><button type="button" aria-pressed="true" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: #FFFFFF; color: #000000; font-family: inherit; font-size: 12px">1 год</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">5 лет</button><button type="button" aria-pressed="false" style="height: 28px; padding: 0 10px; margin-left: -1px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 12px">Всё время</button></div>
+</div>
+</section>
+
+<section aria-labelledby="s-token">
+<h2 id="s-token" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Поле токена (F-01)</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Заявления о безопасности стоят там, где человек отдаёт токен, а не в подвале входа.</p>
+<div style="padding: 20px; background: #FFFFFF; color: #000000">
+<label for="tok" style="display: block; margin-bottom: 8px; font-size: 12px; line-height: 16px">Токен Т-Инвестиций</label>
+<div style="display: flex">
+<input id="tok" type="password" value="t.Xk3pQ9mL2vB7wR5nT8ab12" aria-describedby="tok-hint tok-store" style="flex: 1; min-width: 0; height: 44px; box-sizing: border-box; padding: 0 12px; border: 0; background: #F6F6F6; color: #000000; font-family: inherit; font-size: 15px">
+<a href="#" style="display: flex; height: 44px; font-size: 13px; color: #FFFFFF"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span style="display: flex; align-items: center; padding: 0 18px 0 14px; background: #000000">Подключить</span></a>
+</div>
+<p id="tok-hint" style="margin: 10px 0 0; font-size: 13px; line-height: 20px">Нужен токен с доступом «Только чтение». Заявки и переводы сервис не делает. <a href="#" style="text-decoration: underline; text-underline-offset: 3px">Как выпустить токен</a></p>
+<p id="tok-store" style="margin: 6px 0 0; font-size: 12px; line-height: 18px; color: #757575">Храним токен зашифрованным и показываем только последние 4 символа.</p>
+</div>
+</section>
+
+<section aria-labelledby="s-data">
+<h2 id="s-data" style="margin: 0 0 6px; font-size: 14px; line-height: 20px; font-weight: 700">Данные</h2>
+<p style="margin: 0 0 18px; font-size: 13px; line-height: 20px; color: #757575">Плюс цветом текста, минус красным, всегда со знаком. Стрелка только у итога.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 32px; font-variant-numeric: tabular-nums">
+<span style="font-size: 18px; line-height: 24px"><span aria-hidden="true">↑</span> +42&nbsp;090&nbsp;₽</span>
+<span style="font-size: 14px">+28&nbsp;050&nbsp;₽ <span style="font-size: 12px; color: #AAAAAA">+17,6&nbsp;%</span></span>
+<span style="font-size: 14px; color: #FE2627">−23&nbsp;800&nbsp;₽ <span style="font-size: 12px">−14,7&nbsp;%</span></span>
+<span style="font-size: 12px; color: #AAAAAA">+34&nbsp;570&nbsp;₽ (+4,26&nbsp;%)</span>
+</div>
+</section>
+
+</div>
+</div>
+</div>
+</body>
+</html>

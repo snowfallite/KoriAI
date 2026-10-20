@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kōri: страница ошибки</title>
+<!-- Static export of the Kōri v4 canvas (docs/ui-references/kori-v4/README.md). Visual reference, not app code. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&amp;family=Noto+Serif+JP:wght@400&amp;display=swap">
+<style>
+body{margin:0;background:#000000}
+a{color:inherit;text-decoration:none}
+.ki-cta:hover .ki-cta-label{background:#DBDBDB !important}
+.ki-outline:hover{background:#FFFFFF !important;color:#000000 !important}
+a:focus-visible,button:focus-visible{outline:2px solid transparent;box-shadow:0 0 0 2px #000000,0 0 0 4px #FE2627}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; -webkit-font-smoothing: antialiased">
+<header style="height: 56px; box-sizing: border-box; display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid #262626">
+<a href="#" style="display: flex; align-items: center; color: #FFFFFF">
+<span style="font-size: 24px; line-height: 28px; letter-spacing: -0.02em">Kōri</span>
+</a>
+</header>
+
+<main style="flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr))">
+<section aria-labelledby="e404" style="display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: 64px 72px; border-right: 1px solid #262626">
+<h1 id="e404" style="margin: 12px 0 0; font-size: 36px; line-height: 40px; font-weight: 400">Страница не найдена</h1>
+<p style="margin: 0; max-width: 46ch; font-size: 14px; line-height: 22px; color: #AAAAAA">По адресу /no-such-page ничего нет. Проверьте ссылку или вернитесь к портфелю.</p>
+<a href="#" class="ki-cta" style="align-self: flex-start; display: flex; height: 44px; margin-top: 8px; font-size: 13px; color: #000000"><span aria-hidden="true" style="flex: 0 0 44px; display: flex; align-items: center; justify-content: center; background: #FE2627; color: #000000; font-size: 16px">→</span><span class="ki-cta-label" style="display: flex; align-items: center; padding: 0 20px 0 14px; background: #FFFFFF">Открыть портфель</span></a>
+</section>
+
+<section aria-labelledby="eoffline" style="display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: 64px 72px">
+<h1 id="eoffline" style="margin: 12px 0 0; font-size: 36px; line-height: 40px; font-weight: 400">Нет связи с сервером</h1>
+<p style="margin: 0; max-width: 46ch; font-size: 14px; line-height: 22px; color: #AAAAAA">Страница не загрузилась. Проверьте интернет и повторите. Если не поможет, пришлите код запроса владельцу.</p>
+<p style="margin: 0; font-size: 12px; line-height: 16px; color: #757575">Код запроса 0190a000-dead-7000-8000-0000000000ff</p>
+<button type="button" class="ki-outline" style="align-self: flex-start; height: 44px; margin-top: 8px; padding: 0 18px; border: 1px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer">Повторить</button>
+</section>
+</main>
+</div>
+</body>
+</html>
