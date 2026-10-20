@@ -3,7 +3,7 @@ name: deploy
 # Every merge into main ships to the test VPS (tech.md §20.2).
 on:
   push:
-    branches: [main, s1-13-vps-deploy]
+    branches: [main]
   workflow_dispatch:
 
 # One deploy at a time; a deploy in flight is never cancelled.
