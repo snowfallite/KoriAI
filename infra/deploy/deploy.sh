@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Ships one image tag on the test VPS (tech.md §20.2). deploy.yml copies this file next to
+# docker-compose.yml in /opt/kori and runs it as the deploy user with the GHCR read token on
+# stdin. A tag that fails /api/health/ready for 90 s gives way to the tag in .deployed_sha.
+# By hand, with the images already pulled: bash deploy.sh <sha-tag> <registry user> </dev/null
+set -euo pipefail
+
+tag=${1:?usage: deploy.sh <sha-tag> <registry user>}
+user=${2:?usage: deploy.sh <sha-tag> <registry user>}
+cd "$(dirname "$0")"
+previous=$(cat .deployed_sha 2>/dev/null || true)
+
+# The login lasts for the pull only: a rollback uses the images already on disk.
+if [[ ! -t 0 ]] && read -r token && [[ -n $token ]]; then
+  docker login ghcr.io --username "$user" --password-stdin <<<"$token" >/dev/null
+  trap 'docker logout ghcr.io >/dev/null' EXIT
+fi
+
+export KORI_TAG=$tag
+docker compose pull --quiet
+# Migrations only expand the schema (§5.7): the running version keeps working meanwhile.
+docker compose run --rm api alembic upgrade head
+docker compose up -d --remove-orphans
+
+ready() {
+  docker compose exec -T api python -c \
+    "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/ready', timeout=5)" \
+    >/dev/null 2>&1
+}
+
+deadline=$((SECONDS + 90))
+until ready; do
+  if ((SECONDS >= deadline)); then
+    echo "deploy: $tag is not ready after 90 s" >&2
+    docker compose logs --tail 80 api >&2 || true
+    if [[ -n $previous ]]; then
+      KORI_TAG=$previous docker compose up -d --remove-orphans
+      echo "deploy: rolled back to $previous" >&2
+    fi
+    exit 1
+  fi
+  sleep 2
+done
+
+echo "$tag" >.deployed_sha
+# Keep the live tag and the rollback tag: older images only eat the disk.
+docker image ls --format '{{.Repository}}:{{.Tag}}' \
+  | grep -E '/kori-(api|caddy):sha-' \
+  | grep -vE ":(${tag}|${previous:-none})\$" \
+  | xargs -r docker image rm >/dev/null || true
+docker image prune --force >/dev/null
+echo "deploy: $tag is live"
