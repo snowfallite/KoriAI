@@ -3,7 +3,7 @@
 	export const FIELD = 'h-[52px] px-3.5 text-base md:px-4 md:text-base';
 	// The one action of the panel: 56 px, the glyph cell and the label 18 px after it.
 	export const ACTION =
-		'h-14 w-full justify-start border-0 text-[14px] has-[>[data-slot=button-glyph]]:gap-[18px] [&>[data-slot=button-glyph]]:text-lg';
+		'h-14 w-full justify-start text-[14px] has-[>[data-slot=button-glyph]]:gap-[18px] [&>[data-slot=button-glyph]]:text-lg';
 </script>
 
 <script lang="ts">
