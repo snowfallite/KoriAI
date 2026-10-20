@@ -6,7 +6,7 @@
 	import { Button } from '$lib/ui/button';
 	import { Input } from '$lib/ui/input';
 	import AuthField from '../components/AuthField.svelte';
-	import AuthPanel from '../components/AuthPanel.svelte';
+	import AuthPanel, { ACTION, FIELD } from '../components/AuthPanel.svelte';
 	import { type Field, fieldError } from '../logic';
 
 	let email = $state('');
@@ -25,7 +25,8 @@
 		failure = null;
 		try {
 			await ok(api.POST('/api/auth/login', { body: { email, password } }));
-			await goto(resolve('/chat'));
+			// Until F-03 builds the chat, a new session opens the portfolio (tech.md S1-15).
+			await goto(resolve('/portfolio'));
 		} catch (error) {
 			failure = error as ApiError;
 		} finally {
@@ -36,7 +37,7 @@
 
 <svelte:head><title>Вход · Kōri</title></svelte:head>
 
-<AuthPanel title="Вход" note="Email и пароль" error={atField ? null : failure} onsubmit={submit}>
+<AuthPanel title="Вход" error={atField ? null : failure} onsubmit={submit}>
 	{#snippet fields()}
 		<AuthField id="email" label="Email" error={errorOf('email')}>
 			<Input
@@ -44,44 +45,40 @@
 				type="email"
 				autocomplete="email"
 				required
-				class="h-11 md:text-[15px]"
+				class={FIELD}
 				aria-invalid={errorOf('email') ? true : undefined}
 				aria-describedby={errorOf('email') ? 'email-error' : undefined}
 				bind:value={email}
 			/>
 		</AuthField>
 		<AuthField id="password" label="Пароль" error={errorOf('password')}>
-			{#snippet aside()}
+			<!-- Показать lives inside the field, on its right (kori-v4). -->
+			<div class="relative flex">
+				<Input
+					id="password"
+					type={shown ? 'text' : 'password'}
+					autocomplete="current-password"
+					required
+					class="{FIELD} pr-26 md:pr-28"
+					aria-invalid={errorOf('password') ? true : undefined}
+					aria-describedby={errorOf('password') ? 'password-error' : undefined}
+					bind:value={password}
+				/>
 				<Button
 					variant="link"
-					class="text-caption"
 					aria-controls="password"
+					class="absolute top-0 right-0 h-[52px] px-3.5 text-ui text-grey-600 hover:text-foreground md:px-4"
 					onclick={() => (shown = !shown)}>{shown ? 'Скрыть' : 'Показать'}</Button
 				>
-			{/snippet}
-			<Input
-				id="password"
-				type={shown ? 'text' : 'password'}
-				autocomplete="current-password"
-				required
-				class="h-11 md:text-[15px]"
-				aria-invalid={errorOf('password') ? true : undefined}
-				aria-describedby={errorOf('password') ? 'password-error' : undefined}
-				bind:value={password}
-			/>
+			</div>
 		</AuthField>
 	{/snippet}
-	{#snippet actions()}
-		<Button
-			variant="secondary"
-			size="lg"
-			href={resolve('/register')}
-			class="min-w-44 flex-1 justify-start"
-		>
-			<span data-slot="button-glyph" aria-hidden="true">+</span>Регистрация
-		</Button>
-		<Button type="submit" size="lg" disabled={pending} class="min-w-44 flex-1 justify-start">
+	{#snippet action()}
+		<Button type="submit" disabled={pending} class={ACTION}>
 			<span data-slot="button-glyph" aria-hidden="true">→</span>Войти
 		</Button>
+	{/snippet}
+	{#snippet footer()}
+		Нет аккаунта? <a href={resolve('/register')}>Регистрация по приглашению</a>
 	{/snippet}
 </AuthPanel>

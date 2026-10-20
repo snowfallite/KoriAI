@@ -84,6 +84,12 @@
 	--grey-400: #aaaaaa;
 	--grey-600: #757575;
 	--grey-900: #1c1c1c;
+	/* The sign-in scene, the same in both themes (tech.md §13.3, v11): pink for the second glow
+	   and the stripe over the form, red-800 for the middle of the glow, red-900 for the bottom of
+	   a falling candle. */
+	--pink: #fd4b61;
+	--red-800: #6e0a0d;
+	--red-900: #4a0709;
 	--grad-fade: linear-gradient(90deg, #fe2627 0%, #ffffff 100%);
 	--grad-ignite: linear-gradient(90deg, #000000 0%, #fe2627 100%);
 	--grad-highlight: linear-gradient(90deg, #fd4b61 0%, #fd4b6100 100%);
@@ -182,6 +188,9 @@
 	--color-grey-400: var(--grey-400);
 	--color-grey-600: var(--grey-600);
 	--color-grey-900: var(--grey-900);
+	--color-pink: var(--pink);
+	--color-red-800: var(--red-800);
+	--color-red-900: var(--red-900);
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

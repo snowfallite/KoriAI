@@ -1,56 +1,76 @@
+<script lang="ts" module>
+	// A field of the panel: 52 px, the --muted fill of a white panel, 16 px text (kori-v4).
+	export const FIELD = 'h-[52px] px-3.5 text-base md:px-4 md:text-base';
+	// The one action of the panel: 56 px, the glyph cell and the label 18 px after it.
+	export const ACTION =
+		'h-14 w-full justify-start border-0 text-[14px] has-[>[data-slot=button-glyph]]:gap-[18px] [&>[data-slot=button-glyph]]:text-lg';
+</script>
+
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import Logo from '$lib/components/Logo.svelte';
 	import type { ApiError } from '$lib/types';
 	import * as Alert from '$lib/ui/alert';
+	import { cn } from '$lib/utils/cn';
 
 	let {
 		title,
-		note,
 		error = null,
+		compact = false,
 		onsubmit,
 		fields,
-		actions
+		action,
+		footer
 	}: {
 		title: string;
-		/** The caption across from the seal: how the panel lets the person in. */
-		note: string;
-		/** An error of the whole form, such as too many attempts: a note above the fields. */
+		/** An error of the whole form, such as too many attempts: a notice above the fields. */
 		error?: ApiError | null;
+		/** The longer registration form: a step less air (kori-v4, register.html). */
+		compact?: boolean;
 		onsubmit: (event: SubmitEvent) => void;
 		fields: Snippet;
-		actions: Snippet;
+		action: Snippet;
+		/** The way to the other page, under the action. */
+		footer: Snippet;
 	} = $props();
 
 	const id = $props.id();
 </script>
 
-<!-- A white panel where a person acts (tech.md §13.3): the seal, a black title strip with a red
-     arrow, the fields, a strip of two buttons flush with the bottom. -->
+<!-- The white panel where a person acts (tech.md §13.3, kori-v4): a 3 px stripe of the brand on
+     top, the title, the fields, one action and the way to the other page under it. -->
 <form
 	aria-labelledby="{id}-title"
-	class="theme-day w-full max-w-[440px] bg-background text-foreground"
+	class={cn(
+		'theme-day w-full max-w-[460px] bg-background px-5 pt-7 pb-6 text-foreground md:px-10',
+		compact ? 'md:pt-9 md:pb-7' : 'md:pt-10 md:pb-8'
+	)}
 	{onsubmit}
 >
-	<div class="flex h-12 items-center justify-between gap-4 px-3.5 md:h-[52px] md:px-4">
-		<Logo size="sm" />
-		<span class="text-[10px] tracking-[0.06em] text-grey-600 uppercase md:text-caption">{note}</span
-		>
-	</div>
-	<h1
-		id="{id}-title"
-		class="flex items-center justify-between bg-foreground px-3.5 py-3 text-[24px]/7 text-background md:px-4 md:py-3.5 md:text-[28px]/8"
+	<div
+		aria-hidden="true"
+		class={cn(
+			'-mx-5 -mt-7 mb-[25px] h-[3px] bg-linear-to-r from-primary via-pink via-40% to-transparent md:-mx-10',
+			compact ? 'md:-mt-9 md:mb-[33px]' : 'md:-mt-10 md:mb-[37px]'
+		)}
+	></div>
+	<h1 id="{id}-title" class="text-[28px]/8 tracking-[-0.01em] md:text-quote">{title}</h1>
+	<div
+		class={cn('mt-6 flex flex-col gap-4', compact ? 'md:mt-7 md:gap-[18px]' : 'md:mt-8 md:gap-5')}
 	>
-		{title}<span aria-hidden="true" class="text-[18px] text-primary md:text-[20px]">↓</span>
-	</h1>
-	<div class="flex flex-col gap-4 px-3.5 pt-[18px] pb-5 md:gap-5 md:px-4 md:pt-6 md:pb-7">
 		{#if error}
 			<Alert.Root variant="destructive">
-				<span data-slot="alert-glyph" aria-hidden="true">×</span>
 				<Alert.Title>{error.message}</Alert.Title>
 			</Alert.Root>
 		{/if}
 		{@render fields()}
 	</div>
-	<div class="flex flex-wrap">{@render actions()}</div>
+	<div class={cn('mt-6', compact ? 'md:mt-[26px]' : 'md:mt-7')}>{@render action()}</div>
+	<p
+		class={cn(
+			'mt-4 text-ui text-grey-600 [&_a]:text-foreground [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-primary-deep',
+			compact ? 'md:mt-[18px]' : 'md:mt-5'
+		)}
+	>
+		{@render footer()}
+	</p>
 </form>
