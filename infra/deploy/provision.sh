@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-time setup of the test VPS (tech.md §15.1, §20.2, S1-13); a rerun changes nothing.
 # Run as root: sudo bash provision.sh <domain> "<deploy public key>"
-# Installs Docker, rotates container logs, adds swap, creates the deploy user and /opt/kori
+# Installs Docker, rotates container logs, adds swap, creates the kori-deploy user and /opt/kori
 # with .env and postgres.env. The secrets are generated here and never printed: read them on
 # the server, and put real API keys into /opt/kori/.env by hand.
 set -euo pipefail
@@ -10,6 +10,8 @@ domain=${1:?usage: provision.sh <domain> "<deploy public key>"}
 deploy_key=${2:?usage: provision.sh <domain> "<deploy public key>"}
 # shellcheck source=/dev/null
 . /etc/os-release
+# GitHub masks secret values in logs: a rare user name (VPS_USER) keeps them readable.
+user=kori-deploy
 
 if ! command -v docker >/dev/null; then
   apt-get update -q
@@ -41,13 +43,13 @@ swapon --show | grep -q /swapfile || swapon /swapfile
 echo 'vm.swappiness = 10' >/etc/sysctl.d/90-kori.conf
 sysctl -q -p /etc/sysctl.d/90-kori.conf
 
-# deploy runs compose for GitHub Actions. The docker group equals root, so its key gets no
-# forwarding and no terminal.
-id deploy >/dev/null 2>&1 || useradd --create-home --shell /bin/bash --groups docker deploy
-install -d -m 700 -o deploy -g deploy /home/deploy/.ssh
-install -m 600 -o deploy -g deploy /dev/null /home/deploy/.ssh/authorized_keys
-echo "restrict $deploy_key" >/home/deploy/.ssh/authorized_keys
-install -d -m 750 -o deploy -g deploy /opt/kori
+# The user runs compose for GitHub Actions. The docker group equals root, so its key gets
+# no forwarding and no terminal.
+id "$user" >/dev/null 2>&1 || useradd --create-home --shell /bin/bash --groups docker "$user"
+install -d -m 700 -o "$user" -g "$user" "/home/$user/.ssh"
+install -m 600 -o "$user" -g "$user" /dev/null "/home/$user/.ssh/authorized_keys"
+echo "restrict $deploy_key" >"/home/$user/.ssh/authorized_keys"
+install -d -m 750 -o "$user" -g "$user" /opt/kori
 
 cd /opt/kori
 if [[ ! -e .env ]]; then
@@ -79,9 +81,9 @@ EMBEDDINGS_MODE=real
 FETCH_MODE=real
 EOF
   echo "POSTGRES_PASSWORD=$db_password" >postgres.env
-  # The API runs as uid 10001 and reads .env itself; compose reads both files as deploy.
-  chown 10001:deploy .env
+  # The API runs as uid 10001 and reads .env itself; compose reads both files as $user.
+  chown "10001:$user" .env
   chmod 640 .env
-  chown deploy:deploy postgres.env
+  chown "$user:$user" postgres.env
 fi
 echo "provision: done"
