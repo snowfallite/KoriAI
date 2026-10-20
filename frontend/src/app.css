@@ -2,19 +2,38 @@
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/noto-serif/wght.css';
+@import '@fontsource-variable/noto-serif/wght-italic.css';
 
-/* A day surface (.theme-day) keeps the day look inside the night: the white panels of tech.md §13.3. */
-@custom-variant dark (&:is(.dark *):not(.theme-day, .theme-day *));
+/* The kana こ お り of the spaced name need one chunk of Noto Sans JP out of its 124 (the range
+   of the chunk as the package declares it). */
+@font-face {
+	font-family: 'Noto Sans JP Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('@fontsource-variable/noto-sans-jp/files/noto-sans-jp-119-wght-normal.woff2')
+		format('woff2-variations');
+	unicode-range:
+		U+20, U+2027, U+3001-3002, U+3041-307f, U+3081-308f, U+3091-3093, U+3099-309a, U+309d-309e,
+		U+30a1-30e1, U+30e3-30ed, U+30ef-30f0, U+30f2-30f4, U+30fb-30fe, U+ff0c, U+ff0e;
+}
+
+/* A day surface (.theme-day) keeps the day look inside the night: the white panels of tech.md
+   §13.3. A night surface (.theme-night) keeps the night in the day: the scene of the sign-in
+   pages, the same in both themes. */
+@custom-variant dark (&:is(.dark *, .theme-night *):not(.theme-day, .theme-day *));
 
 /*
- * Kōri v3 tokens (tech.md §13.3, docs/ui-references/kori-v3/README.md): night by default, day on
- * demand, radius 0, no shadows, one red. Selection is white, data wear the brand: the ink color
- * for growth, red for losses, the grey ladder for the rest. Values outside the README table keep
- * the primitives coherent: --muted repeats --accent, --destructive repeats --negative.
- * .theme-day re-applies the day set on a subtree: a white panel where a person acts, at night too.
+ * Kōri tokens (tech.md §13.3, docs/ui-references/kori-v3/README.md with the corrections of
+ * kori-v4): night by default, day on demand, radius 0, no shadows, one red. Selection is white,
+ * data wear the brand: the ink color for growth, red for losses, the grey ladder for the rest.
+ * Values outside the README table keep the primitives coherent: --muted repeats --accent,
+ * --destructive repeats --negative.
  */
 :root,
-.dark .theme-day {
+.dark .theme-day,
+.theme-night .theme-day {
 	color-scheme: light;
 	--radius: 0rem;
 	--background: #ffffff;
@@ -73,7 +92,8 @@
 	--grad-ember: linear-gradient(90deg, #fe2627 0%, #ffa5a5 100%);
 }
 
-.dark {
+.dark,
+.theme-night {
 	color-scheme: dark;
 	--background: #000000;
 	--foreground: #ffffff;
@@ -119,7 +139,8 @@
 	--sidebar-ring: #fe2627;
 }
 
-/* The type scale of v3: one size per role, the same in both themes. */
+/* The type scale of v3 with the corrections of v4: one size per role, the same in both themes.
+   Caps and tracking left the scale: only the column heads and the sign-in cover set them. */
 @theme static {
 	--text-hero: 88px;
 	--text-hero--line-height: 88px;
@@ -134,20 +155,20 @@
 	--text-title--line-height: 28px;
 	--text-lead: 18px;
 	--text-lead--line-height: 24px;
-	--text-body: 16px;
-	--text-body--line-height: 26px;
+	--text-body: 17px;
+	--text-body--line-height: 28px;
 	--text-ui: 13px;
 	--text-ui--line-height: 18px;
 	--text-caps: 12px;
-	--text-caps--line-height: 15px;
-	--text-caps--letter-spacing: 0.08em;
+	--text-caps--line-height: 16px;
 	--text-caption: 11px;
 	--text-caption--line-height: 14px;
-	--text-caption--letter-spacing: 0.06em;
 }
 
 @theme inline {
 	--font-mono: 'JetBrains Mono Variable', monospace;
+	/* The prose of the agent and the quotes of reports; their numbers stay mono (§13.3). */
+	--font-serif: 'Noto Serif Variable', serif;
 	/* Kïoku sets text in the regular weight; bold stays for block headings (font-bold). */
 	--font-weight-medium: 400;
 	--color-prose: var(--prose);
@@ -259,6 +280,10 @@
 	html {
 		@apply font-mono;
 	}
+	/* Japanese is set in Noto Sans JP: the kana of the spaced name. */
+	:lang(ja) {
+		font-family: 'Noto Sans JP Variable', sans-serif;
+	}
 	/* Brand icons: 1.25px lines with square ends at any size. */
 	.lucide {
 		stroke-width: 1.25px;
@@ -273,19 +298,21 @@
 /*
  * The Kïoku focus ring: a 2px gap, then 2px of --ring (red at night, black by day and on white
  * panels). It stays unlayered to beat the outline-none of the primitives; menus and lists keep
- * their highlight.
+ * their highlight, and a field shows its focus as a 2px line under it (tech.md §13.3).
  */
 :focus-visible:not(
 	[role='menuitem'],
 	[role='menuitemcheckbox'],
 	[role='menuitemradio'],
-	[role='option']
+	[role='option'],
+	input:not([type='checkbox'], [type='radio']),
+	textarea
 ) {
 	outline: 2px solid var(--ring);
 	outline-offset: 2px;
 }
 
-/* tech.md S1-14 AC 9: no motion for those who ask; every animation shows its end state. */
+/* tech.md S1-15 AC 10: no motion for those who ask; every animation shows its end state. */
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
