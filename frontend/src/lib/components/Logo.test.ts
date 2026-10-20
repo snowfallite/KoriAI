@@ -4,42 +4,52 @@ import { describe, expect, it } from 'vitest';
 import Logo from './Logo.svelte';
 
 const SIZES = ['sm', 'md', 'lg'] as const;
-
-/** The seal 氷 of the logo (tech.md §13.2): decor, never read out. */
-function sealOf(container: HTMLElement) {
-	return container.querySelector('[data-slot="logo-seal"]');
-}
+const VARIANTS = ['compact', 'spaced', 'sign'] as const;
 
 describe('Logo', () => {
-	it('sets the seal before the name in the compact form and reads only «Kōri»', () => {
-		for (const size of SIZES) {
-			const { container, unmount } = render(Logo, { size });
-			const seal = sealOf(container);
+	// tech.md S1-15 AC 1: the product is named «Kōri», the seal 氷 is gone.
+	it('draws no seal 氷 in any form or size', () => {
+		for (const variant of VARIANTS) {
+			for (const size of SIZES) {
+				const { container, unmount } = render(Logo, { variant, size });
 
-			expect(seal?.getAttribute('aria-hidden')).toBe('true');
+				expect(container.textContent, `${variant} ${size}`).not.toContain('氷');
+				expect(container.querySelector('[data-slot="logo-seal"], path')).toBeNull();
+				unmount();
+			}
+		}
+	});
+
+	it('writes the compact name as the text «Kōri»', () => {
+		for (const size of SIZES) {
+			const { unmount } = render(Logo, { size });
+
 			expect(screen.getByText('Kōri')).toBeTruthy();
 			unmount();
 		}
 	});
 
-	it('gives the seal alone the name «Kōri»', () => {
-		for (const size of SIZES) {
-			const { container, unmount } = render(Logo, { variant: 'sign', size });
-
-			expect(screen.getByRole('img', { name: 'Kōri' })).toBeTruthy();
-			expect(sealOf(container)?.getAttribute('aria-hidden')).toBe('true');
-			unmount();
-		}
-	});
-
-	it('spaces K Ō R I with the kana between and reads it as one name', () => {
-		const { container } = render(Logo, { variant: 'spaced' });
+	// S1-15 AC 9: the spaced name and the sign read as «Kōri», their parts stay silent.
+	it('spaces K Ō R I with the kana between and hides every part from the reader', () => {
+		render(Logo, { variant: 'spaced' });
 		const logo = screen.getByRole('img', { name: 'Kōri' });
+		const kana = [...logo.querySelectorAll('[lang="ja"]')];
 
-		expect(logo.textContent).toContain('こ');
+		expect(kana.map((k) => k.textContent)).toEqual(['こ', 'お', 'り']);
+		expect(logo.textContent?.replace(/\s/g, '')).toBe('KŌRIこおり');
 		for (const part of logo.querySelectorAll(':scope > *')) {
 			expect(part.getAttribute('aria-hidden')).toBe('true');
 		}
-		expect(sealOf(container)).toBeNull();
+	});
+
+	it('signs as «Kō» on the red-deep square', () => {
+		for (const size of SIZES) {
+			const { unmount } = render(Logo, { variant: 'sign', size });
+			const sign = screen.getByRole('img', { name: 'Kōri' });
+
+			expect(sign.textContent?.trim()).toBe('Kō');
+			expect(sign.className).toContain('bg-primary-deep');
+			unmount();
+		}
 	});
 });

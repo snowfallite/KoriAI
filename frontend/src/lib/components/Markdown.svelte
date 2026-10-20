@@ -113,10 +113,11 @@
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- only external http(s) links here -->
-<!-- The answer of v3 (docs/ui-references/kori-v3): grey prose at 16/26, facts in the ink color
-     without bold, block headings bold, sources as red superscript numbers. -->
+<!-- The answer of v4 (tech.md §13.2, docs/ui-references/kori-v4): grey Noto Serif prose at
+     17/28, facts in JetBrains Mono in the ink color, block headings in bold mono, plain list
+     markers, sources as red superscript numbers. Code and tables stay mono. -->
 <div
-	class="space-y-3 text-body break-words text-prose [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_blockquote]:border-l [&_blockquote]:pl-3 [&_blockquote]:text-muted-foreground [&_h1]:mt-8 [&_h1]:text-[16px]/6 [&_h1]:font-bold [&_h1]:text-foreground [&_h2]:mt-8 [&_h2]:text-[16px]/6 [&_h2]:font-bold [&_h2]:text-foreground [&_h3]:mt-8 [&_h3]:text-[16px]/6 [&_h3]:font-bold [&_h3]:text-foreground [&_li]:my-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-normal [&_strong]:text-foreground [&_table]:w-full [&_table]:text-ui [&_td]:border-b [&_td]:border-line-faint [&_td]:p-1.5 [&_th]:border-b [&_th]:p-1.5 [&_th]:text-left [&_th]:text-caption [&_th]:font-normal [&_th]:text-grey-600 [&_th]:uppercase [&_ul]:list-['→_'] [&_ul]:pl-5"
+	class="space-y-3 font-serif text-body break-words text-prose [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:text-[0.88em] [&_blockquote]:border-l [&_blockquote]:pl-3 [&_blockquote]:text-muted-foreground [&_blockquote]:italic [&_code]:font-mono [&_h1]:mt-8 [&_h1]:mb-2 [&_h1]:font-mono [&_h1]:text-[14px]/5 [&_h1]:font-bold [&_h1]:text-foreground [&_h2]:mt-8 [&_h2]:mb-2 [&_h2]:font-mono [&_h2]:text-[14px]/5 [&_h2]:font-bold [&_h2]:text-foreground [&_h3]:mt-8 [&_h3]:mb-2 [&_h3]:font-mono [&_h3]:text-[14px]/5 [&_h3]:font-bold [&_h3]:text-foreground [&_li]:my-1 [&_ol]:list-decimal [&_ol]:pl-6 [&_strong]:font-normal [&_strong]:text-foreground [&_table]:w-full [&_table]:font-mono [&_table]:text-ui [&_td]:border-b [&_td]:border-line-faint [&_td]:p-1.5 [&_th]:border-b [&_th]:p-1.5 [&_th]:text-left [&_th]:text-caption [&_th]:font-normal [&_th]:tracking-[0.06em] [&_th]:text-grey-600 [&_th]:uppercase [&_ul]:list-disc [&_ul]:pl-6"
 >
 	<SvelteMarkdown
 		{source}
@@ -145,13 +146,16 @@
 
 		{#snippet code({ text }: CodeSnippetProps)}
 			<div class="relative">
-				<pre class="overflow-x-auto bg-muted p-3 pr-10 text-ui"><code>{text}</code></pre>
+				<pre class="overflow-x-auto bg-muted p-3 pr-10 font-mono text-ui"><code>{text}</code></pre>
 				<div class="absolute top-1 right-1"><CopyButton {text} /></div>
 			</div>
 		{/snippet}
 
+		<!-- A number is data, not a word: JetBrains Mono at 0.88 em in the ink color, a loss red. -->
 		{#snippet number({ text, loss }: { text: string; loss: boolean })}
-			<span data-number={loss ? 'loss' : 'value'} class={loss ? 'text-negative' : 'text-foreground'}
+			<span
+				data-number={loss ? 'loss' : 'value'}
+				class="font-mono text-[0.88em] tabular-nums {loss ? 'text-negative' : 'text-foreground'}"
 				>{text}</span
 			>
 		{/snippet}
@@ -165,7 +169,7 @@
 			{@const cited = byId.get(id)}
 			{@const url = safeUrl(cited?.url)}
 			{#if cited && url}
-				<sup class="ml-0.5 text-[10px]"
+				<sup class="ml-0.5 font-mono text-[10px]"
 					><a
 						href={url}
 						title={cited.title}
@@ -175,7 +179,9 @@
 					></sup
 				>
 			{:else if cited}
-				<sup class="ml-0.5 text-[10px] text-primary" title={cited.title}>{id.slice(1)}</sup>
+				<sup class="ml-0.5 font-mono text-[10px] text-primary" title={cited.title}
+					>{id.slice(1)}</sup
+				>
 			{/if}
 		{/snippet}
 	</SvelteMarkdown>

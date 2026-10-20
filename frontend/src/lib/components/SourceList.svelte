@@ -14,21 +14,22 @@
 	// Only http(s) leaves the page (tech.md §3.5).
 	const safe = (url: string | null) => (url && /^https?:\/\//i.test(url) ? url : null);
 
-	/** «Т-Инвестиции · портфель acc1, acc2 · 10.10.2026»: who, what, when, where. */
+	/** «Т-Инвестиции, портфель, 10.10.2026»: who, what, when, where. */
 	function line(source: SourceRef): string {
 		const date = source.published_at ? formatDate(source.published_at) : null;
 		const page = source.page ? `стр. ${source.page}` : null;
 		return [source.publisher ?? KIND[source.kind], source.title, date, page]
 			.filter(Boolean)
-			.join(' · ');
+			.join(', ');
 	}
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- only external http(s) links here -->
 {#if sources.length}
-	<!-- Sources under the answer (kori-v3, chat-thread): a red number, the line, an arrow. -->
+	<!-- Sources under the answer (tech.md §13.2, kori-v4 chat-thread): a red number and the line
+	     with commas; the link needs no arrow. -->
 	<div class="border-t pt-3.5">
-		<p class="mb-2.5 text-caption text-grey-600 uppercase">Источники</p>
+		<p class="mb-2.5 text-caps text-grey-600">Источники</p>
 		<ol class="space-y-1.5 text-ui text-muted-foreground" aria-label="Источники">
 			{#each sources as source (source.local_id)}
 				{@const url = safe(source.url)}
@@ -42,7 +43,6 @@
 						>
 							<span class="text-primary">{source.local_id.slice(1)}</span>
 							<span class="min-w-0">{line(source)}</span>
-							<span aria-hidden="true">→</span>
 						</a>
 					{:else}
 						<p class="flex gap-3">

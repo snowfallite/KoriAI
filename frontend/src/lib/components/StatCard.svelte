@@ -30,7 +30,7 @@
 <!-- A summary holds on its number (kori-v3, Карточки): no frame, hairlines above and below, a
      vertical line between neighbours in a row. -->
 <div class="min-w-0 border-y py-4 pr-4 not-first:border-l not-first:pl-4">
-	<p class="text-caption text-grey-600 uppercase">{label}</p>
+	<p class="text-caps text-grey-600">{label}</p>
 	{#if loading}
 		<Skeleton class="mt-2.5 h-[26px] w-32" />
 		<span class="sr-only">Загрузка</span>

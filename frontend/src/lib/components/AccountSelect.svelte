@@ -2,6 +2,7 @@
 	import type { BrokerAccountOut } from '$lib/types';
 	import * as Select from '$lib/ui/select';
 	import * as ToggleGroup from '$lib/ui/toggle-group';
+	import { accountNames } from '$lib/utils/accounts';
 
 	let {
 		accounts,
@@ -21,7 +22,9 @@
 	// A hidden account stays out of the portfolio (tech.md F-01 AC 8).
 	const visible = $derived(accounts.filter((account) => !account.is_hidden));
 	const current = $derived(visible.find((account) => account.alias === value));
-	const name = (account: BrokerAccountOut) => `${account.alias} · ${account.name}`;
+	// An account goes by its name; the alias stays in the URL (tech.md §13.2).
+	const names = $derived(accountNames(visible));
+	const name = (account: BrokerAccountOut) => names.get(account.alias) ?? account.name;
 	const pick = (next: string) => onChange(next === ALL ? null : next);
 </script>
 
@@ -36,9 +39,7 @@
 	>
 		<ToggleGroup.Item value={ALL} class="px-3">Все счета</ToggleGroup.Item>
 		{#each visible as account (account.alias)}
-			<ToggleGroup.Item value={account.alias} class="px-3 normal-case"
-				>{name(account)}</ToggleGroup.Item
-			>
+			<ToggleGroup.Item value={account.alias} class="px-3">{name(account)}</ToggleGroup.Item>
 		{/each}
 	</ToggleGroup.Root>
 {:else}

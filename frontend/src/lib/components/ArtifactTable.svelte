@@ -71,9 +71,9 @@
 	</Table.Row>
 {/snippet}
 
-<!-- A caption over a hairline, as over a chart (docs/ui-references/kori-v3). -->
+<!-- A caption over a hairline, as over a chart (docs/ui-references/kori-v4). -->
 <figure class="min-w-0 space-y-2">
-	<figcaption class="border-b pb-3 text-caption uppercase">{spec.title}</figcaption>
+	<figcaption class="border-b pb-3 text-ui font-bold">{spec.title}</figcaption>
 	<DataTable {columns} rows={spec.rows} dense footer={spec.total ? totalRow : undefined} />
 	{#if spec.note}
 		<p class="text-caption text-grey-600">{spec.note}</p>

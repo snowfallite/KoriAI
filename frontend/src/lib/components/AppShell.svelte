@@ -6,7 +6,6 @@
 	import type { UserOut } from '$lib/types';
 	import { Button } from '$lib/ui/button';
 	import * as Sidebar from '$lib/ui/sidebar';
-	import { cn } from '$lib/utils/cn';
 	import Logo from './Logo.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 
@@ -19,7 +18,7 @@
 <!-- eslint-disable svelte/no-navigation-without-resolve -- NAV holds app paths; the SPA has no base path -->
 
 <!-- A 240 px sidebar on the desktop, a header and four tabs at the bottom under 768 px
-     (tech.md §13.3, docs/ui-references/kori-v3). -->
+     (tech.md §13.3, docs/ui-references/kori-v4). -->
 <Sidebar.Provider style="--sidebar-width: 15rem">
 	<Sidebar.Root collapsible="none" class="sticky top-0 hidden h-svh shrink-0 border-r md:flex">
 		<Sidebar.Header class="h-14 shrink-0 justify-center border-b px-5 py-0">
@@ -27,7 +26,11 @@
 		</Sidebar.Header>
 		<Sidebar.Content class="gap-0">
 			<div class="p-5">
-				<Button variant="secondary" href="/chat" class="w-full justify-start">
+				<Button
+					variant="secondary"
+					href="/chat"
+					class="w-full justify-start has-[>[data-slot=button-glyph]]:gap-3"
+				>
 					<span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат
 				</Button>
 			</div>
@@ -35,21 +38,18 @@
 				<Sidebar.Menu class="gap-0">
 					{#each nav as item (item.id)}
 						<Sidebar.MenuItem>
-							<!-- Text in caps; the chosen item is white on the accent row with a red arrow. -->
+							<!-- The menu in text; the idle item is the ink at 54 % (#8A8A8A at night), the
+							     chosen one white on the accent row with a 2 px red bar at its left edge. -->
 							<Sidebar.MenuButton
 								isActive={current(item) || undefined}
-								class="h-9 gap-2 px-5 text-caps text-muted-foreground uppercase hover:bg-accent hover:text-foreground data-[active=true]:bg-accent data-[active=true]:text-foreground"
+								class="relative h-9 px-5 text-ui text-foreground/54 hover:bg-foreground/5 hover:text-foreground data-[active=true]:bg-accent data-[active=true]:text-foreground"
 							>
 								{#snippet child({ props })}
 									<a href={item.href} aria-current={current(item) ? 'page' : undefined} {...props}>
-										<!-- CSS draws the arrow: it stays out of the name and the text of the link. -->
-										<span
-											aria-hidden="true"
-											class={cn(
-												'w-3.5 shrink-0 text-ui tracking-normal text-primary',
-												current(item) && "before:content-['→']"
-											)}
-										></span>
+										{#if current(item)}
+											<span aria-hidden="true" class="absolute inset-y-0 left-0 w-0.5 bg-primary"
+											></span>
+										{/if}
 										<span>{item.label}</span>
 									</a>
 								{/snippet}
@@ -68,15 +68,13 @@
 			</div>
 			<div class="flex items-center justify-between gap-2">
 				<ThemeToggle />
-				<Button variant="link" class="text-[10px]" onclick={signOut}>
-					Выйти <span aria-hidden="true">→</span>
-				</Button>
+				<Button variant="link" onclick={signOut}>Выйти</Button>
 			</div>
 		</Sidebar.Footer>
 	</Sidebar.Root>
 
 	<div class="flex min-w-0 flex-1 flex-col">
-		<!-- A phone keeps the logo and a new chat on top; the theme and the exit live in Настройки. -->
+		<!-- A phone keeps the name and a new chat on top; the theme and the exit live in Настройки. -->
 		<header
 			class="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between border-b bg-background pr-1 pl-4 md:hidden"
 		>
@@ -98,7 +96,7 @@
 			<a
 				href={item.href}
 				aria-current={current(item) ? 'page' : undefined}
-				class="relative flex flex-col items-center justify-center gap-1.5 text-[10px]/3 tracking-[0.08em] text-muted-foreground uppercase hover:text-foreground aria-[current=page]:text-foreground"
+				class="relative flex flex-col items-center justify-center gap-1.5 text-caption text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground"
 			>
 				{#if current(item)}
 					<span

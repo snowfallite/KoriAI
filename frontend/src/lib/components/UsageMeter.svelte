@@ -23,12 +23,12 @@
 	const ahead = $derived(mark !== undefined && share > mark);
 </script>
 
-<!-- A row of the usage sheet (kori-v3, Карточки): the family in caps, a 6 px bar with the red mark
+<!-- A row of the usage sheet (kori-v3, Карточки): the family, a 6 px bar with the red mark
      of the pace, «6,1 млн из 250 млн» on the right. Usage ahead of the pace turns to warning. -->
 <div
 	class="grid grid-cols-[52px_minmax(0,1fr)_minmax(164px,max-content)] items-center gap-x-4 text-ui tabular-nums"
 >
-	<span class="truncate text-caption uppercase">{label}</span>
+	<span class="truncate text-caps">{label}</span>
 	<div class="relative">
 		<Progress
 			value={Math.min(share, 1) * 100}
