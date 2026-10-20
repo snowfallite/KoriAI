@@ -52,7 +52,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.ref.outputs.name }}:${{ steps.ref.outputs.tag }}
-            ${{ steps.ref.outputs.name }}:main
+            ${{ github.ref == 'refs/heads/main' && format('{0}:main', steps.ref.outputs.name) || '' }}
           # Cached layers keep their digests, so the VPS pulls only the layers that changed.
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,scope=${{ matrix.image }},mode=max
