@@ -40,19 +40,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Image name and tag
+      - name: Image tags
         id: ref
         run: |
-          echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.image }}" >> "$GITHUB_OUTPUT"
-          echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          name="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.image }}"
+          echo "sha=$name:sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          if [[ $GITHUB_REF == refs/heads/main ]]; then
+            echo "main=$name:main" >> "$GITHUB_OUTPUT"
+          fi
       - uses: docker/build-push-action@v7
         with:
           context: .
           file: ${{ matrix.file }}
           push: true
           tags: |
-            ${{ steps.ref.outputs.name }}:${{ steps.ref.outputs.tag }}
-            ${{ github.ref == 'refs/heads/main' && format('{0}:main', steps.ref.outputs.name) || '' }}
+            ${{ steps.ref.outputs.sha }}
+            ${{ steps.ref.outputs.main }}
           # Cached layers keep their digests, so the VPS pulls only the layers that changed.
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,scope=${{ matrix.image }},mode=max
@@ -76,11 +79,14 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           printf '%s %s\n' "$VPS_HOST" "$VPS_HOST_KEY" > ~/.ssh/known_hosts
       - name: Ship the compose file and the scripts
-        run: scp docker-compose.yml infra/deploy/deploy.sh infra/deploy/compose.sh "$TARGET:/opt/kori/"
+        run: >-
+          scp docker-compose.yml infra/deploy/deploy.sh infra/deploy/compose.sh
+          "$TARGET:/opt/kori/"
       # The token goes on stdin: never on a command line or into the shell history of the VPS.
       - name: Deploy
         env:
           GHCR_READ_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
         run: >-
           printf '%s\n' "$GHCR_READ_TOKEN"
-          | ssh "$TARGET" bash /opt/kori/deploy.sh "sha-${GITHUB_SHA::7}" "$GITHUB_REPOSITORY_OWNER"
+          | ssh "$TARGET" bash /opt/kori/deploy.sh
+          "sha-${GITHUB_SHA::7}" "$GITHUB_REPOSITORY_OWNER"
