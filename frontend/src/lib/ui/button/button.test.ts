@@ -56,6 +56,32 @@ describe('Button', () => {
 		expect(own).toContain('bg-foreground');
 	});
 
+	// tech.md S1-15 AC 2: a glyph stands only where it means something, so the cell comes only
+	// from a button-glyph child; Отмена and secondary actions show their label alone.
+	it('draws a cell only from a button-glyph child', () => {
+		for (const variant of VARIANTS) {
+			const { unmount } = render(GlyphButton, { variant, glyph: null, label: 'Отмена' });
+			const button = screen.getByRole('button', { name: 'Отмена' });
+
+			expect(button.querySelector('[data-slot="button-glyph"]'), variant).toBeNull();
+			expect(button.textContent, variant).toBe('Отмена');
+			// No glyph sneaks in through generated content either.
+			expect(button.className, variant).not.toMatch(/(^|\s)(\S+:)?(before|after):content-/);
+			unmount();
+		}
+	});
+
+	// S1-15 AC 3: caps stay in the column heads and on the cover; buttons speak in normal case.
+	it('sets no variant in caps', () => {
+		for (const variant of VARIANTS) {
+			const { unmount } = render(GlyphButton, { variant, glyph: null, label: 'Повторить' });
+			const { own } = classesOf(screen.getByRole('button', { name: 'Повторить' }));
+
+			expect(own, variant).not.toContain('uppercase');
+			unmount();
+		}
+	});
+
 	it('rests on no solid red field in any variant', () => {
 		for (const variant of VARIANTS) {
 			const { unmount } = render(GlyphButton, { variant });
