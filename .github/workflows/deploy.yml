@@ -75,8 +75,8 @@ jobs:
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           printf '%s %s\n' "$VPS_HOST" "$VPS_HOST_KEY" > ~/.ssh/known_hosts
-      - name: Ship the compose file and the deploy script
-        run: scp docker-compose.yml infra/deploy/deploy.sh "$TARGET:/opt/kori/"
+      - name: Ship the compose file and the scripts
+        run: scp docker-compose.yml infra/deploy/deploy.sh infra/deploy/compose.sh "$TARGET:/opt/kori/"
       # The token goes on stdin: never on a command line or into the shell history of the VPS.
       - name: Deploy
         env:
