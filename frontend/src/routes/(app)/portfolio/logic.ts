@@ -1,8 +1,14 @@
 // Pure logic of the portfolio tab (tech.md §16.2): the account in the URL, the structure chart,
-// the totals and the questions the tab leaves in the chat.
+// the lines of the totals and the questions the tab leaves in the chat.
 import type { components } from '$lib/api/schema';
 import type { BrokerAccountOut, ChartSpec, Money } from '$lib/types';
-import { formatNumber, formatPercent } from '$lib/utils/format';
+import {
+	formatDate,
+	formatMoney,
+	formatNumber,
+	formatPercent,
+	formatTime
+} from '$lib/utils/format';
 
 export type Portfolio = components['schemas']['PortfolioOut'];
 export type Position = Portfolio['positions'][number];
@@ -56,7 +62,7 @@ export function allocationChart(portfolio: Portfolio): ChartSpec {
 	return {
 		kind: 'pie',
 		title: 'Структура портфеля',
-		subtitle: 'По типам инструментов',
+		subtitle: 'по типам инструментов',
 		x: { type: 'category', label: 'Тип', format: null, unit: null },
 		y: { type: 'value', label: 'Стоимость', format: 'money', unit: portfolio.currency },
 		y2: null,
@@ -87,13 +93,46 @@ export function accountsHint(count: number): string {
 
 const POSITIONS: Record<string, string> = { one: 'позиция', few: 'позиции', many: 'позиций' };
 
-/** What the total covers: «29 позиций на 2 счетах», or the one account: «10 позиций · acc2 · ИИС». */
+/** What the total covers, on a line of its own: «29 позиций на 2 счетах», or the one account by
+ * its name, «10 позиций на счёте «ИИС»»; the alias never shows (tech.md §13.3). */
 export function coverage(positions: number, accounts: Pick<Account, 'alias' | 'name'>[]): string {
 	const count = `${formatNumber(positions, 0)} ${POSITIONS[PLURAL.select(positions)] ?? 'позиции'}`;
 	const [only] = accounts;
 	return accounts.length === 1 && only
-		? `${count} · ${only.alias} · ${only.name}`
+		? `${count} на счёте «${only.name}»`
 		: `${count} ${accountsHint(accounts.length)}`;
+}
+
+/** «+34 570 ₽ (+4,26 %)»: a result in whole units and its share in brackets, when there is one. */
+function result(money: Money, share: string | null): string {
+	const amount = formatMoney(money.amount, money.currency, { signed: true, digits: 0 });
+	return share === null ? amount : `${amount} (${formatPercent(share, { signed: true })})`;
+}
+
+/** The result of the total to the average purchase price; null when no account has one. */
+export function yieldText(summary: Summary): string | null {
+	if (summary.yield === null) return null;
+	return result(
+		{ amount: String(summary.yield), currency: summary.total.currency },
+		summary.yieldShare
+	);
+}
+
+/** The result of one account to its purchase prices, as the list of accounts shows it. */
+export function accountResult(account: Account): string | null {
+	return account.expected_yield ? result(account.expected_yield, account.expected_yield_pct) : null;
+}
+
+/** The meta line of the tab: whose prices value the portfolio and when, Moscow time. */
+export function pricesNote(asOf: string): string {
+	return `Цены Т-Инвестиций на ${formatDate(asOf)}, ${formatTime(asOf)} МСК`;
+}
+
+/** «SU26240, НКД 8,20 ₽»: the ticker, and the accrued interest of a bond after a comma. */
+export function tickerLine(position: Position): string {
+	const accrued = position.accrued_interest;
+	const ticker = position.instrument.ticker;
+	return accrued ? `${ticker}, НКД ${formatMoney(accrued.amount, accrued.currency)}` : ticker;
 }
 
 /** The total of the hero in whole units, its currency sign apart (docs/ui-references/kori-v3). */
@@ -111,10 +150,14 @@ export function askHref(question: string): string {
 	return `/chat?${new URLSearchParams({ q: question })}`;
 }
 
-/** The question a row of the positions asks: why it moved since the purchase. */
+/** The question a row of the positions asks: why it grew or fell since the purchase. «Позиция»
+ * keeps the verb right whatever the name (Т-Технологии, ОФЗ 26240); a result that rounds to
+ * nothing asks about the position itself. */
 export function positionQuestion(position: Position): string {
 	const name = position.instrument.name;
-	return position.yield_pct === null
-		? `Что с позицией «${name}»?`
-		: `Почему ${name} ${formatPercent(position.yield_pct, { signed: true, digits: 1 })} с покупки?`;
+	const share = position.yield_pct === null ? 0 : Number(position.yield_pct);
+	// One decimal of a percent is a thousandth of the share.
+	if (Math.round(Math.abs(share) * 1000) === 0) return `Что с позицией «${name}»?`;
+	const verb = share > 0 ? 'выросла' : 'упала';
+	return `Почему позиция «${name}» ${verb} на ${formatPercent(Math.abs(share), { digits: 1 })} с покупки?`;
 }
