@@ -43,7 +43,9 @@ test('the demo sees the totals, the structure and the positions of each account'
 	const rows = positions.getByRole('row');
 	// The first load fills the instrument table: a busy runner may take longer than 5 s.
 	await expect(rows).toHaveCount(1 + 29, { timeout: FIRST_LOAD_MS });
-	await expect(page.getByText(/^Цены Т-Инвестиций на \d\d\.\d\d\.\d{4}, \d\d:\d\d МСК$/)).toBeVisible();
+	await expect(
+		page.getByText(/^Цены Т-Инвестиций на \d\d\.\d\d\.\d{4}, \d\d:\d\d МСК$/)
+	).toBeVisible();
 	await expect(page.getByRole('img', { name: 'Структура портфеля' })).toBeVisible();
 
 	// The total in whole rubles, the result to the purchase price and the coverage on their own
