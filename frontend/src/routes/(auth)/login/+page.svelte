@@ -52,7 +52,8 @@
 			/>
 		</AuthField>
 		<AuthField id="password" label="Пароль" error={errorOf('password')}>
-			<!-- Показать lives inside the field, on its right (kori-v4). -->
+			<!-- Показать lives inside the field, on its right (kori-v4); the ink at 60 % keeps it AA on
+			     the fill of the field, where the grey of the mockup reads 4.3:1. -->
 			<div class="relative flex">
 				<Input
 					id="password"
@@ -67,7 +68,7 @@
 				<Button
 					variant="link"
 					aria-controls="password"
-					class="absolute top-0 right-0 h-[52px] px-3.5 text-ui text-grey-600 hover:text-foreground md:px-4"
+					class="absolute top-0 right-0 h-[52px] px-3.5 text-ui text-foreground/60 hover:text-foreground md:px-4"
 					onclick={() => (shown = !shown)}>{shown ? 'Скрыть' : 'Показать'}</Button
 				>
 			</div>
