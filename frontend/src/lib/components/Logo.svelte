@@ -48,10 +48,12 @@
 	>
 		{#each LETTERS as letter, i (letter)}
 			{#if i > 0}<span aria-hidden="true" class="w-[0.6em]"></span>{/if}
-			<!-- The letters fade downwards: the ink color to 46 %, then towards 28 %. -->
+			<!-- The letters fade downwards: the ink color to 46 % of the line, then towards 28 %. The
+			     fill reaches 0.2 em above the line, or the macron of Ō would fall outside it, so the
+			     46 % of the line stand at 55 % of the fill. -->
 			<span
 				aria-hidden="true"
-				class="bg-linear-to-b from-foreground from-0% via-foreground via-46% to-foreground/28 to-100% bg-clip-text text-transparent"
+				class="-mt-[0.2em] bg-linear-to-b from-foreground from-0% via-foreground via-55% to-foreground/28 to-100% bg-clip-text pt-[0.2em] text-transparent"
 				>{letter}</span
 			>
 		{/each}
