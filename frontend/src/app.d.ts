@@ -4,7 +4,11 @@ import type { RowData } from '@tanstack/table-core';
 
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+			message: string;
+			/** The X-Request-Id of the failed call: the error page shows it for support (§3.6). */
+			request_id?: string;
+		}
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}

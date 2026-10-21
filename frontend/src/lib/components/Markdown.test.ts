@@ -74,7 +74,7 @@ describe('Markdown', () => {
 		expect(el.querySelector('code')?.textContent).toBe('[s1]');
 	});
 
-	// docs/ui-references/kori-v3: the answer is grey prose, its numbers in the ink color, losses red.
+	// docs/ui-references/kori-v4: the answer is grey prose, its numbers in the ink color, losses red.
 	it('sets numbers in the ink color and losses in red', () => {
 		const el = view(
 			'Портфель стоит 1 195 145 ₽, Газпром дал −23 800 ₽ и -14,7 %, доля 11,6 %. ' +
@@ -99,6 +99,39 @@ describe('Markdown', () => {
 		]);
 
 		expect([...el.querySelectorAll('[data-number]')].map((n) => n.textContent)).toEqual(['2020']);
+	});
+
+	// tech.md S1-15 AC 4: the prose is Noto Serif, its numbers JetBrains Mono, lists plain.
+	it('sets the prose in serif and every number in a mono span', () => {
+		const el = view('Газпром дал −23 800 ₽ при доле 11,6 %.');
+		const prose = el.firstElementChild as HTMLElement;
+		const numbers = [...el.querySelectorAll('[data-number]')];
+
+		expect(prose.className).toContain('font-serif');
+		expect(numbers.map((n) => n.textContent)).toEqual(['−23 800 ₽', '11,6 %']);
+		for (const number of numbers) {
+			expect(number.className).toContain('font-mono');
+		}
+	});
+
+	it('keeps the ordinary markers of lists', () => {
+		const el = view('- выручка\n- прибыль\n\n1. первый\n2. второй');
+		const prose = el.firstElementChild as HTMLElement;
+
+		expect(el.querySelectorAll('ul > li')).toHaveLength(2);
+		expect(el.querySelectorAll('ol > li')).toHaveLength(2);
+		expect(prose.className).toContain('[&_ul]:list-disc');
+		expect(prose.className).toContain('[&_ol]:list-decimal');
+		expect(prose.className).not.toMatch(/list-\['/);
+	});
+
+	it('sets block headings in bold mono', () => {
+		const el = view('### Что тянет вверх и вниз\n\nТекст.');
+		const prose = el.firstElementChild as HTMLElement;
+
+		expect(el.querySelector('h3')?.textContent).toBe('Что тянет вверх и вниз');
+		expect(prose.className).toContain('[&_h3]:font-mono');
+		expect(prose.className).toContain('[&_h3]:font-bold');
 	});
 
 	it('marks a key phrase between double equals signs', () => {

@@ -7,21 +7,22 @@
 	const STEP = 'hover:bg-[color-mix(in_srgb,var(--foreground)_85%,var(--background))]';
 
 	export const buttonVariants = tv({
-		base: "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-none border border-transparent bg-clip-padding text-ui font-normal whitespace-nowrap transition-colors outline-none select-none active:not-aria-[haspopup]:translate-y-px aria-invalid:border-destructive disabled:pointer-events-none disabled:border-transparent disabled:bg-grey-200 disabled:bg-none disabled:text-grey-600 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 has-[>[data-slot=button-glyph]]:gap-4 has-[>[data-slot=button-glyph]]:pl-0 [&>[data-slot=button-glyph]]:grid [&>[data-slot=button-glyph]]:aspect-square [&>[data-slot=button-glyph]]:self-stretch [&>[data-slot=button-glyph]]:place-items-center [&>[data-slot=button-glyph]]:text-base [&>[data-slot=button-glyph]]:tracking-normal [&>[data-slot=button-glyph]]:normal-case disabled:[&>[data-slot=button-glyph]]:bg-grey-300 disabled:[&>[data-slot=button-glyph]]:bg-none disabled:[&>[data-slot=button-glyph]]:text-grey-600",
+		base: "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-none border border-transparent bg-clip-padding text-ui font-normal whitespace-nowrap transition-colors outline-none select-none active:not-aria-[haspopup]:translate-y-px aria-invalid:border-destructive disabled:pointer-events-none disabled:border-transparent disabled:bg-grey-200 disabled:bg-none disabled:text-grey-600 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 has-[>[data-slot=button-glyph]]:gap-4 has-[>[data-slot=button-glyph]]:border-0 has-[>[data-slot=button-glyph]]:pl-0 [&>[data-slot=button-glyph]]:grid [&>[data-slot=button-glyph]]:aspect-square [&>[data-slot=button-glyph]]:self-stretch [&>[data-slot=button-glyph]]:place-items-center [&>[data-slot=button-glyph]]:text-base [&>[data-slot=button-glyph]]:tracking-normal [&>[data-slot=button-glyph]]:normal-case disabled:[&>[data-slot=button-glyph]]:bg-grey-300 disabled:[&>[data-slot=button-glyph]]:bg-none disabled:[&>[data-slot=button-glyph]]:text-grey-600",
 		variants: {
 			variant: {
-				// Kōri v3 (tech.md §13.1): an action is a glyph cell and a label. The main one has a red
-				// cell and a label in the ink color, destructive a red-deep cell, the stepped grey one a
-				// grey ladder, the AI one an ignite cell on the fade. No button rests on a red field.
+				// Kōri v4 (tech.md §13.1): a label in normal case; a glyph cell comes only from a
+				// button-glyph child, where the glyph means something. The main one has a red cell and
+				// a label in the ink color, destructive a red-deep cell, the stepped grey one a grey
+				// ladder, the AI one an ignite cell on the fade. No button rests on a red field.
 				default: `bg-foreground text-background ${STEP} [&>[data-slot=button-glyph]]:bg-primary [&>[data-slot=button-glyph]]:text-primary-foreground`,
 				destructive: `bg-foreground text-background ${STEP} [&>[data-slot=button-glyph]]:bg-primary-deep [&>[data-slot=button-glyph]]:text-primary-deep-foreground`,
 				secondary:
 					'bg-grey-300 text-black hover:bg-grey-200 aria-expanded:bg-grey-200 [&>[data-slot=button-glyph]]:bg-grey-400',
 				outline:
-					'border-foreground bg-transparent text-caps uppercase hover:bg-foreground hover:text-background aria-expanded:bg-foreground aria-expanded:text-background',
+					'border-foreground bg-transparent hover:bg-foreground hover:text-background aria-expanded:bg-foreground aria-expanded:text-background',
 				ghost:
 					'hover:bg-accent hover:text-foreground aria-expanded:bg-accent aria-expanded:text-foreground disabled:bg-transparent',
-				link: 'text-caps text-muted-foreground uppercase hover:text-primary disabled:bg-transparent',
+				link: 'text-caps text-muted-foreground hover:text-primary disabled:bg-transparent',
 				ai: 'ki-fade text-black hover:bg-primary hover:bg-none [&>[data-slot=button-glyph]]:ki-ignite [&>[data-slot=button-glyph]]:text-white'
 			},
 			size: {

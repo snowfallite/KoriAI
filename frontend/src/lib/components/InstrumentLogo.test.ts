@@ -49,6 +49,31 @@ describe('InstrumentLogo', () => {
 		expect(fallbackOf(container)?.textContent?.trim()).toBe('СБ');
 	});
 
+	// tech.md S1-15 AC 6: an OFZ tile reads «ОФЗ», a currency tile its code.
+	it('names the tile of an OFZ and of a currency', () => {
+		const tiles: [string, string][] = [
+			['ОФЗ 26240', 'ОФЗ'],
+			['ОФЗ 29024', 'ОФЗ'],
+			['Доллар США', 'USD'],
+			['Евро', 'EUR'],
+			['Китайский юань', 'CNY'],
+			['Российский рубль', 'RUB']
+		];
+		for (const [name, tile] of tiles) {
+			const { container, unmount } = render(InstrumentLogo, { src: null, name });
+
+			expect(fallbackOf(container)?.textContent?.trim(), name).toBe(tile);
+			unmount();
+		}
+	});
+
+	// docs/ui-references/kori-v4 (Портфель): Т-Технологии stand as «Т», not «Т-».
+	it('stops a one-word name at its hyphen', () => {
+		const { container } = render(InstrumentLogo, { src: null, name: 'Т-Технологии' });
+
+		expect(fallbackOf(container)?.textContent?.trim()).toBe('Т');
+	});
+
 	it('falls back to initials when the logo fails to load', async () => {
 		stubImages(false);
 		const { container } = render(InstrumentLogo, { src: '/api/media/logos/x', name: 'Сбербанк' });

@@ -378,7 +378,7 @@ export const SOURCES: SourceRef[] = [
 export const MARKDOWN = [
 	'### Итог по портфелю',
 	'',
-	'Портфель стоит 1 195 145 ₽. Бумажная прибыль от средней цены покупки: ==+42 090 ₽, или +3,65 %== [s1].',
+	'Портфель стоит 1 195 145 ₽. Бумажная прибыль к средней цене покупки: ==+42 090 ₽, или +3,65 %== [s1].',
 	'',
 	'### Что тянет вверх и вниз',
 	'',
@@ -434,11 +434,11 @@ export const ACCOUNTS: BrokerAccountOut[] = [
 	}
 ];
 
-/** Five visible accounts: AccountSelect turns from tabs into a list. */
+/** Five visible accounts: AccountSelect turns from tabs into a list; two of one name get a number. */
 export const MANY_ACCOUNTS: BrokerAccountOut[] = [
 	'Брокерский',
 	'ИИС',
-	'Копилка',
+	'Брокерский',
 	'Детский',
 	'Валютный'
 ].map((name, i): BrokerAccountOut => ({

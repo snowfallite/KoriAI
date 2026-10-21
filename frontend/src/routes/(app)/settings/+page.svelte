@@ -11,11 +11,11 @@
 <svelte:head><title>Настройки · Kōri</title></svelte:head>
 
 <!-- Stub until F-01 and F-02 (tech.md §22). -->
-<PageHeader title="Настройки" description="Брокер, модель, расход и профиль" />
+<PageHeader title="Настройки" />
 <div class="space-y-8 p-4 md:p-12">
 	<EmptyState
-		title="Настройки готовятся"
-		description="Здесь появятся токен брокера, выбор модели, расход и профиль."
+		title="Настроек пока нет"
+		description="Здесь появятся подключение Т-Инвестиций, выбор модели, расход и профиль."
 	/>
 	<!-- A phone has no sidebar: the theme and the exit live here until F-02 builds Профиль. -->
 	<section
@@ -25,7 +25,7 @@
 		<p class="min-w-0 truncate text-ui">{data.me.user.email}</p>
 		<div class="flex items-center gap-4">
 			<ThemeToggle />
-			<Button variant="link" onclick={signOut}>Выйти <span aria-hidden="true">→</span></Button>
+			<Button variant="link" onclick={signOut}>Выйти</Button>
 		</div>
 	</section>
 </div>

@@ -28,19 +28,18 @@
 <!-- eslint-disable svelte/no-navigation-without-resolve -- the page resolves the link -->
 <div class="flex flex-col gap-1.5 md:gap-2">
 	<div class="flex items-baseline justify-between gap-4">
-		<Label for={id}>{label}</Label>
+		<Label for={id} class="text-grey-600">{label}</Label>
 		{@render aside?.()}
 	</div>
 	{@render children()}
-	<!-- An error at its field (kori-v3, Регистрация): a red ×, the reason in black, a way out. -->
+	<!-- An error at its field (kori-v4, Регистрация): the red line under the field and the reason
+	     with a way out; no × that would read as «close». -->
 	{#if error}
-		<p id="{id}-error" role="alert" class="flex items-baseline gap-2 text-ui">
-			<span aria-hidden="true" class="text-primary-deep">×</span>
-			<span
-				>{error}{#if link}. <a href={link.href} class="underline underline-offset-3"
-						>{link.label}<span aria-hidden="true">&nbsp;→</span></a
-					>{/if}</span
-			>
+		<p id="{id}-error" role="alert" class="text-[13px]/[18px]">
+			{error}{#if link}. <a
+					href={link.href}
+					class="underline underline-offset-3 hover:text-primary-deep">{link.label}</a
+				>{/if}
 		</p>
 	{/if}
 	{@render hint?.()}

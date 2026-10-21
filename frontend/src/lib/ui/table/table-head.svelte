@@ -14,7 +14,8 @@
 	bind:this={ref}
 	data-slot="table-head"
 	class={cn(
-		'h-9 px-2 text-left align-middle text-caption whitespace-nowrap text-grey-600 uppercase [&:has([role=checkbox])]:pr-0',
+		// The column heads keep the caps of the brand, with their tracking (tech.md §13.3).
+		'h-9 px-2 text-left align-middle text-caption tracking-[0.06em] whitespace-nowrap text-grey-600 uppercase [&:has([role=checkbox])]:pr-0',
 		className
 	)}
 	{...restProps}

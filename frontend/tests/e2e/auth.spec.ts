@@ -9,6 +9,14 @@ const TABS = [
 	['Настройки', '/settings']
 ] as const;
 const DARK = /(^|\s)dark(\s|$)/;
+// tech.md S1-15 AC 1: the captions that made statements instead of informing are gone.
+const SLOGANS = [
+	'Вход для закрытого круга',
+	'Т-Инвестиции · доступ только на чтение',
+	'Токен хранится зашифрованным',
+	'Пароль от 10 символов · хранится как хеш',
+	'Email и пароль'
+];
 
 function newEmail() {
 	return `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`;
@@ -33,6 +41,15 @@ async function signIn(page: Page, email: string, password = PASSWORD) {
 	await page.getByRole('button', { name: 'Войти' }).click();
 }
 
+/** The tags the page sets in caps: S1-15 AC 3 leaves them to the column heads of tables. */
+function uppercased(page: Page) {
+	return page.evaluate(() =>
+		[...document.querySelectorAll('body *')]
+			.filter((el) => getComputedStyle(el).textTransform === 'uppercase')
+			.map((el) => el.tagName.toLowerCase())
+	);
+}
+
 test('a visitor signs up, signs out, signs in, walks the tabs and signs out', async ({ page }) => {
 	const errors = collectErrors(page);
 	const email = newEmail();
@@ -41,22 +58,23 @@ test('a visitor signs up, signs out, signs in, walks the tabs and signs out', as
 	await page.goto('/portfolio');
 	await expect(page).toHaveURL('/login');
 
-	await page.getByRole('link', { name: 'Регистрация' }).click();
+	await page.getByRole('link', { name: 'Регистрация по приглашению' }).click();
 	await expect(page).toHaveURL('/register');
 	await page.getByLabel('Email').fill(email);
 	await page.getByLabel('Имя').fill('Тест');
 	await page.getByLabel('Пароль').fill(PASSWORD);
 	await page.getByRole('button', { name: 'Создать аккаунт' }).click();
-	await expect(page).toHaveURL('/chat');
+	// Until F-03 builds the chat, a new session opens the portfolio (S1-15).
+	await expect(page).toHaveURL('/portfolio');
 	await expect(page.getByText(email)).toBeVisible();
 
 	await page.getByRole('button', { name: 'Выйти' }).click();
 	await expect(page).toHaveURL('/login');
 
 	await signIn(page, email);
-	await expect(page).toHaveURL('/chat');
+	await expect(page).toHaveURL('/portfolio');
 
-	// The tabs come from NAV in its order (S1-05 AC 7); the seal names the app (S1-14 AC 3).
+	// The tabs come from NAV in its order (S1-05 AC 7); the name «Kōri» heads the app (S1-15 AC 1).
 	await expect(page.getByRole('link', { name: 'Kōri' })).toBeVisible();
 	const tabs = page.getByRole('link', { name: /^(Чат|История|Портфель|Настройки)$/ });
 	await expect(tabs).toHaveText(TABS.map(([label]) => label));
@@ -69,15 +87,16 @@ test('a visitor signs up, signs out, signs in, walks the tabs and signs out', as
 			'page'
 		);
 	}
+	expect(await uppercased(page)).toEqual([]);
 
-	// Night is the default; the segments of the sidebar switch the theme (tech.md §13.2).
+	// Dark is the default; the segments of the sidebar switch the theme (tech.md §13.2).
 	const html = page.locator('html');
 	const theme = page.getByRole('group', { name: 'Тема' });
 	await expect(html).toHaveClass(DARK);
-	await expect(theme.getByRole('radio', { name: 'Ночь' })).toBeChecked();
-	await theme.getByRole('radio', { name: 'День' }).click();
+	await expect(theme.getByRole('radio', { name: 'Тёмная' })).toBeChecked();
+	await theme.getByRole('radio', { name: 'Светлая' }).click();
 	await expect(html).not.toHaveClass(DARK);
-	await theme.getByRole('radio', { name: 'Ночь' }).click();
+	await theme.getByRole('radio', { name: 'Тёмная' }).click();
 	await expect(html).toHaveClass(DARK);
 
 	await page.getByRole('button', { name: 'Выйти' }).click();
@@ -89,7 +108,59 @@ test('a visitor signs up, signs out, signs in, walks the tabs and signs out', as
 	expect(errors).toEqual([]);
 });
 
-// S1-14 AC 4: an error the API ties to a field shows at that field.
+// S1-15 AC 1, 3, 5, 9: the scene «свет над графиком», the spaced name, one action, no slogans.
+test('the login page shows the name, one action and the way to register', async ({ page }) => {
+	const errors = collectErrors(page);
+	await page.goto('/login');
+
+	await expect(page.getByRole('img', { name: 'Kōri' })).toBeVisible();
+	await expect(page.getByRole('heading', { level: 1, name: 'Вход' })).toBeVisible();
+	const text = await page.locator('body').innerText();
+	expect(text).not.toContain('氷');
+	for (const slogan of SLOGANS) expect(text).not.toContain(slogan);
+	// One action: Войти; Показать lives inside the password field.
+	await expect(page.getByRole('button')).toHaveCount(2);
+	await expect(page.getByRole('button', { name: 'Войти' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Показать' })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Регистрация по приглашению' })).toBeVisible();
+	await expect(page.getByRole('group', { name: 'Тема' })).toHaveCount(0);
+	expect(await uppercased(page)).toEqual([]);
+
+	// The password shows on demand from inside its field.
+	await page.getByLabel('Пароль').fill('secret-123');
+	await page.getByRole('button', { name: 'Показать' }).click();
+	await expect(page.getByLabel('Пароль')).toHaveAttribute('type', 'text');
+	await page.getByRole('button', { name: 'Скрыть' }).click();
+	await expect(page.getByLabel('Пароль')).toHaveAttribute('type', 'password');
+
+	expect(errors).toEqual([]);
+});
+
+// S1-15 AC 9: keyboard focus shows on every control: a field a 2 px line under it, the rest the
+// ring of the brand.
+test('keyboard focus shows on every control of the login page', async ({ page }) => {
+	await page.goto('/login');
+	// The SPA draws the form once its script runs: tab only after that.
+	await expect(page.getByLabel('Email')).toBeVisible();
+
+	for (const field of [page.getByLabel('Email'), page.getByLabel('Пароль')]) {
+		await page.keyboard.press('Tab');
+		await expect(field).toBeFocused();
+		await expect(field).toHaveCSS('box-shadow', /inset/);
+	}
+	for (const control of [
+		page.getByRole('button', { name: 'Показать' }),
+		page.getByRole('button', { name: 'Войти' }),
+		page.getByRole('link', { name: 'Регистрация по приглашению' })
+	]) {
+		await page.keyboard.press('Tab');
+		await expect(control).toBeFocused();
+		await expect(control).toHaveCSS('outline-style', 'solid');
+		await expect(control).toHaveCSS('outline-width', '2px');
+	}
+});
+
+// S1-15 AC 5: an error lies at its field as a red line and a sentence, without a ×.
 test('a wrong password keeps the visitor on the login page with the reason at the field', async ({
 	page
 }) => {
@@ -99,7 +170,9 @@ test('a wrong password keeps the visitor on the login page with the reason at th
 	await page.goto('/login');
 	await signIn(page, newEmail(), 'wrong-password-1');
 
-	await expect(page.getByRole('alert')).toContainText('Неверный email или пароль');
+	const alert = page.getByRole('alert');
+	await expect(alert).toContainText('Неверный email или пароль');
+	await expect(alert).not.toContainText('×');
 	await expect(page.getByLabel('Пароль')).toHaveAttribute('aria-invalid', 'true');
 	await expect(page.getByLabel('Пароль')).toHaveAccessibleDescription('Неверный email или пароль');
 	await expect(page).toHaveURL('/login');
@@ -115,16 +188,32 @@ test('a taken email is marked at its field with the way to sign in', async ({ pa
 	await page.context().clearCookies();
 
 	await page.goto('/register');
+	await expect(page.getByLabel('Пароль')).toHaveAccessibleDescription('Не короче 10 символов');
 	await page.getByLabel('Email').fill(email);
 	await page.getByLabel('Пароль').fill(PASSWORD);
 	await page.getByRole('button', { name: 'Создать аккаунт' }).click();
 
 	const field = page.getByLabel('Email');
 	await expect(field).toHaveAttribute('aria-invalid', 'true');
-	await expect(field).toHaveAccessibleDescription(/Этот email уже зарегистрирован/);
+	await expect(field).toHaveAccessibleDescription('Этот email уже зарегистрирован. Войти');
 	await expect(page).toHaveURL('/register');
-	await page.getByRole('link', { name: 'Войти' }).click();
+	await page.locator('#email-error').getByRole('link', { name: 'Войти' }).click();
 	await expect(page).toHaveURL('/login');
+});
+
+test.describe('on a phone', () => {
+	test.use({ viewport: { width: 390, height: 844 } });
+
+	// docs/ui-references/kori-v4 (phone-login.png): the name on top, the form at the bottom.
+	test('the login page fits the phone without a sideways scroll', async ({ page }) => {
+		await page.goto('/login');
+		const name = await page.getByRole('img', { name: 'Kōri' }).boundingBox();
+		const form = await page.getByRole('form', { name: 'Вход' }).boundingBox();
+
+		expect(name && form && name.y + name.height <= form.y).toBe(true);
+		expect(form && Math.round(form.y + form.height)).toBe(844 - 12);
+		expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+	});
 });
 
 test('the SPA shell carries the content security policy', async ({ request }) => {

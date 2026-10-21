@@ -12,7 +12,7 @@
 				outline:
 					'border-foreground text-foreground [a]:hover:bg-foreground [a]:hover:text-background',
 				ghost: 'hover:bg-accent hover:text-foreground',
-				link: 'text-muted-foreground uppercase hover:text-primary'
+				link: 'text-muted-foreground hover:text-primary'
 			}
 		},
 		defaultVariants: {

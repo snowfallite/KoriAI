@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { BrokerAccountOut } from '$lib/types';
 import {
 	accountOf,
+	accountResult,
 	accountsHint,
 	allocationChart,
 	askHref,
@@ -10,8 +11,11 @@ import {
 	hero,
 	PORTFOLIO_QUESTION,
 	positionQuestion,
+	pricesNote,
 	summarize,
-	withAccount
+	tickerLine,
+	withAccount,
+	yieldText
 } from './logic';
 import type { Portfolio, Position } from './logic';
 
@@ -106,6 +110,8 @@ describe('allocationChart', () => {
 
 		expect(spec.kind).toBe('pie');
 		expect(spec.title).toBe('Структура портфеля');
+		// docs/ui-references/kori-v4 (Портфель): «Структура портфеля  по типам инструментов».
+		expect(spec.subtitle).toBe('по типам инструментов');
 		expect(spec.y).toMatchObject({ format: 'money', unit: 'RUB' });
 		expect(spec.series).toHaveLength(1);
 		// A margin debt has no place on a pie: the table keeps it.
@@ -175,18 +181,66 @@ describe('accountsHint', () => {
 	});
 });
 
-// The caption under the total of v3: «от средней цены покупки · 10 позиций на 2 счетах».
+// tech.md S1-15 AC 6: the result «к средней цене покупки» and «N позиций на M счетах» stand
+// on lines of their own, accounts by name.
 describe('coverage', () => {
 	const both = [account('acc1', '1', null, null), account('acc2', '1', null, null)];
 
 	it('counts the positions over every account', () => {
+		expect(coverage(10, both)).toBe('10 позиций на 2 счетах');
 		expect(coverage(29, both)).toBe('29 позиций на 2 счетах');
 		expect(coverage(1, both)).toBe('1 позиция на 2 счетах');
 		expect(coverage(3, both)).toBe('3 позиции на 2 счетах');
 	});
 
-	it('names the one account it covers', () => {
-		expect(coverage(10, [account('acc2', '1', null, null)])).toBe('10 позиций · acc2 · Счёт acc2');
+	it('names the one account it covers, never its alias', () => {
+		expect(coverage(10, [account('acc2', '1', null, null)])).toBe(
+			'10 позиций на счёте «Счёт acc2»'
+		);
+	});
+});
+
+describe('yieldText', () => {
+	it('gives the result of every account in whole rubles', () => {
+		const summary = summarize(
+			portfolio({
+				accounts: [account('acc1', '0', '34570', null), account('acc2', '0', '7520', null)]
+			})
+		);
+
+		expect(yieldText(summary)).toBe(`+42${NBSP}090${NBSP}₽`);
+	});
+
+	it('adds the share of one account in brackets', () => {
+		const summary = summarize(portfolio({ accounts: [account('acc1', '0', '34570', '0.0426')] }));
+
+		expect(yieldText(summary)).toBe(`+34${NBSP}570${NBSP}₽ (+4,26${NBSP}%)`);
+	});
+
+	it('has no line without a result', () => {
+		const summary = summarize(portfolio({ accounts: [account('acc1', '0', null, null)] }));
+
+		expect(yieldText(summary)).toBeNull();
+	});
+});
+
+describe('accountResult', () => {
+	it('writes the result of an account with its share in brackets', () => {
+		expect(accountResult(account('acc1', '846865', '34570', '0.0426'))).toBe(
+			`+34${NBSP}570${NBSP}₽ (+4,26${NBSP}%)`
+		);
+		expect(accountResult(account('acc2', '1', '-6400', '-0.061'))).toBe(
+			`−6${NBSP}400${NBSP}₽ (−6,10${NBSP}%)`
+		);
+		expect(accountResult(account('acc3', '1', '1250', null))).toBe(`+1${NBSP}250${NBSP}₽`);
+		expect(accountResult(account('acc4', '1', null, null))).toBeNull();
+	});
+});
+
+describe('pricesNote', () => {
+	// The meta line of v4: the prices of T-Invest at the moment of the answer, Moscow time.
+	it('dates the prices in Moscow time', () => {
+		expect(pricesNote('2026-10-10T16:00:00Z')).toBe('Цены Т-Инвестиций на 10.10.2026, 19:00 МСК');
 	});
 });
 
@@ -218,43 +272,65 @@ describe('askHref', () => {
 	});
 });
 
-describe('positionQuestion', () => {
-	function position(name: string, yield_pct: string | null): Position {
-		const money = { amount: '1', currency: 'RUB' };
-		return {
-			instrument: {
-				uid: '00000000-0000-0000-0000-000000000001',
-				ticker: 'X',
-				class_code: 'TQBR',
-				name,
-				instrument_type: 'share',
-				currency: 'RUB',
-				logo_url: null,
-				brand_color: null
-			},
-			account_alias: 'acc1',
-			quantity: '1',
-			avg_price: money,
-			current_price: money,
-			value: money,
-			value_rub: money,
-			weight: '0.1',
-			yield_abs: yield_pct === null ? null : money,
-			yield_pct,
-			accrued_interest: null
-		};
-	}
+function position(
+	name: string,
+	yield_pct: string | null,
+	fields: Partial<Position['instrument']> & { accrued?: string } = {}
+): Position {
+	const money = { amount: '1', currency: 'RUB' };
+	const { accrued, ...instrument } = fields;
+	return {
+		instrument: {
+			uid: '00000000-0000-0000-0000-000000000001',
+			ticker: 'X',
+			class_code: 'TQBR',
+			name,
+			instrument_type: 'share',
+			currency: 'RUB',
+			logo_url: null,
+			brand_color: null,
+			...instrument
+		},
+		account_alias: 'acc1',
+		quantity: '1',
+		avg_price: money,
+		current_price: money,
+		value: money,
+		value_rub: money,
+		weight: '0.1',
+		yield_abs: yield_pct === null ? null : money,
+		yield_pct,
+		accrued_interest: accrued === undefined ? null : { amount: accrued, currency: 'RUB' }
+	};
+}
 
-	it('asks why a position moved since the purchase', () => {
+// The question a row leaves in the chat (S1-15 AC 6): a sentence, not a telegram; «позиция»
+// keeps the verb right for any name (Т-Технологии, ОФЗ 26240).
+describe('positionQuestion', () => {
+	it('asks why a position grew or fell since the purchase', () => {
 		expect(positionQuestion(position('Сбербанк', '0.176'))).toBe(
-			`Почему Сбербанк +17,6${NBSP}% с покупки?`
+			`Почему позиция «Сбербанк» выросла на 17,6${NBSP}% с покупки?`
 		);
 		expect(positionQuestion(position('Газпром', '-0.147'))).toBe(
-			`Почему Газпром −14,7${NBSP}% с покупки?`
+			`Почему позиция «Газпром» упала на 14,7${NBSP}% с покупки?`
+		);
+		expect(positionQuestion(position('Т-Технологии', '0.099'))).toBe(
+			`Почему позиция «Т-Технологии» выросла на 9,9${NBSP}% с покупки?`
 		);
 	});
 
-	it('asks about the position itself when it has no result', () => {
+	it('asks about the position itself when it has no result or none to speak of', () => {
 		expect(positionQuestion(position('Доллар США', null))).toBe('Что с позицией «Доллар США»?');
+		expect(positionQuestion(position('ОФЗ 26240', '0.0004'))).toBe('Что с позицией «ОФЗ 26240»?');
+	});
+});
+
+describe('tickerLine', () => {
+	// docs/ui-references/kori-v4 (Портфель): «SU26240, НКД 8,20 ₽», a comma instead of a dot.
+	it('adds the accrued interest of a bond after a comma', () => {
+		expect(tickerLine(position('ОФЗ 26240', null, { ticker: 'SU26240', accrued: '8.2' }))).toBe(
+			`SU26240, НКД 8,20${NBSP}₽`
+		);
+		expect(tickerLine(position('Сбербанк', null, { ticker: 'SBER' }))).toBe('SBER');
 	});
 });

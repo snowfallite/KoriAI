@@ -8,14 +8,12 @@
 	import ErrorState from '$lib/components/ErrorState.svelte';
 	import LoadingBlock from '$lib/components/LoadingBlock.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { Button } from '$lib/ui/button';
 	import { Skeleton } from '$lib/ui/skeleton';
-	import { formatDate, formatTime } from '$lib/utils/format';
 	import type { PortfolioState } from './+page';
 	import AccountsList from './components/AccountsList.svelte';
 	import PositionsTable from './components/PositionsTable.svelte';
 	import Totals from './components/Totals.svelte';
-	import { allocationChart, coverage, summarize, withAccount } from './logic';
+	import { allocationChart, coverage, pricesNote, summarize, withAccount } from './logic';
 
 	let { data } = $props();
 
@@ -44,12 +42,7 @@
 
 <svelte:head><title>Портфель · Kōri</title></svelte:head>
 
-<PageHeader
-	title="Портфель"
-	description={asOf
-		? `Оценка на ${formatDate(asOf)} ${formatTime(asOf)} MSK по ценам Т-Инвестиций`
-		: 'Счета, структура и позиции'}
->
+<PageHeader title="Портфель" description={asOf ? pricesNote(asOf) : undefined}>
 	{#snippet actions()}
 		{#if visible.length > 1}
 			<AccountSelect accounts={visible} value={data.account} onChange={selectAccount} />
@@ -72,16 +65,11 @@
 	</div>
 {:else if result.kind === 'not_connected'}
 	<div class="p-4 md:p-12">
+		<!-- Until F-01 the settings hold no token form, so the tab offers no button there. -->
 		<EmptyState
-			title="Брокер не подключён"
-			description="Подключите в Настройках токен Т-Инвестиций с доступом только на чтение: здесь появятся счета, структура и позиции."
-		>
-			{#snippet action()}
-				<Button href={resolve('/settings')}>
-					<span data-slot="button-glyph" aria-hidden="true">→</span>Подключить токен
-				</Button>
-			{/snippet}
-		</EmptyState>
+			title="Т-Инвестиции не подключены"
+			description="Подключение появится в Настройках, и здесь будут счета, структура и позиции."
+		/>
 	</div>
 {:else if result.kind === 'error'}
 	<div class="p-4 md:p-12">
@@ -101,5 +89,5 @@
 		<AccountsList accounts={portfolio.accounts} />
 		<ChartView spec={allocationChart(portfolio)} />
 	</section>
-	<PositionsTable positions={portfolio.positions} showAccount={portfolio.accounts.length > 1} />
+	<PositionsTable positions={portfolio.positions} accounts={portfolio.accounts} />
 {/if}

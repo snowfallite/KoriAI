@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Bold from '@lucide/svelte/icons/bold';
-	import Check from '@lucide/svelte/icons/check';
 	import type { ColumnDef } from '@tanstack/table-core';
 	import { onDestroy } from 'svelte';
 	import { toast } from 'svelte-sonner';
@@ -50,13 +49,15 @@
 	import { Separator } from '$lib/ui/separator';
 	import * as Sheet from '$lib/ui/sheet';
 	import { Switch } from '$lib/ui/switch';
+	import * as Table from '$lib/ui/table';
 	import * as Tabs from '$lib/ui/tabs';
 	import { Textarea } from '$lib/ui/textarea';
 	import { Toggle } from '$lib/ui/toggle';
 	import * as ToggleGroup from '$lib/ui/toggle-group';
 	import * as Tooltip from '$lib/ui/tooltip';
+	import { accountNames } from '$lib/utils/accounts';
 	import { cn } from '$lib/utils/cn';
-	import { formatMoney } from '$lib/utils/format';
+	import { formatMoney, formatPercent } from '$lib/utils/format';
 	import Demo from './components/Demo.svelte';
 	import {
 		ACCOUNTS,
@@ -105,20 +106,47 @@
 	const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 	const LOGO_SIZES = [20, 24, 32, 48] as const;
 	const GRADIENTS = [
-		['ki-fade', 'красный → белый'],
-		['ki-ignite', 'чёрный → красный'],
-		['ki-ember', 'красный → бледно-красный'],
-		['ki-hero', 'розовый → красный → чёрный'],
-		['ki-tile', 'розовый → красный → серый']
+		['ki-fade', 'красный к белому'],
+		['ki-ignite', 'чёрный к красному'],
+		['ki-ember', 'красный к бледно-красному'],
+		['ki-hero', 'розовый, красный, чёрный'],
+		['ki-tile', 'розовый, красный, серый']
 	] as const;
-	// The sheet «Выбранное» of v3: the menu, the model rows and the tabs of a phone.
+	// The glyphs of v4 and what each says (tech.md §13.1): a cell only where the glyph means it.
+	const GLYPHS = [
+		[
+			'→',
+			'Действие вперёд',
+			'Войти, отправить вопрос, спросить о портфеле',
+			'bg-primary text-black'
+		],
+		['+', 'Создать', 'Новый чат, создать аккаунт', 'bg-grey-400 text-black'],
+		['↓', 'Раскрыть', 'Выбор модели, шаги ответа', 'border border-grey-600'],
+		[
+			'×',
+			'Прервать, удалить, закрыть',
+			'Остановить ответ, удалить чат, закрыть окно',
+			'bg-primary-deep text-primary-deep-foreground'
+		],
+		['↑↓', 'Порядок и направление', 'Сортировка колонки; рост или падение у итога портфеля', ''],
+		['2', 'Номер', 'Номер вопроса в чате, счётчик у раздела: История¹²', 'bg-grey-400 text-black']
+	] as const;
+	// The sheet «Выбор» of v4: the menu, the model rows and the tabs of a phone.
 	const MENU = ['Чат', 'История', 'Портфель', 'Настройки'];
 	const MODELS = [
-		['auto', 'Авто', 'подберёт модель по вопросу', 'Сейчас'],
-		['lite', 'Lite', 'короткие ответы и сводки', 'Остаток 97 %'],
-		['pro', 'Pro', 'анализ портфеля и бумаг', 'Остаток 97 %'],
-		['max', 'Max', 'отчётность МСФО и РСБУ', 'Остаток 98 %']
+		['auto', 'Авто', 'подберёт модель по вопросу', 'сейчас'],
+		['lite', 'Lite', 'короткие ответы и сводки', 'остаток 97 %'],
+		['pro', 'Pro', 'анализ портфеля и бумаг', 'остаток 97 %'],
+		['max', 'Max', 'отчётность МСФО и РСБУ', 'остаток 98 %']
 	] as const;
+	const HEADS = ['Инструмент', 'Счёт', 'Кол-во', 'Доля', 'Результат'];
+	const SERIF = [
+		'Главный минус даёт Газпром: −23 800 ₽, или −14,7 %, при доле 11,6 % портфеля. Числа внутри текста набраны моно: это данные, а не слова.',
+		'',
+		'> «Выручка Группы за отчётный год составила [ЧИСЛО] трлн ₽»: так выглядит цитата из отчёта МСФО'
+	].join('\n');
+	const chosen = (alias: string | null, list: typeof ACCOUNTS) =>
+		alias === null ? 'все счета' : (accountNames(list).get(alias) ?? 'все счета');
 	const [sber, gazp] = INSTRUMENTS as [InstrumentBrief, InstrumentBrief];
 </script>
 
@@ -130,25 +158,25 @@
 
 <div class="space-y-14 p-4 md:p-12">
 	<section aria-label="Примитивы" class="space-y-4">
-		<h2 class="border-b pb-3 text-caption uppercase">Примитивы shadcn-svelte</h2>
+		<h2 class="border-b pb-3 text-[14px]/5 font-bold">Примитивы shadcn-svelte</h2>
 		<div class="grid gap-8 md:grid-cols-2">
 			<div class="flex flex-wrap items-center gap-2">
-				<Badge>Подключён</Badge>
+				<Badge>Подключены</Badge>
 				<Badge variant="secondary">облигация</Badge>
-				<Badge variant="outline">acc1</Badge>
+				<Badge variant="outline">Брокерский</Badge>
 				<Badge variant="destructive">ошибка</Badge>
 				<Toggle aria-label="Жирный"><Bold /></Toggle>
 			</div>
 			<div class="space-y-3">
-				<Label for="ks-token">Токен Т-Инвестиций</Label>
-				<Input id="ks-token" type="password" placeholder="t.только-чтение" />
+				<Label for="ks-search">Поиск по чатам</Label>
+				<Input id="ks-search" placeholder="Например: дивиденды" />
 				<Label for="ks-question">Вопрос</Label>
 				<Textarea id="ks-question" placeholder="Что с моим портфелем?" />
 			</div>
 			<div class="space-y-3">
 				<div class="flex items-center gap-3">
 					<Checkbox id="ks-agree" bind:checked={agree} />
-					<Label for="ks-agree">Токен только для чтения</Label>
+					<Label for="ks-agree">Показывать скрытые счета</Label>
 				</div>
 				<div class="flex flex-wrap items-center gap-2">
 					<Dialog.Root>
@@ -192,16 +220,15 @@
 							<Tooltip.Content>Короткая подсказка</Tooltip.Content>
 						</Tooltip.Root>
 					</Tooltip.Provider>
-					<Button variant="outline" onclick={() => toast.success('Сохранено')}>Тост</Button>
 				</div>
 			</div>
 			<div class="space-y-3">
 				<Collapsible.Root class="space-y-2">
 					<Collapsible.Trigger class={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-						Шаги рана <span aria-hidden="true">↓</span>
+						Как получен ответ <span aria-hidden="true">↓</span>
 					</Collapsible.Trigger>
 					<Collapsible.Content class="text-ui text-muted-foreground">
-						Загружаю портфель → строю таблицу
+						Загрузил портфель, построил таблицу
 					</Collapsible.Content>
 				</Collapsible.Root>
 				<ScrollArea class="h-24 border p-2 text-ui">
@@ -232,65 +259,109 @@
 		<Separator />
 	</section>
 
-	<Demo name="Кнопки" note="ячейка-глиф и подпись цветом текста; сплошной красной заливки нет">
+	<Demo name="Глифы" note="глиф ставится, только когда говорит то, чего нет в подписи">
+		<ul class="max-w-[640px] border-t text-ui">
+			{#each GLYPHS as [glyph, meaning, where, cell] (meaning)}
+				<li
+					class="grid min-h-13 grid-cols-[40px_minmax(0,1fr)] items-center gap-x-4 border-b border-line-faint py-1.5 md:grid-cols-[40px_200px_minmax(0,1fr)]"
+				>
+					<span aria-hidden="true" class={cn('grid size-10 place-items-center text-base', cell)}
+						>{glyph}</span
+					>
+					<span>{meaning}</span>
+					<span class="col-start-2 text-muted-foreground md:col-start-3">{where}</span>
+				</li>
+			{/each}
+		</ul>
+		<p class="max-w-[640px] text-ui text-grey-600">
+			Не ставим: стрелку в заголовке, стрелку после ссылки, крестик как знак ошибки, стрелку у
+			каждой строки таблицы.
+		</p>
+	</Demo>
+
+	<Demo
+		name="Кнопки"
+		note="ячейка-глиф у главного действия экрана и у действий с тем же смыслом; отмена, ссылки и второстепенное без ячейки"
+	>
 		<div class="flex flex-wrap items-center gap-x-5 gap-y-4">
-			<Button size="lg"><span data-slot="button-glyph" aria-hidden="true">→</span>Войти</Button>
-			<Button variant="secondary" size="lg"
-				><span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат</Button
+			<Button><span data-slot="button-glyph" aria-hidden="true">→</span>Открыть настройки</Button>
+			<Button variant="ai"
+				><span data-slot="button-glyph" aria-hidden="true">→</span>Спросить о портфеле</Button
 			>
-			<Button variant="ai" size="lg"
-				><span data-slot="button-glyph" aria-hidden="true">→</span>Спросить</Button
-			>
-			<Button variant="ai" size="icon" aria-label="Отправить вопрос">
+			<Button variant="ai" size="icon" aria-label="Спросить">
 				<span aria-hidden="true">→</span>
 			</Button>
-			<Button variant="outline" size="lg">Подключить токен</Button>
-			<Button variant="destructive" size="lg"
-				><span data-slot="button-glyph" aria-hidden="true">→</span>Отключить</Button
-			>
-			<Button variant="link">Подробнее</Button>
-			<Button variant="ghost">Призрак</Button>
 		</div>
 		<div class="flex flex-wrap items-center gap-x-5 gap-y-4">
-			<Button><span data-slot="button-glyph" aria-hidden="true">→</span>40 px</Button>
-			<Button size="lg"><span data-slot="button-glyph" aria-hidden="true">→</span>48 px</Button>
-			<Button disabled><span data-slot="button-glyph" aria-hidden="true">→</span>Недоступно</Button>
-			<Button variant="secondary" disabled
-				><span data-slot="button-glyph" aria-hidden="true">+</span>Недоступно</Button
+			<Button variant="secondary"
+				><span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат</Button
 			>
+			<Button variant="outline">Повторить</Button>
+			<Button variant="ghost">Отмена</Button>
+			<Button variant="link">Выйти</Button>
+			<Button disabled><span data-slot="button-glyph" aria-hidden="true">→</span>Недоступно</Button>
 			<Button variant="link" disabled>Недоступно</Button>
 		</div>
 		<!-- On a white panel the ink label turns black (tech.md §13.1). -->
-		<div class="theme-day flex flex-wrap bg-background">
-			<Button variant="secondary" size="lg" class="min-w-44 flex-1 justify-start"
-				><span data-slot="button-glyph" aria-hidden="true">×</span>Отмена</Button
+		<div class="theme-day flex flex-wrap gap-3 bg-background p-5">
+			<p class="w-full text-caps text-grey-600">На белой панели: вход, регистрация, диалог</p>
+			<Button size="lg"><span data-slot="button-glyph" aria-hidden="true">→</span>Войти</Button>
+			<Button size="lg"
+				><span data-slot="button-glyph" aria-hidden="true">+</span>Создать аккаунт</Button
 			>
-			<Button size="lg" class="min-w-44 flex-1 justify-start"
-				><span data-slot="button-glyph" aria-hidden="true">→</span>Войти</Button
+			<Button variant="destructive" size="lg"
+				><span data-slot="button-glyph" aria-hidden="true">×</span>Удалить</Button
 			>
-			<Button variant="destructive" size="lg" class="min-w-44 flex-1 justify-start"
-				><span data-slot="button-glyph" aria-hidden="true">→</span>Удалить</Button
-			>
+			<Button variant="secondary" size="lg">Отмена</Button>
+		</div>
+	</Demo>
+
+	<Demo name="Шрифты" note="моно звучит как интерфейс и данные, serif набирает то, что читают">
+		<div class="grid gap-10 lg:grid-cols-2">
+			<div class="space-y-2.5 border-t pt-5">
+				<p class="text-caps text-grey-600">JetBrains Mono: интерфейс, числа, тикеры</p>
+				<p class="text-[64px]/[64px] tracking-[-0.03em] whitespace-nowrap tabular-nums">
+					1&nbsp;195&nbsp;145<span class="ml-3 text-[32px] tracking-normal text-grey-600">₽</span>
+				</p>
+				<p class="text-title">Позиции</p>
+				<p class="text-[14px]/5 font-bold">Структура портфеля</p>
+				<p class="text-ui text-prose">Брокерский, 846&nbsp;865&nbsp;₽, SBER, LKOH, ОФЗ 26240</p>
+				<p class="text-caps text-grey-600">Цены Т-Инвестиций на 10.10.2026, 19:00 МСК</p>
+			</div>
+			<div class="space-y-4 border-t pt-5">
+				<p class="text-caps text-grey-600">Noto Serif: ответ агента, цитаты из отчётов</p>
+				<Markdown source={SERIF} />
+				<p class="text-caps text-grey-600">Капс: только заголовки колонок таблиц</p>
+				<Table.Root>
+					<Table.Header>
+						<Table.Row class="hover:bg-transparent">
+							{#each HEADS as head (head)}
+								<Table.Head>{head}</Table.Head>
+							{/each}
+						</Table.Row>
+					</Table.Header>
+				</Table.Root>
+			</div>
 		</div>
 	</Demo>
 
 	<Demo
 		name="Выбранное"
-		note="выбранное белое: стрелка и тёмная строка в меню, инверсия в остальном"
+		note="выбранное белое: в меню белый текст и красная полоса у края, инверсия в остальном"
 	>
 		<div class="grid gap-10 lg:grid-cols-2">
-			<ul aria-label="Меню" class="w-60 border-y text-caps uppercase">
+			<ul aria-label="Меню" class="w-60 border-y text-ui">
 				{#each MENU as item, i (item)}
 					<li
 						class={cn(
-							'flex h-9 items-center gap-2 px-5',
-							i === 2 ? 'bg-accent text-foreground' : 'text-muted-foreground'
+							'relative flex h-9 items-center px-5',
+							i === 2 ? 'bg-accent text-foreground' : 'text-foreground/54'
 						)}
 					>
-						<span
-							aria-hidden="true"
-							class={cn('w-3.5 text-ui text-primary', i === 2 && "before:content-['→']")}
-						></span>{item}
+						{#if i === 2}
+							<span aria-hidden="true" class="absolute inset-y-0 left-0 w-0.5 bg-primary"></span>
+						{/if}
+						{item}
 					</li>
 				{/each}
 			</ul>
@@ -300,8 +371,8 @@
 						<Tabs.Trigger value="active">Активные</Tabs.Trigger>
 						<Tabs.Trigger value="archive">Архив</Tabs.Trigger>
 					</Tabs.List>
-					<Tabs.Content value="active" class="text-ui">Треды за неделю.</Tabs.Content>
-					<Tabs.Content value="archive" class="text-ui">Архивные треды.</Tabs.Content>
+					<Tabs.Content value="active" class="text-ui">Чаты за неделю.</Tabs.Content>
+					<Tabs.Content value="archive" class="text-ui">Архивные чаты.</Tabs.Content>
 				</Tabs.Root>
 				<ToggleGroup.Root
 					type="single"
@@ -321,12 +392,12 @@
 			<RadioGroup.Root bind:value={model} aria-label="Модель" class="gap-0 border">
 				{#each MODELS as [value, label, note, left] (value)}
 					<Label
-						class="flex h-13 cursor-pointer items-center gap-4 border-b border-line-faint px-4 text-ui normal-case last:border-0 hover:bg-accent has-data-checked:bg-foreground has-data-checked:text-background"
+						class="flex h-13 cursor-pointer items-center gap-4 border-b border-line-faint px-4 text-ui last:border-0 hover:bg-accent has-data-checked:bg-foreground has-data-checked:text-background"
 					>
 						<RadioGroup.Item {value} />
 						<span class="w-12">{label}</span>
 						<span class="flex-1 opacity-70">{note}</span>
-						<span class="text-caption uppercase">{left}</span>
+						<span class="text-caps">{left}</span>
 					</Label>
 				{/each}
 			</RadioGroup.Root>
@@ -335,7 +406,7 @@
 				{#each NAV as item (item.id)}
 					<li
 						class={cn(
-							'relative flex flex-col items-center justify-center gap-1.5 text-[10px]/3 tracking-[0.08em] uppercase',
+							'relative flex flex-col items-center justify-center gap-1.5 text-caption',
 							item.id === 'chat' ? 'text-foreground' : 'text-muted-foreground'
 						)}
 					>
@@ -360,28 +431,24 @@
 					class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3 border-b px-6 py-5"
 				>
 					<div class="space-y-1.5">
-						<h3 id="ks-broker" class="text-caps uppercase">Брокер</h3>
-						<p class="text-[13px]/5 text-muted-foreground">
-							Т-Инвестиции, токен с доступом только на чтение
-						</p>
+						<h3 id="ks-broker" class="text-ui font-bold">Т-Инвестиции</h3>
+						<p class="text-[13px]/5 text-muted-foreground">2 счёта: Брокерский и ИИС</p>
 					</div>
-					<Badge>Подключён</Badge>
+					<Badge>Подключены</Badge>
 				</header>
 				<dl
 					class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-6 gap-y-4 border-b border-line-faint px-6 py-5"
 				>
-					{#each [['Токен', 't.••••only'], ['Доступ', 'Только чтение'], ['Проверен', '10.10.2026 09:00']] as [term, detail] (term)}
+					{#each [['Токен', 't.••••only'], ['Доступ', 'Только чтение'], ['Проверен', '10.10.2026, 09:00']] as [term, detail] (term)}
 						<div>
-							<dt class="text-caption text-grey-600 uppercase">{term}</dt>
+							<dt class="text-caps text-grey-600">{term}</dt>
 							<dd class="mt-1.5 text-[15px]/5">{detail}</dd>
 						</div>
 					{/each}
 				</dl>
 				<footer class="flex flex-wrap justify-end gap-3 px-6 py-4">
 					<Button variant="outline">Проверить токен</Button>
-					<Button variant="destructive"
-						><span data-slot="button-glyph" aria-hidden="true">→</span>Отключить</Button
-					>
+					<Button variant="outline">Отключить</Button>
 				</footer>
 			</section>
 			<div class="grid grid-cols-3 self-start">
@@ -393,7 +460,7 @@
 				<StatCard
 					label="Результат"
 					value={formatMoney('42090', 'RUB', { signed: true, digits: 0 })}
-					delta={{ text: '+3,65 % от покупки', trend: 'up' }}
+					delta={{ text: '+3,65 % к цене покупки', trend: 'up' }}
 				/>
 				<StatCard label="Позиции" value="10" hint="на 2 счетах" />
 			</div>
@@ -402,68 +469,102 @@
 
 	<Demo
 		name="Уведомления"
-		note="ячейка-знак слева: × ошибка, ↓ понижение, галочка готово, → справка"
+		note="вид сообщает полоса слева и сам текст: ошибка, понижение, готово, справка"
 	>
 		<div class="grid max-w-[640px] gap-2">
 			<Alert.Root variant="destructive">
-				<span data-slot="alert-glyph" aria-hidden="true">×</span>
-				<Alert.Title>
-					Т-Инвестиции недоступны, попробуйте позже
-					<span class="ml-2 text-caption text-grey-600">req-7f3a2c</span>
-				</Alert.Title>
+				<Alert.Title>Т-Инвестиции не отвечают. Повторите позже.</Alert.Title>
 				<Alert.Action>
-					<Button variant="link" class="text-caption text-foreground">Повторить</Button>
+					<Button variant="link" class="text-foreground">Повторить</Button>
 				</Alert.Action>
 			</Alert.Root>
-			<Alert.Root role="status">
-				<span data-slot="alert-glyph" aria-hidden="true" class="bg-grey-600 text-white">↓</span>
-				<Alert.Title>Модель понижена до Pro: Max идёт выше темпа расхода</Alert.Title>
+			<Alert.Root role="status" class="border-l-grey-600">
+				<Alert.Title>Ответила модель Pro: лимит Max на сегодня почти израсходован</Alert.Title>
+			</Alert.Root>
+			<Alert.Root role="status" class="border-l-grey-400">
+				<Alert.Title>Т-Инвестиции подключены, найдено 2 счёта</Alert.Title>
 			</Alert.Root>
 			<Alert.Root role="status">
-				<span data-slot="alert-glyph" aria-hidden="true" class="bg-grey-400 text-black"
-					><Check /></span
-				>
-				<Alert.Title>Токен подключён, найдено 2 счёта</Alert.Title>
-			</Alert.Root>
-			<Alert.Root role="status">
-				<span data-slot="alert-glyph" aria-hidden="true">→</span>
-				<Alert.Title>2 числа в ответе не подтверждены инструментами</Alert.Title>
+				<Alert.Title>2 числа в ответе не нашлись в данных</Alert.Title>
 				<Alert.Action>
-					<Button variant="link" class="text-caption text-foreground">Показать</Button>
+					<Button variant="link" class="text-foreground">Показать</Button>
 				</Alert.Action>
 			</Alert.Root>
 		</div>
+		<div class="flex flex-wrap gap-3">
+			<Button
+				variant="outline"
+				onclick={() => toast.error('Т-Инвестиции не отвечают. Повторите позже.')}
+				>Тост: ошибка</Button
+			>
+			<Button
+				variant="outline"
+				onclick={() => toast.success('Т-Инвестиции подключены, найдено 2 счёта')}
+				>Тост: готово</Button
+			>
+			<Button variant="outline" onclick={() => toast('Ответ сохранён в чате')}>Тост: справка</Button
+			>
+		</div>
 	</Demo>
 
-	<Demo name="Графика бренда" note="градиент значит «ИИ работает» или его действие">
-		<div class="grid grid-cols-2 gap-4 text-caption md:grid-cols-4">
+	<Demo
+		name="Данные"
+		note="плюс цветом текста, минус красным, всегда со знаком; стрелка только у итога"
+	>
+		<div class="flex flex-wrap items-baseline gap-x-8 gap-y-3 tabular-nums">
+			<span class="text-lead"
+				><span aria-hidden="true">↑</span>&nbsp;{formatMoney('42090', 'RUB', {
+					signed: true,
+					digits: 0
+				})}</span
+			>
+			<span class="text-[14px]"
+				>{formatMoney('28050', 'RUB', { signed: true, digits: 0 })}
+				<span class="text-[12px] text-muted-foreground"
+					>{formatPercent('0.176', { signed: true, digits: 1 })}</span
+				></span
+			>
+			<span class="text-[14px] text-negative"
+				>{formatMoney('-23800', 'RUB', { signed: true, digits: 0 })}
+				<span class="text-[12px]">{formatPercent('-0.147', { signed: true, digits: 1 })}</span
+				></span
+			>
+			<span class="text-[12px] text-muted-foreground"
+				>{formatMoney('34570', 'RUB', { signed: true, digits: 0 })} ({formatPercent('0.0426', {
+					signed: true
+				})})</span
+			>
+		</div>
+	</Demo>
+
+	<Demo name="Графика бренда" note="в приложении градиент значит «ИИ работает» или его действие">
+		<div class="grid grid-cols-2 gap-4 text-caps md:grid-cols-4">
 			{#each GRADIENTS as [utility, note] (utility)}
 				<figure>
 					<div class="h-16 {utility}" aria-hidden="true"></div>
 					<figcaption class="mt-2">
-						{utility} · <span class="text-muted-foreground">{note}</span>
+						{utility}: <span class="text-muted-foreground">{note}</span>
 					</figcaption>
 				</figure>
 			{/each}
 			<figure>
 				<div class="h-16 ki-halftone" aria-hidden="true"></div>
 				<figcaption class="mt-2">
-					ki-halftone · <span class="text-muted-foreground">полутон, шаг 4 px</span>
+					ki-halftone: <span class="text-muted-foreground">полутон, шаг 4 px</span>
 				</figcaption>
 			</figure>
 			<figure>
-				<p class="h-16 text-body"><span class="ki-highlight px-1">Выручка выросла на 12 %</span></p>
+				<p class="h-16 font-serif text-body">
+					<span class="ki-highlight px-1">Выручка выросла на 12 %</span>
+				</p>
 				<figcaption class="mt-2">
-					ki-highlight · <span class="text-muted-foreground">подсветка фразы</span>
+					ki-highlight: <span class="text-muted-foreground">подсветка ключевой фразы</span>
 				</figcaption>
 			</figure>
 		</div>
 	</Demo>
 
-	<Demo
-		name="Logo"
-		note="печать 氷: compact в шапке, spaced на обложке, sign у ответа и в фавиконе"
-	>
+	<Demo name="Logo" note="«Kōri»: compact в шапке, spaced над формой входа, sign «Kō» в фавиконе">
 		<div class="flex flex-wrap items-end gap-8">
 			<Logo size="sm" />
 			<Logo />
@@ -472,44 +573,52 @@
 			<Logo variant="sign" />
 			<Logo variant="sign" size="lg" />
 		</div>
-		<Logo variant="spaced" />
+		<div class="flex flex-wrap items-end gap-12">
+			<Logo variant="spaced" size="sm" />
+			<Logo variant="spaced" size="md" />
+		</div>
 	</Demo>
 
 	<Demo name="AppShell" note="сайдбар на десктопе, вкладки снизу на мобильном">
 		<!-- transform keeps the fixed tab bar inside the frame -->
 		<div class="h-[520px] [transform:translateZ(0)] overflow-hidden border">
 			<AppShell nav={NAV} user={USER}>
-				<PageHeader title="Портфель" description="Содержимое вкладки" />
+				<PageHeader title="Портфель" description="Цены Т-Инвестиций на 10.10.2026, 19:00 МСК" />
 			</AppShell>
 		</div>
 	</Demo>
 
-	<Demo name="PageHeader" note="мета-строка 56 px">
+	<Demo
+		name="PageHeader"
+		note="мета-строка 56 px: заголовок обычным регистром, пояснение, действия"
+	>
 		<div class="border">
-			<PageHeader title="История" description="Треды и поиск по ним">
+			<PageHeader title="История" description="12 чатов">
 				{#snippet actions()}
 					<Button variant="secondary" size="sm"
 						><span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат</Button
 					>
 				{/snippet}
 			</PageHeader>
-			<PageHeader title="Чат" description="Без действий справа остаётся кана" />
+			<PageHeader title="Чат" />
 		</div>
 	</Demo>
 
 	<Demo name="EmptyState">
 		<EmptyState
-			title="Пока нет тредов"
-			description="Задайте вопрос о портфеле, и тред появится здесь."
+			title="Чатов пока нет"
+			description="Задайте вопрос о портфеле, и чат появится здесь."
 		>
 			{#snippet action()}
-				<Button><span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат</Button>
+				<Button variant="secondary"
+					><span data-slot="button-glyph" aria-hidden="true">+</span>Новый чат</Button
+				>
 			{/snippet}
 		</EmptyState>
 	</Demo>
 
-	<Demo name="ErrorState">
-		<ErrorState error={ERROR} onRetry={() => toast.info('Повторяю запрос')} />
+	<Demo name="ErrorState" note="рамка с полосой red-deep слева, код запроса с копированием">
+		<ErrorState error={ERROR} onRetry={() => toast('Повторяю запрос')} />
 	</Demo>
 
 	<Demo name="LoadingBlock">
@@ -563,14 +672,14 @@
 
 	<Demo
 		name="Markdown"
-		note="текст серым, числа цветом текста, минус красным; HTML остаётся текстом"
+		note="текст Noto Serif, числа моно, минус красным, маркеры обычные; HTML остаётся текстом"
 	>
 		<div class="max-w-[820px]">
 			<Markdown source={MARKDOWN} sources={SOURCES} />
 		</div>
 	</Demo>
 
-	<Demo name="SourceList">
+	<Demo name="SourceList" note="номер и строка через запятую, ссылка без стрелки">
 		<div class="max-w-[820px]">
 			<SourceList sources={SOURCES} />
 		</div>
@@ -582,7 +691,7 @@
 				label="Стоимость портфеля"
 				value={formatMoney('1195145', 'RUB', { digits: 0 })}
 				delta={{ text: '+3,2 % за месяц', trend: 'up' }}
-				hint="Все счета"
+				hint="все счета"
 			/>
 			<StatCard
 				label="Доходность"
@@ -612,13 +721,18 @@
 		</div>
 	</Demo>
 
-	<Demo name="InstrumentLogo" note="логотип или инициалы на нейтральной плитке">
+	<Demo
+		name="InstrumentLogo"
+		note="логотип или текст на нейтральной плитке: инициалы, «ОФЗ», код валюты"
+	>
 		<div class="flex flex-wrap items-center gap-4">
 			{#each LOGO_SIZES as size (size)}
 				<InstrumentLogo src={sber.logo_url} name={sber.name} {size} />
 				<InstrumentLogo src={null} name="Газпром нефть" color={gazp.brand_color} {size} />
 			{/each}
-			<InstrumentLogo src={null} name="ОФЗ 26238" />
+			<InstrumentLogo src={null} name="ОФЗ 26238" size={32} />
+			<InstrumentLogo src={null} name="Доллар США" size={32} />
+			<InstrumentLogo src={null} name="Т-Технологии" size={32} />
 		</div>
 	</Demo>
 
@@ -631,21 +745,25 @@
 		</div>
 	</Demo>
 
-	<Demo name="AccountSelect" note="до четырёх счетов вкладками; скрытый счёт не показывается">
+	<Demo
+		name="AccountSelect"
+		note="до четырёх счетов вкладками, по имени; скрытый счёт не показывается"
+	>
 		<div class="flex flex-wrap items-center gap-4 text-ui">
 			<AccountSelect accounts={ACCOUNTS} value={account} onChange={(alias) => (account = alias)} />
-			<span class="text-muted-foreground">Выбрано: {account ?? 'все счета'}</span>
+			<span class="text-muted-foreground">Выбрано: {chosen(account, ACCOUNTS)}</span>
 		</div>
 		<div class="flex flex-wrap items-center gap-4 text-ui">
 			<AccountSelect accounts={MANY_ACCOUNTS} value={many} onChange={(alias) => (many = alias)} />
-			<span class="text-muted-foreground">Пять счетов: список, выбрано {many ?? 'все счета'}</span>
+			<span class="text-muted-foreground"
+				>Пять счетов списком, два одного имени: выбрано {chosen(many, MANY_ACCOUNTS)}</span
+			>
 		</div>
 	</Demo>
 
 	<Demo name="PeriodSelect">
 		<div class="flex flex-wrap items-center gap-4 text-ui">
 			<PeriodSelect value={period} onChange={(next) => (period = next)} />
-			<span class="text-muted-foreground">Период: {period}</span>
 		</div>
 	</Demo>
 
@@ -658,19 +776,20 @@
 		</div>
 	</Demo>
 
-	<Demo name="ConfirmDialog" note="белая панель, чёрная плашка заголовка, две кнопки">
-		<Button variant="destructive" onclick={() => (confirming = true)}
-			><span data-slot="button-glyph" aria-hidden="true">→</span>Удалить тред</Button
-		>
+	<Demo
+		name="ConfirmDialog"
+		note="белая панель, чёрная плашка заголовка без крестика, один × у действия «Удалить»"
+	>
+		<Button variant="outline" onclick={() => (confirming = true)}>Удалить чат</Button>
 		<ConfirmDialog
 			bind:open={confirming}
-			title="Удалить тред?"
+			title="Удалить чат?"
 			description="«Что с моим портфелем и почему?» и 4 сообщения удалятся без возврата."
 			confirmLabel="Удалить"
 			destructive
 			onConfirm={async () => {
 				await pause(600);
-				toast.success('Тред удалён');
+				toast.success('Чат удалён');
 			}}
 		/>
 	</Demo>
@@ -682,11 +801,11 @@
 		</div>
 	</Demo>
 
-	<Demo name="ThemeToggle" note="сегменты «Ночь» и «День», выбранный белый">
+	<Demo name="ThemeToggle" note="сегменты «Тёмная» и «Светлая», выбранный белый">
 		<ThemeToggle />
 	</Demo>
 
-	<Demo name="Disclaimer">
+	<Demo name="Disclaimer" note="обычным регистром, под ответами с meta.disclaimer">
 		<Disclaimer />
 	</Demo>
 

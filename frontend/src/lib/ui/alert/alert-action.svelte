@@ -13,7 +13,7 @@
 <div
 	bind:this={ref}
 	data-slot="alert-action"
-	class={cn('col-start-3 row-span-2 row-start-1 flex items-center pr-4 pl-2', className)}
+	class={cn('col-start-2 row-span-2 row-start-1 flex items-center pr-4 pl-2', className)}
 	{...restProps}
 >
 	{@render children?.()}

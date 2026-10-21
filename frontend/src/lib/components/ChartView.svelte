@@ -165,9 +165,10 @@
 		ctx.fillStyle = t.surface;
 		ctx.fillRect(0, 0, full, tall);
 		ctx.textBaseline = 'middle';
-		ctx.font = `11px ${t.font}`;
+		// The caption as the page sets it: the title in bold, in normal case (tech.md §13.3).
+		ctx.font = `bold 13px ${t.font}`;
 		ctx.fillStyle = t.text;
-		ctx.fillText(spec.title.toUpperCase(), pad, pad + 6);
+		ctx.fillText(spec.title, pad, pad + 6);
 		ctx.font = `14px ${t.font}`;
 		let y = pad + 24;
 		const text = (value: string, x: number, color: string, align: CanvasTextAlign = 'left') => {
@@ -228,28 +229,21 @@
 	);
 </script>
 
-<!-- No frame and no fill (kori-v3): a caption over a hairline, then the marks. -->
+<!-- No frame and no fill (kori-v4): a caption over a hairline, the title in bold and the note in
+     grey, then the marks. -->
 <figure bind:this={figure} class={cn('min-w-0', className)}>
-	<figcaption
-		class="flex items-baseline justify-between gap-4 border-b pb-3 text-caption uppercase"
-	>
+	<figcaption class="flex items-baseline justify-between gap-4 border-b pb-3 text-ui">
 		<p class="min-w-0">
-			{spec.title}{#if spec.subtitle}<span class="text-muted-foreground"
+			<span class="font-bold">{spec.title}</span>{#if spec.subtitle}<span class="text-grey-600"
 					>&nbsp;&nbsp;{spec.subtitle}</span
 				>{/if}
 		</p>
 		<div class="flex shrink-0 gap-4">
-			<Button
-				variant="link"
-				class="text-caption"
-				disabled={cartesian ? !chart : !groups.length}
-				onclick={downloadPng}
-			>
+			<Button variant="link" disabled={cartesian ? !chart : !groups.length} onclick={downloadPng}>
 				PNG
 			</Button>
 			<Button
 				variant="link"
-				class="text-caption"
 				aria-expanded={showData}
 				aria-controls={dataId}
 				onclick={() => (showData = !showData)}
@@ -276,7 +270,7 @@
 			{#each groups as group, g (g)}
 				<div class="space-y-1.5">
 					{#if groups.length > 1}
-						<p class="text-caption text-muted-foreground uppercase">{group.name}</p>
+						<p class="text-caps text-muted-foreground">{group.name}</p>
 					{/if}
 					{#each group.plates as plate, i (i)}
 						{@const inside = fits(plate.label, plate.share * track)}

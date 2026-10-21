@@ -15,7 +15,8 @@
 	bind:this={ref}
 	data-slot={dataSlot}
 	class={cn(
-		'flex field-sizing-content min-h-16 w-full rounded-none border border-input bg-transparent px-3 py-2.5 text-base text-foreground transition-colors outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-accent disabled:text-muted-foreground aria-invalid:border-primary-deep aria-invalid:shadow-[inset_0_0_0_1px_var(--primary-deep)] md:text-ui',
+		// A field as an input is (tech.md §13.3): the line under it on focus, a fill on a white panel.
+		'flex field-sizing-content min-h-16 w-full rounded-none border border-input bg-transparent px-3 py-2.5 text-base text-foreground transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus:shadow-[inset_0_-2px_0_var(--foreground)] disabled:cursor-not-allowed disabled:bg-accent disabled:text-muted-foreground in-[.theme-day]:border-transparent in-[.theme-day]:bg-muted aria-invalid:border-primary-deep aria-invalid:shadow-[inset_0_-2px_0_var(--primary-deep)] in-[.theme-day]:aria-invalid:border-transparent md:text-ui',
 		className
 	)}
 	bind:value
