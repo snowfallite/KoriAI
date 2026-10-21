@@ -146,7 +146,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     write(args.nodes, json.dumps(nodes, ensure_ascii=False, indent=2) + "\n")
     for warning in warnings:
         sys.stderr.write(f"xray_nodes: {warning}\n")
-    sys.stderr.write(f"xray_nodes: {len(nodes['outbounds'])} nodes\n")
+    sys.stderr.write(f"xray_nodes: nodes for xray: {len(nodes['outbounds'])}\n")
     return 0
 
 

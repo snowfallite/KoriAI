@@ -22,9 +22,9 @@ docker compose pull --quiet
 docker compose run --rm api alembic upgrade head
 
 # The egress to Tavily (§15.1): nodes from the owner's subscription, an empty list without one.
-# A broken subscription keeps the nodes xray has. deploy.yml ships base.json and the script.
-python3 xray/xray_nodes.py xray/subscription xray/nodes.json \
-  || echo "deploy: the xray nodes stay as they were" >&2
+# A broken subscription keeps the nodes xray has; the script says why. deploy.yml ships
+# base.json and the script.
+python3 xray/xray_nodes.py xray/subscription xray/nodes.json || true
 [[ -f xray/nodes.json ]] || printf '{"outbounds": []}\n' >xray/nodes.json
 xray_config=$(cat xray/base.json xray/nodes.json | sha256sum)
 
