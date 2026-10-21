@@ -15,7 +15,7 @@ export const load: LayoutLoad = async ({ depends }) => {
 		if (typeof reason.code !== 'string') throw failure;
 		// The error page says what failed and gives the request code (tech.md S1-15 AC 8); a lost
 		// network has no status of its own.
-		error(reason.status >= 400 ? reason.status : 503, {
+		error(reason.status >= 400 && reason.status <= 599 ? reason.status : 503, {
 			message: reason.message,
 			request_id: reason.request_id || undefined
 		});

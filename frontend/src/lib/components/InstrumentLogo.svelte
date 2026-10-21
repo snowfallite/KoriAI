@@ -1,9 +1,15 @@
 <script lang="ts" module>
 	// A currency tile shows its code (tech.md §13.2). The props carry the name only, so the code
 	// comes from the Russian name of the currency as CLDR spells it: «Доллар США» is USD.
-	const CURRENCY = new Intl.DisplayNames(['ru'], { type: 'currency' });
+	// A browser without these Intl parts keeps the initials instead of failing the module.
+	const CURRENCY =
+		typeof Intl.DisplayNames === 'function' && typeof Intl.supportedValuesOf === 'function'
+			? new Intl.DisplayNames(['ru'], { type: 'currency' })
+			: null;
 	const CODES = new Map(
-		Intl.supportedValuesOf('currency').map((code) => [CURRENCY.of(code)?.toLowerCase(), code])
+		CURRENCY
+			? Intl.supportedValuesOf('currency').map((code) => [CURRENCY.of(code)?.toLowerCase(), code])
+			: []
 	);
 
 	/** The text of the tile: «ОФЗ» for a federal loan bond, the code of a currency, else the
