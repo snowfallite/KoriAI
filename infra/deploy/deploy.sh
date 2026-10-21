@@ -26,6 +26,7 @@ docker compose run --rm api alembic upgrade head
 # base.json and the script.
 python3 xray/xray_nodes.py xray/subscription xray/nodes.json || true
 [[ -f xray/nodes.json ]] || printf '{"outbounds": []}\n' >xray/nodes.json
+chmod 644 xray/base.json xray/nodes.json  # xray reads them as uid 65532; xray/ itself is 700
 xray_config=$(cat xray/base.json xray/nodes.json | sha256sum)
 
 docker compose up -d --remove-orphans
