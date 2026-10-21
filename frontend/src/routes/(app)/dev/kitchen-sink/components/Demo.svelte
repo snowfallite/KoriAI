@@ -4,12 +4,12 @@
 	let { name, note, children }: { name: string; note?: string; children: Snippet } = $props();
 </script>
 
-<!-- A sheet of the kitchen-sink: a caption over a hairline, as the sheets of the v3 mockup. -->
+<!-- A sheet of the kitchen-sink as the system page of v4 sets it: a bold heading, a grey note. -->
 <section aria-label={name} class="space-y-4">
-	<header class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b pb-3">
-		<h2 class="text-caption uppercase">{name}</h2>
+	<header class="space-y-1.5">
+		<h2 class="text-[14px]/5 font-bold">{name}</h2>
 		{#if note}
-			<p class="text-caption text-grey-600">{note}</p>
+			<p class="text-ui text-grey-600">{note}</p>
 		{/if}
 	</header>
 	{@render children()}
