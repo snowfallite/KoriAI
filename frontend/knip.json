@@ -1,4 +1,5 @@
 {
 	"$schema": "https://unpkg.com/knip@6/schema.json",
-	"entry": ["src/lib/ui/**/*.ts"]
+	"entry": ["src/lib/ui/**/*.ts"],
+	"ignoreDependencies": ["@fontsource-variable/noto-sans-jp"]
 }
