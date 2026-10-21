@@ -122,3 +122,33 @@ def test_token_keys_must_be_aes_256_without_echoing_them(keys: str) -> None:
 def test_active_token_key_must_exist() -> None:
     with pytest.raises(ValidationError, match="TINVEST_TOKEN_ACTIVE_KEY"):
         settings(TINVEST_TOKEN_KEYS=f"k2:{AES_KEY}")
+
+
+def test_tavily_proxy_is_empty_or_a_plain_http_proxy() -> None:
+    assert settings().TAVILY_PROXY_URL == ""
+    assert settings(TAVILY_PROXY_URL="http://xray:8080").TAVILY_PROXY_URL == "http://xray:8080"
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "xray:8080",
+        "https://xray:8080",
+        "socks5://xray:1080",
+        "http://xray",
+        "http://xray:99999",
+        "http://xray:8080/tavily",
+        "http://xray:8080?pool=a",
+        "http://kori:s3cr3t@xray:8080",
+        "http://:s3cr3t@xray:8080",
+    ],
+)
+def test_tavily_proxy_rejects_other_urls_without_echoing_them(url: str) -> None:
+    with pytest.raises(ValidationError) as error:
+        settings(TAVILY_PROXY_URL=url)
+
+    # A value error of the key itself, not extra="forbid" refusing an unknown key.
+    [problem] = error.value.errors()
+    assert problem["loc"] == ("TAVILY_PROXY_URL",)
+    assert problem["type"] == "value_error"
+    assert "s3cr3t" not in str(error.value)

@@ -4,8 +4,16 @@ import base64
 from datetime import date
 from pathlib import Path
 from typing import Annotated, Literal, Self, get_args
+from urllib.parse import urlsplit
 
-from pydantic import BeforeValidator, SecretBytes, SecretStr, field_validator, model_validator
+from pydantic import (
+    AfterValidator,
+    BeforeValidator,
+    SecretBytes,
+    SecretStr,
+    field_validator,
+    model_validator,
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.contracts.llm import ModelFamily
@@ -43,6 +51,29 @@ def _aes_keys(raw: object) -> object:
     if any(len(key) != 32 for key in keys.values()):
         raise ValueError("AES-256-GCM keys must decode to 32 bytes")
     return keys
+
+
+def _proxy_url(value: str) -> str:
+    """Empty, or http://host:port: the proxy sits in the compose network, no credentials (§3.5)."""
+    if not value:
+        return value
+    url = urlsplit(value)
+    try:
+        port = url.port
+    except ValueError:  # not a number or out of range
+        port = None
+    if (
+        url.scheme != "http"
+        or "@" in url.netloc
+        or not url.hostname
+        or port is None
+        or url.path not in {"", "/"}
+        or url.query
+        or url.fragment
+    ):
+        # No value in the message: a URL with credentials holds a secret.
+        raise ValueError("expected an empty value or http://host:port without credentials")
+    return value
 
 
 # Env values of lists and maps: "a,b" and "k:v,k:v".
@@ -142,6 +173,7 @@ class Settings(BaseSettings):
     # Web
     WEB_MODE: Mode = "fake"
     TAVILY_API_KEY: SecretStr = SecretStr("")
+    TAVILY_PROXY_URL: Annotated[str, AfterValidator(_proxy_url)] = ""
     TAVILY_MONTHLY_CREDITS: int = 1000
     TAVILY_USER_DAILY_CREDITS: int = 40
     WEB_CACHE_TTL_SEARCH_S: int = 21600
