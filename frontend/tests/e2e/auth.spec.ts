@@ -136,6 +136,30 @@ test('the login page shows the name, one action and the way to register', async 
 	expect(errors).toEqual([]);
 });
 
+// S1-15 AC 9: keyboard focus shows on every control: a field a 2 px line under it, the rest the
+// ring of the brand.
+test('keyboard focus shows on every control of the login page', async ({ page }) => {
+	await page.goto('/login');
+	// The SPA draws the form once its script runs: tab only after that.
+	await expect(page.getByLabel('Email')).toBeVisible();
+
+	for (const field of [page.getByLabel('Email'), page.getByLabel('Пароль')]) {
+		await page.keyboard.press('Tab');
+		await expect(field).toBeFocused();
+		await expect(field).toHaveCSS('box-shadow', /inset/);
+	}
+	for (const control of [
+		page.getByRole('button', { name: 'Показать' }),
+		page.getByRole('button', { name: 'Войти' }),
+		page.getByRole('link', { name: 'Регистрация по приглашению' })
+	]) {
+		await page.keyboard.press('Tab');
+		await expect(control).toBeFocused();
+		await expect(control).toHaveCSS('outline-style', 'solid');
+		await expect(control).toHaveCSS('outline-width', '2px');
+	}
+});
+
 // S1-15 AC 5: an error lies at its field as a red line and a sentence, without a ×.
 test('a wrong password keeps the visitor on the login page with the reason at the field', async ({
 	page

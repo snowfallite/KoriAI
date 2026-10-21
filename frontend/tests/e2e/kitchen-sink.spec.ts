@@ -115,6 +115,25 @@ test('kitchen-sink shows every component in both themes without console errors',
 	expect(errors).toEqual([]);
 });
 
+/** Animations of the page that still run. */
+function running(page: Page) {
+	return page.evaluate(
+		() => document.getAnimations().filter((animation) => animation.playState === 'running').length
+	);
+}
+
+// S1-15 AC 10: who asks for less motion gets none; the skeletons of the page pulse otherwise.
+test('reduced motion stops every animation', async ({ page }) => {
+	await page.goto('/dev/kitchen-sink');
+	await expect(page.getByRole('region', { name: 'LoadingBlock' })).toBeVisible();
+	await expect.poll(() => running(page)).toBeGreaterThan(0);
+
+	await page.emulateMedia({ reducedMotion: 'reduce' });
+	await page.reload();
+	await expect(page.getByRole('region', { name: 'LoadingBlock' })).toBeVisible();
+	await expect.poll(() => running(page)).toBe(0);
+});
+
 // S1-08 AC 1: the button opens an echo stream; its dev.echo frame carries the payload back.
 test('Эхо streams its payload back over SSE', async ({ page }) => {
 	await page.goto('/dev/kitchen-sink');
