@@ -3,8 +3,10 @@ transport: the request it sends, the DTO it makes, the credits, the errors."""
 
 # ruff: noqa: RUF001  (Russian test data)
 
+import asyncio
 import json
-from collections.abc import Callable
+import socket
+from collections.abc import AsyncIterator, Callable
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -189,6 +191,8 @@ async def test_a_429_is_retried_and_keeps_its_retry_after() -> None:
     ("status", "error", "code", "attempts"),
     [
         (432, QuotaExhaustedError, "web_credits_exhausted", 1),
+        (433, QuotaExhaustedError, "web_credits_exhausted", 1),
+        (403, PermanentGatewayError, "web_unavailable", 1),  # a refusal of the IP (L-02)
         (401, PermanentGatewayError, "web_unavailable", 1),
         (400, PermanentGatewayError, "validation_error", 1),
         (502, TransientGatewayError, "web_unavailable", 3),
@@ -213,6 +217,97 @@ async def test_errors_of_the_api(
 
     assert raised.value.code == code
     assert len(sent) == attempts
+
+
+@pytest.fixture
+async def refusing_proxy() -> AsyncIterator[tuple[str, list[str]]]:
+    """A local HTTP proxy: writes down the first line of every request and answers 502."""
+    seen: list[str] = []
+
+    async def serve(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        seen.append((await reader.readline()).decode().strip())
+        while (await reader.readline()).strip():  # the headers
+            pass
+        writer.write(b"HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\n\r\n")
+        await writer.drain()
+        writer.close()
+
+    server = await asyncio.start_server(serve, "127.0.0.1", 0)
+    async with server:
+        yield f"http://127.0.0.1:{server.sockets[0].getsockname()[1]}", seen
+
+
+@pytest.fixture
+async def local_tavily() -> AsyncIterator[str]:
+    """Tavily on a local port without TLS: every request gets the recorded search."""
+    answer = json.dumps(recorded("search")).encode()
+
+    async def serve(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        head = (await reader.readuntil(b"\r\n\r\n")).decode().lower()
+        length = next(
+            (int(line[15:]) for line in head.split("\r\n") if line.startswith("content-length:")),
+            0,
+        )
+        await reader.readexactly(length)
+        writer.write(
+            b"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\n"
+            + f"Content-Length: {len(answer)}\r\n\r\n".encode()
+            + answer
+        )
+        await writer.drain()
+        writer.close()
+
+    server = await asyncio.start_server(serve, "127.0.0.1", 0)
+    async with server:
+        yield f"http://127.0.0.1:{server.sockets[0].getsockname()[1]}"
+
+
+def proxied(url: str) -> TavilyWebSearch:
+    settings = Settings.model_construct(TAVILY_API_KEY=SecretStr(KEY), TAVILY_PROXY_URL=url)
+    return TavilyWebSearch(settings)
+
+
+async def test_tavily_goes_through_the_proxy_of_the_key(
+    refusing_proxy: tuple[str, list[str]], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    url, seen = refusing_proxy
+    monkeypatch.setattr("app.gateways.retry.backoff", lambda attempt, retry_after, base: 0)
+
+    with pytest.raises(TransientGatewayError) as refused:
+        await proxied(url).search(search())
+
+    # A proxy that refuses the tunnel is an unavailable one (§8.4): retried like the network.
+    assert refused.value.code == "web_unavailable"
+    assert seen == ["CONNECT api.tavily.com:443 HTTP/1.1"] * 3
+
+
+async def test_a_proxy_that_is_down_is_transient(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("app.gateways.retry.backoff", lambda attempt, retry_after, base: 0)
+    with socket.socket() as probe:  # a free port: nobody listens there once it closes
+        probe.bind(("127.0.0.1", 0))
+        port = probe.getsockname()[1]
+
+    with pytest.raises(TransientGatewayError) as down:
+        await proxied(f"http://127.0.0.1:{port}").search(search())
+
+    assert down.value.code == "web_unavailable"
+
+
+async def test_without_the_key_tavily_goes_direct_whatever_the_environment_says(
+    refusing_proxy: tuple[str, list[str]], local_tavily: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    url, seen = refusing_proxy
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"):
+        monkeypatch.setenv(name, url)
+        monkeypatch.setenv(name.lower(), url)
+    for name in ("NO_PROXY", "no_proxy"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr("app.gateways.web.tavily.API", local_tavily)
+
+    found = await proxied("").search(search())
+
+    # §3.5: only TAVILY_PROXY_URL routes Tavily; the proxy variables of the process never do.
+    assert (len(found.hits), seen) == (3, [])
 
 
 @pytest.mark.parametrize(

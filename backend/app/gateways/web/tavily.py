@@ -1,4 +1,5 @@
-"""Tavily behind WebSearchPort (tech.md §8.4): AsyncTavilyClient on our own httpx client.
+"""Tavily behind WebSearchPort (tech.md §8.4): AsyncTavilyClient on our own httpx client, which
+leaves through TAVILY_PROXY_URL when the key is set (§3.5: the VPS IP gets a 403).
 
 Credits come from the formula of credits.py on what the answer holds; MeteredWebSearch around
 this adapter checks the budgets and keeps web_cache.
@@ -51,11 +52,15 @@ from app.gateways.web.credits import (
 
 API = "https://api.tavily.com"
 TIMEOUT_S = 60.0
-# The SDK drops the headers of a 429; this hook keeps Retry-After for the error.
+LIMITS = frozenset({432, 433})  # the plan or the pay-as-you-go limit ran out
+# The SDK drops the status and the headers of an error answer; this hook keeps the status (a 403
+# apart from 432 and 433) and Retry-After of a 429 for the error.
+_status: ContextVar[int | None] = ContextVar("tavily_status", default=None)
 _retry_after: ContextVar[float | None] = ContextVar("tavily_retry_after", default=None)
 
 
-async def _note_retry_after(response: httpx.Response) -> None:
+async def _note_answer(response: httpx.Response) -> None:
+    _status.set(response.status_code)
     if response.status_code == 429:
         try:
             _retry_after.set(float(response.headers.get("retry-after", "")))
@@ -81,8 +86,10 @@ def _error(exc: Exception) -> GatewayError | None:
     match exc:
         case UsageLimitExceededError():
             return TransientGatewayError("web_unavailable", _retry_after.get())
-        case ForbiddenError():  # 432 and 433: the plan or the pay-as-you-go limit ran out
+        case ForbiddenError() if _status.get() in LIMITS:
             return QuotaExhaustedError("web_credits_exhausted")
+        case ForbiddenError():  # 403: Tavily refuses the key or the IP of the server (L-02)
+            return PermanentGatewayError("web_unavailable")
         case InvalidAPIKeyError():
             return PermanentGatewayError("web_unavailable")
         case BadRequestError():
@@ -102,7 +109,10 @@ class TavilyWebSearch:
             base_url=API,
             timeout=TIMEOUT_S,
             transport=transport,
-            event_hooks={"response": [_note_retry_after]},
+            # Only TAVILY_PROXY_URL routes Tavily (§3.5), never HTTP(S)_PROXY of the process.
+            proxy=settings.TAVILY_PROXY_URL or None,
+            trust_env=False,
+            event_hooks={"response": [_note_answer]},
         )
         self._client = AsyncTavilyClient(
             api_key=settings.TAVILY_API_KEY.get_secret_value(), client=self._http
@@ -113,6 +123,7 @@ class TavilyWebSearch:
 
     async def _call(self, call: Callable[[], Awaitable[dict[str, Any]]]) -> dict[str, Any]:
         async def attempt() -> dict[str, Any]:
+            _status.set(None)
             _retry_after.set(None)
             try:
                 return await call()
