@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «Kōri»
 
-> CORE_VERSION: 11
+> CORE_VERSION: 12
 > SKELETON_READY: no
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v12 (2026-10-21): Tavily ходит через прокси выхода: сервис `xray` на VPS с нодами VLESS из подписки владельца, ключ `TAVILY_PROXY_URL`, правила выхода в §3.5; остальные клиенты идут напрямую; адаптер отличает отказ 403 от лимитов 432 и 433 (L-02).
 - v11 (2026-10-20): цвета сцены входа v4 стали токенами, одинаковыми в обеих темах: `--pink` (второе свечение и полоса над формой), `--red-800` (середина свечения), `--red-900` (дно падающей свечи); README v4 сводит каждый цвет сцены к токену (S1-15).
 - v10 (2026-10-16): визуал v4 по макету `docs/ui-references/kori-v4/`: бренд Kïoku, у каждого приёма свой смысл в Kōri. Имя продукта «Kōri» без печати 氷, на входе разреженный «K Ō R I» с каной こ お り; ячейка-глиф только там, где глиф значит (`→` вперёд, `+` создать, `↓` раскрыть, `×` прервать, удалить, закрыть); капс только на обложке входа и в заголовках колонок; JetBrains Mono для интерфейса и чисел, Noto Serif для текста ответа; вход на сцене «свет над графиком» с японскими свечами и белой формой, поля заливкой без рамки; `ThemeToggle` «Тёмная» и «Светлая», `ErrorState` без ячейки `×`, своя страница ошибки; агент называет счета по имени, метка F-07 «Не все числа нашлись в данных», заявления о токене только у поля токена (F-01); задача S1-15 (S1-15).
 - v9 (2026-10-16): `t-tech-investments` ставится из wheel, который T-Bank выложил на GitHub (`Invest-SDK/invest-python`), по ссылке на коммит; индекс opensource.tbank.ru недоступен с 2026-10-13 после атак на дата-центры банка (L-04).
@@ -79,7 +80,7 @@
 | | argon2-cffi, cryptography | пароли, шифрование токенов |
 | | structlog | JSON-логи |
 | Данные | PostgreSQL 18, Qdrant | PG18 даёт `uuidv7()`. Точные образы пинуются в S1-02 |
-| Инфра | Docker Compose, Caddy 2, just | TLS, reverse proxy, статика SPA; `justfile` как единая точка команд |
+| Инфра | Docker Compose, Caddy 2, Xray-core, just | TLS, reverse proxy, статика SPA; Xray: выход к Tavily через ноды VLESS (§3.5); `justfile` как единая точка команд |
 | CI/CD | GitHub Actions, GHCR | |
 | Гейт фронта | prettier, eslint, svelte-check (`sv check`), knip | |
 | Гейт бэка | ruff (lint + format), mypy `--strict`, import-linter, deptry | |
@@ -105,7 +106,7 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
                              ├─► Qdrant (чанки отчётности)
                              ├─► T-Invest API (gRPC; токен пользователя или системный)
                              ├─► GigaChat API (HTTPS)
-                             ├─► Tavily API
+                             ├─► Tavily API (через xray и ноду VLESS, §3.5)
                              └─► e-disclosure.ru (Firefox через Playwright)
 ```
 
@@ -163,6 +164,8 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
 - Контекст LLM: без токенов, email, внешних id счетов (только алиасы `acc1`, `acc2`), без внутренних UUID (только локальные id артефактов `c1`, `t1`, `i1`, источников `s1` и датасетов `ds1`).
 - Prompt injection: контент из веба и отчётности недоверенный. В наблюдениях он обёрнут маркерами `<<<EXTERNAL n>>> … <<<END>>>`. Системный промпт запрещает исполнять инструкции оттуда. `web_search.query` не длиннее 200 символов.
 - Медиапрокси: только http(s); после резолва DNS запрещены приватные, loopback и link-local адреса; не больше 3 редиректов с повторной проверкой; `Content-Type: image/*`; не больше `MEDIA_MAX_BYTES`; таймаут 10 с; кэш на диске.
+- Прокси выхода: через него ходит только адаптер Tavily (`TAVILY_PROXY_URL`), потому что с IP VPS Tavily отвечает 403 (L-02). GigaChat, T-Invest, e-disclosure, медиапрокси и CDN логотипов идут напрямую. Прокси задаётся клиенту адаптера, а не переменными `HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`: их читают httpx и gRPC, и токены пользователей ушли бы через чужую ноду. URL прокси без логина и пароля.
+- Сервис `xray` (§15.1): портов наружу нет; вход пускает только домены `tavily.com`, остальные адреса, приватные тоже, закрыты. Подписка VLESS и ключи нод живут только на VPS в `/opt/kori/xray/`: не в git, `.env`, логах и контексте LLM.
 - Markdown ответа: сырой HTML выводится текстом; ссылки только http(s) с `rel="noopener noreferrer nofollow"` и `target="_blank"`; картинки только из артефактов.
 - CSP: `kit.csp` в `svelte.config.js` (`mode: 'hash'`, `default-src 'self'`, `img-src 'self' data:`, `style-src 'self' 'unsafe-inline'`, `connect-src 'self'`). Caddy добавляет `Content-Security-Policy: frame-ancestors 'none'`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: same-origin`, HSTS. `script-src` в заголовках Caddy не задаётся: он заблокирует инлайн-скрипт старта SPA.
 
@@ -184,18 +187,20 @@ Caddy ── /api/* ──► api: FastAPI, ОДИН процесс
 ├── justfile                      # единая точка команд (§15.4)
 ├── .env.example                  # полный список ключей (§15.3)
 ├── .claude/settings.json         # техзащита зон (§19.4)
-├── docker-compose.yml            # caddy, api, postgres, qdrant
+├── docker-compose.yml            # caddy, api, postgres, qdrant, xray
 ├── docker-compose.dev.yml        # dev: порты наружу, reload, фейки
 ├── docker-compose.ci.yml         # CI и e2e: фейки, эфемерные тома
 ├── .github/workflows/{pr.yml, deploy.yml}
 ├── infra/
 │   ├── caddy/{Caddyfile, Dockerfile}      # Dockerfile собирает SPA и кладёт её в образ caddy
 │   ├── certs/russian_trusted_root_ca.pem  # корневой сертификат НУЦ Минцифры для GigaChat
-│   └── deploy/deploy.sh
+│   ├── deploy/deploy.sh
+│   └── xray/base.json                     # прокси выхода к Tavily: вход, маршруты, балансер нод (§15.1)
 ├── scripts/
 │   ├── check_contract_bump.py    # CI: правки ядра и контрактной зоны требуют бампа CORE_VERSION
 │   ├── check_forbidden_apis.py   # CI: запрет торговых методов T-Invest и маркеров CONTRACT-GAP
 │   ├── smoke_external.py         # доступность внешних API с машины запуска
+│   ├── xray_nodes.py             # ноды xray из подписки VLESS; запускает deploy.sh на VPS (§20.2)
 │   └── discover_edisclosure.py   # dev-only: кравлинг структуры e-disclosure (S1-12)
 ├── docs/
 │   ├── sources/e-disclosure.md   # итоги discovery
@@ -1067,7 +1072,7 @@ class WebSearchPort(Protocol):
 
 Кредиты (`gateways/web/credits.py`, формула Tavily): search basic 1, advanced 2; extract 1 за каждые 5 успешных URL (basic) или 2 (advanced), с округлением вверх; map 1 за каждые 10 страниц, 2 с `instructions`; crawl = map + extract. Неуспешные извлечения не тарифицируются.
 
-Порядок вызова: `estimate(q)` → проверка месячного бюджета `TAVILY_MONTHLY_CREDITS` и дневного лимита пользователя `TAVILY_USER_DAILY_CREDITS` → `QuotaExhaustedError('web_credits_exhausted')` при нехватке → кэш `web_cache` (попадание стоит 0) → вызов → запись фактических кредитов в `usage_daily`. TTL кэша: search `WEB_CACHE_TTL_SEARCH_S`, extract, crawl и map `WEB_CACHE_TTL_EXTRACT_S`. Адаптер: `AsyncTavilyClient`; 429 → `TransientGatewayError('web_unavailable', retry_after_s=Retry-After)`.
+Порядок вызова: `estimate(q)` → проверка месячного бюджета `TAVILY_MONTHLY_CREDITS` и дневного лимита пользователя `TAVILY_USER_DAILY_CREDITS` → `QuotaExhaustedError('web_credits_exhausted')` при нехватке → кэш `web_cache` (попадание стоит 0) → вызов → запись фактических кредитов в `usage_daily`. TTL кэша: search `WEB_CACHE_TTL_SEARCH_S`, extract, crawl и map `WEB_CACHE_TTL_EXTRACT_S`. Адаптер: `AsyncTavilyClient` на своём `httpx.AsyncClient`. Задан `TAVILY_PROXY_URL`: клиент ходит через этот прокси (§3.5); SDK получает готовый клиент и свои `TAVILY_HTTP_PROXY`, `TAVILY_HTTPS_PROXY` не читает. Ответы: 429 → `TransientGatewayError('web_unavailable', retry_after_s=Retry-After)`; 432 и 433 (лимит плана и PayGo) → `QuotaExhaustedError('web_credits_exhausted')`; 401 и 403 (ключ, отказ по IP) → `PermanentGatewayError('web_unavailable')`; таймаут, 5xx и недоступный прокси → `TransientGatewayError('web_unavailable')`.
 
 ### 8.5 Раскрытие (`DisclosurePort`, e-disclosure.ru)
 
@@ -1643,7 +1648,8 @@ class SourceRef(BaseModel):
 
 ### 15.1 Compose
 
-- `docker-compose.yml` (тестовый VPS): `caddy` (80/443, тома `caddy_data`, `caddy_config`), `api` (образ `ghcr.io/<owner>/kori-api:<sha>`, `env_file: .env`, том `data:/data`), `postgres` (`postgres:18`, том `pg_data`, healthcheck), `qdrant` (пин версии, том `qdrant_data`). Реплика `api` одна, `uvicorn --workers 1`.
+- `docker-compose.yml` (тестовый VPS): `caddy` (80/443, тома `caddy_data`, `caddy_config`), `api` (образ `ghcr.io/<owner>/kori-api:<sha>`, `env_file: .env`, том `data:/data`), `postgres` (`postgres:18`, том `pg_data`, healthcheck), `qdrant` (пин версии, том `qdrant_data`), `xray` (прокси выхода, ниже). Реплика `api` одна, `uvicorn --workers 1`.
+- `xray` есть только на VPS: образ `ghcr.io/xtls/xray-core` с пином версии и digest, портов наружу нет, вход HTTP `xray:8080` для `TAVILY_PROXY_URL` (§3.5). Конфиг склеивается через `-confdir`: статичная часть `infra/xray/base.json` (вход, маршруты, балансер нод по наименьшей задержке с проверкой живости) и `xray/nodes.json`. Его собирает `scripts/xray_nodes.py` (stdlib, Python 3.10 хоста VPS) из подписки владельца `/opt/kori/xray/subscription` (права 600): base64 или список ссылок `vless://`; поддержан reality поверх tcp и grpc, прочие ссылки пропускаются с предупреждением, которое называет только имя ноды. В dev и ci xray нет.
 - `docker-compose.dev.yml`: порты 5432 и 6333 наружу, `api` с `--reload` и смонтированным кодом, все `*_MODE=fake`. Фронт запускается на хосте `pnpm dev`, Vite проксирует `/api` на `localhost:8000`.
 - `docker-compose.ci.yml`: фейки, эфемерные тома, Caddy отдаёт собранную SPA. На нём идут e2e.
 
@@ -1684,7 +1690,7 @@ class SourceRef(BaseModel):
 | LLM | `LLM_MODE=fake`, `GIGACHAT_CREDENTIALS=`, `GIGACHAT_SCOPE=GIGACHAT_API_PERS`, `GIGACHAT_BASE_URL=https://api.giga.chat/v1`, `GIGACHAT_CA_BUNDLE=/app/certs/russian_trusted_root_ca.pem`, `GIGACHAT_TIMEOUT_S=120`, `LLM_MAX_CONCURRENCY=1`, `LLM_QUEUE_TIMEOUT_S=90`, `LLM_MODELS=lite:GigaChat-2,pro:GigaChat-2-Pro,max:GigaChat-2-Max,ultra:GigaChat-3-Ultra`, `LLM_TOOLS_UNSUPPORTED=`, `LLM_CONTEXT_TOKENS=lite:32000,pro:32000,max:32000,ultra:32000` (реальные окна фиксирует S1-09) |
 | Квоты | `LLM_QUOTAS=lite:250000000,pro:40000000,max:25000000,ultra:50000000`, `LLM_QUOTA_PERIOD_START=2026-09-26`, `LLM_QUOTA_PERIOD_DAYS=365`, `LLM_PACE_MAX=1.15`, `LLM_PACE_GRACE_DAYS=7`, `LLM_RESERVE_PCT=1`, `USER_DAILY_BUDGET_LITE_EQ=600000`, `BACKGROUND_DAILY_BUDGET_LITE_EQ=1500000` |
 | Агент | `AGENT_HISTORY_MESSAGES=8`, `AGENT_RUN_TIMEOUT_S=240`, `AGENT_RUN_BUDGET_LITE_EQ=400000`, `TOOL_TIMEOUT_S=60`, `RUN_EVENTS_TTL_S=600` |
-| Web | `WEB_MODE=fake`, `TAVILY_API_KEY=`, `TAVILY_MONTHLY_CREDITS=1000`, `TAVILY_USER_DAILY_CREDITS=40`, `WEB_CACHE_TTL_SEARCH_S=21600`, `WEB_CACHE_TTL_EXTRACT_S=604800` |
+| Web | `WEB_MODE=fake`, `TAVILY_API_KEY=`, `TAVILY_PROXY_URL=` (пусто: напрямую; иначе `http://host:port` без логина и пароля, на VPS `http://xray:8080`), `TAVILY_MONTHLY_CREDITS=1000`, `TAVILY_USER_DAILY_CREDITS=40`, `WEB_CACHE_TTL_SEARCH_S=21600`, `WEB_CACHE_TTL_EXTRACT_S=604800` |
 | Раскрытие | `DISCLOSURE_MODE=fake`, `EDISCLOSURE_BASE_URL=https://www.e-disclosure.ru`, `EDISCLOSURE_RPS=0.5`, `DISCLOSURE_YEARS_BACK=5` |
 | Векторы | `EMBEDDINGS_MODE=fake`, `EMBEDDINGS_DENSE_MODEL=intfloat/multilingual-e5-small`, `EMBEDDINGS_SPARSE_MODEL=Qdrant/bm25`, `FASTEMBED_CACHE_DIR=/data/fastembed`, `VECTORS_MODE=memory` (`qdrant` на VPS) |
 | Медиа | `FETCH_MODE=fake`, `MEDIA_MAX_BYTES=5242880` |
@@ -1909,13 +1915,15 @@ CONTRACT GAP
 
 1. Сборка образов: `api` (`backend/Dockerfile`, multi-stage, uv, сертификат из `infra/certs`), `caddy` (`infra/caddy/Dockerfile`: сборка SPA в pnpm, затем образ Caddy со статикой и `Caddyfile`). Теги `sha-<short>` и `main`.
 2. Push в GHCR.
-3. SSH на VPS, `infra/deploy/deploy.sh <sha>`:
+3. Копирование на VPS: `docker-compose.yml`, `infra/deploy/deploy.sh`, `infra/deploy/compose.sh` в `/opt/kori`, `infra/xray/base.json` и `scripts/xray_nodes.py` в `/opt/kori/xray/`.
+4. SSH на VPS, `infra/deploy/deploy.sh <sha>`:
    - `docker compose pull`;
    - `docker compose run --rm api alembic upgrade head` (миграции только здесь);
-   - `docker compose up -d`;
+   - `xray_nodes.py` собирает `xray/nodes.json` из `xray/subscription`, без подписки пишет пустой список нод;
+   - `docker compose up -d`; ноды изменились: `docker compose restart xray`;
    - ожидание `GET /api/health/ready` до 90 с;
    - провал: возврат к тегу из `.deployed_sha`, `up -d`, выход с ошибкой. Откат работает, потому что миграции только расширяют схему (§5.7).
-4. Успех: запись `.deployed_sha`.
+5. Успех: запись `.deployed_sha`.
 
 GitHub Environment `test` с секретами §15.3. `concurrency: deploy`, без отмены идущего деплоя.
 
@@ -1937,7 +1945,7 @@ MVP: один тестовый VPS, он же рабочее окружение 
 | ID | Что | Блокирует | Действие в день 1 | До получения |
 |---|---|---|---|---|
 | L-01 | GigaChat: freemium только для личного некоммерческого использования (соглашение для физлиц, п. 2.4 и 5.3.1; ПДн третьих лиц в сервис не передаются, п. 8.7). Публичный многопользовательский сервис требует договора юрлица или ИП и платных пакетов (10 потоков по умолчанию). Ultra на платных тарифах пока недоступна. Новые клиенты с 01.09.2026 оплачивают модели через cloud.ru | публичный запуск, больше 1 потока | получить ключ авторизации (scope `GIGACHAT_API_PERS`); решить юрформу, если нужен публичный запуск | `REGISTRATION_MODE=invite`, `LLM_MAX_CONCURRENCY=1` |
-| L-02 | Tavily: ключ; free 1000 кредитов в месяц; прод-нагрузка требует PAYGO или плана; доступность API с IP VPS | реальный веб-поиск | получить ключ, `just smoke-external` с VPS | `WEB_MODE=fake` |
+| L-02 | Tavily: ключ; free 1000 кредитов в месяц; прод-нагрузка требует PAYGO или плана; с IP VPS (Cloud.ru) API отвечает 403, выход идёт через ноду VLESS (§3.5) | реальный веб-поиск | получить ключ; подписку VLESS положить на VPS; `just smoke-external` с VPS через прокси | `WEB_MODE=fake` |
 | L-03 | VPS: площадка, доступность всех внешних API с её IP (GigaChat, T-Invest, Tavily, e-disclosure, github.com для wheel T-Bank), домен, DNS; 152-ФЗ (локализация ПДн граждан РФ) при публичном запуске | S1-13 | арендовать, прогнать smoke | локальный compose |
 | L-04 | Пакет `t-tech-investments`: индекс T-Bank недоступен с 2026-10-13, источник теперь wheel на GitHub (§4.3). Пропадёт и он: wheel кладётся в кэш CI или приватный mirror | CI бэка | сделано: S1-01 (индекс), v9 (GitHub) | локальная установка по `uv.lock` |
 | L-05 | T-Invest: read-only токен владельца для smoke и `TINVEST_SYSTEM_TOKEN` | реальные данные брокера | выпустить токен «только чтение» в Т-Инвестициях | `TINVEST_MODE=fake` |
