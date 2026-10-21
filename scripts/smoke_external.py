@@ -1,8 +1,10 @@
 """Smoke of the external APIs with real keys (tech.md §15.4; S1-09 AC 4). Never runs in CI.
 
-`just smoke-external [--skip-context]` from the repo root. Keys come from the environment, .env
-and backend/.env, as the API reads them. The checks go through the real adapters; model calls go
-through metering, so llm_calls and usage_daily count them while the database answers.
+`just smoke-external [--skip-context] [--only NAME]` from the repo root. Keys come from the
+environment, .env and backend/.env, as the API reads them. The checks go through the real
+adapters; model calls go through metering, so llm_calls and usage_daily count them while the
+database answers. --only gigachat, tinvest, tavily or edisclosure runs that check alone (repeat it
+for more): --only tavily checks the egress of §3.5 without a model call or a hit on e-disclosure.
 
 Writes docs/sources/smoke-<date>.md. Costs: a call with a function per model family, two calls
 for the prompt cache, probes of 32k and 128k tokens per family for the context windows (skip them
@@ -49,6 +51,7 @@ from app.gateways.llm.metering import Metering
 from app.gateways.tinvest.real import RealTInvest
 from app.gateways.web.tavily import TavilyWebSearch
 
+CHECKS = ("gigachat", "tinvest", "tavily", "edisclosure")  # in the order they run
 SBER_CARD, SBER_INN = 3043, "7707083893"  # e-disclosure card and INN of PJSC Sberbank
 # Three shares of the main board: the logo URL of §8.2 is checked on them (S1-11 AC 6).
 LOGO_TICKERS, LOGO_BOARD = ("SBER", "GAZP", "LKOH"), "TQBR"
@@ -288,7 +291,8 @@ async def tavily(smoke: Smoke) -> None:
         detail = f"результатов {len(found.hits)}, кредитов {found.credits}"
         return ("ok" if found.hits else "нет"), detail
 
-    await smoke.check("Tavily: поиск", search)
+    route = "через TAVILY_PROXY_URL" if smoke.settings.TAVILY_PROXY_URL else "напрямую"
+    await smoke.check(f"Tavily: поиск {route}", search)
 
 
 async def edisclosure(smoke: Smoke) -> None:
@@ -305,7 +309,7 @@ async def edisclosure(smoke: Smoke) -> None:
     await smoke.check(f"e-disclosure: карточка {SBER_CARD} через Firefox", card)
 
 
-def report(smoke: Smoke, probe_windows: bool) -> str:
+def report(smoke: Smoke, probe_windows: bool, with_llm: bool) -> str:
     now = time.now().astimezone(time.MSK)
     s = smoke.settings
     windows = (
@@ -316,6 +320,18 @@ def report(smoke: Smoke, probe_windows: bool) -> str:
     rows = [
         f"| {name} | {status} | {detail.replace('|', '/')} |"
         for name, status, detail in smoke.checks
+    ]
+    llm = [
+        "## Значения для .env",
+        "",
+        "Семейства без вызова функций и принятые окна контекста (окно: самая длинная",
+        "проба, которую API принял).",
+        "",
+        "```",
+        f"LLM_TOOLS_UNSUPPORTED={','.join(sorted(smoke.without_tools))}",
+        f"LLM_CONTEXT_TOKENS={windows}",
+        "```",
+        "",
     ]
     return "\n".join(
         [
@@ -328,16 +344,7 @@ def report(smoke: Smoke, probe_windows: bool) -> str:
             "|---|---|---|",
             *rows,
             "",
-            "## Значения для .env",
-            "",
-            "Семейства без вызова функций и принятые окна контекста (окно: самая длинная",
-            "проба, которую API принял).",
-            "",
-            "```",
-            f"LLM_TOOLS_UNSUPPORTED={','.join(sorted(smoke.without_tools))}",
-            f"LLM_CONTEXT_TOKENS={windows}",
-            "```",
-            "",
+            *(llm if with_llm else []),  # without GigaChat the values would be the old ones
         ]
     )
 
@@ -345,8 +352,12 @@ def report(smoke: Smoke, probe_windows: bool) -> str:
 async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--skip-context", action="store_true", help="no context window probes")
+    parser.add_argument(
+        "--only", action="append", choices=CHECKS, help="run this check alone; repeat for more"
+    )
     args = parser.parse_args()
-    probe_windows = not args.skip_context
+    chosen = set(args.only or CHECKS)
+    probe_windows = not args.skip_context and "gigachat" in chosen
     configure_logging("WARNING")
     settings = load_settings()
 
@@ -360,16 +371,23 @@ async def main() -> int:
         metering = Unrecorded
     gate = InProcessPriorityGate(settings.LLM_MAX_CONCURRENCY, settings.LLM_QUEUE_TIMEOUT_S)
     smoke = Smoke(settings, metering(gate, lambda: engine, settings), GigaChatLlm(settings))
+    steps: dict[str, Callable[[], Awaitable[None]]] = {
+        "gigachat": lambda: gigachat(smoke, probe_windows),
+        "tinvest": lambda: tinvest(smoke),
+        "tavily": lambda: tavily(smoke),
+        "edisclosure": lambda: edisclosure(smoke),
+    }
     try:
-        await gigachat(smoke, probe_windows)
-        await tinvest(smoke)
-        await tavily(smoke)
-        await edisclosure(smoke)
+        for name in CHECKS:
+            if name in chosen:
+                await steps[name]()
     finally:
         await engine.dispose()
 
     out = ROOT / "docs" / "sources" / f"smoke-{time.msk_day():%Y-%m-%d}.md"
-    out.write_text(report(smoke, probe_windows), encoding="utf-8", newline="\n")
+    out.write_text(
+        report(smoke, probe_windows, "gigachat" in chosen), encoding="utf-8", newline="\n"
+    )
     say(f"отчёт: {out.relative_to(ROOT)}")
     return 0 if all(status in {"ok", "пропуск"} for _, status, _ in smoke.checks) else 1
 
