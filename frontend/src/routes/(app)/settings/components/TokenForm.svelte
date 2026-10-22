@@ -54,21 +54,22 @@
 <!-- The white panel where the person hands over the token (kori-v4, Поле токена): the field with
      its action, and under them the facts about the token, which no other place repeats (F-01
      AC 9). -->
-<form class="theme-day bg-background p-5 text-foreground" onsubmit={submit}>
+<form class="theme-day bg-background p-4 text-foreground md:p-5" onsubmit={submit}>
 	{#if failure && !atField}
 		<Alert.Root variant="destructive" class="mb-4">
 			<Alert.Title>{failure.message}</Alert.Title>
 		</Alert.Root>
 	{/if}
 	<Label for="broker-token" class="mb-2">Токен Т-Инвестиций</Label>
-	<div class="flex">
+	<!-- On a narrow phone the action moves under the field rather than squeezing it. -->
+	<div class="flex flex-wrap gap-y-2">
 		<Input
 			id="broker-token"
 			type="password"
 			autocomplete="off"
 			spellcheck={false}
 			required
-			class="h-11 px-3 text-[15px] md:text-[15px]"
+			class="h-11 min-w-48 flex-1 px-3 text-[15px] md:text-[15px]"
 			aria-invalid={atField ? true : undefined}
 			aria-describedby={described}
 			bind:value={token}

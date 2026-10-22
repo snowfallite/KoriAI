@@ -45,19 +45,20 @@
 			cell: ({ row }) => renderSnippet(name, row.original),
 			enableSorting: false
 		},
+		// A phone keeps the name and the switch: the opening day matters least.
 		{
 			id: 'opened',
 			header: 'Открыт',
 			cell: ({ row }) => (row.original.opened_at ? formatDate(row.original.opened_at) : '—'),
 			enableSorting: false,
-			meta: { class: 'text-prose' }
+			meta: { class: 'hidden sm:table-cell' }
 		},
 		{
 			id: 'shown',
 			header: 'Показывать',
 			cell: ({ row }) => renderSnippet(toggle, row.original),
 			enableSorting: false,
-			meta: { class: 'w-28 text-right' }
+			meta: { class: 'text-right' }
 		}
 	]);
 </script>

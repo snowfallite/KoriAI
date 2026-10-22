@@ -8,6 +8,7 @@
 	import { Badge } from '$lib/ui/badge';
 	import { Button } from '$lib/ui/button';
 	import * as Card from '$lib/ui/card';
+	import { cn } from '$lib/utils/cn';
 	import { checkedAt, type Connection } from '../logic';
 	import AccountsTable from './AccountsTable.svelte';
 	import TokenForm from './TokenForm.svelte';
@@ -87,7 +88,7 @@
 			</div>
 		{/if}
 		{#if asking}
-			<div class={broker.connected ? 'border-t p-6' : 'p-6'}>
+			<div class={cn('p-4 md:p-6', broker.connected && 'border-t')}>
 				<TokenForm
 					onConnected={() => (replacing = false)}
 					onCancel={replacing ? () => (replacing = false) : undefined}

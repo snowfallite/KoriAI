@@ -87,30 +87,39 @@ test('a user connects a token, hides an account and disconnects', async ({ page 
 	expect(errors).toEqual([]);
 });
 
-test('a token that does more than read gets the reason at its field', async ({ page }) => {
-	const reason = 'Токен даёт не только чтение: нужен доступ «Только чтение»';
-	await page.route('**/api/broker/connection', async (route) => {
-		if (route.request().method() !== 'PUT') return route.fallback();
-		await route.fulfill({
-			status: 422,
-			contentType: 'application/json',
-			body: JSON.stringify({
-				code: 'token_not_read_only',
-				message: reason,
-				details: null,
-				request_id: 'e2e'
-			})
+test.describe('on a phone', () => {
+	test.use({ viewport: { width: 360, height: 780 } });
+
+	test('a token that does more than read gets the reason at its field', async ({ page }) => {
+		const reason = 'Токен даёт не только чтение: нужен доступ «Только чтение»';
+		await page.route('**/api/broker/connection', async (route) => {
+			if (route.request().method() !== 'PUT') return route.fallback();
+			await route.fulfill({
+				status: 422,
+				contentType: 'application/json',
+				body: JSON.stringify({
+					code: 'token_not_read_only',
+					message: reason,
+					details: null,
+					request_id: 'e2e'
+				})
+			});
 		});
+		await signUp(page);
+		await page.goto('/settings');
+
+		const field = page.getByLabel('Токен Т-Инвестиций');
+		const connect = page.getByRole('button', { name: 'Подключить' });
+		await expect(field).toBeInViewport();
+		await expect(connect).toBeInViewport();
+		expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+
+		await field.fill(TOKEN);
+		await connect.click();
+
+		await expect(page.getByText(reason)).toBeVisible();
+		await expect(field).toHaveAttribute('aria-invalid', 'true');
+		await expect(page.getByText(/Т-Инвестиции подключены/)).toHaveCount(0);
+		await expect(page.getByRole('row')).toHaveCount(0);
 	});
-	await signUp(page);
-	await page.goto('/settings');
-
-	const field = page.getByLabel('Токен Т-Инвестиций');
-	await field.fill(TOKEN);
-	await page.getByRole('button', { name: 'Подключить' }).click();
-
-	await expect(page.getByText(reason)).toBeVisible();
-	await expect(field).toHaveAttribute('aria-invalid', 'true');
-	await expect(page.getByText(/Т-Инвестиции подключены/)).toHaveCount(0);
-	await expect(page.getByRole('row')).toHaveCount(0);
 });
