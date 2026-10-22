@@ -8,6 +8,7 @@
 	import ErrorState from '$lib/components/ErrorState.svelte';
 	import LoadingBlock from '$lib/components/LoadingBlock.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import { Button } from '$lib/ui/button';
 	import { Skeleton } from '$lib/ui/skeleton';
 	import type { PortfolioState } from './+page';
 	import AccountsList from './components/AccountsList.svelte';
@@ -65,11 +66,17 @@
 	</div>
 {:else if result.kind === 'not_connected'}
 	<div class="p-4 md:p-12">
-		<!-- Until F-01 the settings hold no token form, so the tab offers no button there. -->
+		<!-- The token field lives in the settings (F-01): the main action of the empty tab. -->
 		<EmptyState
 			title="Т-Инвестиции не подключены"
-			description="Подключение появится в Настройках, и здесь будут счета, структура и позиции."
-		/>
+			description="Подключите токен в Настройках: здесь появятся счета, структура и позиции."
+		>
+			{#snippet action()}
+				<Button href={resolve('/settings')}>
+					<span data-slot="button-glyph" aria-hidden="true">→</span>Открыть настройки
+				</Button>
+			{/snippet}
+		</EmptyState>
 	</div>
 {:else if result.kind === 'error'}
 	<div class="p-4 md:p-12">

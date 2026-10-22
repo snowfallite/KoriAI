@@ -100,13 +100,15 @@ test('the tiles without a logo name OFZ and currencies', async ({ page }) => {
 	expect(logo.headers()['content-type']).toBe('image/png');
 });
 
-test('the owner without a broker learns where the connection will be', async ({ page }) => {
+test('the owner without a broker goes to the settings to connect one', async ({ page }) => {
 	const errors = collectErrors(page);
 	await signIn(page, 'owner@example.test');
 
 	await expect(page.getByText('Т-Инвестиции не подключены')).toBeVisible();
-	// Until F-01 the settings hold no token form, so the tab offers no button there.
-	await expect(page.locator('main').getByRole('link')).toHaveCount(0);
+	// S1-11 AC 3: the empty state leads to the token field of F-01.
+	await page.getByRole('link', { name: 'Открыть настройки' }).click();
+	await expect(page).toHaveURL('/settings');
+	await expect(page.getByLabel('Токен Т-Инвестиций')).toBeVisible();
 	// No broker, no request: the 409 of the API never reaches the console.
 	expect(errors).toEqual([]);
 });
