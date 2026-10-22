@@ -1,22 +1,19 @@
 <script lang="ts">
-	import EmptyState from '$lib/components/EmptyState.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { signOut } from '$lib/state/session.svelte';
 	import { Button } from '$lib/ui/button';
+	import BrokerSection from './components/BrokerSection.svelte';
 
 	let { data } = $props();
 </script>
 
 <svelte:head><title>Настройки · Kōri</title></svelte:head>
 
-<!-- Stub until F-01 and F-02 (tech.md §22). -->
+<!-- The sections of tech.md §13.3: Брокер now; F-02 adds Модель and Профиль, F-06 Расход. -->
 <PageHeader title="Настройки" />
-<div class="space-y-8 p-4 md:p-12">
-	<EmptyState
-		title="Настроек пока нет"
-		description="Здесь появятся подключение Т-Инвестиций, выбор модели, расход и профиль."
-	/>
+<div class="max-w-[1200px] space-y-8 p-4 md:p-12">
+	<BrokerSection broker={data.me.broker} />
 	<!-- A phone has no sidebar: the theme and the exit live here until F-02 builds Профиль. -->
 	<section
 		aria-label="Сессия"
