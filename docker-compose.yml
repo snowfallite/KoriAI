@@ -1,5 +1,6 @@
 # Test VPS (tech.md §15.1, §20.2). deploy.sh sets KORI_TAG (sha-<short>).
-# Next to this file: .env (tech.md §15.3) and postgres.env (POSTGRES_PASSWORD from DATABASE_URL).
+# Next to this file: .env (tech.md §15.3), postgres.env (POSTGRES_PASSWORD from DATABASE_URL) and
+# xray/ (base.json, nodes.json from the owner's subscription; tech.md §3.5).
 name: kori
 
 services:
@@ -46,6 +47,20 @@ services:
     restart: unless-stopped
     volumes:
       - qdrant_data:/qdrant/storage
+
+  # The egress of the Tavily adapter (TAVILY_PROXY_URL=http://xray:8080): no port outside, only
+  # tavily.com goes out, through the owner's VLESS nodes. Logs go to stdout, not to the image's
+  # own config dir and log file.
+  xray:
+    image: ghcr.io/xtls/xray-core:26.9.30@sha256:6d30597c3e729b5dc1faac8dbc0138fbbe6d4d787bfb54120ea48f14e2e7b5ca
+    restart: unless-stopped
+    command: ["run", "-confdir", "/etc/kori-xray"]
+    volumes:
+      - ./xray/base.json:/etc/kori-xray/01_base.json:ro
+      - ./xray/nodes.json:/etc/kori-xray/02_nodes.json:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
 
 volumes:
   data:

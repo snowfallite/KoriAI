@@ -78,10 +78,12 @@ jobs:
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           printf '%s %s\n' "$VPS_HOST" "$VPS_HOST_KEY" > ~/.ssh/known_hosts
+      # xray/ also holds the owner's subscription (600): the directory stays closed to others.
       - name: Ship the compose file and the scripts
-        run: >-
-          scp docker-compose.yml infra/deploy/deploy.sh infra/deploy/compose.sh
-          "$TARGET:/opt/kori/"
+        run: |
+          scp docker-compose.yml infra/deploy/deploy.sh infra/deploy/compose.sh "$TARGET:/opt/kori/"
+          ssh "$TARGET" mkdir -p -m 700 /opt/kori/xray
+          scp infra/xray/base.json scripts/xray_nodes.py "$TARGET:/opt/kori/xray/"
       # The token goes on stdin: never on a command line or into the shell history of the VPS.
       - name: Deploy
         env:
