@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «Kōri»
 
-> CORE_VERSION: 12
-> SKELETON_READY: no
+> CORE_VERSION: 13
+> SKELETON_READY: yes
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v13 (2026-10-22): каркас готов: чек-лист §22.1 закрыт, `SKELETON_READY: yes`, слайсы S2 открыты для режима `feature`; по smoke с VPS 21.10.2026 `LLM_CONTEXT_TOKENS` по умолчанию 128000 у всех семейств, `LLM_TOOLS_UNSUPPORTED` пуст (S1-09).
 - v12 (2026-10-21): Tavily ходит через прокси выхода: сервис `xray` на VPS с нодами VLESS из подписки владельца, ключ `TAVILY_PROXY_URL`, правила выхода в §3.5; остальные клиенты идут напрямую; адаптер отличает отказ 403 от лимитов 432 и 433 (L-02).
 - v11 (2026-10-20): цвета сцены входа v4 стали токенами, одинаковыми в обеих темах: `--pink` (второе свечение и полоса над формой), `--red-800` (середина свечения), `--red-900` (дно падающей свечи); README v4 сводит каждый цвет сцены к токену (S1-15).
 - v10 (2026-10-16): визуал v4 по макету `docs/ui-references/kori-v4/`: бренд Kïoku, у каждого приёма свой смысл в Kōri. Имя продукта «Kōri» без печати 氷, на входе разреженный «K Ō R I» с каной こ お り; ячейка-глиф только там, где глиф значит (`→` вперёд, `+` создать, `↓` раскрыть, `×` прервать, удалить, закрыть); капс только на обложке входа и в заголовках колонок; JetBrains Mono для интерфейса и чисел, Noto Serif для текста ответа; вход на сцене «свет над графиком» с японскими свечами и белой формой, поля заливкой без рамки; `ThemeToggle` «Тёмная» и «Светлая», `ErrorState` без ячейки `×`, своя страница ошибки; агент называет счета по имени, метка F-07 «Не все числа нашлись в данных», заявления о токене только у поля токена (F-01); задача S1-15 (S1-15).
@@ -1052,7 +1053,7 @@ Metering берёт слот гейта (§3.3), ставит `X-Session-ID = ct
                instruments: [], period: null, confidence: 0.95, source: llm}
 ```
 
-Возможности моделей: `LLM_MODELS` (семейство → model_id) и `LLM_TOOLS_UNSUPPORTED` (семейства без вызова функций; заполняется по итогам smoke S1-09). Семейство без инструментов маршрутизация не выбирает для интентов с инструментами.
+Возможности моделей: `LLM_MODELS` (семейство → model_id) и `LLM_TOOLS_UNSUPPORTED` (семейства без вызова функций; в smoke S1-09 функцию вызвали все четыре семейства, по умолчанию пуст). Семейство без инструментов маршрутизация не выбирает для интентов с инструментами.
 
 ### 8.4 Веб-поиск (`WebSearchPort`, Tavily)
 
@@ -1687,7 +1688,7 @@ class SourceRef(BaseModel):
 | Qdrant | `QDRANT_URL=http://localhost:6333`, `QDRANT_API_KEY=`, `QDRANT_COLLECTION=doc_chunks` |
 | Auth | `SESSION_TTL_DAYS=30`, `COOKIE_SECURE=false`, `REGISTRATION_MODE=invite`, `SEED_OWNER_EMAIL=owner@example.test`, `SEED_OWNER_PASSWORD=` |
 | T-Invest | `TINVEST_MODE=fake`, `TINVEST_APP_NAME=kori`, `TINVEST_SYSTEM_TOKEN=`, `TINVEST_TOKEN_KEYS=k1:<base64 32 байта>`, `TINVEST_TOKEN_ACTIVE_KEY=k1`, `TINVEST_TIMEOUT_S=20` |
-| LLM | `LLM_MODE=fake`, `GIGACHAT_CREDENTIALS=`, `GIGACHAT_SCOPE=GIGACHAT_API_PERS`, `GIGACHAT_BASE_URL=https://api.giga.chat/v1`, `GIGACHAT_CA_BUNDLE=/app/certs/russian_trusted_root_ca.pem`, `GIGACHAT_TIMEOUT_S=120`, `LLM_MAX_CONCURRENCY=1`, `LLM_QUEUE_TIMEOUT_S=90`, `LLM_MODELS=lite:GigaChat-2,pro:GigaChat-2-Pro,max:GigaChat-2-Max,ultra:GigaChat-3-Ultra`, `LLM_TOOLS_UNSUPPORTED=`, `LLM_CONTEXT_TOKENS=lite:32000,pro:32000,max:32000,ultra:32000` (реальные окна фиксирует S1-09) |
+| LLM | `LLM_MODE=fake`, `GIGACHAT_CREDENTIALS=`, `GIGACHAT_SCOPE=GIGACHAT_API_PERS`, `GIGACHAT_BASE_URL=https://api.giga.chat/v1`, `GIGACHAT_CA_BUNDLE=/app/certs/russian_trusted_root_ca.pem`, `GIGACHAT_TIMEOUT_S=120`, `LLM_MAX_CONCURRENCY=1`, `LLM_QUEUE_TIMEOUT_S=90`, `LLM_MODELS=lite:GigaChat-2,pro:GigaChat-2-Pro,max:GigaChat-2-Max,ultra:GigaChat-3-Ultra`, `LLM_TOOLS_UNSUPPORTED=`, `LLM_CONTEXT_TOKENS=lite:128000,pro:128000,max:128000,ultra:128000` (окна по smoke S1-09: каждое семейство приняло пробу на 128 тыс. токенов, настоящее окно может быть больше) |
 | Квоты | `LLM_QUOTAS=lite:250000000,pro:40000000,max:25000000,ultra:50000000`, `LLM_QUOTA_PERIOD_START=2026-09-26`, `LLM_QUOTA_PERIOD_DAYS=365`, `LLM_PACE_MAX=1.15`, `LLM_PACE_GRACE_DAYS=7`, `LLM_RESERVE_PCT=1`, `USER_DAILY_BUDGET_LITE_EQ=600000`, `BACKGROUND_DAILY_BUDGET_LITE_EQ=1500000` |
 | Агент | `AGENT_HISTORY_MESSAGES=8`, `AGENT_RUN_TIMEOUT_S=240`, `AGENT_RUN_BUDGET_LITE_EQ=400000`, `TOOL_TIMEOUT_S=60`, `RUN_EVENTS_TTL_S=600` |
 | Web | `WEB_MODE=fake`, `TAVILY_API_KEY=`, `TAVILY_PROXY_URL=` (пусто: напрямую; иначе `http://host:port` без логина и пароля, на VPS `http://xray:8080`), `TAVILY_MONTHLY_CREDITS=1000`, `TAVILY_USER_DAILY_CREDITS=40`, `WEB_CACHE_TTL_SEARCH_S=21600`, `WEB_CACHE_TTL_EXTRACT_S=604800` |
@@ -2036,19 +2037,19 @@ AC: 1) в интерфейсе нет печати 氷, имя продукта 
 Тесты: компонентные тесты `Logo` (имя «Kōri», нет 氷, кана скрыта от чтения с экрана), `Button` (ячейка рисуется только из `button-glyph`), `ErrorState` (нет `×`), `Markdown` (числа в моно-спане, обычные маркеры); vitest `portfolio/logic.ts` (вопрос строки, строки итога) и `routes/(auth)/logic.ts`; e2e входа, регистрации, страницы ошибки и портфеля с новыми подписями; снимки экранов из AC 5, 6 и 8 в описании PR.
 
 **Чек-лист «каркас готов».** Фичи S2 не начинаются, пока каждый пункт не зелёный:
-- [ ] CI зелёный на тривиальном PR (S1-01);
-- [ ] layout, навигация данными и гард авторизации в `main` (S1-05);
-- [ ] UI-примитивы и компоненты импортируются и отрендерены в kitchen-sink (S1-06);
-- [ ] визуал v3 из `docs/ui-references/kori-v3/` в `main` (S1-14);
-- [ ] визуал v4 из `docs/ui-references/kori-v4/` в `main` (S1-15);
-- [ ] очередь гоняет демо-джоб, тест идемпотентности зелёный (S1-07);
-- [ ] SSE эхает тестовое событие, e2e зелёный (S1-08);
-- [ ] фейки всех внешних клиентов отдают сид-данные (S1-09, S1-10);
-- [ ] миграции проходят на эфемерном Postgres в CI (S1-03);
-- [ ] `just gen` воспроизводим, TS-типы в `main` (S1-04);
-- [ ] сквозная вертикаль Портфель в `main` и задеплоена на тестовый VPS (S1-11, S1-13);
-- [ ] smoke внешних API выполнен с VPS, статус L-01..L-07 записан (S1-09);
-- [ ] discovery e-disclosure записан (S1-12).
+- [x] CI зелёный на тривиальном PR (S1-01);
+- [x] layout, навигация данными и гард авторизации в `main` (S1-05);
+- [x] UI-примитивы и компоненты импортируются и отрендерены в kitchen-sink (S1-06);
+- [x] визуал v3 из `docs/ui-references/kori-v3/` в `main` (S1-14);
+- [x] визуал v4 из `docs/ui-references/kori-v4/` в `main` (S1-15);
+- [x] очередь гоняет демо-джоб, тест идемпотентности зелёный (S1-07);
+- [x] SSE эхает тестовое событие, e2e зелёный (S1-08);
+- [x] фейки всех внешних клиентов отдают сид-данные (S1-09, S1-10);
+- [x] миграции проходят на эфемерном Postgres в CI (S1-03);
+- [x] `just gen` воспроизводим, TS-типы в `main` (S1-04);
+- [x] сквозная вертикаль Портфель в `main` и задеплоена на тестовый VPS (S1-11, S1-13);
+- [x] smoke внешних API выполнен с VPS, статус L-01..L-07 записан (S1-09);
+- [x] discovery e-disclosure записан (S1-12).
 
 После прохождения владелец в режиме `contract` ставит в шапке `SKELETON_READY: yes` с бампом версии. Сессия в режиме `feature` при `SKELETON_READY: no` задачу не начинает и перечисляет незакрытые пункты.
 
