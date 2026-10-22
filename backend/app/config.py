@@ -142,10 +142,10 @@ class Settings(BaseSettings):
     }
     LLM_TOOLS_UNSUPPORTED: Annotated[frozenset[ModelFamily], Items] = frozenset()
     LLM_CONTEXT_TOKENS: Annotated[dict[ModelFamily, int], Pairs] = {
-        "lite": 32000,
-        "pro": 32000,
-        "max": 32000,
-        "ultra": 32000,
+        "lite": 128_000,
+        "pro": 128_000,
+        "max": 128_000,
+        "ultra": 128_000,
     }
 
     # Quotas
