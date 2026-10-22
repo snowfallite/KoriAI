@@ -43,6 +43,13 @@ def test_defaults_start_dev_on_fakes() -> None:
     assert config.LLM_QUOTAS["pro"] == 40_000_000
 
 
+def test_context_windows_default_to_the_smoke_measure() -> None:
+    # Every family took the 128k probe of the S1-09 smoke from the VPS.
+    windows = settings().LLM_CONTEXT_TOKENS
+
+    assert windows == {"lite": 128_000, "pro": 128_000, "max": 128_000, "ultra": 128_000}
+
+
 def test_env_file_lists_and_maps_parse(tmp_path: Path) -> None:
     env = tmp_path / ".env"
     env.write_text(
