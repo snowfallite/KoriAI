@@ -10,8 +10,8 @@ async function signIn(page: Page, email: string) {
 	await page.getByLabel('Email').fill(email);
 	await page.getByLabel('Пароль').fill(PASSWORD);
 	await page.getByRole('button', { name: 'Войти' }).click();
-	// Until F-03 builds the chat, a new session opens the portfolio (S1-15).
-	await expect(page).toHaveURL('/portfolio');
+	// A new session opens the chat (F-03).
+	await expect(page).toHaveURL('/chat');
 	await expect(page.getByText(email)).toBeVisible();
 }
 

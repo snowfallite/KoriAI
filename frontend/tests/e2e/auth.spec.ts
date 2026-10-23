@@ -64,15 +64,15 @@ test('a visitor signs up, signs out, signs in, walks the tabs and signs out', as
 	await page.getByLabel('Имя').fill('Тест');
 	await page.getByLabel('Пароль').fill(PASSWORD);
 	await page.getByRole('button', { name: 'Создать аккаунт' }).click();
-	// Until F-03 builds the chat, a new session opens the portfolio (S1-15).
-	await expect(page).toHaveURL('/portfolio');
+	// A new session opens the chat (F-03).
+	await expect(page).toHaveURL('/chat');
 	await expect(page.getByText(email)).toBeVisible();
 
 	await page.getByRole('button', { name: 'Выйти' }).click();
 	await expect(page).toHaveURL('/login');
 
 	await signIn(page, email);
-	await expect(page).toHaveURL('/portfolio');
+	await expect(page).toHaveURL('/chat');
 
 	// The tabs come from NAV in its order (S1-05 AC 7); the name «Kōri» heads the app (S1-15 AC 1).
 	await expect(page.getByRole('link', { name: 'Kōri' })).toBeVisible();
