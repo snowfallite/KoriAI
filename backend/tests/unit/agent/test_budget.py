@@ -116,3 +116,19 @@ def test_the_daily_cap_stops_at_its_value() -> None:
 
     assert over_daily_cap({"lite": 100_000, "pro": 80_000}, FREEMIUM, cap)
     assert not over_daily_cap({"lite": 599_999}, FREEMIUM, cap)
+
+
+def test_a_quota_of_zero_switches_its_family_off() -> None:
+    # The owner may turn ultra off with LLM_QUOTAS ultra:0 (L-01).
+    off = Pacing(
+        quotas={**FREEMIUM, "ultra": 0},
+        period_start=START,
+        period_days=365,
+        pace_max=1.15,
+        grace_days=7,
+        reserve_pct=1,
+    )
+
+    assert allowed(off, {}, day(100)) == ALL - {"ultra"}
+    assert "ultra" not in weights(off.quotas)
+    assert lite_equivalent({"ultra": 1_000, "lite": 10}, off.quotas) == 10

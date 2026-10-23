@@ -65,6 +65,8 @@ def allowed(pacing: Pacing, spend: Spend, today: date) -> frozenset[ModelFamily]
 
 def _fits(pacing: Pacing, family: ModelFamily, used: int, share: float) -> bool:
     quota = pacing.quotas[family]
+    if quota <= 0:  # a quota of 0 switches the family off
+        return False
     reserve = quota * pacing.reserve_pct / 100
     return pace_ratio(used, quota, share) <= pacing.pace_max and quota - used > reserve
 
@@ -75,13 +77,14 @@ def substitute(requested: ModelFamily, free: Collection[ModelFamily]) -> ModelFa
 
 
 def weights(quotas: Mapping[ModelFamily, int]) -> dict[ModelFamily, float]:
-    """w_f = Q_lite / Q_f: what a token of a family costs in tokens of lite."""
-    return {family: quotas["lite"] / quotas[family] for family in FAMILIES}
+    """w_f = Q_lite / Q_f: what a token of a family costs in tokens of lite. A family switched
+    off by a quota of 0 has no weight."""
+    return {family: quotas["lite"] / quotas[family] for family in FAMILIES if quotas[family] > 0}
 
 
 def lite_equivalent(spend: Spend, quotas: Mapping[ModelFamily, int]) -> float:
     w = weights(quotas)
-    return sum(amount * w[family] for family, amount in spend.items())
+    return sum(amount * w.get(family, 0) for family, amount in spend.items())
 
 
 def over_daily_cap(spend: Spend, quotas: Mapping[ModelFamily, int], cap: int) -> bool:
