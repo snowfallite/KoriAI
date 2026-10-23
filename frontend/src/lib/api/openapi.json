@@ -2380,6 +2380,14 @@
               }
             ],
             "title": "Web Credits"
+          },
+          "tools": {
+            "items": {
+              "$ref": "#/components/schemas/ToolStepOut"
+            },
+            "type": "array",
+            "title": "Tools",
+            "default": []
           }
         },
         "additionalProperties": false,
@@ -2392,7 +2400,8 @@
           "ungrounded_numbers",
           "disclaimer",
           "tokens_billable",
-          "web_credits"
+          "web_credits",
+          "tools"
         ],
         "title": "MessageMeta"
       },
@@ -3829,6 +3838,46 @@
           "title"
         ],
         "title": "ToolStartedEvent"
+      },
+      "ToolStepOut": {
+        "properties": {
+          "tool": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tool",
+          "title",
+          "ok",
+          "error_code",
+          "duration_ms"
+        ],
+        "title": "ToolStepOut",
+        "description": "A tool step of a run as tool.started and tool.finished told it (§7)."
       },
       "UserOut": {
         "properties": {

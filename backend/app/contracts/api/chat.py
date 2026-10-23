@@ -8,10 +8,12 @@ from pydantic import Field, StringConstraints
 from app.contracts.artifacts import ArtifactOut, SourceRef
 from app.contracts.common import (
     Contract,
+    ErrorCode,
     ErrorOut,
     MessageRole,
     MessageStatus,
     RunStatus,
+    ToolName,
     UtcDatetime,
     WarningCode,
 )
@@ -75,6 +77,16 @@ class WarningOut(Contract):
     message: str
 
 
+class ToolStepOut(Contract):
+    """A tool step of a run as tool.started and tool.finished told it (§7)."""
+
+    tool: ToolName
+    title: str
+    ok: bool
+    error_code: ErrorCode | None
+    duration_ms: int
+
+
 class MessageMeta(Contract):
     # A user message stores {} (tech.md §5.3), so every field has a default.
     model_family: ModelFamily | None = None
@@ -85,6 +97,7 @@ class MessageMeta(Contract):
     disclaimer: bool = False
     tokens_billable: int | None = None
     web_credits: int | None = None
+    tools: list[ToolStepOut] = []  # in the order of the calls; the answers before v15 have none
 
 
 class MessageOut(Contract):

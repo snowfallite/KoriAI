@@ -783,6 +783,11 @@ export interface components {
             tokens_billable: number | null;
             /** Web Credits */
             web_credits: number | null;
+            /**
+             * Tools
+             * @default []
+             */
+            tools: components["schemas"]["ToolStepOut"][];
         };
         /** MessageOut */
         MessageOut: {
@@ -1293,6 +1298,20 @@ export interface components {
             tool: components["schemas"]["ToolName"];
             /** Title */
             title: string;
+        };
+        /**
+         * ToolStepOut
+         * @description A tool step of a run as tool.started and tool.finished told it (§7).
+         */
+        ToolStepOut: {
+            tool: components["schemas"]["ToolName"];
+            /** Title */
+            title: string;
+            /** Ok */
+            ok: boolean;
+            error_code: components["schemas"]["ErrorCode"] | null;
+            /** Duration Ms */
+            duration_ms: number;
         };
         /** UserOut */
         UserOut: {

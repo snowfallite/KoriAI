@@ -35,7 +35,8 @@ function message(role: Message['role'], content: string, at = '2026-10-22T16:04:
 			ungrounded_numbers: [],
 			disclaimer: false,
 			tokens_billable: null,
-			web_credits: null
+			web_credits: null,
+			tools: []
 		},
 		created_at: at
 	};

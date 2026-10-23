@@ -1,12 +1,13 @@
 # tech.md: ядро проекта «Kōri»
 
-> CORE_VERSION: 14
+> CORE_VERSION: 15
 > SKELETON_READY: yes
 
 ИИ-аналитик для частного инвестора с брокерским счётом в Т-Инвестициях. Разработчик один, он же владелец контрактов. Этот файл: единственный источник истины для всех сессий нейросети.
 
 ## Changelog (append-only, новые сверху)
 
+- v15 (2026-10-23): `MessageMeta` несёт шаги инструментов рана `tools: list[ToolStepOut]`: готовый ответ показывает «N шагов ↓» со статусами и после перезагрузки чата (F-07).
 - v14 (2026-10-22): `subscribeRun` получил необязательный `onClosed`: сервер закрыл поток без `run.finished` (404 после рестарта процесса, 410 после `RUN_EVENTS_TTL_S`), клиент берёт итог рана через REST (F-03).
 - v13 (2026-10-22): каркас готов: чек-лист §22.1 закрыт, `SKELETON_READY: yes`, слайсы S2 открыты для режима `feature`; по smoke с VPS 21.10.2026 `LLM_CONTEXT_TOKENS` по умолчанию 128000 у всех семейств, `LLM_TOOLS_UNSUPPORTED` пуст (S1-09).
 - v12 (2026-10-21): Tavily ходит через прокси выхода: сервис `xray` на VPS с нодами VLESS из подписки владельца, ключ `TAVILY_PROXY_URL`, правила выхода в §3.5; остальные клиенты идут напрямую; адаптер отличает отказ 403 от лимитов 432 и 433 (L-02).
@@ -862,7 +863,8 @@ create table job_markers (                           -- эффект demo.echo �
 
 - `MessageOut {id, role, status, content: str, blocks: list[MessageBlock], artifacts: list[ArtifactOut], sources: list[SourceRef], meta: MessageMeta, created_at}`.
 - `MessageBlock = {type: 'markdown', text: str} | {type: 'artifact', artifact_id: uuid}`. Блоки строит бэк функцией `split_blocks` (§9.9), фронт повторяет её в `blocks.ts` для стрима.
-- `MessageMeta {model_family: ModelFamily | null, model_id: str | null, routing_reason: str | null, warnings: list[WarningOut {code: WarningCode, message: str}], ungrounded_numbers: list[str], disclaimer: bool, tokens_billable: int | null, web_credits: int | null}`.
+- `MessageMeta {model_family: ModelFamily | null, model_id: str | null, routing_reason: str | null, warnings: list[WarningOut {code: WarningCode, message: str}], ungrounded_numbers: list[str], disclaimer: bool, tokens_billable: int | null, web_credits: int | null, tools: list[ToolStepOut]}`.
+- `ToolStepOut {tool: ToolName, title: str, ok: bool, error_code: ErrorCode | null, duration_ms: int}`: шаг инструмента рана, как его показали `tool.started` и `tool.finished` (§7). `meta.tools` хранит шаги в порядке вызова; по ним готовый ответ показывает «N шагов ↓» и после перезагрузки чата. Ответ без инструментов несёт пустой список.
 - `ArtifactOut` и `SourceRef`: §9.9.
 
 ### 6.7 Служебное и коды ошибок
@@ -1146,7 +1148,7 @@ load_context → classify → route → agent ⇄ tools → [synthesize] → pos
 | `agent` | Вызов модели через `metering.stream` (`priority=interactive`, `session_id=thread_id`) с инструментами из `RoutingDecision.tools`. Есть `tool_calls`: переход в `tools` (берётся первый вызов). Нет: финальный текст |
 | `tools` | Валидация аргументов моделью §9.7, исполнение с таймаутом `TOOL_TIMEOUT_S` (для `web_crawl` ×1.5), регистрация датасетов, артефактов, источников, события `tool.*`, `artifact.created`, `source.added`, строка `tool_calls`, наблюдение в `ToolMessage` |
 | `synthesize` | Для `RoutingDecision.synthesize = true` или при исчерпании лимитов: финальный ответ по черновику рана (сводки инструментов, датасетов, id артефактов и источников) без инструментов, семейство `synth_family` |
-| `postprocess` | `split_blocks`, проверка плейсхолдеров и цитат, grounding (§9.10), дисклеймер (§9.11), сохранение ответа, связь артефактов и источников с сообщением, `run.finished`, отложенные `threads.title` и `threads.summarize` |
+| `postprocess` | `split_blocks`, проверка плейсхолдеров и цитат, grounding (§9.10), дисклеймер (§9.11), шаги инструментов в `meta.tools` (§6.6), сохранение ответа, связь артефактов и источников с сообщением, `run.finished`, отложенные `threads.title` и `threads.summarize` |
 
 Лимиты рана:
 - шаги модели: `RoutingDecision.max_steps`; по достижении последний вызов идёт без инструментов с инструкцией ответить по собранным данным, предупреждение `steps_limit`;
@@ -2090,7 +2092,7 @@ AC: 1) `used` по семействам считается с начала пе�
 
 **F-07. Агент: инструменты портфеля и артефакты** (F-05).
 Зона: `agent/tools/{portfolio_overview,portfolio_positions,operations_summary,make_chart,make_table,calc}.py`, `agent/datasets.py`, `agent/postprocess.py` (плейсхолдеры, grounding, meta, дисклеймер), домен `portfolio` (сервис операций), `analytics/{numbers,calc}.py`, роут `chat` (`ArtifactView` в `MessageView`, локальный `ToolStepList`), сценарии `f07_*`. Контракты: §9.7-§9.11, §7. UI: `ArtifactView`, `ChartView`, `ArtifactTable`, `SourceList`, `Collapsible`, `Badge`; шаги, артефакты и сноски по экрану `chat-thread` из `docs/ui-references/kori-v4/`.
-AC: 1) «Что у меня в портфеле?» → `portfolio_overview` → ответ с `t1` и `c1` в тексте, блоки в порядке текста; 2) `make_chart` строит `ChartSpec` нужного вида по датасету рана, неизвестная колонка → `ok=false` со списком колонок; 3) `make_table` сортирует и режет, `TableSpec` валиден; 4) `calc('(1250000-1000000)/1000000*100')` даёт 25, выражение с именами → `ok=false`; 5) неизвестный плейсхолдер удаляется с `unknown_placeholder`, неупомянутый артефакт уходит в конец; 6) число вне фактов попадает в `meta.ungrounded_numbers`, UI показывает метку «Не все числа нашлись в данных» с кнопкой «Показать»; 7) `tool.*` и `artifact.created` приходят раньше финального `text.delta`, UI показывает шаги со статусами; 8) наблюдение в LLM не длиннее 1500 символов, датасеты описаны сводкой; 9) `portfolio_analysis` получает дисклеймер.
+AC: 1) «Что у меня в портфеле?» → `portfolio_overview` → ответ с `t1` и `c1` в тексте, блоки в порядке текста; 2) `make_chart` строит `ChartSpec` нужного вида по датасету рана, неизвестная колонка → `ok=false` со списком колонок; 3) `make_table` сортирует и режет, `TableSpec` валиден; 4) `calc('(1250000-1000000)/1000000*100')` даёт 25, выражение с именами → `ok=false`; 5) неизвестный плейсхолдер удаляется с `unknown_placeholder`, неупомянутый артефакт уходит в конец; 6) число вне фактов попадает в `meta.ungrounded_numbers`, UI показывает метку «Не все числа нашлись в данных» с кнопкой «Показать»; 7) `tool.*` и `artifact.created` приходят раньше финального `text.delta`, UI показывает шаги со статусами, готовый ответ раскрывает их и после перезагрузки (`meta.tools`); 8) наблюдение в LLM не длиннее 1500 символов, датасеты описаны сводкой; 9) `portfolio_analysis` получает дисклеймер.
 Тесты: агентные сценарии (обзор портфеля; сбой инструмента через `FaultPlan` → ответ с объяснением); contract `ToolResult`, `ChartSpec`, `TableSpec`; property `split_blocks` (общие векторы + генерация), `extract_numbers`, `format_ru`, `safe_eval`; vitest `blocks.ts` на тех же векторах; e2e «обзор портфеля в чате».
 
 **F-08. Агент: инструменты рынка и аналитика** (F-07).
