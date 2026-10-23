@@ -25,6 +25,7 @@ from app.contracts.agent import TaskProfile
 from app.contracts.api.chat import ArtifactBlock, MarkdownBlock, MessageBlock
 from app.contracts.common import ToolName
 from app.contracts.disclosure import DisclosureCompany, DisclosureFileRow, IssuerRef
+from app.contracts.faults import FaultPlan
 from app.contracts.tinvest import (
     TAccount,
     TCandle,
@@ -141,6 +142,7 @@ VALIDATORS: dict[str, Callable[[Path], object]] = {
     "tinvest/coupons.yaml": adapter(dict[str, list[TCoupon]]),
     "tinvest/report_schedule.yaml": adapter(list[TReportEvent]),
     "llm/*.yaml": llm_file,
+    "faults/*.yaml": adapter(FaultPlan),
     "web/*.yaml": adapter(WebFixtures),
     "edisclosure/companies.yaml": adapter(list[DisclosureCompany]),
     "edisclosure/files/*.yaml": adapter(list[DisclosureFileRow]),

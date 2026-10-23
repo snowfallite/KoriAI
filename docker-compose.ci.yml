@@ -27,6 +27,8 @@ services:
       DATABASE_URL: postgresql+psycopg://app:app@postgres:5432/app
       # A public test key: it seals only the made-up token of the seed demo (S1-10).
       TINVEST_TOKEN_KEYS: k1:a29yaS1kZXYtb25seS10b2tlbi1rZXktMzItYnl0ZXM=
+      # The fake model answers after 3 s, so the e2e of F-03 can stop a run (tech.md §8.1).
+      FAKE_FAULTS: /app/fixtures/seed/faults/f03_e2e.yaml
     depends_on:
       postgres:
         condition: service_healthy
