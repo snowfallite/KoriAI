@@ -39,8 +39,10 @@
 		text: string;
 		since: number;
 	} | null>(null);
-	// Follows ?q= of the address and takes what the person types (F-03 AC 10).
-	let draft = $derived(data.question);
+	// ?q= of the address fills the field (F-03 AC 10). A new load with the same ?q=, such as the
+	// reload after an answer, leaves what the person types: a derived passes on changes only.
+	const fromAddress = $derived(data.question);
+	let draft = $derived(fromAddress);
 	let sending = $state(false);
 	let composer = $state<ReturnType<typeof Composer> | null>(null);
 	/** The errors of runs that failed while the page watched, by the id of the failed answer. */
@@ -93,7 +95,8 @@
 		const { message_id, error } = run.view;
 		if (message_id && error) failures.set(message_id, error);
 		await invalidate('app:chat');
-		asked = null;
+		// A question sent meanwhile keeps its own mark.
+		if (asked?.run === run.runId) asked = null;
 	}
 
 	async function send(text: string) {

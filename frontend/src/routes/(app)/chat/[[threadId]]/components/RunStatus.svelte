@@ -25,9 +25,10 @@
 	} = $props();
 
 	const view = $derived(run.view);
+	// A closed stream says the run is over, not how: the thread from REST tells that.
 	const over = $derived(isOver(view) || run.closed);
-	// A restart drops the stream: the server refuses it, or a shutdown ended the run.
-	const interrupted = $derived(run.closed || view.status === 'interrupted');
+	// A shutdown ended the run before its answer (§3.4).
+	const interrupted = $derived(view.status === 'interrupted');
 	// The stream shows the blocks the saved answer will have (tech.md §6.6, §9.9).
 	const blocks = $derived(
 		splitBlocks(view.text, new Map(view.artifacts.map((a) => [a.local_id, a.id]))).blocks

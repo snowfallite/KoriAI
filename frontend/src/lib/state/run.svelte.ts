@@ -10,7 +10,7 @@ export class LiveRun {
 	/** Stops listening, e.g. when the page goes away mid-run. */
 	readonly close: () => void;
 
-	constructor(runId: string) {
+	constructor(readonly runId: string) {
 		this.close = subscribeRun(
 			runId,
 			(event) => {
