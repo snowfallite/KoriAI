@@ -91,6 +91,8 @@ class AgentService:
                 ctx.finish("interrupted", None, None)
 
     async def _fail(self, ctx: RunContext) -> None:
+        if ctx.finished:  # the answer is saved already
+            return
         error = run_error("internal", ctx.ticket.run_id)
         message_id = None
         try:
