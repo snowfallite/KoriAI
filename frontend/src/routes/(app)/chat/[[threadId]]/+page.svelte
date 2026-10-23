@@ -181,46 +181,57 @@
 		</div>
 	</div>
 {:else}
-	<PageHeader
-		title={thread ? threadTitle(thread) : (pending?.text ?? 'Чат')}
-		description={questionCount(list.length + (pending ? 1 : 0))}
-	/>
-	<div class="flex justify-center px-4 pt-8 pb-10 md:px-12 md:pt-12 md:pb-16">
-		<div class="flex w-full max-w-[820px] flex-col gap-14 md:gap-[72px]">
-			{#each list as turn (turn.question.id)}
-				{#if live && turn.question.id === liveQuestion}
+	<!-- The thread fills the window under the header of a phone and over its tabs, so the field
+	     stays at the bottom under a short thread too. -->
+	<div class="flex min-h-[calc(100svh-7.5rem-env(safe-area-inset-bottom))] flex-col md:min-h-svh">
+		<PageHeader
+			title={thread ? threadTitle(thread) : (pending?.text ?? 'Чат')}
+			description={questionCount(list.length + (pending ? 1 : 0))}
+		/>
+		<div class="flex flex-1 justify-center px-4 pt-8 pb-10 md:px-12 md:pt-12 md:pb-16">
+			<div class="flex w-full max-w-[820px] flex-col gap-14 md:gap-[72px]">
+				{#each list as turn (turn.question.id)}
+					{#if live && turn.question.id === liveQuestion}
+						<RunStatus
+							number={turn.number}
+							question={turn.question.content}
+							since={mine?.since ?? Date.parse(turn.question.created_at)}
+							run={live}
+							onRetry={() => send(turn.question.content)}
+						/>
+					{:else}
+						<MessageView
+							{turn}
+							error={turn.answer ? failures.get(turn.answer.id) : undefined}
+							onRetry={() => send(turn.question.content)}
+						/>
+					{/if}
+				{/each}
+				{#if pending && live}
 					<RunStatus
-						number={turn.number}
-						question={turn.question.content}
-						since={mine?.since ?? Date.parse(turn.question.created_at)}
+						number={list.length + 1}
+						question={pending.text}
+						since={pending.since}
 						run={live}
-						onRetry={() => send(turn.question.content)}
-					/>
-				{:else}
-					<MessageView
-						{turn}
-						error={turn.answer ? failures.get(turn.answer.id) : undefined}
-						onRetry={() => send(turn.question.content)}
+						onRetry={() => send(pending.text)}
 					/>
 				{/if}
-			{/each}
-			{#if pending && live}
-				<RunStatus
-					number={list.length + 1}
-					question={pending.text}
-					since={pending.since}
-					run={live}
-					onRetry={() => send(pending.text)}
-				/>
-			{/if}
+			</div>
 		</div>
-	</div>
-	<!-- The question field stays under the feed, above the tabs of a phone. -->
-	<div
-		class="sticky bottom-[calc(4rem+env(safe-area-inset-bottom))] flex justify-center border-t bg-background px-4 pt-3 pb-3 md:bottom-0 md:px-12 md:pt-5 md:pb-7"
-	>
-		<div class="w-full max-w-[820px]">
-			<Composer bind:value={draft} variant="thread" {busy} {sending} onSend={send} onStop={stop} />
+		<!-- The question field stays under the feed, above the tabs of a phone. -->
+		<div
+			class="sticky bottom-[calc(4rem+env(safe-area-inset-bottom))] flex justify-center border-t bg-background px-4 pt-3 pb-3 md:bottom-0 md:px-12 md:pt-5 md:pb-7"
+		>
+			<div class="w-full max-w-[820px]">
+				<Composer
+					bind:value={draft}
+					variant="thread"
+					{busy}
+					{sending}
+					onSend={send}
+					onStop={stop}
+				/>
+			</div>
 		</div>
 	</div>
 {/if}
