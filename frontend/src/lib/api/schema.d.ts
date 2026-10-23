@@ -259,6 +259,81 @@ export interface paths {
         patch: operations["change_account_api_broker_accounts__alias__patch"];
         trace?: never;
     };
+    "/api/chat/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send
+         * @description A question without thread_id starts a thread; the answer streams from
+         *     GET /api/chat/runs/{run_id}/events.
+         */
+        post: operations["send_api_chat_messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chat/threads/{thread_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Thread */
+        get: operations["thread_api_chat_threads__thread_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chat/runs/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Run */
+        get: operations["run_api_chat_runs__run_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chat/runs/{run_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel
+         * @description The run stops after its current step and keeps what it wrote as a partial answer.
+         */
+        post: operations["cancel_api_chat_runs__run_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/media/logos/{logo_base}": {
         parameters: {
             query?: never;
@@ -329,6 +404,19 @@ export interface components {
         };
         /** @enum {string} */
         AnswerStyle: "concise" | "detailed";
+        /** ArtifactBlock */
+        ArtifactBlock: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "artifact";
+            /**
+             * Artifact Id
+             * Format: uuid
+             */
+            artifact_id: string;
+        };
         /** ArtifactCreatedEvent */
         ArtifactCreatedEvent: {
             /** Seq */
@@ -627,12 +715,103 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** MarkdownBlock */
+        MarkdownBlock: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "markdown";
+            /** Text */
+            text: string;
+        };
         /** MeOut */
         MeOut: {
             user: components["schemas"]["UserOut"];
             settings: components["schemas"]["SettingsOut"];
             broker: components["schemas"]["BrokerConnectionOut"];
         };
+        /** MessageAcceptedOut */
+        MessageAcceptedOut: {
+            /**
+             * Thread Id
+             * Format: uuid
+             */
+            thread_id: string;
+            /**
+             * Message Id
+             * Format: uuid
+             */
+            message_id: string;
+            /**
+             * Run Id
+             * Format: uuid
+             */
+            run_id: string;
+        };
+        MessageBlock: components["schemas"]["MarkdownBlock"] | components["schemas"]["ArtifactBlock"];
+        /** MessageIn */
+        MessageIn: {
+            /** Thread Id */
+            thread_id?: string | null;
+            /** Text */
+            text: string;
+        };
+        /** MessageMeta */
+        MessageMeta: {
+            model_family: components["schemas"]["ModelFamily"] | null;
+            /** Model Id */
+            model_id: string | null;
+            /** Routing Reason */
+            routing_reason: string | null;
+            /**
+             * Warnings
+             * @default []
+             */
+            warnings: components["schemas"]["WarningOut"][];
+            /**
+             * Ungrounded Numbers
+             * @default []
+             */
+            ungrounded_numbers: string[];
+            /**
+             * Disclaimer
+             * @default false
+             */
+            disclaimer: boolean;
+            /** Tokens Billable */
+            tokens_billable: number | null;
+            /** Web Credits */
+            web_credits: number | null;
+        };
+        /** MessageOut */
+        MessageOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            role: components["schemas"]["MessageRole"];
+            status: components["schemas"]["MessageStatus"];
+            /** Content */
+            content: string;
+            /** Blocks */
+            blocks: components["schemas"]["MessageBlock"][];
+            /** Artifacts */
+            artifacts: components["schemas"]["ArtifactOut"][];
+            /** Sources */
+            sources: components["schemas"]["SourceRef"][];
+            meta: components["schemas"]["MessageMeta"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** @enum {string} */
+        MessageRole: "user" | "assistant";
+        /** @enum {string} */
+        MessageStatus: "complete" | "partial" | "failed";
         /** @enum {string} */
         ModelFamily: "lite" | "pro" | "max" | "ultra";
         /** @enum {string} */
@@ -734,6 +913,33 @@ export interface components {
             /** Message Id */
             message_id: string | null;
             error: components["schemas"]["ErrorOut"] | null;
+        };
+        /** RunOut */
+        RunOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Thread Id
+             * Format: uuid
+             */
+            thread_id: string;
+            status: components["schemas"]["RunStatus"];
+            model_family: components["schemas"]["ModelFamily"] | null;
+            /** Model Id */
+            model_id: string | null;
+            /** Steps */
+            steps: number;
+            error: components["schemas"]["ErrorOut"] | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Finished At */
+            finished_at: string | null;
         };
         /** RunQueuedEvent */
         RunQueuedEvent: {
@@ -992,6 +1198,41 @@ export interface components {
              */
             type: "text.reset";
         };
+        /** ThreadDetailOut */
+        ThreadDetailOut: {
+            thread: components["schemas"]["ThreadOut"];
+            /** Messages */
+            messages: components["schemas"]["MessageOut"][];
+            active_run: components["schemas"]["RunOut"] | null;
+        };
+        /** ThreadOut */
+        ThreadOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Title */
+            title: string | null;
+            /**
+             * Title Source
+             * @enum {string}
+             */
+            title_source: "auto" | "user";
+            /** Message Count */
+            message_count: number;
+            /** Last Message At */
+            last_message_at: string | null;
+            /** Archived */
+            archived: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Snippet */
+            snippet: string | null;
+        };
         /** ToolFinishedEvent */
         ToolFinishedEvent: {
             /** Seq */
@@ -1077,6 +1318,12 @@ export interface components {
         };
         /** @enum {string} */
         WarningCode: "model_downgraded" | "budget_low" | "web_credits_low" | "tool_failed" | "steps_limit" | "ungrounded_numbers" | "partial_answer" | "unknown_placeholder" | "broker_not_connected";
+        /** WarningOut */
+        WarningOut: {
+            code: components["schemas"]["WarningCode"];
+            /** Message */
+            message: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -1707,6 +1954,168 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BrokerAccountOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    send_api_chat_messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageAcceptedOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    thread_api_chat_threads__thread_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                thread_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ThreadDetailOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    run_api_chat_runs__run_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunOut"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Server Error */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    cancel_api_chat_runs__run_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunOut"];
                 };
             };
             /** @description Client Error */
