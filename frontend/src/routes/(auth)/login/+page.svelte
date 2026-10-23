@@ -25,8 +25,8 @@
 		failure = null;
 		try {
 			await ok(api.POST('/api/auth/login', { body: { email, password } }));
-			// Until F-03 builds the chat, a new session opens the portfolio (tech.md S1-15).
-			await goto(resolve('/portfolio'));
+			// A new session opens the chat, the home of the app (tech.md §1, F-03).
+			await goto(resolve('/chat'));
 		} catch (error) {
 			failure = error as ApiError;
 		} finally {

@@ -24,6 +24,9 @@ async function signUp(page: Page) {
 	await page.getByLabel('Имя').fill('Тест');
 	await page.getByLabel('Пароль').fill(PASSWORD);
 	await page.getByRole('button', { name: 'Создать аккаунт' }).click();
+	// A new session opens the chat (F-03); the portfolio is one tab away.
+	await expect(page).toHaveURL('/chat');
+	await page.getByRole('link', { name: 'Портфель', exact: true }).click();
 	await expect(page).toHaveURL('/portfolio');
 }
 

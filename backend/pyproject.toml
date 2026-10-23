@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28.1",
     "langchain-core>=1.6.6,<2",
     "langchain-gigachat>=0.5.1,<0.6",
+    "langgraph>=1,<2",
     "playwright>=1.63.0",
     "procrastinate>=3.10,<3.11",
     "psycopg[binary]>=3.3.6",
