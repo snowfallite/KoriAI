@@ -111,11 +111,13 @@ class ChatService:
         self._runs = runs
         self._agent = agent
 
-    async def send(self, user_id: UUID, body: MessageIn) -> MessageAcceptedOut:
-        """Saves the question with a queued run and starts the task that answers it (§3.4)."""
+    async def send(self, user_id: UUID, role: str, body: MessageIn) -> MessageAcceptedOut:
+        """Saves the question with a queued run and starts the task that answers it (§3.4);
+        a question over the budget gets no run (§9.5)."""
         text = body.text.strip()
         if not text:
             raise AppError("validation_error", "Напишите вопрос")
+        await self._agent.admit(user_id, role)
         try:
             accepted = await self._accept(user_id, body.thread_id, text)
         except _ActiveRun:

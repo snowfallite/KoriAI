@@ -95,14 +95,18 @@ async def postprocess(state: AgentState, runtime: Runtime[RunContext]) -> dict[s
     ctx = runtime.context
     status = state["status"]
     text = state["final_text"] or ""
-    # F-03 runs no tools, so the run has no artifacts yet.
+    # No tools run before F-07, so the run has no artifacts yet.
     warnings = list(state["warnings"])
     if split_blocks(text, {}).unknown:
         warnings.append(WarningOut(code="unknown_placeholder", message=UNKNOWN_PLACEHOLDER))
-    # A run cancelled before its first call asked no model.
+    # The model that answered: none when the run stopped before its first step. A run that
+    # called no model at all, not even the classifier, has no tokens either.
+    decision = state["routing"]
+    answered = decision if decision is not None and state["step"] > 0 else None
     meta = MessageMeta(
-        model_family=ctx.family if ctx.started else None,
-        model_id=ctx.model_id if ctx.started else None,
+        model_family=answered.family if answered else None,
+        model_id=answered.model_id if answered else None,
+        routing_reason=decision.reason if decision else None,
         warnings=warnings,
         tokens_billable=state["tokens_billable"] if ctx.started else None,
     )

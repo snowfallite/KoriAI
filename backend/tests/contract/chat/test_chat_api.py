@@ -206,7 +206,13 @@ async def test_a_busy_gate_queues_the_run_and_a_second_message_gets_run_active(
         assert (reply.status_code, error_of(reply).code) == (409, "run_active")
     assert len(await rows(app, Thread)) == 1
     assert len(await rows(app, Message, Message.thread_id == first.thread_id)) == 2
-    assert [e.type for e in events[:3]] == ["run.queued", "run.started", "step.started"]
+    # The route picks the model first (F-05), then the run waits for its slot.
+    assert [e.type for e in events[:4]] == [
+        "run.routed",
+        "run.queued",
+        "run.started",
+        "step.started",
+    ]
     assert events[-1].type == "run.finished"
 
 
@@ -223,8 +229,8 @@ async def test_the_answer_streams_and_the_thread_returns_it_in_blocks(
 
     text = scenario_text("(?i)дюраци")
     types = [event.type for event in events]
-    assert types[:2] == ["run.started", "step.started"]
-    assert set(types[2:-1]) == {"text.delta"} and types[-1] == "run.finished"
+    assert types[:3] == ["run.routed", "run.started", "step.started"]
+    assert set(types[3:-1]) == {"text.delta"} and types[-1] == "run.finished"
     assert "".join(e.delta for e in events if isinstance(e, TextDeltaEvent)) == text
     finished = events[-1]
     assert isinstance(finished, RunFinishedEvent)

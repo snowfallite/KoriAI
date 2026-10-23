@@ -1,0 +1,27 @@
+# Сценарии ScriptedChatModel (§8.3) для F-05: классификатор на Lite и ответы маршрутизированного
+# рана. Регулярки ищут слова вопроса: в сообщении шага агента перед вопросом идёт служебный
+# контекст (дата, брокер, счета, стиль), его слова в регулярки не годятся.
+# Вопрос без признаков для правил: профиль даёт Lite.
+- match: {purpose: classify, user_regex: "(?i)на рынке"}
+  structured: {intent: news, complexity: low, needs: [web, market], output: text, instruments: [],
+               period: null, confidence: 0.85, source: llm}
+  usage: {prompt_tokens: 300, completion_tokens: 40, precached_prompt_tokens: 0}
+- match: {purpose: agent_step, user_regex: "(?i)на рынке"}
+  steps:
+    - text: "Новостей о рынке в этом разговоре пока нет: веб-поиск подключится позже."
+  usage: {prompt_tokens: 700, completion_tokens: 60, precached_prompt_tokens: 0}
+# Вопрос F-03 без признаков: Lite видит в нём график портфеля.
+- match: {purpose: classify, user_regex: "(?i)нарисуй"}
+  structured: {intent: portfolio_status, complexity: low, needs: [portfolio], output: chart,
+               instruments: [], period: null, confidence: 0.6, source: llm}
+  usage: {prompt_tokens: 280, completion_tokens: 35, precached_prompt_tokens: 0}
+# Анализ портфеля: правила уверены, ответ готовит модель после бюджета.
+- match: {purpose: agent_step, user_regex: "(?i)портфель упал"}
+  steps:
+    - text: "Данных портфеля в этом ответе нет: инструменты портфеля подключатся позже."
+  usage: {prompt_tokens: 820, completion_tokens: 30, precached_prompt_tokens: 0}
+# Вопрос о портфеле без брокера: модель предлагает подключить токен.
+- match: {purpose: agent_step, user_regex: "(?i)у меня в портфеле"}
+  steps:
+    - text: "Брокер не подключён. Подключите токен Т-Инвестиций в Настройках, и я покажу портфель."
+  usage: {prompt_tokens: 760, completion_tokens: 28, precached_prompt_tokens: 0}

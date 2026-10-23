@@ -1,7 +1,7 @@
 """The state of a run and what its nodes share (tech.md §9.1, §9.2).
 
-F-03 runs the minimal graph load_context → agent → postprocess: lite without tools. The slices
-that add classify, route and tools add their fields here.
+F-05 runs load_context → classify → route → agent → postprocess: the route picks the family and
+the tools; the slices that add the tools add their fields here.
 """
 
 import asyncio
@@ -12,14 +12,16 @@ from uuid import UUID
 from langchain_core.messages import BaseMessage
 
 from app.config import Settings
+from app.contracts.agent import RoutingDecision, TaskProfile
 from app.contracts.api.chat import WarningOut
+from app.contracts.api.settings import ModelMode
 from app.contracts.common import ErrorOut, RunStatus
-from app.contracts.llm import ModelFamily
 from app.contracts.stream import RunFinishedEvent, RunStartedEvent, StreamEvent
 from app.db.base import UnitOfWork
 from app.domains.agent import repo
 from app.domains.broker.service import BrokerService
 from app.domains.settings.service import SettingsService
+from app.domains.usage.service import UsageService
 from app.gateways.llm.metering import Metering
 from app.gateways.llm.port import LlmPort
 from app.http.events import RunEventBus
@@ -40,6 +42,12 @@ class AgentState(TypedDict):
     user_id: UUID
     thread_id: UUID
     messages: list[BaseMessage]  # the LLM context of this run
+    question: str  # the text of the user message, for the classifier
+    previous: str | None  # the question before it in the history
+    mode: ModelMode  # model_mode of the user settings
+    broker_ready: bool  # the broker gives data: connected with a working token
+    profile: TaskProfile | None
+    routing: RoutingDecision | None
     step: int  # calls of the model so far
     warnings: list[WarningOut]
     final_text: str | None
@@ -55,6 +63,12 @@ def initial_state(ticket: RunTicket) -> AgentState:
         user_id=ticket.user_id,
         thread_id=ticket.thread_id,
         messages=[],
+        question="",
+        previous=None,
+        mode="auto",
+        broker_ready=False,
+        profile=None,
+        routing=None,
         step=0,
         warnings=[],
         final_text=None,
@@ -77,11 +91,10 @@ class RunContext:
     metering: Metering
     broker: BrokerService
     preferences: SettingsService
+    usage: UsageService
     events: RunEventBus
     cancelled: asyncio.Event  # POST .../cancel sets it
-    deadline: float  # loop time when the model step gives up (AGENT_RUN_TIMEOUT_S)
-    family: ModelFamily
-    model_id: str
+    deadline: float  # loop time when a model call gives up (AGENT_RUN_TIMEOUT_S)
     started: bool = False
     finished: bool = False
 
@@ -91,7 +104,7 @@ class RunContext:
     async def start(self) -> None:
         """The first model call holds its slot: the run is running (§3.3, §7)."""
         async with self.uow as session:
-            await repo.start_run(session, self.ticket.run_id, self.family, self.model_id)
+            await repo.start_run(session, self.ticket.run_id)
         self.started = True
         self.emit(RunStartedEvent)
 
