@@ -7,20 +7,44 @@ from uuid import UUID
 from sqlalchemy import func, insert, select, tuple_, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.contracts.agent import RoutingDecision, TaskProfile
 from app.contracts.common import ErrorCode, MessageStatus, RunStatus
-from app.contracts.llm import ModelFamily
 from app.db.schema.agent import AgentRun, Artifact, Source
+from app.db.schema.broker import Instrument
 from app.db.schema.chat import Message, Thread
 
 
-async def start_run(
-    session: AsyncSession, run_id: UUID, family: ModelFamily, model_id: str
-) -> None:
+async def start_run(session: AsyncSession, run_id: UUID) -> None:
     await session.execute(
         update(AgentRun)
         .where(AgentRun.id == run_id, AgentRun.status == "queued")
-        .values(status="running", started_at=func.now(), model_family=family, model_id=model_id)
+        .values(status="running", started_at=func.now())
     )
+
+
+async def route_run(
+    session: AsyncSession,
+    run_id: UUID,
+    profile: TaskProfile,
+    routing: RoutingDecision | None,
+) -> None:
+    """The profile and the route of the run (§5.5); no route: no family was allowed."""
+    await session.execute(
+        update(AgentRun)
+        .where(AgentRun.id == run_id)
+        .values(
+            profile=profile.model_dump(mode="json"),
+            routing=routing.model_dump(mode="json") if routing else None,
+            model_family=routing.family if routing else None,
+            model_id=routing.model_id if routing else None,
+        )
+    )
+
+
+async def instrument_names(session: AsyncSession) -> Sequence[tuple[str, str]]:
+    """The (ticker, name) pairs the rules of the classifier check mentions against (§9.3)."""
+    rows = await session.execute(select(Instrument.ticker, Instrument.name))
+    return [(ticker, name) for ticker, name in rows]
 
 
 async def summary(session: AsyncSession, thread_id: UUID) -> str | None:

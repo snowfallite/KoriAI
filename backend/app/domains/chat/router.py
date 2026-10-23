@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api/chat", tags=["chat"], lifespan=lifespan)
 async def send(body: MessageIn, user: CurrentUser, chat: ChatServiceDep) -> MessageAcceptedOut:
     """A question without thread_id starts a thread; the answer streams from
     GET /api/chat/runs/{run_id}/events."""
-    return await chat.send(user.user_id, body)
+    return await chat.send(user.user_id, user.role, body)
 
 
 @router.get("/threads/{thread_id}")

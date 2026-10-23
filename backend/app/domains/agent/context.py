@@ -103,11 +103,27 @@ def context_block(now: datetime, broker: BrokerConnectionOut, answer_style: Answ
     )
 
 
+# §9.4: without the broker the portfolio tools drop out and the model offers to connect it.
+NO_BROKER = (
+    "брокер не подключён: данных портфеля и счетов нет; на вопрос про портфель предложи "
+    "подключить токен в Настройках"
+)
+INVALID_BROKER = (
+    "токен брокера не действует: данных портфеля и счетов нет; на вопрос про портфель предложи "
+    "подключить токен заново в Настройках"
+)
+
+
+def broker_ready(broker: BrokerConnectionOut) -> bool:
+    """The broker gives data: connected, and its token works."""
+    return broker.connected and broker.status == "active"
+
+
 def _broker(broker: BrokerConnectionOut) -> str:
     if not broker.connected:
-        return "брокер не подключён: данных счетов нет, токен подключают в Настройках"
+        return NO_BROKER
     if broker.status == "invalid":
-        return "токен брокера не действует: данных счетов нет, токен подключают заново в Настройках"
+        return INVALID_BROKER
     # The T-Invest id of an account never reaches the model (§3.5).
     accounts = [
         f"{account.alias} «{' '.join(account.name.split())}»"
@@ -157,4 +173,11 @@ async def load_context(state: AgentState, runtime: Runtime[RunContext]) -> dict[
     ]
     history = history_messages(said, ctx.settings.AGENT_HISTORY_MESSAGES)
     block = context_block(time.now(), broker, preferences.answer_style)
-    return {"messages": llm_messages(summary, history, block, asked.content)}
+    previous = next((m.text for m in reversed(history) if isinstance(m, HumanMessage)), None)
+    return {
+        "messages": llm_messages(summary, history, block, asked.content),
+        "question": asked.content,
+        "previous": previous,
+        "mode": preferences.model_mode,
+        "broker_ready": broker_ready(broker),
+    }
