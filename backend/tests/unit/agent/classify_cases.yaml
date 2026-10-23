@@ -1,0 +1,74 @@
+# Размеченные вопросы для classify_rules (F-05 AC 1; tech.md §9.3, §9.4): правила дают верный
+# интент с уверенностью от 0.8 хотя бы на 90% фраз, остальные отдают Lite (уверенность ниже 0.8).
+# Бумаги и компании взяты из seed/tinvest/instruments.yaml.
+# smalltalk: приветствие, благодарность, прощание без задачи.
+- {text: "Привет!", intent: smalltalk}
+- {text: "Добрый вечер", intent: smalltalk}
+- {text: "Спасибо, всё понятно", intent: smalltalk}
+- {text: "Как дела?", intent: smalltalk}
+- {text: "Пока, до завтра", intent: smalltalk}
+# help: вопросы о самом сервисе.
+- {text: "Что ты умеешь?", intent: help}
+- {text: "Как подключить токен Т-Инвестиций?", intent: help}
+- {text: "Откуда ты берёшь данные?", intent: help}
+- {text: "Какие вопросы тебе можно задавать?", intent: help}
+- {text: "Помоги разобраться, как пользоваться чатом", intent: help}
+# portfolio_status: что лежит в портфеле и сколько стоит, без вопроса «почему».
+- {text: "Что у меня в портфеле?", intent: portfolio_status}
+- {text: "Сколько сейчас стоит мой портфель?", intent: portfolio_status}
+- {text: "Покажи мои позиции на ИИС", intent: portfolio_status}
+- {text: "Какие облигации лежат на моём брокерском счёте?", intent: portfolio_status}
+- {text: "Сколько я заплатил комиссий за этот год?", intent: portfolio_status}
+- {text: "Покажи таблицу моих акций по стоимости", intent: portfolio_status}
+# portfolio_analysis: почему портфель такой, его риск и результат.
+- {text: "Что с моим портфелем и почему?", intent: portfolio_analysis}
+- {text: "Почему мой портфель упал за неделю?", intent: portfolio_analysis}
+- {text: "Какой риск у моего портфеля?", intent: portfolio_analysis}
+- {text: "Насколько диверсифицирован мой портфель?", intent: portfolio_analysis}
+- {text: "Какие позиции сильнее всего тянут портфель вниз?", intent: portfolio_analysis}
+- {text: "Обзор портфеля: структура и вклад позиций", intent: portfolio_analysis}
+# instrument_quote: цена, курс или график цены одного инструмента.
+- {text: "Сколько стоит SBER?", intent: instrument_quote}
+- {text: "Какая сейчас цена акций Газпрома?", intent: instrument_quote}
+- {text: "Курс юаня на сегодня", intent: instrument_quote}
+- {text: "Покажи график цены Яндекса за год", intent: instrument_quote}
+- {text: "Котировки LKOH", intent: instrument_quote}
+- {text: "Почём сейчас доллар?", intent: instrument_quote}
+# instrument_analysis: один инструмент целиком: дивиденды, мультипликаторы, консенсус.
+- {text: "Расскажи про акции Северстали", intent: instrument_analysis}
+- {text: "Какие дивиденды платит Татнефть?", intent: instrument_analysis}
+- {text: "Какие мультипликаторы у MOEX?", intent: instrument_analysis}
+- {text: "Что думают аналитики о Магните?", intent: instrument_analysis}
+- {text: "Какие перспективы у Полюса?", intent: instrument_analysis}
+- {text: "Когда Сбербанк отчитается в следующий раз?", intent: instrument_analysis}
+# compare: два инструмента и больше.
+- {text: "Сравни SBER и VTBR", intent: compare}
+- {text: "Что лучше по дивидендам: Газпром или ЛУКОЙЛ?", intent: compare}
+- {text: "Сравни доходность ROSN, LKOH и TATN за 3 года", intent: compare}
+- {text: "Чем Яндекс отличается от МТС по мультипликаторам?", intent: compare}
+- {text: "Корреляция GAZP и NVTK за год", intent: compare}
+# financials: отчётность эмитента.
+- {text: "Какая выручка у ЛУКОЙЛа за 5 лет?", intent: financials}
+- {text: "Покажи отчётность МСФО Сбербанка за 2025 год", intent: financials}
+- {text: "Как менялся чистый долг Северстали?", intent: financials}
+- {text: "РСБУ Аэрофлота за последний квартал", intent: financials}
+- {text: "Какая EBITDA у НОВАТЭКа?", intent: financials}
+- {text: "Свободный денежный поток Магнита за 3 года", intent: financials}
+# news: новости и события.
+- {text: "Какие новости по Газпрому за неделю?", intent: news}
+- {text: "Что случилось с акциями Яндекса сегодня?", intent: news}
+- {text: "Последние новости о ВТБ", intent: news}
+- {text: "Почему упали акции Аэрофлота?", intent: news}
+- {text: "Что пишут о рынке облигаций на этой неделе?", intent: news}
+# research: подробный разбор компании.
+- {text: "Сделай подробный разбор компании Сбербанк", intent: research}
+- {text: "Подготовь полный анализ Норильского никеля: бизнес, отчётность, оценка и риски", intent: research}
+- {text: "Нужен глубокий разбор ЛУКОЙЛа", intent: research}
+- {text: "Сделай инвестиционное исследование по Яндексу", intent: research}
+# other: общие вопросы о финансах и всё остальное.
+- {text: "Что такое дюрация облигации?", intent: other}
+- {text: "Как устроен купон облигации?", intent: other}
+- {text: "Чем акция отличается от облигации?", intent: other}
+- {text: "Объясни, что такое P/E", intent: other}
+- {text: "Как рассчитывается НКД?", intent: other}
+- {text: "Какая погода в Москве?", intent: other}
